@@ -1,2 +1,2 @@
 # hassio
-Hola Assistant Project
+Hi, this is my Home Assistant Project
