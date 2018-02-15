@@ -2,8 +2,8 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Arrayán8
   # Location required to calculate the time the sun rises and sets
-  latitude: 37.389154
-  longitude: -6.093752
+  latitude: !secret latitude_home
+  longitude: !secret latitude_home
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 172
   # metric for Metric, imperial for Imperial
@@ -13,6 +13,9 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
 
+group: !include groups.yaml
+script: !include scripts.yaml
+automation: !include automations.yaml
 
 # Show links to resources in log and frontend
 #introduction:
@@ -37,10 +40,6 @@ http:
 updater:
   # Optional, allows Home Assistant developers to focus on popular components.
   # include_used_components: true
-
-group: !include groups.yaml
-automation: !include automations.yaml
-script: !include scripts.yaml
 
 # Discover some devices automatically
 discovery:
@@ -151,3 +150,28 @@ input_boolean:
     name: AAF Home
     initial: off
     icon: mdi:cellphone-iphone
+#
+# TEMAS PENDIENTES
+#
+
+# AAC. WEB SSH TERMINAL
+#panel_iframe:
+#  terminal:
+#    title: 'Terminal'
+#    icon: mdi:console
+#    url: 'http://192.168.0.23:4200'
+
+# AAC. PROSEGUR
+#alarm_control_panel:
+#  - platform: totalconnect
+#    username: agustin.alvarezconesa@gmail.com
+#    password: Casuario2018
+
+# AAC. TV Sony
+# media_player:
+#   - platform: braviatv
+#     host: 192.168.0.14
+#     name: TV Sony Salón
+#   - platform: braviatv
+#     host: 192.168.0.15
+#     name: TV Sony Estudio
