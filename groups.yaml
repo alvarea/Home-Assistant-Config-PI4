@@ -1,0 +1,90 @@
+
+default_view:
+  view: yes
+  icon: mdi:home
+  entities:
+    - group.hometab
+    - group.tiempo
+    - group.family_home
+    - group.family_tracking
+    - group.apple_dev
+    - group.cocina
+    - group.estudio
+    - group.salon
+
+cocina:
+  name: Cocina
+  view: yes
+  entities:
+    - light.room_entrada
+    - light.room_pasillo
+    - camera.ipcam11_cocina
+
+salon:
+  name: Salón
+  view: yes
+  entities:
+    - light.room_salon_tv
+    - light.room_salon_lectura
+    - light.hue_cilindro
+    - light.hue_seises
+    - media_player.apple_tv
+
+estudio:
+  name: Estudio
+  view: yes
+  entities:
+    - light.room_estudio
+    - light.hue_estudio
+    - camera.ipcam12_salon
+
+hometab:
+  name: ARRAYAN HOME
+  entities:
+    - device_tracker.prosegur
+    - sensor.uptime
+    - sensor.ssl_certificate_expiry
+    - sun.sun
+    - sensor.moon
+    - sensor.date
+    - sensor.time
+    - sensor.time_utc
+
+tiempo:
+  name: Weather
+  entities:
+    - sensor.hoy_temperature
+    - sensor.hoy_symbol
+    - sensor.manana_temperature
+    - sensor.manana_symbol
+
+family_home:
+  name: Family @ Home?
+  entities:
+    - input_boolean.mfchome
+    - input_boolean.aachome
+    - input_boolean.pafhome
+    - input_boolean.aafhome
+
+family_tracking:
+  name: Tracking Devices
+  entities:
+    - device_tracker.mfc_iphone_owntrack_mfc
+    - device_tracker.aac_iphone_owntrack
+    - device_tracker.paf_iphone_owntrack
+    - device_tracker.aaf_iphone_nmap
+    - device_tracker.mfc_iphone_nmap
+    - device_tracker.aac_iphone_nmap
+    - device_tracker.paf_iphone_nmap
+    - device_tracker.mfc_ios
+    - device_tracker.aac_ios
+
+apple_dev:
+  name: Apple's World
+  view: no
+  entities:
+    - device_tracker.macbook
+    - device_tracker.ipad_nmap
+    - device_tracker.ipad_mini_nmap
+    - device_tracker.watch_aac
+

@@ -1,0 +1,20 @@
+sun.sun:
+  friendly_name: Sol
+sensor.moon:
+  friendly_name: Luna
+sensor.date:
+  friendly_name: Fecha
+sensor.time:
+  friendly_name: Hora
+sensor.time_utc:
+  friendly_name: Hora (UTC)
+sensor.hoy_symbol:
+  friendly_name: Prevision Actual
+sensor.manana_symbol:
+  friendly_name: Previsión Mañana
+sensor.hoy_temperature:
+  friendly_name: Temperatura actual
+sensor.manana_temperature:
+  friendly_name: Temperatura Mañana
+sensor.ssl_certificate_expiry:
+  friendly_name: SSL Cert
