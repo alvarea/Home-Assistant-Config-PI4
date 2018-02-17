@@ -178,9 +178,12 @@
 #
 # LUCES: Encendido Entrada según groups.family
 #
-- id: switch_off_lights_family_get_home
+- id: switch_on_entrada_family_get_home
   alias: 'Endiende Luz Entrada Cuando Llega Alguien'
   trigger:
+    - platform: sun
+      event: sunset
+      offset: '-01:00:00'
     - platform: state
       entity_id:
         - input_boolean.aachome

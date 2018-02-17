@@ -11,6 +11,19 @@ default_view:
     - group.cocina
     - group.estudio
     - group.salon
+    - group.luces
+
+hometab:
+  name: ARRAYAN HOME
+  entities:
+    - device_tracker.prosegur
+    - sensor.uptime
+    - sensor.ssl_certificate_expiry
+    - sun.sun
+    - sensor.moon
+    - sensor.date
+    - sensor.time
+    - sensor.time_utc
 
 cocina:
   name: Cocina
@@ -25,9 +38,9 @@ salon:
   view: yes
   entities:
     - light.room_salon_tv
-    - light.room_salon_lectura
     - light.hue_cilindro
     - light.hue_seises
+    - light.hue_lectura
     - media_player.apple_tv
 
 estudio:
@@ -38,17 +51,32 @@ estudio:
     - light.hue_estudio
     - camera.ipcam12_salon
 
-hometab:
-  name: ARRAYAN HOME
+luces:
+  name: Luces
+  view: yes
   entities:
-    - device_tracker.prosegur
-    - sensor.uptime
-    - sensor.ssl_certificate_expiry
-    - sun.sun
-    - sensor.moon
-    - sensor.date
-    - sensor.time
-    - sensor.time_utc
+    - group.luces_entrada
+    - group.luces_salon
+    - group.luces_estudio
+
+luces_entrada:
+  name: Luces Entrada
+  entities:
+    - light.room_entrada
+    - light.room_pasillo
+
+luces_salon:
+  name: Luces Salon
+  entities:
+    - light.room_salon_tv
+    - light.hue_cilindro
+    - light.hue_seises
+    - light.hue_lectura
+
+luces_estudio:
+  name: Luces Estudio
+  entities:
+    - light.hue_estudio
 
 tiempo:
   name: Weather

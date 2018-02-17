@@ -3,7 +3,7 @@ homeassistant:
   name: Arrayán8
   # Location required to calculate the time the sun rises and sets
   latitude: !secret latitude_home
-  longitude: !secret latitude_home
+  longitude: !secret longitude_home
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 172
   # metric for Metric, imperial for Imperial
