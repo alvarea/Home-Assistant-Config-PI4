@@ -1,6 +1,6 @@
 homeassistant:
   # Name of the location where Home Assistant is running
-  name: Arrayán8
+  name: Álvarez Fijo Home
   # Location required to calculate the time the sun rises and sets
   latitude: !secret latitude_home
   longitude: !secret longitude_home
@@ -30,7 +30,7 @@ http:
   api_password: !secret http_password
   ssl_certificate: /etc/letsencrypt/live/alvarea.duckdns.org/fullchain.pem
   ssl_key: /etc/letsencrypt/live/alvarea.duckdns.org/privkey.pem
-  base_url: alvarea.duckdns.org
+  base_url: !secret http_base_url
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -61,17 +61,24 @@ sun:
 
 # AAC. Sensores de Tiempo, sol, Luna,
 sensor:
-  - platform: yr
+  - platform: yweather
+    woeid: 90231690
     name: Hoy
     monitored_conditions:
+      - weather
       - temperature
-      - symbol
-  - platform: yr
+      - temp_min
+      - temp_max
+      - wind_speed
+      - humidity
+  - platform: yweather
+    woeid: 90231690
+    forecast: 1
     name: Mañana
-    forecast: 24
     monitored_conditions:
-      - temperature
-      - symbol
+      - weather
+      - temp_min
+      - temp_max
   - platform: time_date
     display_options:
       - 'date'
@@ -83,7 +90,14 @@ sensor:
   - platform: cert_expiry
     host: alvarea.duckdns.org
     port: 443
-
+  - platform: systemmonitor
+    resources:
+      - type: processor_use
+      - type: memory_use_percent
+      - type: disk_use_percent
+        arg: /
+      - type: load_5m
+      - type: load_15m
 # Text to speech
 #tts:
 #  - platform: google

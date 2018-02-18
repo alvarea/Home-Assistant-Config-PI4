@@ -181,9 +181,6 @@
 - id: switch_on_entrada_family_get_home
   alias: 'Endiende Luz Entrada Cuando Llega Alguien'
   trigger:
-    - platform: sun
-      event: sunset
-      offset: '-01:00:00'
     - platform: state
       entity_id:
         - input_boolean.aachome
@@ -195,6 +192,8 @@
   condition:
     condition: and
     conditions:
+      - condition: sun
+        after: sunset
       - condition: state
         entity_id: group.family_home
         state: 'on'

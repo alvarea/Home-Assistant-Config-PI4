@@ -12,13 +12,11 @@ default_view:
     - group.luces_view
 
 main_grp:
-  name: Álvarez Fijo Family Home
+  name: System Status
   entities:
     - device_tracker.prosegur
     - sensor.uptime
     - sensor.ssl_certificate_expiry
-    - sun.sun
-    - sensor.moon
     - sensor.date
     - sensor.time
     - sensor.time_utc
@@ -26,10 +24,17 @@ main_grp:
 tiempo_grp:
   name: Weather
   entities:
+    - sun.sun
+    - sensor.moon
+    - sensor.hoy_condition
     - sensor.hoy_temperature
-    - sensor.hoy_symbol
-    - sensor.manana_temperature
-    - sensor.manana_symbol
+    - sensor.hoy_temperature_max
+    - sensor.hoy_temperature_min
+    - sensor.hoy_wind_speed
+    - sensor.hoy_humidity
+    - sensor.manana_condition
+    - sensor.manana_temperature_max
+    - sensor.manana_temperature_min
 
 family_home_grp:
   name: Family @ Home?
@@ -91,8 +96,18 @@ tracking_view:
   view: yes
   icon: mdi:laptop-mac
   entities:
+    - group.server_grp
     - group.family_track_grp
     - group.nmap_track_grp
+
+server_grp:
+  name: Server Information
+  entities:
+    - sensor.cpu_used
+    - sensor.ram_used
+    - sensor.disk_used_
+    - sensor.average_load_5m
+    - sensor.average_load_15m
 
 family_track_grp:
   name: Owntracks & IOS Tracking
