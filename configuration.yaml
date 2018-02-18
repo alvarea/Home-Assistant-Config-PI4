@@ -45,7 +45,7 @@ updater:
 discovery:
 
 # Allows you to issue voice commands from the frontend in enabled browsers
-conversation:
+#conversation:
 
 # Enables support for tracking state changes over time
 history:
@@ -111,6 +111,12 @@ camera:
     name: IPcam12 Salon
     username: admin
     password: !secret IPcam12
+
+apple_tv:
+  - host: 192.168.0.19
+    login_id: 00000000-5540-7268-ea1c-2a4e4d154343
+    name: Apple TV
+    credentials: 906CB00CF5F3A299:84CB3B3A11823C334BD48BAB463C0B625392E4BEF4F2817F19361BE285C0BEB1
 
 # AAC. MQTT - BROKER: CLOUDMQTT
 mqtt:

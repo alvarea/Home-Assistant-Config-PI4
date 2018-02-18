@@ -1,20 +1,18 @@
-
 default_view:
   view: yes
   icon: mdi:home
   entities:
-    - group.hometab
-    - group.tiempo
-    - group.family_home
-    - group.family_tracking
-    - group.apple_dev
-    - group.cocina
-    - group.estudio
-    - group.salon
-    - group.luces
+    - group.main_grp
+    - group.tiempo_grp
+    - group.family_home_grp
+    - group.tracking_view
+    - group.cocina_view
+    - group.salon_view
+    - group.estudio_view
+    - group.luces_view
 
-hometab:
-  name: ARRAYAN HOME
+main_grp:
+  name: Álvarez Fijo Family Home
   entities:
     - device_tracker.prosegur
     - sensor.uptime
@@ -25,60 +23,7 @@ hometab:
     - sensor.time
     - sensor.time_utc
 
-cocina:
-  name: Cocina
-  view: yes
-  entities:
-    - light.room_entrada
-    - light.room_pasillo
-    - camera.ipcam11_cocina
-
-salon:
-  name: Salón
-  view: yes
-  entities:
-    - light.room_salon_tv
-    - light.hue_cilindro
-    - light.hue_seises
-    - light.hue_lectura
-    - media_player.apple_tv
-
-estudio:
-  name: Estudio
-  view: yes
-  entities:
-    - light.room_estudio
-    - light.hue_estudio
-    - camera.ipcam12_salon
-
-luces:
-  name: Luces
-  view: yes
-  entities:
-    - group.luces_entrada
-    - group.luces_salon
-    - group.luces_estudio
-
-luces_entrada:
-  name: Luces Entrada
-  entities:
-    - light.room_entrada
-    - light.room_pasillo
-
-luces_salon:
-  name: Luces Salon
-  entities:
-    - light.room_salon_tv
-    - light.hue_cilindro
-    - light.hue_seises
-    - light.hue_lectura
-
-luces_estudio:
-  name: Luces Estudio
-  entities:
-    - light.hue_estudio
-
-tiempo:
+tiempo_grp:
   name: Weather
   entities:
     - sensor.hoy_temperature
@@ -86,7 +31,7 @@ tiempo:
     - sensor.manana_temperature
     - sensor.manana_symbol
 
-family_home:
+family_home_grp:
   name: Family @ Home?
   entities:
     - input_boolean.mfchome
@@ -94,25 +39,82 @@ family_home:
     - input_boolean.pafhome
     - input_boolean.aafhome
 
-family_tracking:
-  name: Tracking Devices
+cocina_view:
+  name: Cocina
+  view: yes
+  entities:
+    - group.luces_entrada_grp
+    - camera.ipcam11_cocina
+
+salon_view:
+  name: Salón
+  view: yes
+  entities:
+    - group.luces_salon_grp
+    - media_player.apple_tv
+
+estudio_view:
+  name: Estudio
+  view: yes
+  entities:
+    - group.luces_estudio_grp
+    - camera.ipcam12_salon
+
+luces_view:
+  name: Luces
+  view: yes
+  entities:
+    - group.luces_entrada_grp
+    - group.luces_salon_grp
+    - group.luces_estudio_grp
+
+luces_entrada_grp:
+  name: Luces Entrada
+  entities:
+    - light.hue_entrada
+    - light.hue_pasillo
+
+luces_salon_grp:
+  name: Luces Salon
+  entities:
+    - light.room_salon_tv
+    - light.hue_cilindro
+    - light.hue_seises
+    - light.hue_lectura
+
+luces_estudio_grp:
+  name: Luces Estudio
+  entities:
+    - light.hue_estudio
+
+tracking_view:
+  view: yes
+  icon: mdi:laptop-mac
+  entities:
+    - group.family_track_grp
+    - group.nmap_track_grp
+
+family_track_grp:
+  name: Owntracks & IOS Tracking
   entities:
     - device_tracker.mfc_iphone_owntrack_mfc
     - device_tracker.aac_iphone_owntrack
     - device_tracker.paf_iphone_owntrack
-    - device_tracker.aaf_iphone_nmap
-    - device_tracker.mfc_iphone_nmap
-    - device_tracker.aac_iphone_nmap
-    - device_tracker.paf_iphone_nmap
     - device_tracker.mfc_ios
     - device_tracker.aac_ios
 
-apple_dev:
-  name: Apple's World
+nmap_track_grp:
+  name: NMAP Device Tracking
   view: no
   entities:
+    - device_tracker.prosegur
+    - device_tracker.mfc_iphone_nmap
+    - device_tracker.aac_iphone_nmap
+    - device_tracker.paf_iphone_nmap
+    - device_tracker.aaf_iphone_nmap
     - device_tracker.macbook
     - device_tracker.ipad_nmap
     - device_tracker.ipad_mini_nmap
     - device_tracker.watch_aac
+    - device_tracker.inteldev
 

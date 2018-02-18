@@ -193,9 +193,13 @@
       from: 'off'
       to: 'on'
   condition:
-    condition: state
-    entity_id: group.family_home
-    state: 'on'
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.family_home
+        state: 'on'
+      - condition: time
+        before: '00:00:00'
   action:
     service: light.turn_on
-    entity_id: light.hue_entrada
+    entity_id: light.room_salon_tv
