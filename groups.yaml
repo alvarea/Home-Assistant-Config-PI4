@@ -4,7 +4,7 @@ default_view:
   entities:
     - group.main_grp
     - group.tiempo_grp
-    - group.family_home_grp
+    - group.family_home
     - group.tracking_view
     - group.cocina_view
     - group.salon_view
@@ -36,7 +36,7 @@ tiempo_grp:
     - sensor.manana_temperature_max
     - sensor.manana_temperature_min
 
-family_home_grp:
+family_home:
   name: Family @ Home?
   entities:
     - input_boolean.mfchome
