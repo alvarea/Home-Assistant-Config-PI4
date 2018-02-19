@@ -18,14 +18,14 @@ main_grp:
     - sensor.uptime
     - sensor.ssl_certificate_expiry
     - sensor.date
-    - sensor.time
-    - sensor.time_utc
+    - sun.sun
+    - sensor.moon
+    #- sensor.time
+    #- sensor.time_utc
 
 tiempo_grp:
   name: Weather
   entities:
-    - sun.sun
-    - sensor.moon
     - sensor.hoy_condition
     - sensor.hoy_temperature
     - sensor.hoy_temperature_max
@@ -74,8 +74,9 @@ luces_view:
     - group.luces_estudio_grp
 
 luces_entrada_grp:
-  name: Luces Entrada
+  name: Luces Cocina-Entrada
   entities:
+    - light.hue_cocina
     - light.hue_entrada
     - light.hue_pasillo
 
@@ -131,5 +132,5 @@ nmap_track_grp:
     - device_tracker.ipad_nmap
     - device_tracker.ipad_mini_nmap
     - device_tracker.watch_aac
-    - device_tracker.inteldev
+
 

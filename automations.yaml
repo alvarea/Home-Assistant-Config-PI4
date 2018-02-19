@@ -157,20 +157,12 @@
 # LUCES: Apagado general según groups.family
 #
 - id: switch_off_lights_family_not_home
-  alias: 'Apaga Luces Si No hay Nadie'
+  alias: 'Apaga Luces Si NotHome'
   trigger:
-    - platform: state
-      entity_id:
-        - input_boolean.aachome
-        - input_boolean.mfchome
-        - input_boolean.pafhome
-        - input_boolean.aafhome
-      from: 'on'
-      to: 'off'
-  condition:
-    condition: state
+    platform: state
     entity_id: group.family_home
-    state: 'off'
+    from: 'on'
+    to: 'off'
   action:
     service: light.turn_off
     entity_id: group.all_lights
@@ -179,14 +171,10 @@
 # LUCES: Encendido Entrada según groups.family
 #
 - id: switch_on_entrada_family_get_home
-  alias: 'Endiende Luz Entrada Cuando Llega Alguien'
+  alias: 'Endiende Luz Piloto'
   trigger:
     - platform: state
-      entity_id:
-        - input_boolean.aachome
-        - input_boolean.mfchome
-        - input_boolean.pafhome
-        - input_boolean.aafhome
+      entity_id: group.family_home
       from: 'off'
       to: 'on'
   condition:
@@ -194,11 +182,8 @@
     conditions:
       - condition: sun
         after: sunset
-      - condition: state
-        entity_id: group.family_home
-        state: 'on'
       - condition: time
         before: '00:00:00'
   action:
     service: light.turn_on
-    entity_id: light.room_salon_tv
+    entity_id: light.hue_cocina
