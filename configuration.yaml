@@ -153,6 +153,7 @@ device_tracker:
   - platform: owntracks
     mqtt_topic: "owntracks/#"
 
+# AAC. Interruptores control presencia Family
 input_boolean:
   mfchome:
     name: MFC Home
@@ -170,6 +171,12 @@ input_boolean:
     name: AAF Home
     initial: off
     icon: mdi:cellphone-iphone
+
+# AAC. Mediaplayer FireTV
+media_player:
+  - platform: firetv
+    name: FireTV Cocina
+
 #
 # TEMAS PENDIENTES
 #

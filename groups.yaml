@@ -50,6 +50,7 @@ cocina_view:
   entities:
     - group.luces_entrada_grp
     - camera.ipcam11_cocina
+    - media_player.firetv_cocina
 
 salon_view:
   name: Salón
@@ -66,7 +67,7 @@ estudio_view:
     - camera.ipcam12_salon
 
 luces_view:
-  name: Luces
+  icon: mdi:lightbulb-on
   view: yes
   entities:
     - group.luces_entrada_grp
