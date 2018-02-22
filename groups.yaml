@@ -2,39 +2,29 @@ default_view:
   view: yes
   icon: mdi:home
   entities:
-    - group.main_grp
-    - group.tiempo_grp
-    - group.family_home
-    - group.tracking_view
     - group.cocina_view
     - group.salon_view
     - group.estudio_view
+    - group.tiempo_view
     - group.luces_view
+    - group.tracking_view
+    - group.main_grp
+    - group.family_home
 
 main_grp:
   name: System Status
   entities:
     - device_tracker.prosegur
     - sensor.uptime
-    - sensor.ssl_certificate_expiry
-    - sensor.date
     - sun.sun
     - sensor.moon
-    #- sensor.time
-    #- sensor.time_utc
 
-tiempo_grp:
-  name: Weather
+main_grp:
+  name: System Status
   entities:
-    - sensor.hoy_condition
-    - sensor.hoy_temperature
-    - sensor.hoy_temperature_max
-    - sensor.hoy_temperature_min
-    - sensor.hoy_wind_speed
-    - sensor.hoy_humidity
-    - sensor.manana_condition
-    - sensor.manana_temperature_max
-    - sensor.manana_temperature_min
+    - sensor.date
+    - sensor.ssl_certificate_expiry
+
 
 family_home:
   name: Family @ Home?
@@ -65,6 +55,34 @@ estudio_view:
   entities:
     - group.luces_estudio_grp
     - camera.ipcam12_salon
+
+tiempo_view:
+  view: yes
+  icon: mdi:weather-partlycloudy
+  entities:
+    - camera.weather_satelite
+    - group.tiempo_hoy_grp
+    - group.tiempo_man_grp
+
+tiempo_hoy_grp:
+  name: Hoy
+  entities:
+    - sensor.hoy_condition
+    - sensor.hoy_temperature
+    - sensor.hoy_temperature_max
+    - sensor.hoy_temperature_min
+    - sensor.hoy_wind_speed
+    - sensor.hoy_humidity
+
+tiempo_man_grp:
+  name: Previsión Mañana
+  entities:
+    - sensor.manana_condition
+    - sensor.manana_temperature
+    - sensor.manana_temperature_max
+    - sensor.manana_temperature_min
+    - sensor.manana_wind_speed
+    - sensor.manana_humidity
 
 luces_view:
   icon: mdi:lightbulb-on
