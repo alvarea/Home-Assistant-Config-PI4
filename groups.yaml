@@ -14,17 +14,11 @@ default_view:
 main_grp:
   name: System Status
   entities:
-    - device_tracker.prosegur
+    - sensor.time_date
+    - sensor.time_utc
     - sensor.uptime
-    - sun.sun
-    - sensor.moon
-
-main_grp:
-  name: System Status
-  entities:
-    - sensor.date
     - sensor.ssl_certificate_expiry
-
+    - sun.sun
 
 family_home:
   name: Family @ Home?
@@ -73,6 +67,7 @@ tiempo_hoy_grp:
     - sensor.hoy_temperature_min
     - sensor.hoy_wind_speed
     - sensor.hoy_humidity
+    - sensor.moon
 
 tiempo_man_grp:
   name: Previsión Mañana
