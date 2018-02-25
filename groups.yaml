@@ -14,8 +14,7 @@ default_view:
 main_grp:
   name: System Status
   entities:
-    - sensor.time_date
-    - sensor.time_utc
+    - sensor.time__date
     - sensor.uptime
     - sensor.ssl_certificate_expiry
     - sun.sun

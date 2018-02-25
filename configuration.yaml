@@ -86,6 +86,7 @@ sensor:
     display_options:
       - 'date'
       - 'time_date'
+      - 'date_time'
       - 'time_utc'
   - platform: uptime
     unit_of_measurement: hours
@@ -120,18 +121,20 @@ ios:
 # AAC. GENERIC IP CAMERA
 camera:
   - platform: generic
-    still_image_url: http://192.168.0.11/snapshot/image0.jpg
-    name: IPcam11 Cocina
-    username: admin
-    password: !secret IPcam11
+    still_image_url: https://api.sat24.com/mostrecent/SP/visual5hdcomplete%20width=500%20height=304
+    name: Weather Satelite
   - platform: generic
     still_image_url: http://192.168.0.12:8080/snapshot.cgi
     name: IPcam12 Estudio
     username: admin
     password: !secret IPcam12
   - platform: generic
-    still_image_url: https://api.sat24.com/mostrecent/SP/visual5hdcomplete%20width=500%20height=304
-    name: Weather Satelite
+    still_image_url: http://192.168.0.11/snapshot/image0.jpg
+    name: IPcam11 Cocina
+    username: admin
+    password: !secret IPcam11
+
+
 
 apple_tv:
   - host: 192.168.0.19
@@ -178,6 +181,10 @@ input_boolean:
     name: AAF Home
     initial: off
     icon: mdi:cellphone-iphone
+  luceshome:
+    name: Luces Interior
+    initial: off
+    icon: mdi:lightbulb-on
 
 # AAC. Mediaplayer FireTV
 media_player:

@@ -129,7 +129,7 @@
     - platform: state
       entity_id: device_tracker.aaf_iphone_nmap
       to: 'not_home'
-      for: '00:07:00'
+      for: '00:10:00'
   condition:
     condition: state
     entity_id: input_boolean.aafhome
@@ -154,10 +154,10 @@
     entity_id: input_boolean.aafhome
 
 #
-# LUCES: Apagado general según groups.family
+# LUCES: Apagado/Encendido general según groups.family
 #
 - id: switch_off_lights_family_not_home
-  alias: 'Apaga Luces Si NotHome'
+  alias: 'Apaga Luces Si Family Out'
   trigger:
     platform: state
     entity_id: group.family_home
@@ -167,11 +167,8 @@
     service: light.turn_off
     entity_id: group.all_lights
 
-#
-# LUCES: Encendido Entrada según groups.family
-#
 - id: switch_on_entrada_family_get_home
-  alias: 'Endiende Luz Piloto'
+  alias: 'Endiende Piloto Si Family Home'
   trigger:
     - platform: state
       entity_id: group.family_home
