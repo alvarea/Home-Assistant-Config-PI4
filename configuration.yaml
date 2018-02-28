@@ -56,6 +56,13 @@ logbook:
 # Enables a map showing the location of tracked devices
 map:
 
+zone:
+  name: Heineken
+  latitude: 37.3880472
+  longitude: -5.9619718
+  icon: mdi:beer
+  radius: 100
+
 # Track the sun
 sun:
 
@@ -155,48 +162,45 @@ mqtt:
 
 # AAC. NMAP, OWNTRACKS
 device_tracker:
+  - platform: geofency
   - platform: nmap_tracker
     hosts:
       - 192.168.0.10
       - 192.168.0.50-99
     home_interval: 10
+    consider_home: 180
     exclude:
      - 192.168.0.23
   - platform: owntracks
     mqtt_topic: "owntracks/#"
-  - platform: geofency
 
 # AAC. Interruptores control presencia Family
 input_boolean:
   mfchome:
     name: MFC Home
-    initial: off
+    initial: on
     icon: mdi:cellphone-iphone
+    #picture: /local/MFC_2017_0.jpeg
   aachome:
     name: AAC Home
-    initial: off
+    initial: on
     icon: mdi:cellphone-iphone
+    #picture: /local/AAC_2017_0.jpg
   pafhome:
     name: PAF Home
-    initial: off
+    initial: on
     icon: mdi:cellphone-iphone
+    #picture: /local/PAF_2017_0.png
   aafhome:
     name: AAF Home
-    initial: off
+    initial: on
     icon: mdi:cellphone-iphone
-  luceshome:
-    name: Luces Interior
-    initial: off
-    icon: mdi:lightbulb-on
+    #picture: /local/AAF_2017_0.png
 
 # AAC. Mediaplayer FireTV
 media_player:
   - platform: firetv
     name: FireTV Cocina
-
-#
-# TEMAS PENDIENTES
-#
 
 # AAC. PROSEGUR
 #alarm_control_panel:

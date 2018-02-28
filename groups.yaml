@@ -2,14 +2,14 @@ default_view:
   view: yes
   icon: mdi:home
   entities:
-    - group.cocina_view
-    - group.salon_view
-    - group.estudio_view
     - group.tiempo_view
     - group.luces_view
     - group.status_view
-    - group.main_grp
+    - group.cocina_view
+    - group.salon_view
+    - group.estudio_view
     - group.family_home
+    - group.main_grp
 
 main_grp:
   name: System Status
@@ -131,23 +131,24 @@ pi3_grp:
 family_track_grp:
   name: Family Tracking
   entities:
-    - device_tracker.b8b52a3bf0384e72a268705d9b06e496
-    - device_tracker.mfc_iphone_owntrack_mfc
+    - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
     - device_tracker.aac_iphone_owntrack
-    - device_tracker.paf_iphone_owntrack
-    - device_tracker.mfc_ios
     - device_tracker.aac_ios
+    - device_tracker.aac_iphone_nmap
+    - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
+    - device_tracker.mfc_iphone_owntrack_mfc
+    - device_tracker.mfc_ios
+    - device_tracker.mfc_iphone_nmap
+    - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+    - device_tracker.paf_iphone_nmap
+    - device_tracker.aaf_iphone_nmap
 
 nmap_track_grp:
   name: NMAP Device Tracking
   view: no
   entities:
     - device_tracker.prosegur
-    - device_tracker.mfc_iphone_nmap
-    - device_tracker.aac_iphone_nmap
-    - device_tracker.paf_iphone_nmap
-    - device_tracker.aaf_iphone_nmap
     - device_tracker.macbook
     - device_tracker.ipad_nmap
     - device_tracker.ipad_mini_nmap
-    - device_tracker.watch_aac
+

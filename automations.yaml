@@ -9,6 +9,7 @@
       entity_id:
         - device_tracker.aac_ios
         - device_tracker.aac_iphone_owntrack
+        - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
       to: 'not_home'
     - platform: state
       entity_id: device_tracker.aac_iphone_nmap
@@ -31,6 +32,7 @@
         - device_tracker.aac_ios
         - device_tracker.aac_iphone_nmap
         - device_tracker.aac_iphone_owntrack
+        - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
       to: 'home'
   condition:
     condition: state
@@ -51,6 +53,7 @@
       entity_id:
         - device_tracker.mfc_ios
         - device_tracker.mfc_iphone_owntrack
+        - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 # MFC
       to: 'not_home'
     - platform: state
       entity_id: device_tracker.mfc_iphone_nmap
@@ -73,6 +76,7 @@
         - device_tracker.mfc_ios
         - device_tracker.mfc_iphone_nmap
         - device_tracker.mfc_iphone_owntrack_mfc
+        - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
       to: 'home'
   condition:
     condition: state
@@ -93,7 +97,9 @@
       to: 'not_home'
       for: '00:07:00'
     - platform: state
-      entity_id: device_tracker.paf_iphone_owntrack
+      entity_id:
+          - device_tracker.paf_iphone_owntrack
+          - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
       to: 'not_home'
   condition:
     condition: state
@@ -111,6 +117,7 @@
       entity_id:
         - device_tracker.paf_iphone_nmap
         - device_tracker.paf_iphone_owntrack
+        - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
       to: 'home'
   condition:
     condition: state
