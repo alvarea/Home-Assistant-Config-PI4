@@ -129,8 +129,9 @@ pi3_grp:
     - sensor.swap_use_percent
 
 family_track_grp:
-  name: Owntracks & IOS Tracking
+  name: Family Tracking
   entities:
+    - device_tracker.b8b52a3bf0384e72a268705d9b06e496
     - device_tracker.mfc_iphone_owntrack_mfc
     - device_tracker.aac_iphone_owntrack
     - device_tracker.paf_iphone_owntrack

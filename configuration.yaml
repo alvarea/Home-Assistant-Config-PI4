@@ -164,6 +164,7 @@ device_tracker:
      - 192.168.0.23
   - platform: owntracks
     mqtt_topic: "owntracks/#"
+  - platform: geofency
 
 # AAC. Interruptores control presencia Family
 input_boolean:

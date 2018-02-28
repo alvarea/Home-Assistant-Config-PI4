@@ -10,6 +10,9 @@ sensor.time_utc:
   friendly_name: Hora (UTC)
 sensor.ssl_certificate_expiry:
   friendly_name: SSL Cert
+#
+# YAHOO WEATHER
+#
 sensor.hoy_temperature_min:
   friendly_name: Mínima Hoy
 sensor.hoy_temperature:
@@ -32,6 +35,9 @@ sensor.manana_temperature:
   friendly_name: Mañana Temperatura
 sensor.manana_wind_speed:
   friendly_name: Velocidad Viento
+#
+# PI3 system status
+#
 sensor.disk_use_percent_:
   friendly_name: '%Disk'
 sensor.load_15m:
@@ -42,5 +48,18 @@ sensor.processor_use:
 sensor.memory_use_percent:
   friendly_name: '%Memory'
 sensor.last_boot:
-  friendly_name: Last Boot
+  friendly_name: 'Last Boot'
   icon: mdi:server-security
+sensor.memory_free:
+  unit_of_measurement: MB
+sensor.memory_use:
+  unit_of_measurement: MB
+sensor.disk_use_:
+  unit_of_measurement: GB
+  friendly_name: 'Disk used'
+sensor.disk_free_:
+  unit_of_measurement: GB
+  friendly_name: 'Disk free'
+sensor.swap_use_percent:
+  friendly_name: '%Swapping'
+
