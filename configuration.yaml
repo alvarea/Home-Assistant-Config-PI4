@@ -84,10 +84,7 @@ sensor:
       - humidity
   - platform: time_date
     display_options:
-      - 'date'
-      - 'time_date'
-      - 'date_time'
-      - 'time_utc'
+      - 'time'
   - platform: uptime
     unit_of_measurement: hours
   - platform: moon
@@ -96,12 +93,19 @@ sensor:
     port: 443
   - platform: systemmonitor
     resources:
+      - type: load_15m
       - type: processor_use
       - type: memory_use_percent
+      - type: memory_use
+      - type: memory_free
       - type: disk_use_percent
         arg: /
-      - type: load_5m
-      - type: load_15m
+      - type: disk_use
+        arg: /
+      - type: disk_free
+        arg: /
+      - type: swap_use_percent
+      - type: last_boot
 
 # Text to speech
 #tts:
@@ -133,8 +137,6 @@ camera:
     name: IPcam11 Cocina
     username: admin
     password: !secret IPcam11
-
-
 
 apple_tv:
   - host: 192.168.0.19

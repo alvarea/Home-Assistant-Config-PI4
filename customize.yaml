@@ -10,3 +10,37 @@ sensor.time_utc:
   friendly_name: Hora (UTC)
 sensor.ssl_certificate_expiry:
   friendly_name: SSL Cert
+sensor.hoy_temperature_min:
+  friendly_name: Mínima Hoy
+sensor.hoy_temperature:
+  friendly_name: Hoy
+sensor.manana_temperature_max:
+  friendly_name: Máxima Mañana
+sensor.manana_temperature_min:
+  friendly_name: Mínima Mañana
+sensor.hoy_temperature_max:
+  friendly_name: Máxima Hoy
+sensor.hoy_humidity:
+  friendly_name: '%Humedad'
+sensor.hoy_wind_speed:
+  friendly_name: Velocidad Viento
+sensor.manana_condition:
+  friendly_name: Previsión Mañana
+sensor.manana_humidity:
+  friendly_name: '%Humedad'
+sensor.manana_temperature:
+  friendly_name: Mañana Temperatura
+sensor.manana_wind_speed:
+  friendly_name: Velocidad Viento
+sensor.disk_use_percent_:
+  friendly_name: '%Disk'
+sensor.load_15m:
+  friendly_name: System Load (15')
+  icon: mdi:server
+sensor.processor_use:
+  friendly_name: '%CPU'
+sensor.memory_use_percent:
+  friendly_name: '%Memory'
+sensor.last_boot:
+  friendly_name: Last Boot
+  icon: mdi:server-security

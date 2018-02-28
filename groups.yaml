@@ -7,15 +7,16 @@ default_view:
     - group.estudio_view
     - group.tiempo_view
     - group.luces_view
-    - group.tracking_view
+    - group.status_view
     - group.main_grp
     - group.family_home
 
 main_grp:
   name: System Status
   entities:
-    - sensor.time__date
+    - sensor.last_boot
     - sensor.uptime
+    - sensor.time
     - sensor.ssl_certificate_expiry
     - sun.sun
 
@@ -47,7 +48,7 @@ estudio_view:
   view: yes
   entities:
     - group.luces_estudio_grp
-    - camera.ipcam12_salon
+    - camera.ipcam12_estudio
 
 tiempo_view:
   view: yes
@@ -106,22 +107,26 @@ luces_estudio_grp:
   entities:
     - light.hue_estudio
 
-tracking_view:
+status_view:
   view: yes
   icon: mdi:laptop-mac
   entities:
-    - group.server_grp
+    - group.pi3_grp
     - group.family_track_grp
     - group.nmap_track_grp
 
-server_grp:
-  name: Server Information
+pi3_grp:
+  name: PI3 System Status
   entities:
-    - sensor.cpu_used
-    - sensor.ram_used
-    - sensor.disk_used_
-    - sensor.average_load_5m
-    - sensor.average_load_15m
+    - sensor.load_15m
+    - sensor.processor_use
+    - sensor.memory_use_percent
+    - sensor.memory_use
+    - sensor.memory_free
+    - sensor.disk_use_percent_
+    - sensor.disk_use_
+    - sensor.disk_free_
+    - sensor.swap_use_percent
 
 family_track_grp:
   name: Owntracks & IOS Tracking
@@ -145,5 +150,3 @@ nmap_track_grp:
     - device_tracker.ipad_nmap
     - device_tracker.ipad_mini_nmap
     - device_tracker.watch_aac
-
-
