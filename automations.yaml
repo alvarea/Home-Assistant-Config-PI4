@@ -97,9 +97,7 @@
       to: 'not_home'
       for: '00:07:00'
     - platform: state
-      entity_id:
-          - device_tracker.paf_iphone_owntrack
-          - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+      entity_id: device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
       to: 'not_home'
   condition:
     condition: state
@@ -116,8 +114,8 @@
     - platform: state
       entity_id:
         - device_tracker.paf_iphone_nmap
-        - device_tracker.paf_iphone_owntrack
         - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+        #- device_tracker.paf_iphone_owntrack
       to: 'home'
   condition:
     condition: state
@@ -137,6 +135,9 @@
       entity_id: device_tracker.aaf_iphone_nmap
       to: 'not_home'
       for: '00:10:00'
+    - platform: state
+      entity_id: device_tracker.bef743fa74f2464ba458612ad3e1c195
+      to: 'not_home'
   condition:
     condition: state
     entity_id: input_boolean.aafhome
@@ -150,7 +151,9 @@
   initial_state: True
   trigger:
     - platform: state
-      entity_id: device_tracker.aaf_iphone_nmap
+      entity_id:
+        - device_tracker.aaf_iphone_nmap
+        - device_tracker.bef743fa74f2464ba458612ad3e1c195
       to: 'home'
   condition:
     condition: state

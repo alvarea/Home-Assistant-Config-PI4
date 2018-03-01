@@ -58,10 +58,10 @@ map:
 
 zone:
   name: Heineken
-  latitude: 37.3880472
-  longitude: -5.9619718
+  latitude: 37.3876837
+  longitude: -5.9645631
   icon: mdi:beer
-  radius: 100
+  radius: 50
 
 # Track the sun
 sun:
@@ -163,6 +163,8 @@ mqtt:
 # AAC. NMAP, OWNTRACKS
 device_tracker:
   - platform: geofency
+  - platform: owntracks
+    mqtt_topic: "owntracks/#"
   - platform: nmap_tracker
     hosts:
       - 192.168.0.10
@@ -171,8 +173,6 @@ device_tracker:
     consider_home: 180
     exclude:
      - 192.168.0.23
-  - platform: owntracks
-    mqtt_topic: "owntracks/#"
 
 # AAC. Interruptores control presencia Family
 input_boolean:
