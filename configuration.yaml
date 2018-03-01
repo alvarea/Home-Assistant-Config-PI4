@@ -57,11 +57,16 @@ logbook:
 map:
 
 zone:
-  name: Heineken
-  latitude: 37.3876837
-  longitude: -5.9645631
-  icon: mdi:beer
-  radius: 50
+  - name: Heineken
+    latitude: 37.3876837
+    longitude: -5.9645631
+    icon: mdi:beer
+    radius: 50
+  - name: FAECA
+    latitude: 37.393004
+    longitude: -5.957486
+    icon: mdi:tree
+    radius: 50
 
 # Track the sun
 sun:
