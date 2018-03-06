@@ -1,0 +1,10 @@
+test_telegram:
+  alias: 'test_telegram'
+  sequence:
+    - service: notify.telegram
+      data:
+        title: ALARM TEST MESSAGE
+        message: 'This is a test!'
+        data:
+          photo:
+            - url: http://192.168.0.11/snapshot/image0.jpg
