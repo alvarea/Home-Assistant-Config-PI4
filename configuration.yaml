@@ -57,19 +57,142 @@ logbook:
 map:
 
 zone:
-  - name: Heineken
+  - name: heineken
     latitude: 37.3876837
     longitude: -5.9645631
     icon: mdi:beer
     radius: 50
-  - name: FAECA
+  - name: faeca
     latitude: 37.393004
     longitude: -5.957486
     icon: mdi:tree
     radius: 50
+  - name: piso_paloma
+    latitude: 37.3748
+    longitude: -6.0530
+    icon: mdi:home-account
 
 # Track the sun
 sun:
+
+# Text to speech
+#tts:
+#  - platform: google
+
+# Cloud
+#cloud:
+
+# AAC. Philips Hue Bridge
+hue:
+  bridges:
+    - host: 192.168.0.17
+
+# AAC. Dispositivos Apple IOS
+ios:
+
+notify:
+  - name: IOS
+    platform: group
+    services:
+      - service: ios_aac_ios
+      - service: ios_mfc_ios
+  - platform: telegram
+    name: Telegram
+    chat_id: 521008833
+
+# AAC. Notifications via Telegram Bot
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_apikey
+    allowed_chat_ids: 521008833
+
+# AAC. GENERIC IP CAMERA
+camera:
+  - platform: generic
+    still_image_url: https://api.sat24.com/mostrecent/SP/visual5hdcomplete%20width=500%20height=304
+    name: Weather Satelite
+  - platform: generic
+    still_image_url: http://192.168.0.12:8080/snapshot.cgi
+    name: IPcam12 Estudio
+    username: admin
+    password: !secret IPcam12
+  - platform: generic
+    still_image_url: http://192.168.0.11/snapshot/image0.jpg
+    name: IPcam11 Cocina
+    username: admin
+    password: !secret IPcam11
+
+apple_tv:
+  - host: 192.168.0.19
+    login_id: 00000000-5540-7268-ea1c-2a4e4d154343
+    name: Apple TV
+    credentials: 906CB00CF5F3A299:84CB3B3A11823C334BD48BAB463C0B625392E4BEF4F2817F19361BE285C0BEB1
+
+# AAC. MQTT - BROKER: CLOUDMQTT
+mqtt:
+  broker: m23.cloudmqtt.com
+  port: 11024
+  client_id: hass_alvarea
+  keepalive: 60
+  username: HASS
+  password: !secret cloudmqtt
+
+# AAC. NMAP, OWNTRACKS
+device_tracker:
+  - platform: geofency
+  - platform: owntracks
+    mqtt_topic: "owntracks/#"
+  - platform: nmap_tracker
+    hosts:
+      - 192.168.0.10
+      - 192.168.0.50-99
+    home_interval: 10
+    consider_home: 0:10:00
+    exclude:
+     - 192.168.0.23
+
+# AAC. Interruptores control presencia Family
+input_boolean:
+  home_mfc:
+    name: Malen
+    initial: on
+    icon: mdi:cellphone-iphone
+  home_aac:
+    name: Agustin
+    initial: on
+    icon: mdi:cellphone-iphone
+  home_paf:
+    name: Paloma
+    initial: on
+    icon: mdi:cellphone-iphone
+  home_aaf:
+    name: Agu
+    initial: on
+    icon: mdi:cellphone-iphone
+# AAC. Interruptores control alarma y notificaciones
+  home_armed:
+    name: Alarma Armado
+    initial: off
+    icon: mdi:security-home
+  home_notify:
+    name: Notificaciones Alarma
+    initial: off
+    icon: mdi:bell-ring
+
+input_select:
+  home_alarm_mode:
+    name: Modo Alarma
+    options:
+     - Total
+     - Parcial
+     - Test Mode
+    initial: Total
+    icon: mdi:home-account
+
+# AAC. Mediaplayer FireTV
+media_player:
+  - platform: firetv
+    name: FireTV Cocina
 
 # AAC. Sensores de Tiempo, sol, Luna,
 sensor:
@@ -118,94 +241,6 @@ sensor:
         arg: /
       - type: swap_use_percent
       - type: last_boot
-
-# Text to speech
-#tts:
-#  - platform: google
-
-# Cloud
-#cloud:
-
-# AAC. Philips Hue Bridge
-hue:
-  bridges:
-    - host: 192.168.0.17
-
-# AAC. Dispositivos Apple IOS
-ios:
-
-# AAC. GENERIC IP CAMERA
-camera:
-  - platform: generic
-    still_image_url: https://api.sat24.com/mostrecent/SP/visual5hdcomplete%20width=500%20height=304
-    name: Weather Satelite
-  - platform: generic
-    still_image_url: http://192.168.0.12:8080/snapshot.cgi
-    name: IPcam12 Estudio
-    username: admin
-    password: !secret IPcam12
-  - platform: generic
-    still_image_url: http://192.168.0.11/snapshot/image0.jpg
-    name: IPcam11 Cocina
-    username: admin
-    password: !secret IPcam11
-
-apple_tv:
-  - host: 192.168.0.19
-    login_id: 00000000-5540-7268-ea1c-2a4e4d154343
-    name: Apple TV
-    credentials: 906CB00CF5F3A299:84CB3B3A11823C334BD48BAB463C0B625392E4BEF4F2817F19361BE285C0BEB1
-
-# AAC. MQTT - BROKER: CLOUDMQTT
-mqtt:
-  broker: m23.cloudmqtt.com
-  port: 11024
-  client_id: hass_alvarea
-  keepalive: 60
-  username: HASS
-  password: !secret cloudmqtt
-
-# AAC. NMAP, OWNTRACKS
-device_tracker:
-  - platform: geofency
-  - platform: owntracks
-    mqtt_topic: "owntracks/#"
-  - platform: nmap_tracker
-    hosts:
-      - 192.168.0.10
-      - 192.168.0.50-99
-    home_interval: 10
-    consider_home: 180
-    exclude:
-     - 192.168.0.23
-
-# AAC. Interruptores control presencia Family
-input_boolean:
-  mfchome:
-    name: MFC Home
-    initial: on
-    icon: mdi:cellphone-iphone
-    #picture: /local/MFC_2017_0.jpeg
-  aachome:
-    name: AAC Home
-    initial: on
-    icon: mdi:cellphone-iphone
-    #picture: /local/AAC_2017_0.jpg
-  pafhome:
-    name: PAF Home
-    initial: on
-    icon: mdi:cellphone-iphone
-    #picture: /local/PAF_2017_0.png
-  aafhome:
-    name: AAF Home
-    initial: on
-    icon: mdi:cellphone-iphone
-    #picture: /local/AAF_2017_0.png
-
-# AAC. Mediaplayer FireTV
-media_player:
-  - platform: firetv
-    name: FireTV Cocina
 
 # AAC. PROSEGUR
 #alarm_control_panel:

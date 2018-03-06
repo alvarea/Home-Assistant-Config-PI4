@@ -1,58 +1,69 @@
 default_view:
   view: yes
   icon: mdi:home
+  name: Home View
   entities:
     - group.tiempo_view
+    - group.camaras_view
     - group.luces_view
-    - group.status_view
     - group.cocina_view
     - group.salon_view
     - group.estudio_view
-    - group.family_home
-    - group.main_grp
+    - group.tracking_view
+    - group.system_view
+    - group.alarm_grp
+    - group.family_home_grp
+    - group.family_aac_grp
+    - group.family_mfc_grp
+    - group.family_child_grp
 
-main_grp:
-  name: System Status
+alarm_grp:
+  name: Alarma
   entities:
-    - sensor.last_boot
-    - sensor.uptime
-    - sensor.time
-    - sensor.ssl_certificate_expiry
-    - sun.sun
+    - input_boolean.home_armed
+    #- input_boolean.home_notify
+    - input_select.home_alarm_mode
 
-family_home:
+family_home_grp:
   name: Family @ Home?
   entities:
-    - input_boolean.mfchome
-    - input_boolean.aachome
-    - input_boolean.pafhome
-    - input_boolean.aafhome
+    - input_boolean.home_mfc
+    - input_boolean.home_aac
+    - input_boolean.home_paf
+    - input_boolean.home_aaf
 
-cocina_view:
-  name: Cocina
-  view: yes
+family_aac_grp:
+  name: Agustin
   entities:
-    - group.luces_entrada_grp
+    - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
+    - sensor.iphoneaac_battery_level_3
+    - sensor.iphoneaac_battery_state_2
+
+family_mfc_grp:
+  name: Malen
+  entities:
+    - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MF
+    - sensor.iphonemalen_battery_level_2
+    - sensor.iphonemalen_battery_state
+
+family_child_grp:
+  name: Niños
+  entities:
+    - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+    - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
+
+camaras_view:
+  view: yes
+  icon: mdi:cctv
+  name: Cámaras
+  entities:
     - camera.ipcam11_cocina
-    - media_player.firetv_cocina
-
-salon_view:
-  name: Salón
-  view: yes
-  entities:
-    - group.luces_salon_grp
-    - media_player.apple_tv
-
-estudio_view:
-  name: Estudio
-  view: yes
-  entities:
-    - group.luces_estudio_grp
     - camera.ipcam12_estudio
 
 tiempo_view:
   view: yes
   icon: mdi:weather-partlycloudy
+  name: El Tiempo
   entities:
     - camera.weather_satelite
     - group.tiempo_hoy_grp
@@ -82,6 +93,7 @@ tiempo_man_grp:
 luces_view:
   icon: mdi:lightbulb-on
   view: yes
+  name: Luces
   entities:
     - group.luces_entrada_grp
     - group.luces_salon_grp
@@ -107,31 +119,67 @@ luces_estudio_grp:
   entities:
     - light.hue_estudio
 
-status_view:
+cocina_view:
+  view: yes
+  icon: mdi:food
+  name: Cocina
+  entities:
+    - group.luces_entrada_grp
+    - camera.ipcam11_cocina
+    - media_player.firetv_cocina
+
+salon_view:
+  view: yes
+  icon: mdi:sofa
+  name: Salón
+  entities:
+    - group.luces_salon_grp
+    - remote.apple_tv
+    - media_player.apple_tv
+
+estudio_view:
   view: yes
   icon: mdi:laptop-mac
+  name: Estudio
   entities:
-    - group.family_track_grp
-    - group.nmap_track_grp
-    - group.pi3_grp
+    - group.luces_estudio_grp
+    - camera.ipcam12_estudio
 
-family_track_grp:
-  name: Family Tracking
+tracking_view:
+  view: yes
+  icon: mdi:map-marker
+  name: Tracking
+  entities:
+    - group.track_aac_grp
+    - group.track_mfc_grp
+    - group.track_child_grp
+    - group.track_nmap_grp
+
+track_aac_grp:
+  name: Agustín Tracking
   entities:
     - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
     - device_tracker.aac_iphone_owntrack
     - device_tracker.aac_ios
     - device_tracker.aac_iphone_nmap
+
+track_mfc_grp:
+  name: Malen Tracking
+  entities:
     - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
     - device_tracker.mfc_iphone_owntrack_mfc
     - device_tracker.mfc_ios
     - device_tracker.mfc_iphone_nmap
+
+track_child_grp:
+  name: Niños Tracking
+  entities:
     - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
     - device_tracker.paf_iphone_nmap
     - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
     - device_tracker.aaf_iphone_nmap
 
-nmap_track_grp:
+track_nmap_grp:
   name: NMAP Device Tracking
   view: no
   entities:
@@ -140,7 +188,24 @@ nmap_track_grp:
     - device_tracker.ipad_nmap
     - device_tracker.ipad_mini_nmap
 
-pi3_grp:
+system_view:
+  view: yes
+  icon: mdi:server
+  name: System Status
+  entities:
+    - group.hassbian_grp
+    - group.pi3status_grp
+
+hassbian_grp:
+  name: System Status
+  entities:
+    - sensor.last_boot
+    - sensor.uptime
+    - sensor.time
+    - sensor.ssl_certificate_expiry
+    - sun.sun
+
+pi3status_grp:
   name: PI3 System Status
   entities:
     - sensor.load_15m

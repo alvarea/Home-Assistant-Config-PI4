@@ -2,7 +2,7 @@
 # AGUSTIN: Control Presencia => Booleean input_boolean.acchome
 #
 - id: update_tracker_to_not_home_aac
-  alias: 'AAC to Not Home'
+  alias: 'Home 2 Away AAC'
   initial_state: True
   trigger:
     - platform: state
@@ -11,20 +11,38 @@
         - device_tracker.aac_iphone_owntrack
         - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
       to: 'not_home'
-    - platform: state
-      entity_id: device_tracker.aac_iphone_nmap
-      to: 'not_home'
-      for: '00:07:00'
   condition:
     condition: state
-    entity_id: input_boolean.aachome
+    entity_id: input_boolean.home_aac
     state: 'on'
   action:
     service: homeassistant.turn_off
-    entity_id: input_boolean.aachome
+    entity_id: input_boolean.home_aac
+
+- id: update_nmap_to_not_home_aac
+  alias: 'Home 2 Away AAC NMAP'
+  initial_state: True
+  trigger:
+    - platform: state
+      entity_id: device_tracker.aac_iphone_nmap
+      to: 'not_home'
+      for: '00:15:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.home_aac
+        state: 'on'
+      - condition: time
+        after: '08:00:00'
+      - condition: time
+        before: '01:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: input_boolean.home_aac
 
 - id: update_tracker_to_home_aac
-  alias: 'AAC to Home'
+  alias: 'Away to Home AAC'
   initial_state: True
   trigger:
     - platform: state
@@ -36,17 +54,17 @@
       to: 'home'
   condition:
     condition: state
-    entity_id: input_boolean.aachome
+    entity_id: input_boolean.home_aac
     state: 'off'
   action:
     service: homeassistant.turn_on
-    entity_id: input_boolean.aachome
+    entity_id: input_boolean.home_aac
 
 #
-# MALEN: Control Presencia =>  input_boolean.mfchome
+# MALEN: Control Presencia =>  input_boolean.home_mfc
 #
 - id: update_tracker_to_not_home_mfc
-  alias: 'MFC to Not Home'
+  alias: 'Home 2 Away MFC'
   initial_state: True
   trigger:
     - platform: state
@@ -55,20 +73,38 @@
         - device_tracker.mfc_iphone_owntrack
         - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 # MFC
       to: 'not_home'
-    - platform: state
-      entity_id: device_tracker.mfc_iphone_nmap
-      to: 'not_home'
-      for: '00:07:00'
   condition:
     condition: state
-    entity_id: input_boolean.mfchome
+    entity_id: input_boolean.home_mfc
     state: 'on'
   action:
     service: homeassistant.turn_off
-    entity_id: input_boolean.mfchome
+    entity_id: input_boolean.home_mfc
+
+- id: update_nmap_to_not_home_mfc
+  alias: 'Home 2 Away MFC NMAP'
+  initial_state: True
+  trigger:
+    - platform: state
+      entity_id: device_tracker.mfc_iphone_nmap
+      to: 'not_home'
+      for: '00:15:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.home_mfc
+        state: 'on'
+      - condition: time
+        after: '08:00:00'
+      - condition: time
+        before: '01:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: input_boolean.home_mfc
 
 - id: update_tracker_to_home_mfc
-  alias: 'MFC to Home'
+  alias: 'Away to Home MFC'
   initial_state: True
   trigger:
     - platform: state
@@ -80,74 +116,109 @@
       to: 'home'
   condition:
     condition: state
-    entity_id: input_boolean.mfchome
+    entity_id: input_boolean.home_mfc
     state: 'off'
   action:
     service: homeassistant.turn_on
-    entity_id: input_boolean.mfchome
+    entity_id: input_boolean.home_mfc
 #
-# PALOMA: Control Presencia => input_boolean.pafhome
+# PALOMA: Control Presencia => input_boolean.home_paf
 #
 - id: update_tracker_to_not_home_paf
-  alias: 'PAF to Not Home'
+  alias: 'Home 2 Away PAF'
   initial_state: True
   trigger:
-    - platform: state
-      entity_id: device_tracker.paf_iphone_nmap
-      to: 'not_home'
-      for: '00:07:00'
     - platform: state
       entity_id: device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
       to: 'not_home'
   condition:
     condition: state
-    entity_id: input_boolean.pafhome
+    entity_id: input_boolean.home_paf
     state: 'on'
   action:
     service: homeassistant.turn_off
-    entity_id: input_boolean.pafhome
+    entity_id: input_boolean.home_paf
+
+- id: update_nmap_to_not_home_paf
+  alias: 'Home 2 Away PAF NMAP'
+  initial_state: True
+  trigger:
+    - platform: state
+      entity_id: device_tracker.paf_iphone_nmap
+      to: 'not_home'
+      for: '00:15:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.home_paf
+        state: 'on'
+      - condition: time
+        after: '08:00:00'
+      - condition: time
+        before: '01:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: input_boolean.home_paf
 
 - id: update_tracker_to_home_paf
-  alias: 'PAF to Home'
+  alias: 'Away to Home PAF'
   initial_state: True
   trigger:
     - platform: state
       entity_id:
         - device_tracker.paf_iphone_nmap
         - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
-        #- device_tracker.paf_iphone_owntrack
       to: 'home'
   condition:
     condition: state
-    entity_id: input_boolean.pafhome
+    entity_id: input_boolean.home_paf
     state: 'off'
   action:
     service: homeassistant.turn_on
-    entity_id: input_boolean.pafhome
+    entity_id: input_boolean.home_paf
 #
-# AGU: Control Presencia => input_boolean.aafhome
+# AGU: Control Presencia => input_boolean.agu
 #
 - id: update_tracker_to_not_home_aaf
-  alias: 'AAF to Not Home'
+  alias: 'Home 2 Away AAF'
   initial_state: True
   trigger:
-    - platform: state
-      entity_id: device_tracker.aaf_iphone_nmap
-      to: 'not_home'
-      for: '00:10:00'
     - platform: state
       entity_id: device_tracker.bef743fa74f2464ba458612ad3e1c195
       to: 'not_home'
   condition:
     condition: state
-    entity_id: input_boolean.aafhome
+    entity_id: input_boolean.home_aaf
     state: 'on'
   action:
     service: homeassistant.turn_off
-    entity_id: input_boolean.aafhome
+    entity_id: input_boolean.home_aaf
+
+- id: update_nmap_to_not_home_aaf
+  alias: 'Home 2 Away AAF NMAP'
+  initial_state: True
+  trigger:
+    - platform: state
+      entity_id: device_tracker.aaf_iphone_nmap
+      to: 'not_home'
+      for: '00:15:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.home_aaf
+        state: 'on'
+      - condition: time
+        after: '08:00:00'
+      - condition: time
+        before: '01:00:00'
+  action:
+    service: homeassistant.turn_off
+    entity_id: input_boolean.home_aaf
 
 - id: update_tracker_to_home_aaf
-  alias: 'AAF to Home'
+  alias: 'Away to Home AAF'
   initial_state: True
   trigger:
     - platform: state
@@ -157,28 +228,28 @@
       to: 'home'
   condition:
     condition: state
-    entity_id: input_boolean.aafhome
+    entity_id: input_boolean.home_aaf
     state: 'off'
   action:
     service: homeassistant.turn_on
-    entity_id: input_boolean.aafhome
+    entity_id: input_boolean.home_aaf
 
 #
 # LUCES: Apagado/Encendido general según groups.family
 #
 - id: switch_off_lights_family_not_home
-  alias: 'Apaga Luces Si Family Out'
+  alias: 'Lights Off If Family Away'
   trigger:
     platform: state
     entity_id: group.family_home
     from: 'on'
     to: 'off'
   action:
-    service: light.turn_off
-    entity_id: group.all_lights
+    - service: light.turn_off
+      entity_id: group.all_lights
 
 - id: switch_on_entrada_family_get_home
-  alias: 'Endiende Piloto Si Family Home'
+  alias: 'Lights Piloto On If Family Home'
   trigger:
     - platform: state
       entity_id: group.family_home
@@ -194,3 +265,25 @@
   action:
     service: light.turn_on
     entity_id: light.hue_cocina
+
+#
+# ALARMA: Armado y Control de la Alarma
+#
+- id: alarm_test_notification
+  alias: 'Alarm Test Notification'
+  trigger:
+    platform: state
+    entity_id: input_boolean.home_armed
+    from: 'off'
+    to: 'on'
+  action:
+    #- service: notify.IOS
+    - service: notify.ios_aac_ios
+      data:
+        message: "ALARM NOTIFICATION"
+        data:
+          push:
+            sound: "US-EN-Morgan-Freeman-Motion-Detected.wav"
+          #attachment:
+          #  url: http://192.168.0.12:8080/snapshot.cgi
+          #  hide-thumbnail: false
