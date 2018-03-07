@@ -1,5 +1,5 @@
-test_telegram:
-  alias: 'test_telegram'
+telegram_alarm_send_photo:
+  alias: 'Telegram Alarm Send Foto'
   sequence:
     - service: notify.telegram
       data:
@@ -8,3 +8,22 @@ test_telegram:
         data:
           photo:
             - url: http://192.168.0.11/snapshot/image0.jpg
+
+telegram_family_away:
+  alias: 'Telegram Family Away'
+  sequence:
+    - service: notify.telegram
+      data:
+        title: 'Family Away from Home'
+        message: 'No hay nadie en casa'
+
+notify_family:
+  alias: 'Notificaciones Family'
+  sequence:
+    - condition: state
+      entity_id: input_select.home_notify
+      state: 'off'
+    - service: notify.telegram
+      data_template:
+          title: "{{ title }}"
+          message: "{{ message }}"

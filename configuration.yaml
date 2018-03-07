@@ -57,17 +57,17 @@ logbook:
 map:
 
 zone:
-  - name: heineken
+  - name: Heineken
     latitude: 37.3876837
     longitude: -5.9645631
     icon: mdi:beer
     radius: 50
-  - name: faeca
+  - name: Faeca
     latitude: 37.393004
     longitude: -5.957486
     icon: mdi:tree
     radius: 50
-  - name: piso_paloma
+  - name: Casa Abuela
     latitude: 37.3748
     longitude: -6.0530
     icon: mdi:home-account
@@ -98,7 +98,7 @@ notify:
       - service: ios_mfc_ios
   - platform: telegram
     name: Telegram
-    chat_id: 521008833
+    chat_id: !secret telegram_chat_aac
 
 # AAC. Notifications via Telegram Bot
 telegram_bot:
@@ -174,20 +174,17 @@ input_boolean:
     name: Alarma Armado
     initial: off
     icon: mdi:security-home
-  home_notify:
-    name: Notificaciones Alarma
-    initial: off
-    icon: mdi:bell-ring
 
+# AAC. Modo Notificaciones
 input_select:
-  home_alarm_mode:
-    name: Modo Alarma
+  home_notify:
+    name: Notificaciones
     options:
-     - Total
-     - Parcial
-     - Test Mode
-    initial: Total
-    icon: mdi:home-account
+     - Telegram
+     - IOS
+     - Off
+    initial: Telegram
+    icon: mdi:bell-ring
 
 # AAC. Mediaplayer FireTV
 media_player:

@@ -241,18 +241,27 @@
   alias: 'Lights Off If Family Away'
   trigger:
     platform: state
-    entity_id: group.family_home
+    entity_id: group.family_home_grp
     from: 'on'
     to: 'off'
   action:
     - service: light.turn_off
-      entity_id: group.all_lights
+      entity_id:
+        - group.luces_entrada_grp
+        - group.luces_salon_grp
+        - group.luces_estudio_grp
+    - service: script.turn_on
+      entity_id: script.notify_family
+      data:
+        variables:
+          title: 'No hay nadie en Casa.'
+          message: '==> Luces Apagadas'
 
 - id: switch_on_entrada_family_get_home
-  alias: 'Lights Piloto On If Family Home'
+  alias: 'Lights Piloto If Family Home'
   trigger:
     - platform: state
-      entity_id: group.family_home
+      entity_id: group.family_home_grp
       from: 'off'
       to: 'on'
   condition:
@@ -261,10 +270,14 @@
       - condition: sun
         after: sunset
       - condition: time
-        before: '00:00:00'
+        before: '00:30:00'
   action:
-    service: light.turn_on
-    entity_id: light.hue_cocina
+    - service: light.turn_on
+      entity_id: light.hue_cocina
+    - service: notify.telegram
+      data:
+        title: 'Family at Home'
+        message: 'Se enciende Luz Piloto'
 
 #
 # ALARMA: Armado y Control de la Alarma
@@ -277,7 +290,8 @@
     from: 'off'
     to: 'on'
   action:
-    #- service: notify.IOS
+    - service: script.turn_on
+      entity_id: script.telegram_alarm_send_photo
     - service: notify.ios_aac_ios
       data:
         message: "ALARM NOTIFICATION"
