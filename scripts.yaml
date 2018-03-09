@@ -1,10 +1,11 @@
 telegram_alarm_send_photo:
   alias: 'Telegram Alarm Send Foto'
   sequence:
+    - condition: state
+      entity_id: input_select.home_notify
+      state: 'Telegram'
     - service: notify.telegram
       data:
-        title: 'ALARM TEST MESSAGE'
-        message: 'This is a test!'
         data:
           photo:
             - url: http://192.168.0.11/snapshot/image0.jpg
@@ -12,11 +13,10 @@ telegram_alarm_send_photo:
 telegram_family:
   alias: 'Telegram Family'
   sequence:
-    #condition:
-    #  condition: state
-    #  entity_id: input_select.home_notify
-    #  state: 'Telegram'
-    - service: notify.telegram
-      data_template:
-        title: "{{ title }}"
-        message: "{{ message }}"
+  - condition: state
+    entity_id: input_select.home_notify
+    state: 'Telegram'
+  - service: notify.telegram
+    data_template:
+      title: "{{ title }}"
+      message: "{{ message }}"

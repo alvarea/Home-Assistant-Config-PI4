@@ -292,6 +292,12 @@
     to: 'on'
   action:
     - service: script.turn_on
+      entity_id: script.telegram_family
+      data:
+        variables:
+          title: 'ALARMA EN CASA'
+          message: '==> Zona1: Cocina'
+    - service: script.turn_on
       entity_id: script.telegram_alarm_send_photo
     #- service: notify.ios_aac_ios
     #  data:
