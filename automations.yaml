@@ -26,7 +26,7 @@
     - platform: state
       entity_id: device_tracker.aac_iphone_nmap
       to: 'not_home'
-      for: '00:15:00'
+      for: '00:10:00'
   condition:
     condition: and
     conditions:
@@ -36,7 +36,7 @@
       - condition: time
         after: '08:00:00'
       - condition: time
-        before: '01:00:00'
+        before: '23:59:00'
   action:
     service: homeassistant.turn_off
     entity_id: input_boolean.home_aac
@@ -88,7 +88,7 @@
     - platform: state
       entity_id: device_tracker.mfc_iphone_nmap
       to: 'not_home'
-      for: '00:15:00'
+      for: '00:10:00'
   condition:
     condition: and
     conditions:
@@ -98,7 +98,7 @@
       - condition: time
         after: '08:00:00'
       - condition: time
-        before: '01:00:00'
+        before: '23:59:00'
   action:
     service: homeassistant.turn_off
     entity_id: input_boolean.home_mfc
@@ -146,7 +146,7 @@
     - platform: state
       entity_id: device_tracker.paf_iphone_nmap
       to: 'not_home'
-      for: '00:15:00'
+      for: '00:10:00'
   condition:
     condition: and
     conditions:
@@ -156,7 +156,7 @@
       - condition: time
         after: '08:00:00'
       - condition: time
-        before: '01:00:00'
+        before: '23:59:00'
   action:
     service: homeassistant.turn_off
     entity_id: input_boolean.home_paf
@@ -202,7 +202,7 @@
     - platform: state
       entity_id: device_tracker.aaf_iphone_nmap
       to: 'not_home'
-      for: '00:15:00'
+      for: '00:10:00'
   condition:
     condition: and
     conditions:
@@ -212,7 +212,7 @@
       - condition: time
         after: '08:00:00'
       - condition: time
-        before: '01:00:00'
+        before: '23:59:00'
   action:
     service: homeassistant.turn_off
     entity_id: input_boolean.home_aaf
@@ -231,8 +231,8 @@
     entity_id: input_boolean.home_aaf
     state: 'off'
   action:
-    service: homeassistant.turn_on
-    entity_id: input_boolean.home_aaf
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.home_aaf
 
 #
 # LUCES: Apagado/Encendido general según groups.family
@@ -251,11 +251,11 @@
         - group.luces_salon_grp
         - group.luces_estudio_grp
     - service: script.turn_on
-      entity_id: script.notify_family
+      entity_id: script.telegram_family
       data:
         variables:
-          title: 'No hay nadie en Casa.'
-          message: '==> Luces Apagadas'
+          title: 'NADIE EN CASA'
+          message: '==> Luces OFF'
 
 - id: switch_on_entrada_family_get_home
   alias: 'Lights Piloto If Family Home'
@@ -270,15 +270,16 @@
       - condition: sun
         after: sunset
       - condition: time
-        before: '00:30:00'
+        before: '23:59:00'
   action:
     - service: light.turn_on
       entity_id: light.hue_cocina
-    - service: notify.telegram
+    - service: script.turn_on
+      entity_id: script.telegram_family
       data:
-        title: 'Family at Home'
-        message: 'Se enciende Luz Piloto'
-
+        variables:
+          title: 'ALGUIEN EN CASA'
+          message: '==> Luz Piloto ON'
 #
 # ALARMA: Armado y Control de la Alarma
 #
@@ -292,12 +293,12 @@
   action:
     - service: script.turn_on
       entity_id: script.telegram_alarm_send_photo
-    - service: notify.ios_aac_ios
-      data:
-        message: "ALARM NOTIFICATION"
-        data:
-          push:
-            sound: "US-EN-Morgan-Freeman-Motion-Detected.wav"
+    #- service: notify.ios_aac_ios
+    #  data:
+    #    message: "ALARM NOTIFICATION"
+    #    data:
+    #      push:
+    #        sound: "US-EN-Morgan-Freeman-Motion-Detected.wav"
           #attachment:
           #  url: http://192.168.0.12:8080/snapshot.cgi
           #  hide-thumbnail: false

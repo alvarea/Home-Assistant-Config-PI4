@@ -96,8 +96,8 @@ notify:
     services:
       - service: ios_aac_ios
       - service: ios_mfc_ios
-  - platform: telegram
-    name: Telegram
+  - name: telegram
+    platform: telegram
     chat_id: !secret telegram_chat_aac
 
 # AAC. Notifications via Telegram Bot

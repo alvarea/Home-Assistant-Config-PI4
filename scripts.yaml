@@ -3,27 +3,20 @@ telegram_alarm_send_photo:
   sequence:
     - service: notify.telegram
       data:
-        title: ALARM TEST MESSAGE
+        title: 'ALARM TEST MESSAGE'
         message: 'This is a test!'
         data:
           photo:
             - url: http://192.168.0.11/snapshot/image0.jpg
 
-telegram_family_away:
-  alias: 'Telegram Family Away'
+telegram_family:
+  alias: 'Telegram Family'
   sequence:
-    - service: notify.telegram
-      data:
-        title: 'Family Away from Home'
-        message: 'No hay nadie en casa'
-
-notify_family:
-  alias: 'Notificaciones Family'
-  sequence:
-    - condition: state
-      entity_id: input_select.home_notify
-      state: 'off'
+    #condition:
+    #  condition: state
+    #  entity_id: input_select.home_notify
+    #  state: 'Telegram'
     - service: notify.telegram
       data_template:
-          title: "{{ title }}"
-          message: "{{ message }}"
+        title: "{{ title }}"
+        message: "{{ message }}"
