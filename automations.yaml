@@ -235,30 +235,30 @@
       entity_id: input_boolean.home_aaf
 
 #
-# LUCES: Apagado/Encendido general según groups.family
+# FAMILY AT HOME: Reglas de Home / Away
 #
-- id: switch_off_lights_family_not_home
-  alias: 'Lights Off If Family Away'
+- id: family_home_to_away
+  alias: 'Family Home to Away'
   trigger:
     platform: state
     entity_id: group.family_home_grp
     from: 'on'
     to: 'off'
   action:
+    - service: script.turn_on
+      entity_id: script.mensaje_family
+      data:
+        variables:
+          title: 'FAMILY@HOME?'
+          message: '==> Nadie en Casa'
     - service: light.turn_off
       entity_id:
         - group.luces_entrada_grp
         - group.luces_salon_grp
         - group.luces_estudio_grp
-    - service: script.turn_on
-      entity_id: script.telegram_family
-      data:
-        variables:
-          title: 'NADIE EN CASA'
-          message: '==> Luces OFF'
 
-- id: switch_on_entrada_family_get_home
-  alias: 'Lights Piloto If Family Home'
+- id: family_home_to_away
+  alias: 'Family Home at Home'
   trigger:
     - platform: state
       entity_id: group.family_home_grp
@@ -272,14 +272,14 @@
       - condition: time
         before: '23:59:00'
   action:
-    - service: light.turn_on
-      entity_id: light.hue_cocina
     - service: script.turn_on
-      entity_id: script.telegram_family
+      entity_id: script.mensaje_family
       data:
         variables:
-          title: 'ALGUIEN EN CASA'
-          message: '==> Luz Piloto ON'
+          title: 'FAMILY@HOME?'
+          message: '==> Alguien en Casa'
+    - service: light.turn_on
+      entity_id: light.hue_cocina
 #
 # ALARMA: Armado y Control de la Alarma
 #
@@ -292,19 +292,10 @@
     to: 'on'
   action:
     - service: script.turn_on
-      entity_id: script.telegram_family
+      entity_id: script.mensaje_family
       data:
         variables:
-          title: 'ALARMA EN CASA'
-          message: '==> Zona1: Cocina'
-    - service: script.turn_on
-      entity_id: script.telegram_alarm_send_photo
-    #- service: notify.ios_aac_ios
-    #  data:
-    #    message: "ALARM NOTIFICATION"
-    #    data:
-    #      push:
-    #        sound: "US-EN-Morgan-Freeman-Motion-Detected.wav"
-          #attachment:
-          #  url: http://192.168.0.12:8080/snapshot.cgi
-          #  hide-thumbnail: false
+          title: 'ALARMA'
+          message: '==> TEST Mensaje Alarma'
+    #- service: script.turn_on
+    #  entity_id: script.telegram_alarm_send_photo

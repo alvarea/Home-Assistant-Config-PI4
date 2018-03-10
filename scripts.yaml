@@ -1,3 +1,62 @@
+mensaje_family:
+  alias: 'Mensaje Family'
+  sequence:
+  # IF HOME_NOTIFY = OFF CANCEL
+  - condition: template
+    value_template: "{% if not is_state('input_select.home_notify', 'Off') %}true{% endif %}"
+
+  # Actualiza el valor de input_text.mensaje_tit con el título recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_tit
+    data_template:
+      value: "{{ title }}"
+
+  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_msg
+    data_template:
+      value: "{{ message }}"
+
+  # Llamada a Script Notificación Telegram
+  - service: script.turn_on
+    entity_id: script.mensaje_telegram
+  # Llamada a Script Notificación IOS
+  - service: script.turn_on
+    entity_id: script.mensaje_ios
+
+mensaje_telegram:
+  alias: 'Mensaje Telegram'
+  # The Telegram notify platform accepts the standard title, message, data
+  sequence:
+  # IF HOME_NOTIFY = TELEGRAM THEN Notify.Telegram
+  - condition: state
+    entity_id: input_select.home_notify
+    state: 'Telegram'
+  - service: notify.telegram
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+
+mensaje_ios:
+  alias: 'Mensaje IOS'
+  # The iOS notify platform accepts the standard title, message and target
+  sequence:
+  # IF HOME_IOS = IOS THEN Notify.IOS
+  - condition: state
+    entity_id: input_select.home_notify
+    state: 'IOS'
+  - service: notify.ios_aac_ios
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+      #data:
+        #push:
+          #sound: "US-EN-Morgan-Freeman-Motion-Detected.wav"
+
 telegram_alarm_send_photo:
   alias: 'Telegram Alarm Send Foto'
   sequence:
@@ -9,14 +68,3 @@ telegram_alarm_send_photo:
         data:
           photo:
             - url: http://192.168.0.11/snapshot/image0.jpg
-
-telegram_family:
-  alias: 'Telegram Family'
-  sequence:
-  - condition: state
-    entity_id: input_select.home_notify
-    state: 'Telegram'
-  - service: notify.telegram
-    data_template:
-      title: "{{ title }}"
-      message: "{{ message }}"

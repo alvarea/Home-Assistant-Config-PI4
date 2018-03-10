@@ -22,7 +22,8 @@ alarm_grp:
   entities:
     - input_boolean.home_armed
     - input_select.home_notify
-    #- input_select.home_alarm_mode
+    #- input_text.mensaje_tit
+    #- input_text.mensaje_msg
 
 family_home_grp:
   name: Family @ Home?

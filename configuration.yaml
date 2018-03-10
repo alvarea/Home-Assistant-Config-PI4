@@ -91,13 +91,12 @@ hue:
 ios:
 
 notify:
-  - name: IOS
-    platform: group
+  - platform: group # notification group for IOS
+    name: ios
     services:
       - service: ios_aac_ios
-      - service: ios_mfc_ios
-  - name: telegram
-    platform: telegram
+  - platform: telegram
+    name: telegram
     chat_id: !secret telegram_chat_aac
 
 # AAC. Notifications via Telegram Bot
@@ -180,11 +179,20 @@ input_select:
   home_notify:
     name: Notificaciones
     options:
-     - Telegram
-     - IOS
-     - Off
+     - 'Off'
+     - 'Telegram'
+     - 'IOS'
     initial: Telegram
     icon: mdi:bell-ring
+
+# AAC. Mensaje para Notificaciones
+input_text:
+  mensaje_tit:
+    name: Titulo Notificaciones
+    initial: <OK>
+  mensaje_msg:
+    name: Cuerpo Notificaciones
+    initial: <OK>
 
 # AAC. Mediaplayer FireTV
 media_player:
