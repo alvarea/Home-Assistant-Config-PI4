@@ -249,13 +249,19 @@
       entity_id: script.mensaje_family
       data:
         variables:
-          title: 'FAMILY@HOME?'
+          title: 'FAMILY at HOME?'
           message: '==> Nadie en Casa'
     - service: light.turn_off
       entity_id:
         - group.luces_entrada_grp
         - group.luces_salon_grp
         - group.luces_estudio_grp
+    - service: script.turn_on
+      entity_id: script.mensaje_family
+      data:
+        variables:
+          title: ' '
+          message: '==> Luces OFF'
 
 - id: family_home_to_away
   alias: 'Family Home at Home'
@@ -276,10 +282,17 @@
       entity_id: script.mensaje_family
       data:
         variables:
-          title: 'FAMILY@HOME?'
-          message: '==> Alguien en Casa'
+          title: 'FAMILY at HOME?'
+          message: '==> Hay alguien en Casa'
     - service: light.turn_on
       entity_id: light.hue_cocina
+    - service: script.turn_on
+      entity_id: script.mensaje_family
+      data:
+        variables:
+          title: ' '
+          message: '==> Luces Piloto ON'
+
 #
 # ALARMA: Armado y Control de la Alarma
 #

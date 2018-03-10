@@ -1,15 +1,15 @@
 default_view:
   view: yes
-  icon: mdi:home
+  icon: mdi:home-assistant
   name: Home View
   entities:
+    - group.tracking_view
     - group.tiempo_view
     - group.camaras_view
     - group.luces_view
     - group.cocina_view
     - group.salon_view
     - group.estudio_view
-    - group.tracking_view
     - group.system_view
     - group.alarm_grp
     - group.family_home_grp
@@ -52,6 +52,49 @@ family_child_grp:
   entities:
     - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
     - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
+
+tracking_view:
+  view: yes
+  icon: mdi:map-marker
+  name: Tracking
+  entities:
+    - group.track_aac_grp
+    - group.track_mfc_grp
+    - group.track_child_grp
+    - group.track_nmap_grp
+
+track_aac_grp:
+  name: Agustín Tracking
+  entities:
+    - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
+    - device_tracker.aac_iphone_owntrack
+    - device_tracker.aac_ios
+    - device_tracker.aac_iphone_nmap
+
+track_mfc_grp:
+  name: Malen Tracking
+  entities:
+    - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
+    - device_tracker.mfc_iphone_owntrack_mfc
+    - device_tracker.mfc_ios
+    - device_tracker.mfc_iphone_nmap
+
+track_child_grp:
+  name: Niños Tracking
+  entities:
+    - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+    - device_tracker.paf_iphone_nmap
+    - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
+    - device_tracker.aaf_iphone_nmap
+
+track_nmap_grp:
+  name: NMAP Device Tracking
+  view: no
+  entities:
+    - device_tracker.prosegur
+    - device_tracker.macbook
+    - device_tracker.ipad_nmap
+    - device_tracker.ipad_mini_nmap
 
 camaras_view:
   view: yes
@@ -145,49 +188,6 @@ estudio_view:
   entities:
     - group.luces_estudio_grp
     - camera.ipcam12_estudio
-
-tracking_view:
-  view: yes
-  icon: mdi:map-marker
-  name: Tracking
-  entities:
-    - group.track_aac_grp
-    - group.track_mfc_grp
-    - group.track_child_grp
-    - group.track_nmap_grp
-
-track_aac_grp:
-  name: Agustín Tracking
-  entities:
-    - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-    - device_tracker.aac_iphone_owntrack
-    - device_tracker.aac_ios
-    - device_tracker.aac_iphone_nmap
-
-track_mfc_grp:
-  name: Malen Tracking
-  entities:
-    - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
-    - device_tracker.mfc_iphone_owntrack_mfc
-    - device_tracker.mfc_ios
-    - device_tracker.mfc_iphone_nmap
-
-track_child_grp:
-  name: Niños Tracking
-  entities:
-    - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
-    - device_tracker.paf_iphone_nmap
-    - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
-    - device_tracker.aaf_iphone_nmap
-
-track_nmap_grp:
-  name: NMAP Device Tracking
-  view: no
-  entities:
-    - device_tracker.prosegur
-    - device_tracker.macbook
-    - device_tracker.ipad_nmap
-    - device_tracker.ipad_mini_nmap
 
 system_view:
   view: yes
