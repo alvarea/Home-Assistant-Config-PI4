@@ -169,8 +169,8 @@ input_boolean:
     initial: on
     icon: mdi:cellphone-iphone
 # AAC. Interruptores control alarma y notificaciones
-  home_armed:
-    name: Alarma Armado
+  alarm_mode:
+    name: Alarma
     initial: off
     icon: mdi:security-home
 
@@ -184,6 +184,16 @@ input_select:
      - 'IOS'
     initial: Telegram
     icon: mdi:bell-ring
+  home_last_change:
+    name: Last Home Tracking
+    options:
+     - 'Agustín'
+     - 'Malen'
+     - 'Agu'
+     - 'Paloma'
+    initial: 'Agustín'
+    icon: mdi:home-account
+
 
 # AAC. Mensaje para Notificaciones
 input_text:
@@ -193,6 +203,7 @@ input_text:
   mensaje_msg:
     name: Cuerpo Notificaciones
     initial: <OK>
+
 
 # AAC. Mediaplayer FireTV
 media_player:

@@ -16,8 +16,12 @@
     entity_id: input_boolean.home_aac
     state: 'on'
   action:
-    service: homeassistant.turn_off
-    entity_id: input_boolean.home_aac
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.home_aac
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Agustín
 
 - id: update_nmap_to_not_home_aac
   alias: 'Home 2 Away AAC NMAP'
@@ -38,8 +42,12 @@
       - condition: time
         before: '23:59:00'
   action:
-    service: homeassistant.turn_off
-    entity_id: input_boolean.home_aac
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.home_aac
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Agustín
 
 - id: update_tracker_to_home_aac
   alias: 'Away to Home AAC'
@@ -57,8 +65,13 @@
     entity_id: input_boolean.home_aac
     state: 'off'
   action:
-    service: homeassistant.turn_on
-    entity_id: input_boolean.home_aac
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.home_aac
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Agustín
+
 
 #
 # MALEN: Control Presencia =>  input_boolean.home_mfc
@@ -78,8 +91,12 @@
     entity_id: input_boolean.home_mfc
     state: 'on'
   action:
-    service: homeassistant.turn_off
-    entity_id: input_boolean.home_mfc
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.home_mfc
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Malen
 
 - id: update_nmap_to_not_home_mfc
   alias: 'Home 2 Away MFC NMAP'
@@ -100,8 +117,12 @@
       - condition: time
         before: '23:59:00'
   action:
-    service: homeassistant.turn_off
-    entity_id: input_boolean.home_mfc
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.home_mfc
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Malen
 
 - id: update_tracker_to_home_mfc
   alias: 'Away to Home MFC'
@@ -119,8 +140,12 @@
     entity_id: input_boolean.home_mfc
     state: 'off'
   action:
-    service: homeassistant.turn_on
-    entity_id: input_boolean.home_mfc
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.home_mfc
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Malen
 #
 # PALOMA: Control Presencia => input_boolean.home_paf
 #
@@ -136,8 +161,12 @@
     entity_id: input_boolean.home_paf
     state: 'on'
   action:
-    service: homeassistant.turn_off
-    entity_id: input_boolean.home_paf
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.home_paf
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Paloma
 
 - id: update_nmap_to_not_home_paf
   alias: 'Home 2 Away PAF NMAP'
@@ -158,8 +187,12 @@
       - condition: time
         before: '23:59:00'
   action:
-    service: homeassistant.turn_off
-    entity_id: input_boolean.home_paf
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.home_paf
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Paloma
 
 - id: update_tracker_to_home_paf
   alias: 'Away to Home PAF'
@@ -175,8 +208,12 @@
     entity_id: input_boolean.home_paf
     state: 'off'
   action:
-    service: homeassistant.turn_on
-    entity_id: input_boolean.home_paf
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.home_paf
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Paloma
 #
 # AGU: Control Presencia => input_boolean.agu
 #
@@ -192,8 +229,12 @@
     entity_id: input_boolean.home_aaf
     state: 'on'
   action:
-    service: homeassistant.turn_off
-    entity_id: input_boolean.home_aaf
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.home_aaf
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Agu
 
 - id: update_nmap_to_not_home_aaf
   alias: 'Home 2 Away AAF NMAP'
@@ -214,8 +255,12 @@
       - condition: time
         before: '23:59:00'
   action:
-    service: homeassistant.turn_off
-    entity_id: input_boolean.home_aaf
+    - service: homeassistant.turn_off
+      entity_id: input_boolean.home_aaf
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Agu
 
 - id: update_tracker_to_home_aaf
   alias: 'Away to Home AAF'
@@ -233,65 +278,56 @@
   action:
     - service: homeassistant.turn_on
       entity_id: input_boolean.home_aaf
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.home_last_change
+        option: Agu
 
 #
-# FAMILY AT HOME: Reglas de Home / Away
+# FAMILY AT HOME: Control Home/Away
 #
-- id: family_home_to_away
-  alias: 'Family Home to Away'
+- id: family_away
+  alias: 'Family Away'
   trigger:
     platform: state
     entity_id: group.family_home_grp
     from: 'on'
     to: 'off'
   action:
+    # Notifica a Familia NADIE en Casa
     - service: script.turn_on
       entity_id: script.mensaje_family
       data:
         variables:
-          title: 'FAMILY at HOME?'
-          message: '==> Nadie en Casa'
-    - service: light.turn_off
-      entity_id:
-        - group.luces_entrada_grp
-        - group.luces_salon_grp
-        - group.luces_estudio_grp
+          title: 'FAMILY at HOME: <NO>'
+          message: >
+            >>> Evento: {{ states('input_select.home_last_change') }}
+          #>>> {{ trigger.event }}
+          #>>> {{ trigger.to_state.state }}
+          #{{ states('trigger.to_state') }}
+    # Script Luces Apagado Total
     - service: script.turn_on
-      entity_id: script.mensaje_family
-      data:
-        variables:
-          title: ' '
-          message: '==> Luces OFF'
+      entity_id: script.luces_off_family_away
 
-- id: family_home_to_away
-  alias: 'Family Home at Home'
+- id: family_at_home
+  alias: 'Family at Home'
   trigger:
     - platform: state
       entity_id: group.family_home_grp
       from: 'off'
       to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: sun
-        after: sunset
-      - condition: time
-        before: '23:59:00'
   action:
+    # Notifica a Familia NADIE en Casa
     - service: script.turn_on
       entity_id: script.mensaje_family
       data:
         variables:
-          title: 'FAMILY at HOME?'
-          message: '==> Hay alguien en Casa'
-    - service: light.turn_on
-      entity_id: light.hue_cocina
+          title: 'FAMILY at HOME: <SI>'
+          message: >
+            >>> Evento: {{ states('input_select.home_last_change') }}
+    # Script encendido Luz piloto si es de noche y antes 00:00
     - service: script.turn_on
-      entity_id: script.mensaje_family
-      data:
-        variables:
-          title: ' '
-          message: '==> Luces Piloto ON'
+      entity_id: script.luces_on_family_home
 
 #
 # ALARMA: Armado y Control de la Alarma
@@ -310,5 +346,7 @@
         variables:
           title: 'ALARMA'
           message: '==> TEST Mensaje Alarma'
+
     #- service: script.turn_on
     #  entity_id: script.telegram_alarm_send_photo
+

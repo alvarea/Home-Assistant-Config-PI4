@@ -20,7 +20,7 @@ default_view:
 alarm_grp:
   name: Alarma
   entities:
-    - input_boolean.home_armed
+    - input_boolean.alarm_mode
     - input_select.home_notify
     #- input_text.mensaje_tit
     #- input_text.mensaje_msg
@@ -32,6 +32,7 @@ family_home_grp:
     - input_boolean.home_aac
     - input_boolean.home_paf
     - input_boolean.home_aaf
+    - input_select.home_last_change
 
 family_aac_grp:
   name: Agustin
