@@ -336,7 +336,7 @@
   alias: 'Alarm Test Notification'
   trigger:
     platform: state
-    entity_id: input_boolean.home_armed
+    entity_id: input_boolean.alarm_mode
     from: 'off'
     to: 'on'
   action:
@@ -344,9 +344,9 @@
       entity_id: script.mensaje_family
       data:
         variables:
-          title: 'ALARMA'
-          message: '==> TEST Mensaje Alarma'
-
-    #- service: script.turn_on
-    #  entity_id: script.telegram_alarm_send_photo
+          title: '[ALARMA]'
+          message: >
+            >>> URGENTE HA: Alarma Detectada
+    - service: script.turn_on
+      entity_id: script.telegram_alarm_send_photo
 
