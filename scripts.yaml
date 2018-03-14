@@ -98,5 +98,8 @@ telegram_alarm_send_photo:
       state: 'Telegram'
     - service: notify.telegram
       data:
-        photo:
-          - url: http://192.168.0.11/snapshot/image0.jpg
+        title: '[ALARMA]'
+        message: Cámara Cocina
+        data:
+          photo:
+            - url: http://192.168.0.11/snapshot/image0.jpg

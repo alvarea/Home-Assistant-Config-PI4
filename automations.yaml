@@ -332,6 +332,23 @@
 #
 # ALARMA: Armado y Control de la Alarma
 #
+- id: alarm_prosegur_device_check
+  alias: 'Prosegur Device Tracking Check'
+  trigger:
+    platform: state
+    entity_id: device_tracker.prosegur
+    from: 'home'
+    to: 'away'
+    for: '05:00:00'
+  action:
+    - service: script.turn_on
+      entity_id: script.mensaje_family
+      data:
+        variables:
+          title: '[ALARMA PROSEGUR]'
+          message: >
+            >>> URGENTE HA: Prosegur No Responde (NMAP)
+
 - id: alarm_test_notification
   alias: 'Alarm Test Notification'
   trigger:
