@@ -258,6 +258,29 @@ sensor:
       - type: swap_use_percent
       - type: last_boot
 
+# AAC. XIAOMI AQARA GATEWAY
+xiaomi_aqara:
+  gateways:
+    - mac: 78:11:DC:B7:88:FA
+      key: AD58F3C5D30D405C
+
+# AAC. ALARM MANUAL CONTROL PANEL
+alarm_control_panel:
+  - platform: manual
+    name: Home Alarm
+    code: 2309
+    # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
+    delay_time: 0
+    # Pending: The time in seconds of the pending time before effecting a state change. Default is 60 seconds.
+    pending_time: 30
+    # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
+    trigger_time: 4
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      pending_time: 0
+      delay_time: 0
+
 # AAC. PROSEGUR
 #alarm_control_panel:
 #  - platform: totalconnect

@@ -349,8 +349,8 @@
           message: >
             >>> URGENTE HA: Prosegur No Responde (NMAP)
 
-- id: alarm_test_notification
-  alias: 'Alarm Test Notification'
+- id: alarm_sirena_on_notification
+  alias: 'Alarm  Notification'
   trigger:
     platform: state
     entity_id: input_boolean.alarm_mode
@@ -363,7 +363,32 @@
         variables:
           title: '[ALARMA]'
           message: >
-            >>> URGENTE HA: Alarma Detectada
+            >>> URGENTE HA: ALARMA ACTIVADA
+    - service: xiaomi_aqara.play_ringtone
+      data:
+        gw_mac: 78:11:DC:B7:88:FA
+        ringtone_id: 1
+        ringtone_vol: 100
+
+- id: alarm_sirena_off_notification
+  alias: 'Alarm Test Notification'
+  trigger:
+    platform: state
+    entity_id: input_boolean.alarm_mode
+    from: 'on'
+    to: 'off'
+  action:
     - service: script.turn_on
-      entity_id: script.telegram_alarm_send_photo
+      entity_id: script.mensaje_family
+      data:
+        variables:
+          title: '[ALARMA]'
+          message: >
+            >>> URGENTE HA: ALARMA DESACTIVADA
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: 78:11:DC:B7:88:FA
+
+    #- service: script.turn_on
+    #entity_id: script.telegram_alarm_send_photo
 
