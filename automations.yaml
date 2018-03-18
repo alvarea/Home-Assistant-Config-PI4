@@ -294,6 +294,14 @@
     from: 'on'
     to: 'off'
   action:
+    # Script Luces Apagado Total
+    - service: script.turn_on
+      entity_id: script.luces_off_family_away
+    # Servicio Alarma Armado Total
+    - service: alarm_control_panel.alarm_arm_away
+      data:
+        entity_id: alarm_control_panel.ha
+        code: !secret alarm_control_code
     # Notifica a Familia NADIE en Casa
     - service: script.turn_on
       entity_id: script.mensaje_family
@@ -301,13 +309,9 @@
         variables:
           title: 'FAMILY at HOME: <NO>'
           message: >
-            >>> Evento: {{ states('input_select.home_last_change') }}
-          #>>> {{ trigger.event }}
-          #>>> {{ trigger.to_state.state }}
-          #{{ states('trigger.to_state') }}
-    # Script Luces Apagado Total
-    - service: script.turn_on
-      entity_id: script.luces_off_family_away
+            >>> EVENTO: Último en Salir {{ states('input_select.home_last_change') }}
+
+            >>> ALARMA: Armado Total
 
 - id: family_at_home
   alias: 'Family at Home'
@@ -317,18 +321,24 @@
       from: 'off'
       to: 'on'
   action:
-    # Notifica a Familia NADIE en Casa
+    # Script encendido Luz piloto si es de noche y antes 00:00
+    - service: script.turn_on
+      entity_id: script.luces_on_family_home
+    # Servicio Alarma Armado Total
+    - service: alarm_control_panel.alarm_disarm
+      data:
+        entity_id: alarm_control_panel.ha
+        code: !secret alarm_control_code
+    # Notifica a Familia Alguien en Casa
     - service: script.turn_on
       entity_id: script.mensaje_family
       data:
         variables:
           title: 'FAMILY at HOME: <SI>'
           message: >
-            >>> Evento: {{ states('input_select.home_last_change') }}
-    # Script encendido Luz piloto si es de noche y antes 00:00
-    - service: script.turn_on
-      entity_id: script.luces_on_family_home
+            >>> EVENTO: Ha entrado {{ states('input_select.home_last_change') }}
 
+            >>> ALARMA: Desarmado
 #
 # ALARMA: Armado y Control de la Alarma
 #
@@ -349,8 +359,8 @@
           message: >
             >>> URGENTE HA: Prosegur No Responde (NMAP)
 
-- id: alarm_sirena_on_notification
-  alias: 'Alarm  Notification'
+- id: alarm_sirena_test_on
+  alias: 'Alarma Sirena Test On'
   trigger:
     platform: state
     entity_id: input_boolean.alarm_mode
@@ -363,15 +373,15 @@
         variables:
           title: '[ALARMA]'
           message: >
-            >>> URGENTE HA: ALARMA ACTIVADA
+            >>> URGENTE: ALARMA EN CASA
     - service: xiaomi_aqara.play_ringtone
       data:
         gw_mac: 78:11:DC:B7:88:FA
         ringtone_id: 1
         ringtone_vol: 100
 
-- id: alarm_sirena_off_notification
-  alias: 'Alarm Test Notification'
+- id: alarm_sirena_test_off
+  alias: 'Alarma Sirena Test Off'
   trigger:
     platform: state
     entity_id: input_boolean.alarm_mode
@@ -384,7 +394,7 @@
         variables:
           title: '[ALARMA]'
           message: >
-            >>> URGENTE HA: ALARMA DESACTIVADA
+            >>> URGENTE: DESARMADO
     - service: xiaomi_aqara.stop_ringtone
       data:
         gw_mac: 78:11:DC:B7:88:FA

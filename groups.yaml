@@ -20,7 +20,7 @@ default_view:
 alarm_grp:
   name: Alarma
   entities:
-    - alarm_control_panel.home_alarm
+    - alarm_control_panel.ha
     - input_boolean.alarm_mode
     - input_select.home_notify
     #- input_text.mensaje_tit

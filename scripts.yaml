@@ -10,12 +10,13 @@ luces_on_family_home:
     - service: light.turn_on
       #entity_id: light.hue_estudio
       entity_id: light.hue_cocina
-    - service: script.turn_on
-      entity_id: script.mensaje_family
-      data:
-        variables:
-          title: 'LUCES'
-          message: '>>> Piloto: ON'
+    #- service: script.turn_on
+    #  entity_id: script.mensaje_family
+    #  data:
+    #    variables:
+    #      title: 'LUCES'
+    #      message: '>>> Piloto: ON'
+
 luces_off_family_away:
   alias: 'Family Away Luces OFF'
   sequence:
@@ -24,12 +25,12 @@ luces_off_family_away:
         - group.luces_entrada_grp
         - group.luces_salon_grp
         - group.luces_estudio_grp
-    - service: script.turn_on
-      entity_id: script.mensaje_family
-      data:
-        variables:
-          title: 'LUCES'
-          message: '>>> Home: OFF'
+    #- service: script.turn_on
+    #  entity_id: script.mensaje_family
+    #  data:
+    #    variables:
+    #      title: 'LUCES'
+    #      message: '>>> Home: OFF'
 
 mensaje_family:
   alias: 'Mensaje Family'

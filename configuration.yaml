@@ -103,7 +103,9 @@ notify:
 telegram_bot:
   - platform: polling
     api_key: !secret telegram_apikey
-    allowed_chat_ids: 521008833
+    allowed_chat_ids:
+      - !secret telegram_chat_aac
+      - !secret telegram_chat_mfc
 
 # AAC. GENERIC IP CAMERA
 camera:
@@ -170,7 +172,7 @@ input_boolean:
     icon: mdi:cellphone-iphone
 # AAC. Interruptores control alarma y notificaciones
   alarm_mode:
-    name: Alarma
+    name: Alarma Botón Pánico
     initial: off
     icon: mdi:security-home
 
@@ -265,21 +267,24 @@ xiaomi_aqara:
       key: AD58F3C5D30D405C
 
 # AAC. ALARM MANUAL CONTROL PANEL
+#
+# Status:  Disarmed => Armed (Home/Night/Away) => Triggered => Disarmed
+#
 alarm_control_panel:
   - platform: manual
-    name: Home Alarm
-    code: 2309
-    # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
-    delay_time: 0
+    name: HA
+    code: !secret alarm_control_code
     # Pending: The time in seconds of the pending time before effecting a state change. Default is 60 seconds.
-    pending_time: 30
+    # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
     # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
-    trigger_time: 4
-    disarmed:
-      trigger_time: 0
     armed_home:
       pending_time: 0
       delay_time: 0
+    armed_away:
+      pending_time: 30
+      delay_time: 15
+    disarmed:
+      trigger_time: 0
 
 # AAC. PROSEGUR
 #alarm_control_panel:

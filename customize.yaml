@@ -1,3 +1,8 @@
+# PANEL CONTROL ALARMA
+#
+alarm_control_panel.ha:
+  friendly_name: Panel Control Alarma
+
 sun.sun:
   friendly_name: Sol
 sensor.moon:
@@ -62,4 +67,12 @@ sensor.disk_free_:
   friendly_name: 'Disk free'
 sensor.swap_use_percent:
   friendly_name: '%Swapping'
+
+#
+# LUCES
+#
+light.gateway_light_7811dcb788fa:
+  friendly_name: Xiaomi Estudio Light
+sensor.illumination_7811dcb788fa:
+  friendly_name: Hue Sensor Luz
 
