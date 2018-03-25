@@ -66,7 +66,7 @@ mensaje_telegram:
   - condition: state
     entity_id: input_select.home_notify
     state: 'Telegram'
-  - service: notify.telegram
+  - service: notify.telegram_family
     data_template:
       title: >
         {{ states('input_text.mensaje_tit') }}
@@ -97,7 +97,7 @@ telegram_alarm_send_photo:
     - condition: state
       entity_id: input_select.home_notify
       state: 'Telegram'
-    - service: notify.telegram
+    - service: notify.telegram_family
       data:
         title: '[ALARMA]'
         message: Cámara Cocina

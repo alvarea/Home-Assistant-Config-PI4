@@ -72,7 +72,7 @@ sensor.swap_use_percent:
 # LUCES
 #
 light.gateway_light_7811dcb788fa:
-  friendly_name: Xiaomi Estudio Light
+  friendly_name: Xiaomi Estudio
 sensor.illumination_7811dcb788fa:
-  friendly_name: Hue Sensor Luz
+  friendly_name: Xiaomi Sensor Luz
 

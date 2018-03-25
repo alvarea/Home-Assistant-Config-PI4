@@ -1,3 +1,22 @@
+
+#
+# CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
+#
+- id: ssl_expiry_notification
+  alias: 'SSL expiry notification'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ssl_certificate_expiry
+    below: 21
+  action:
+    service: script.turn_on
+    entity_id: script.mensaje_family
+    data:
+      variables:
+        title: 'CERTIFICADO SSL'
+        message: >
+          >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
+
 #
 # AGUSTIN: Control Presencia => Booleean input_boolean.acchome
 #
