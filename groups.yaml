@@ -3,28 +3,18 @@ default_view:
   icon: mdi:home-assistant
   name: Home View
   entities:
+    - group.alarma_view
     - group.tracking_view
     - group.tiempo_view
     - group.camaras_view
     - group.luces_view
+    - group.entrada_view
     - group.cocina_view
     - group.salon_view
     - group.estudio_view
     - group.system_view
-    - group.alarm_grp
     - group.family_home_grp
-    - group.family_aac_grp
-    - group.family_mfc_grp
-    - group.family_child_grp
-
-alarm_grp:
-  name: Alarma
-  entities:
-    - alarm_control_panel.ha
-    - input_boolean.alarm_mode
-    - input_select.home_notify
-    #- input_text.mensaje_tit
-    #- input_text.mensaje_msg
+    - group.family_track_grp
 
 family_home_grp:
   name: Family @ Home?
@@ -35,25 +25,39 @@ family_home_grp:
     - input_boolean.home_aaf
     - input_select.home_last_change
 
-family_aac_grp:
-  name: Agustin
+family_track_grp:
+  name: Family Tracking
   entities:
     - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-    - sensor.iphoneaac_battery_level_3
-    - sensor.iphoneaac_battery_state_2
-
-family_mfc_grp:
-  name: Malen
-  entities:
     - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MF
-    - sensor.iphonemalen_battery_level_2
-    - sensor.iphonemalen_battery_state
-
-family_child_grp:
-  name: Niños
-  entities:
     - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
     - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
+
+alarma_view:
+  name: Panel Control Alarma
+  icon: mdi:security-home
+  view: yes
+  entities:
+    - group.alarma_grp
+    - group.sensor_grp
+
+alarma_grp:
+  name: Alarma
+  view: no
+  entities:
+    - alarm_control_panel.ha
+    - input_boolean.alarm_mode
+    - input_select.home_notify
+    #- input_text.mensaje_tit
+    #- input_text.mensaje_msg
+
+sensor_grp:
+  name: Sensores Alarma
+  view: no
+  entities:
+    - sensor.illumination_158d0001e55903
+    - binary_sensor.door_window_sensor_158d00022b393c
+    - binary_sensor.motion_sensor_158d0001e55903
 
 tracking_view:
   view: yes
@@ -72,6 +76,8 @@ track_aac_grp:
     - device_tracker.aac_iphone_owntrack
     - device_tracker.aac_ios
     - device_tracker.aac_iphone_nmap
+    - sensor.iphoneaac_battery_level_3
+    - sensor.iphoneaac_battery_state_2
 
 track_mfc_grp:
   name: Malen Tracking
@@ -80,6 +86,8 @@ track_mfc_grp:
     - device_tracker.mfc_iphone_owntrack_mfc
     - device_tracker.mfc_ios
     - device_tracker.mfc_iphone_nmap
+    - sensor.iphonemalen_battery_level_2
+    - sensor.iphonemalen_battery_state
 
 track_child_grp:
   name: Niños Tracking
@@ -149,9 +157,10 @@ luces_view:
 luces_entrada_grp:
   name: Luces Cocina-Entrada
   entities:
-    - light.hue_cocina
+    - sensor.illumination_158d0001e55903
     - light.hue_entrada
     - light.hue_pasillo
+    - light.hue_cocina
 
 luces_salon_grp:
   name: Luces Salon

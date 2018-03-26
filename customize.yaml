@@ -69,10 +69,16 @@ sensor.swap_use_percent:
   friendly_name: '%Swapping'
 
 #
-# LUCES
+# XIAOMI AQARA GATEWAY + SENSORS
 #
 light.gateway_light_7811dcb788fa:
-  friendly_name: Xiaomi Estudio
+  friendly_name: Gateway Luz Estudio
 sensor.illumination_7811dcb788fa:
-  friendly_name: Xiaomi Sensor Luz
+  friendly_name: Sensor Luz Estudio
+binary_sensor.door_window_sensor_158d00022b393c:
+  friendly_name: Sensor Puerta Entrada
+binary_sensor.motion_sensor_158d0001e55903:
+  friendly_name: Sensor Presencia Entrada
+sensor.illumination_158d0001e55903:
+  friendly_name: Sensor Luz Entrada
 
