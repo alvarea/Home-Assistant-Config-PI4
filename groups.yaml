@@ -151,15 +151,22 @@ luces_view:
   name: Luces
   entities:
     - group.luces_entrada_grp
+    - group.luces_cocina_grp
     - group.luces_salon_grp
     - group.luces_estudio_grp
 
 luces_entrada_grp:
-  name: Luces Cocina-Entrada
+  name: Luces Entrada
   entities:
     - sensor.illumination_158d0001e55903
+    - switch.wall_switch_left_158d0002236e75
+    - switch.wall_switch_right_158d0002236e75
     - light.hue_entrada
     - light.hue_pasillo
+
+luces_cocina_grp:
+  name: Luces Cocina
+  entities:
     - light.hue_cocina
 
 luces_salon_grp:
@@ -182,7 +189,7 @@ cocina_view:
   icon: mdi:food
   name: Cocina
   entities:
-    - group.luces_entrada_grp
+    - light.hue_cocina
     - camera.ipcam11_cocina
     - media_player.firetv_cocina
 

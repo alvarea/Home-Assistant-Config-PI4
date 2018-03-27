@@ -8,7 +8,6 @@ luces_on_family_home:
     - condition: time
       before: '23:59:00'
     - service: light.turn_on
-      #entity_id: light.hue_estudio
       entity_id: light.hue_cocina
     #- service: script.turn_on
     #  entity_id: script.mensaje_family

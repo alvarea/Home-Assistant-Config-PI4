@@ -326,7 +326,7 @@
       entity_id: script.mensaje_family
       data:
         variables:
-          title: 'FAMILY at HOME: <NO>'
+          title: '[FAMILY@HOME]: NO'
           message: >
             >>> EVENTO: Último en Salir {{ states('input_select.home_last_change') }}
 
@@ -353,14 +353,150 @@
       entity_id: script.mensaje_family
       data:
         variables:
-          title: 'FAMILY at HOME: <SI>'
+          title: '[FAMILY@HOME]: SI'
           message: >
             >>> EVENTO: Ha entrado {{ states('input_select.home_last_change') }}
 
             >>> ALARMA: Desarmado
-#
-# ALARMA: Armado y Control de la Alarma
-#
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# REGLAS DE CONTROL DE LUCES Y ALUMBRADO                                      #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+
+- id: sunset_luces_exterior_on
+  alias: 'Luces Exterior On'
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: "-00:30:00"
+    #- condition: time
+    #  before: '23:59:00'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.wall_switch_right_158d0002236e75
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.mensaje_family
+      data:
+        variables:
+          title: '[LUCES]: ON'
+          message: >
+            >>> EVENTO: El sol se pone en 30min
+
+            >>> LUCES: Alumbrado Exterior ON
+
+- id: sunrise_luces_exterior_off
+  alias: 'Luces Exterior Off'
+  trigger:
+    - platform: state
+      entity_id: group.family_home_grp
+      from: 'off'
+      to: 'on'
+    - platform: sun
+      event: sunrise
+      offset: "-07:00:00"
+  condition:
+    condition: time
+    after: '00:01:00'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.wall_switch_right_158d0002236e75
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.mensaje_family
+      data:
+        variables:
+          title: '[LUCES]: OFF'
+          message: >
+            >>> EVENTO: Medianoche
+
+            >>> LUCES: Alumbrado Exterior Off
+
+
+- id: sunset_luces_salon_on
+  alias: 'Luces Salon On'
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: "-01:00:00"
+  condition:
+    condition: state
+    entity_id: group.family_home_grp
+    state: 'on'
+  action:
+    - service: light.turn_on
+      entity_id: light.room_salon_tv
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.mensaje_family
+      data:
+        variables:
+          title: '[LUCES]: ON'
+          message: >
+            >>> EVENTO: El sol se pone en 60min
+
+            >>> LUCES: Luces Salón ON
+
+- id: sunrise_luces_salon_off
+  alias: 'Luces Salon Off'
+  trigger:
+    - platform: time
+      at: "00:00:00"
+  action:
+    - service: switch.turn_off
+      entity_id: switch.wall_switch_right_158d0002236e75
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.mensaje_family
+      data:
+        variables:
+          title: '[LUCES]: OFF'
+          message: >
+            >>> EVENTO: Medianoche
+
+            >>> LUCES: Luces Salón Off
+
+- id: sensor_luz_entrada_on
+  alias: 'Luces Sensor Entrada On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e55903
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c
+      to: 'on'
+  #condition:
+    #condition: numeric_state
+    #entity_id: sensor.temperature
+    #below: 10
+    #condition: template
+    #value_template: '{{ states.sensor.illumination_158d0001e55903.state < 10 }}'
+  action:
+    - service: light.turn_on
+      entity_id: light.hue_entrada
+      data:
+        brightness: 120
+        rgb_color: [255, 0, 0]
+
+- id: sensor_luz_entrada_off
+  alias: 'Luces Sensor Entrada Off'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0001e55903
+    to: 'off'
+    for:
+      minutes: 5
+  action:
+    - service: light.turn_off
+      entity_id: light.hue_entrada
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# ALARMA: Armado y Control de la Alarma                                       #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+
 - id: alarm_prosegur_device_check
   alias: 'Prosegur Device Tracking Check'
   trigger:

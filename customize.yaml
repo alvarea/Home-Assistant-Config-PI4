@@ -81,4 +81,9 @@ binary_sensor.motion_sensor_158d0001e55903:
   friendly_name: Sensor Presencia Entrada
 sensor.illumination_158d0001e55903:
   friendly_name: Sensor Luz Entrada
-
+switch.wall_switch_left_158d0002236e75:
+  friendly_name: Luz Techo Entrada
+  icon: mdi:ceiling-light
+switch.wall_switch_right_158d0002236e75:
+  friendly_name: Luces Exterior
+  icon: mdi:lightbulb-outline
