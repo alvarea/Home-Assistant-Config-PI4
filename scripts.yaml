@@ -5,10 +5,8 @@ luces_on_family_home:
     #  value_template: "{% if is_state('sun.sun', 'below_horizon') %}true{% endif %}"
     - condition: sun
       after: sunset
-    - condition: time
-      before: '23:59:00'
     - service: light.turn_on
-      entity_id: light.hue_cocina
+      entity_id: light.hue_entrada
     #- service: script.turn_on
     #  entity_id: script.mensaje_family
     #  data:
@@ -22,6 +20,7 @@ luces_off_family_away:
     - service: light.turn_off
       entity_id:
         - group.luces_entrada_grp
+        - group.luces_cocina_grp
         - group.luces_salon_grp
         - group.luces_estudio_grp
     #- service: script.turn_on

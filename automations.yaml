@@ -302,9 +302,12 @@
         entity_id: input_select.home_last_change
         option: Agu
 
-#
+#-----------------------------------------------------------------------------#
+#                                                                             #
 # FAMILY AT HOME: Control Home/Away
-#
+#                                                                             #
+#-----------------------------------------------------------------------------#
+
 - id: family_away
   alias: 'Family Away'
   trigger:
@@ -330,6 +333,8 @@
           message: >
             >>> EVENTO: Último en Salir {{ states('input_select.home_last_change') }}
 
+            >>> LUCES: Luces interior Off
+
             >>> ALARMA: Armado Total
 
 - id: family_at_home
@@ -340,7 +345,7 @@
       from: 'off'
       to: 'on'
   action:
-    # Script encendido Luz piloto si es de noche y antes 00:00
+    # Script encendido Luz piloto si es de noche
     - service: script.turn_on
       entity_id: script.luces_on_family_home
     # Servicio Alarma Armado Total
@@ -357,6 +362,8 @@
           message: >
             >>> EVENTO: Ha entrado {{ states('input_select.home_last_change') }}
 
+            >>> LUCES: Luces entrada On
+
             >>> ALARMA: Desarmado
 
 #-----------------------------------------------------------------------------#
@@ -365,12 +372,12 @@
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-- id: sunset_luces_exterior_on
-  alias: 'Luces Exterior On'
+- id: luces_exterior_on_sunset
+  alias: 'Luces Exterior On Sunset offset+15m'
   trigger:
     - platform: sun
       event: sunset
-      offset: "-00:30:00"
+      offset: "+00:15:00"
     #- condition: time
     #  before: '23:59:00'
   action:
@@ -383,24 +390,22 @@
         variables:
           title: '[LUCES]: ON'
           message: >
-            >>> EVENTO: El sol se pone en 30min
+            >>> EVENTO: Puesta de sol hace 15min
 
             >>> LUCES: Alumbrado Exterior ON
 
-- id: sunrise_luces_exterior_off
-  alias: 'Luces Exterior Off'
+- id: luces_exterior_off_family_home
+  alias: 'Luces Exterior Off Family Home delay+10m'
   trigger:
     - platform: state
       entity_id: group.family_home_grp
       from: 'off'
       to: 'on'
-    - platform: sun
-      event: sunrise
-      offset: "-07:00:00"
   condition:
     condition: time
     after: '00:01:00'
   action:
+    - delay: 0:10
     - service: switch.turn_off
       entity_id: switch.wall_switch_right_158d0002236e75
     # Notifica a Familia
@@ -414,13 +419,36 @@
 
             >>> LUCES: Alumbrado Exterior Off
 
+- id: sunrise_luces_exterior_off
+  alias: 'Luces Exterior Off Sunrise offset-120m'
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: "-02:00:00"
+  condition:
+    condition: state
+    entity_id: switch.wall_switch_right_158d0002236e75
+    state: 'on'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.wall_switch_right_158d0002236e75
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.mensaje_family
+      data:
+        variables:
+          title: '[LUCES]: OFF'
+          message: >
+            >>> EVENTO: Amanecer en 2 horas
 
-- id: sunset_luces_salon_on
-  alias: 'Luces Salon On'
+            >>> LUCES: Alumbrado Exterior Off
+
+- id: luces_salon_on_sunset
+  alias: 'Luces Salon On Sunset Offset-30m'
   trigger:
     - platform: sun
       event: sunset
-      offset: "-01:00:00"
+      offset: "-00:30:00"
   condition:
     condition: state
     entity_id: group.family_home_grp
@@ -435,12 +463,12 @@
         variables:
           title: '[LUCES]: ON'
           message: >
-            >>> EVENTO: El sol se pone en 60min
+            >>> EVENTO: El sol se pone en 30min
 
             >>> LUCES: Luces Salón ON
 
 - id: sunrise_luces_salon_off
-  alias: 'Luces Salon Off'
+  alias: 'Luces Salon Off Sunrise'
   trigger:
     - platform: time
       at: "00:00:00"
@@ -458,8 +486,8 @@
 
             >>> LUCES: Luces Salón Off
 
-- id: sensor_luz_entrada_on
-  alias: 'Luces Sensor Entrada On'
+- id: luz_entrada_on_sensor
+  alias: 'Luces Entrada On Sensor'
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001e55903
@@ -467,6 +495,14 @@
     - platform: state
       entity_id: binary_sensor.door_window_sensor_158d00022b393c
       to: 'on'
+  condition:
+    condition: or  # 'when dark' condition: either after sunset or before sunrise
+    conditions:
+      - condition: sun
+        after: sunset
+        after_offset: "-1:00:00"
+      - condition: sun
+        before: sunrise
   #condition:
     #condition: numeric_state
     #entity_id: sensor.temperature
@@ -480,24 +516,30 @@
         brightness: 120
         rgb_color: [255, 0, 0]
 
-- id: sensor_luz_entrada_off
-  alias: 'Luces Sensor Entrada Off'
+- id: luz_entrada_off_sensor
+  alias: 'Luces Entrada Off Sensor'
   trigger:
-    platform: state
-    entity_id: binary_sensor.motion_sensor_158d0001e55903
-    to: 'off'
-    for:
-      minutes: 5
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e55903
+      to: 'off'
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c
+      to: 'off'
+      for:
+        minutes: 5
   action:
     - service: light.turn_off
       entity_id: light.hue_entrada
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # ALARMA: Armado y Control de la Alarma                                       #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-- id: alarm_prosegur_device_check
+- id: alarma_prosegur_device_check
   alias: 'Prosegur Device Tracking Check'
   trigger:
     platform: state
@@ -514,8 +556,9 @@
           message: >
             >>> URGENTE HA: Prosegur No Responde (NMAP)
 
-- id: alarm_sirena_test_on
-  alias: 'Alarma Sirena Test On'
+
+- id: alarma_boton_panico_on
+  alias: 'Alarma Boton Panico On'
   trigger:
     platform: state
     entity_id: input_boolean.alarm_mode
@@ -535,8 +578,8 @@
         ringtone_id: 1
         ringtone_vol: 100
 
-- id: alarm_sirena_test_off
-  alias: 'Alarma Sirena Test Off'
+- id: alarma_boton_panico_off
+  alias: 'Alarma Boton Panico Off'
   trigger:
     platform: state
     entity_id: input_boolean.alarm_mode
@@ -554,6 +597,35 @@
       data:
         gw_mac: 78:11:DC:B7:88:FA
 
-    #- service: script.turn_on
-    #entity_id: script.telegram_alarm_send_photo
+- id: alarma_away_intrusion
+  alias: 'Alarma Away Intrusion'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e55903
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: alarm_control_panel.ha
+      state: armed_away
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.alarm_mode
+    - service: xiaomi_aqara.play_ringtone
+      data:
+        gw_mac: 78:11:DC:B7:88:FA
+        ringtone_id: 1
+        ringtone_vol: 100
+    - service: script.turn_on
+      entity_id: script.mensaje_family
+      data:
+        variables:
+          title: '*** [ALARMA] ***'
+          message: >
+            >>> URGENTE: ALARMA EN CASA
 
+            >>> ZONA: Sensor Entrada
+
+            >>> SIRENA: Sirena sonando
