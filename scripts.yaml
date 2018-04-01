@@ -1,37 +1,57 @@
-luces_on_family_home:
-  alias: 'Family at Home Piloto ON'
-  sequence:
-    #- condition: template
-    #  value_template: "{% if is_state('sun.sun', 'below_horizon') %}true{% endif %}"
-    - condition: sun
-      after: sunset
-    - service: light.turn_on
-      entity_id: light.hue_entrada
-    #- service: script.turn_on
-    #  entity_id: script.mensaje_family
-    #  data:
-    #    variables:
-    #      title: 'LUCES'
-    #      message: '>>> Piloto: ON'
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# SCRIPTS GENERICOS DE NOTIFICACIONES                                         #
+#                                                                             #
+#-----------------------------------------------------------------------------#
 
-luces_off_family_away:
-  alias: 'Family Away Luces OFF'
+notifica_alarma:
+  alias: 'Mensaje Alarma'
   sequence:
-    - service: light.turn_off
-      entity_id:
-        - group.luces_entrada_grp
-        - group.luces_cocina_grp
-        - group.luces_salon_grp
-        - group.luces_estudio_grp
-    #- service: script.turn_on
-    #  entity_id: script.mensaje_family
-    #  data:
-    #    variables:
-    #      title: 'LUCES'
-    #      message: '>>> Home: OFF'
+  # Actualiza el valor de input_text.mensaje_tit con el título recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_tit
+    data_template:
+      value: "{{ title }}"
 
-mensaje_family:
-  alias: 'Mensaje Family'
+  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_msg
+    data_template:
+      value: "{{ message }}"
+
+  # Notificación Telegram
+  - service: notify.telegram_family
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+
+  # Llamada a Script Notificación Telegram
+  - service: script.turn_on
+    entity_id: script.telegram_alarm_send_photo
+
+ # Notificación IOS
+  - service: notify.ios_aac_ios
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+
+telegram_alarm_send_photo:
+  alias: 'Telegram Alarm Send Foto'
+  sequence:
+    - service: notify.telegram_family
+      data:
+        title: '[ALARMA]'
+        message: Cámara Cocina
+        data:
+          photo:
+            - url: http://192.168.0.11/snapshot/image0.jpg
+
+notifica_evento:
+  alias: 'Notifica Evento Informativo'
   sequence:
   # IF HOME_NOTIFY = OFF CANCEL
   - condition: template
@@ -49,56 +69,65 @@ mensaje_family:
     data_template:
       value: "{{ message }}"
 
-  # Llamada a Script Notificación Telegram
+  # Llamada a Scripts Notificación Telegram
   - service: script.turn_on
-    entity_id: script.mensaje_telegram
-  # Llamada a Script Notificación IOS
+    entity_id: script.notifica_telegram_aac
   - service: script.turn_on
-    entity_id: script.mensaje_ios
+    entity_id: script.notifica_telegram_mfc
+  #- service: script.turn_on
+  #  entity_id: script.notifica_telegram_paf
+  #- service: script.turn_on
+  #  entity_id: script.notifica_telegram_aaf
 
-mensaje_telegram:
-  alias: 'Mensaje Telegram'
-  # The Telegram notify platform accepts the standard title, message, data
+notifica_telegram_aac:
+  alias: 'Mensaje Telegram AAC'
   sequence:
   # IF HOME_NOTIFY = TELEGRAM THEN Notify.Telegram
   - condition: state
-    entity_id: input_select.home_notify
-    state: 'Telegram'
-  - service: notify.telegram_family
+    entity_id: input_select.notify_aac
+    state: 'on'
+  - service: notify.telegram_aac
     data_template:
       title: >
         {{ states('input_text.mensaje_tit') }}
       message: >
         {{ states('input_text.mensaje_msg') }}
 
-mensaje_ios:
-  alias: 'Mensaje IOS'
-  # The iOS notify platform accepts the standard title, message and target
+notifica_telegram_mfc:
+  alias: 'Mensaje Telegram MFC'
   sequence:
-  # IF HOME_IOS = IOS THEN Notify.IOS
+  # IF HOME_NOTIFY = TELEGRAM THEN Notify.Telegram
   - condition: state
-    entity_id: input_select.home_notify
-    state: 'IOS'
-  - service: notify.ios_aac_ios
+    entity_id: input_select.notify_mfc
+    state: 'on'
+  - service: notify.telegram_mfc
     data_template:
       title: >
         {{ states('input_text.mensaje_tit') }}
       message: >
         {{ states('input_text.mensaje_msg') }}
-      #data:
-        #push:
-          #sound: "US-EN-Morgan-Freeman-Motion-Detected.wav"
 
-telegram_alarm_send_photo:
-  alias: 'Telegram Alarm Send Foto'
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# CONTROL DE LUCES Y ALUMBRADO                                                #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+luces_on_family_home:
+  alias: 'Family at Home Piloto ON'
   sequence:
-    - condition: state
-      entity_id: input_select.home_notify
-      state: 'Telegram'
-    - service: notify.telegram_family
-      data:
-        title: '[ALARMA]'
-        message: Cámara Cocina
-        data:
-          photo:
-            - url: http://192.168.0.11/snapshot/image0.jpg
+    #- condition: template
+    #  value_template: "{% if is_state('sun.sun', 'below_horizon') %}true{% endif %}"
+    - condition: sun
+      after: sunset
+    - service: light.turn_on
+      entity_id: light.hue_entrada
+
+luces_off_family_away:
+  alias: 'Family Away Luces OFF'
+  sequence:
+    - service: light.turn_off
+      entity_id:
+        - group.luces_entrada_grp
+        - group.luces_cocina_grp
+        - group.luces_salon_grp
+        - group.luces_estudio_grp

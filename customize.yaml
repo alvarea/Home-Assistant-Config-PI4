@@ -2,6 +2,8 @@
 #
 alarm_control_panel.ha:
   friendly_name: Panel Control Alarma
+input_select.home_last_change:
+  friendly_name: Último Tracking
 
 sun.sun:
   friendly_name: Sol
@@ -77,6 +79,7 @@ sensor.illumination_7811dcb788fa:
   friendly_name: Sensor Luz Estudio
 binary_sensor.door_window_sensor_158d00022b393c:
   friendly_name: Sensor Puerta Entrada
+  icon: mdi:door
 binary_sensor.motion_sensor_158d0001e55903:
   friendly_name: Sensor Presencia Entrada
 sensor.illumination_158d0001e55903:

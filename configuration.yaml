@@ -102,6 +102,12 @@ notify:
   - platform: telegram
     name: telegram_family
     chat_id: !secret telegram_chat_fam
+  - platform: telegram
+    name: telegram_aac
+    chat_id: !secret telegram_chat_aac
+  - platform: telegram
+    name: telegram_mfc
+    chat_id: !secret telegram_chat_mfc
 
 # AAC. Notifications via Telegram Bot
 telegram_bot:
@@ -174,7 +180,23 @@ input_boolean:
   home_aaf:
     name: Agu
     initial: on
-    icon: mdi:cellphone-iphone
+    icon: mdi:bell-ring
+  notify_mfc:
+    name: Notificaciones Malen
+    initial: on
+    icon: mdi:bell-ring
+  notify_aac:
+    name: Notificaciones Agustin
+    initial: on
+    icon: mdi:bell-ring
+  notify_paf:
+    name: Notificaciones Paloma
+    initial: off
+    icon: mdi:bell-ring
+  notify_aaf:
+    name: Notificaciones Agu
+    initial: off
+    icon: mdi:bell-ring
 # AAC. Interruptores control alarma y notificaciones
   alarm_mode:
     name: Alarma Botón Pánico
@@ -201,7 +223,6 @@ input_select:
     initial: 'Agustín'
     icon: mdi:home-account
 
-
 # AAC. Mensaje para Notificaciones
 input_text:
   mensaje_tit:
@@ -217,29 +238,10 @@ media_player:
   - platform: firetv
     name: FireTV Cocina
 
-# AAC. Sensores de Tiempo, sol, Luna,
 sensor:
-  - platform: yweather
-    woeid: 90231690
-    name: Hoy
-    monitored_conditions:
-      - weather
-      - temperature
-      - temp_min
-      - temp_max
-      - wind_speed
-      - humidity
-  - platform: yweather
-    woeid: 90231690
-    forecast: 1
-    name: Mañana
-    monitored_conditions:
-      - weather
-      - temperature
-      - temp_min
-      - temp_max
-      - wind_speed
-      - humidity
+#
+# AAC. Sensores del Sistema
+#
   - platform: time_date
     display_options:
       - 'time'
@@ -264,6 +266,91 @@ sensor:
         arg: /
       - type: swap_use_percent
       - type: last_boot
+#
+# AAC. Sensores de Previsiones de Tiempo
+#
+  - platform: yweather
+    woeid: 90231690
+    name: Hoy
+    monitored_conditions:
+      - weather
+      - temperature
+      - temp_min
+      - temp_max
+      - wind_speed
+      - humidity
+  - platform: yweather
+    woeid: 90231690
+    forecast: 1
+    name: Mañana
+    monitored_conditions:
+      - weather
+      - temperature
+      - temp_min
+      - temp_max
+      - wind_speed
+      - humidity
+#
+# AAC. Platform Template
+#
+  - platform: template
+    sensors:
+      bateria_presencia_entrada:
+        # binary_sensor.motion_sensor_158d0001e55903
+        value_template: "{{ states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level|default(-1)|int if states.binary_sensor.motion_sensor_158d0001e55903 is not none }}"
+        friendly_name: 'Batería Sensor Presencia Entrada'
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_puerta_entrada:
+        # binary_sensor.door_window_sensor_158d00022b393c
+        friendly_name: 'Batería Sensor Puerta Entrada'
+        value_template: "{{ states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level|default(-1)|int if states.binary_sensor.door_window_sensor_158d00022b393c is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
 
 # AAC. XIAOMI AQARA GATEWAY
 xiaomi_aqara:
@@ -290,6 +377,7 @@ alarm_control_panel:
       delay_time: 15
     disarmed:
       trigger_time: 0
+
 
 # AAC. PROSEGUR
 #alarm_control_panel:

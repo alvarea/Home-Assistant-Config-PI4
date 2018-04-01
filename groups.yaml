@@ -13,6 +13,7 @@ default_view:
     - group.salon_view
     - group.estudio_view
     - group.system_view
+    - group.config_view
     - group.alarma_grp
     - group.family_home_grp
     - group.family_track_grp
@@ -24,7 +25,6 @@ family_home_grp:
     - input_boolean.home_aac
     - input_boolean.home_paf
     - input_boolean.home_aaf
-    - input_select.home_last_change
 
 family_track_grp:
   name: Family Tracking
@@ -40,16 +40,7 @@ alarma_view:
   view: yes
   entities:
     - group.alarma_grp
-    - group.sensor_grp
-    - group.notifica_grp
-
-notifica_grp:
-  name: Notificaciones
-  view: no
-  entities:
-    - input_select.home_notify
-    - input_text.mensaje_tit
-    - input_text.mensaje_msg
+    - group.sensor_entrada_grp
 
 alarma_grp:
   name: Alarma
@@ -57,14 +48,16 @@ alarma_grp:
   entities:
     - alarm_control_panel.ha
     - input_boolean.alarm_mode
+    - input_select.home_last_change
 
-sensor_grp:
-  name: Sensores Alarma
+sensor_entrada_grp:
+  name: Sensores Entrada
   view: no
   entities:
-    - sensor.illumination_158d0001e55903
     - binary_sensor.door_window_sensor_158d00022b393c
+    - sensor.bateria_puerta_entrada
     - binary_sensor.motion_sensor_158d0001e55903
+    - sensor.bateria_presencia_entrada
 
 tracking_view:
   view: yes
@@ -74,7 +67,6 @@ tracking_view:
     - group.track_aac_grp
     - group.track_mfc_grp
     - group.track_child_grp
-    - group.track_nmap_grp
 
 track_aac_grp:
   name: Agustín Tracking
@@ -103,16 +95,6 @@ track_child_grp:
     - device_tracker.paf_iphone_nmap
     - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
     - device_tracker.aaf_iphone_nmap
-
-track_nmap_grp:
-  name: NMAP Device Tracking
-  view: no
-  entities:
-    - device_tracker.prosegur
-    - device_tracker.xiaomi_gateway
-    - device_tracker.macbook
-    - device_tracker.ipad_nmap
-    - device_tracker.ipad_mini_nmap
 
 camaras_view:
   view: yes
@@ -229,6 +211,7 @@ system_view:
   entities:
     - group.hassbian_grp
     - group.pi3status_grp
+    - group.track_nmap_grp
 
 hassbian_grp:
   name: System Status
@@ -252,4 +235,38 @@ pi3status_grp:
     - sensor.disk_free_
     - sensor.swap_use_percent
 
+track_nmap_grp:
+  name: NMAP Device Tracking
+  view: no
+  entities:
+    - device_tracker.prosegur
+    - device_tracker.macbook
+    - device_tracker.ipad_nmap
+    - device_tracker.ipad_mini_nmap
+    #- device_tracker.xiaomi_gateway
+
+config_view:
+  name: Configuración
+  view: yes
+  icon: mdi:settings
+  entities:
+      - group.notify_telegram_grp
+      - group.msg_control_grp
+
+notify_telegram_grp:
+  name: Notificaciones Telegram
+  view: no
+  entities:
+    - input_select.home_notify
+    - input_boolean.notify_mfc
+    - input_boolean.notify_aac
+    - input_boolean.notify_paf
+    - input_boolean.notify_aaf
+
+msg_control_grp:
+  name: Notificaciones
+  view: no
+  entities:
+    - input_text.mensaje_tit
+    - input_text.mensaje_msg
 

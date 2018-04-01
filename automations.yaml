@@ -1,21 +1,9 @@
 
-#
-# CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
-#
-- id: ssl_expiry_notification
-  alias: 'SSL expiry notification'
-  trigger:
-    platform: numeric_state
-    entity_id: sensor.ssl_certificate_expiry
-    below: 21
-  action:
-    service: script.turn_on
-    entity_id: script.mensaje_family
-    data:
-      variables:
-        title: 'CERTIFICADO SSL'
-        message: >
-          >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# FAMILY TRACKING Control Home/Away                                           #
+#                                                                             #
+#-----------------------------------------------------------------------------#
 
 #
 # AGUSTIN: Control Presencia => Booleean input_boolean.acchome
@@ -304,7 +292,7 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# FAMILY AT HOME: Control Home/Away
+# FAMILY AT HOME: Control Home/Away                                           #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
@@ -326,7 +314,7 @@
         code: !secret alarm_control_code
     # Notifica a Familia NADIE en Casa
     - service: script.turn_on
-      entity_id: script.mensaje_family
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '[FAMILY@HOME]: NO'
@@ -355,10 +343,10 @@
         code: !secret alarm_control_code
     # Notifica a Familia Alguien en Casa
     - service: script.turn_on
-      entity_id: script.mensaje_family
+      entity_id: script.notifica_evento
       data:
         variables:
-          title: '[FAMILY@HOME]: SI'
+          title: '*FAMILY@HOME: SI*'
           message: >
             >>> EVENTO: Ha entrado {{ states('input_select.home_last_change') }}
 
@@ -385,46 +373,53 @@
       entity_id: switch.wall_switch_right_158d0002236e75
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.mensaje_family
+      entity_id: script.notifica_evento
       data:
         variables:
-          title: '[LUCES]: ON'
+          title: '*LUCES: ON*'
           message: >
             >>> EVENTO: Puesta de sol hace 15min
 
             >>> LUCES: Alumbrado Exterior ON
 
 - id: luces_exterior_off_family_home
-  alias: 'Luces Exterior Off Family Home delay+10m'
+  alias: 'Luces Exterior Off Family Home delay 10m'
   trigger:
     - platform: state
       entity_id: group.family_home_grp
       from: 'off'
       to: 'on'
+    - platform: time
+      at: '00:00:00'
   condition:
-    condition: time
-    after: '00:01:00'
+    condition: and
+    conditions:
+      - condition: time
+        after: '00:01:00'
+      - condition: state
+        entity_id: group.family_home_grp
+        state: 'on'
   action:
-    - delay: 0:10
+    - delay: 0:05
     - service: switch.turn_off
       entity_id: switch.wall_switch_right_158d0002236e75
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.mensaje_family
+      entity_id: script.notifica_evento
       data:
         variables:
-          title: '[LUCES]: OFF'
+          title: '*LUCES: OFF*'
           message: >
-            >>> EVENTO: Medianoche
+            >>> EVENTO: Medianoche y Family@Home
 
             >>> LUCES: Alumbrado Exterior Off
 
 - id: sunrise_luces_exterior_off
-  alias: 'Luces Exterior Off Sunrise offset-120m'
+  alias: 'Luces Exterior Off Sunrise offset 3h'
   trigger:
     - platform: sun
       event: sunrise
-      offset: "-02:00:00"
+      offset: "-03:00:00"
   condition:
     condition: state
     entity_id: switch.wall_switch_right_158d0002236e75
@@ -434,17 +429,17 @@
       entity_id: switch.wall_switch_right_158d0002236e75
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.mensaje_family
+      entity_id: script.notifica_evento
       data:
         variables:
-          title: '[LUCES]: OFF'
+          title: '*LUCES: OFF*'
           message: >
             >>> EVENTO: Amanecer en 2 horas
 
             >>> LUCES: Alumbrado Exterior Off
 
 - id: luces_salon_on_sunset
-  alias: 'Luces Salon On Sunset Offset-30m'
+  alias: 'Luces Salon On Sunset Offset 30m'
   trigger:
     - platform: sun
       event: sunset
@@ -458,10 +453,10 @@
       entity_id: light.room_salon_tv
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.mensaje_family
+      entity_id: script.notifica_evento
       data:
         variables:
-          title: '[LUCES]: ON'
+          title: '*LUCES: ON*'
           message: >
             >>> EVENTO: El sol se pone en 30min
 
@@ -477,10 +472,10 @@
       entity_id: switch.wall_switch_right_158d0002236e75
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.mensaje_family
+      entity_id: script.notifica_evento
       data:
         variables:
-          title: '[LUCES]: OFF'
+          title: '*LUCES: OFF*'
           message: >
             >>> EVENTO: Medianoche
 
@@ -503,6 +498,7 @@
         after_offset: "-1:00:00"
       - condition: sun
         before: sunrise
+        before_offset: "+3:00:00"
   #condition:
     #condition: numeric_state
     #entity_id: sensor.temperature
@@ -549,10 +545,10 @@
     for: '05:00:00'
   action:
     - service: script.turn_on
-      entity_id: script.mensaje_family
+      entity_id: script.notifica_alarma
       data:
         variables:
-          title: '[ALARMA PROSEGUR]'
+          title: '*ALARMA*'
           message: >
             >>> URGENTE HA: Prosegur No Responde (NMAP)
 
@@ -565,18 +561,18 @@
     from: 'off'
     to: 'on'
   action:
-    - service: script.turn_on
-      entity_id: script.mensaje_family
-      data:
-        variables:
-          title: '[ALARMA]'
-          message: >
-            >>> URGENTE: ALARMA EN CASA
     - service: xiaomi_aqara.play_ringtone
       data:
         gw_mac: 78:11:DC:B7:88:FA
         ringtone_id: 1
         ringtone_vol: 100
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA*'
+          message: >
+            >>> URGENTE: ALARMA EN CASA
 
 - id: alarma_boton_panico_off
   alias: 'Alarma Boton Panico Off'
@@ -586,16 +582,17 @@
     from: 'on'
     to: 'off'
   action:
-    - service: script.turn_on
-      entity_id: script.mensaje_family
-      data:
-        variables:
-          title: '[ALARMA]'
-          message: >
-            >>> URGENTE: DESARMADO
     - service: xiaomi_aqara.stop_ringtone
       data:
         gw_mac: 78:11:DC:B7:88:FA
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA*'
+          message: >
+            >>> URGENTE: DESARMADO
+
 
 - id: alarma_away_intrusion
   alias: 'Alarma Away Intrusion'
@@ -619,13 +616,37 @@
         ringtone_id: 1
         ringtone_vol: 100
     - service: script.turn_on
-      entity_id: script.mensaje_family
+      entity_id: script.notifica_alarma
       data:
         variables:
-          title: '*** [ALARMA] ***'
+          title: '*ALARMA*'
           message: >
             >>> URGENTE: ALARMA EN CASA
 
             >>> ZONA: Sensor Entrada
 
             >>> SIRENA: Sirena sonando
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# CONTROL DEL SISTEMA                                                         #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+
+#
+# CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
+#
+- id: ssl_expiry_notification
+  alias: 'SSL expiry notification'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ssl_certificate_expiry
+    below: 21
+  action:
+    service: script.turn_on
+    entity_id: script.notifica_evento
+    data:
+      variables:
+        title: 'CERTIFICADO SSL'
+        message: >
+          >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
