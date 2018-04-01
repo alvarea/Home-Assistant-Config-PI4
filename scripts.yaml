@@ -27,10 +27,6 @@ notifica_alarma:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
-  # Llamada a Script Notificación Telegram
-  - service: script.turn_on
-    entity_id: script.telegram_alarm_send_photo
-
  # Notificación IOS
   - service: notify.ios_aac_ios
     data_template:
@@ -39,16 +35,19 @@ notifica_alarma:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
-telegram_alarm_send_photo:
+telegram_alarm_send_photos:
   alias: 'Telegram Alarm Send Foto'
   sequence:
     - service: notify.telegram_family
       data:
-        title: '[ALARMA]'
-        message: Cámara Cocina
+        title: '*ALARMA*'
+        message: Fotos Cámaras Seguridad
         data:
           photo:
             - url: http://192.168.0.11/snapshot/image0.jpg
+              caption: Cámara Cocina
+            - url: http://192.168.0.12:8080/snapshot.cgi
+              caption: Cámara Estudio
 
 notifica_evento:
   alias: 'Notifica Evento Informativo'
@@ -82,9 +81,8 @@ notifica_evento:
 notifica_telegram_aac:
   alias: 'Mensaje Telegram AAC'
   sequence:
-  # IF HOME_NOTIFY = TELEGRAM THEN Notify.Telegram
   - condition: state
-    entity_id: input_select.notify_aac
+    entity_id: input_boolean.notify_aac
     state: 'on'
   - service: notify.telegram_aac
     data_template:
@@ -96,9 +94,8 @@ notifica_telegram_aac:
 notifica_telegram_mfc:
   alias: 'Mensaje Telegram MFC'
   sequence:
-  # IF HOME_NOTIFY = TELEGRAM THEN Notify.Telegram
   - condition: state
-    entity_id: input_select.notify_mfc
+    entity_id: input_boolean.notify_mfc
     state: 'on'
   - service: notify.telegram_mfc
     data_template:

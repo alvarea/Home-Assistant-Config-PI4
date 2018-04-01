@@ -16,7 +16,6 @@ default_view:
     - group.config_view
     - group.alarma_grp
     - group.family_home_grp
-    - group.family_track_grp
 
 family_home_grp:
   name: Family @ Home?
