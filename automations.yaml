@@ -317,7 +317,7 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '[FAMILY@HOME]: NO'
+          title: '*FAMILY@HOME: NO*'
           message: >
             >>> EVENTO: Último en Salir {{ states('input_select.home_last_change') }}
 
@@ -360,8 +360,56 @@
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-- id: luces_exterior_on_sunset
-  alias: 'Luces Exterior On Sunset offset+15m'
+- id: L01_luces_on_entrada_on_sensor
+  alias: 'L01 Luces On Entrada Según Sensor'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e55903
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c
+      to: 'on'
+  condition:
+    condition: or  # 'when dark' condition: either after sunset or before sunrise
+    conditions:
+      - condition: sun
+        after: sunset
+        after_offset: "-1:00:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "+3:00:00"
+  #condition:
+    #condition: numeric_state
+    #entity_id: sensor.temperature
+    #below: 10
+    #condition: template
+    #value_template: '{{ states.sensor.illumination_158d0001e55903.state < 10 }}'
+  action:
+    - service: light.turn_on
+      entity_id: light.hue_entrada
+      data:
+        brightness: 120
+        rgb_color: [255, 0, 0]
+
+- id: L02_luz_off_entrada_off_sensor
+  alias: 'L02 Luces Off Entrada Según Sensor'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e55903
+      to: 'off'
+      for:
+        minutes: 5
+    - platform: state
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c
+      to: 'off'
+      for:
+        minutes: 5
+  action:
+    - service: light.turn_off
+      entity_id: light.hue_entrada
+
+- id: L03_luces_on_exterior_sunset
+  alias: 'L03 Luces On Exterior Puesta Sol +15m'
   trigger:
     - platform: sun
       event: sunset
@@ -382,8 +430,8 @@
 
             >>> LUCES: Alumbrado Exterior ON
 
-- id: luces_exterior_off_family_home
-  alias: 'Luces Exterior Off Family Home delay 10m'
+- id: L04_luces_off_exterior_family_home
+  alias: 'L04 Luces Off Exterior Si Family Home +05m'
   trigger:
     - platform: state
       entity_id: group.family_home_grp
@@ -414,8 +462,8 @@
 
             >>> LUCES: Alumbrado Exterior Off
 
-- id: sunrise_luces_exterior_off
-  alias: 'Luces Exterior Off Sunrise offset 3h'
+- id: L05_luces_off_exterior_sunrise
+  alias: 'L05 Luces Off Exterior Amanecer -180m'
   trigger:
     - platform: sun
       event: sunrise
@@ -438,8 +486,8 @@
 
             >>> LUCES: Alumbrado Exterior Off
 
-- id: luces_salon_on_sunset
-  alias: 'Luces Salon On Sunset Offset 30m'
+- id: L06_luces_on_salon_sunset
+  alias: 'L06 Luces On Salon Puesta Sol -30m'
   trigger:
     - platform: sun
       event: sunset
@@ -462,14 +510,15 @@
 
             >>> LUCES: Luces Salón ON
 
-- id: sunrise_luces_salon_off
-  alias: 'Luces Salon Off Sunrise'
+- id: L07_luces_off_salon_midnight
+  alias: 'L07 Luces Off Salon si Medianoche'
   trigger:
     - platform: time
       at: "00:00:00"
   action:
-    - service: switch.turn_off
-      entity_id: switch.wall_switch_right_158d0002236e75
+    - service: light.turn_off
+      entity_id:
+        - group.luces_salon_grp
     # Notifica a Familia
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -481,53 +530,44 @@
 
             >>> LUCES: Luces Salón Off
 
-- id: luz_entrada_on_sensor
-  alias: 'Luces Entrada On Sensor'
+- id: L08_luces_off_home_sunrise
+  alias: 'L08 Luces Off Home Si es de Día'
   trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e55903
-      to: 'on'
-    - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c
-      to: 'on'
+    - platform: time
+      hours: 02
   condition:
-    condition: or  # 'when dark' condition: either after sunset or before sunrise
+    condition: and
     conditions:
       - condition: sun
-        after: sunset
-        after_offset: "-1:00:00"
-      - condition: sun
-        before: sunrise
-        before_offset: "+3:00:00"
-  #condition:
-    #condition: numeric_state
-    #entity_id: sensor.temperature
-    #below: 10
-    #condition: template
-    #value_template: '{{ states.sensor.illumination_158d0001e55903.state < 10 }}'
-  action:
-    - service: light.turn_on
-      entity_id: light.hue_entrada
-      data:
-        brightness: 120
-        rgb_color: [255, 0, 0]
-
-- id: luz_entrada_off_sensor
-  alias: 'Luces Entrada Off Sensor'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e55903
-      to: 'off'
-      for:
-        minutes: 5
-    - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c
-      to: 'off'
-      for:
-        minutes: 5
+        after: sunrise
+        after_offset: '03:00:00'
+      - condition: time
+        before: '15:00:00'
+      - condition: state
+        entity_id: group.luces_salon_grp
+        state: 'on'
+      - condition: state
+        entity_id: group.luces_estudio_grp
+        state: 'on'
+      - condition: state
+        entity_id: group.luces_cocina_grp
+        state: 'on'
   action:
     - service: light.turn_off
-      entity_id: light.hue_entrada
+      entity_id:
+        - group.luces_salon_grp
+        - group.luces_estudio_grp
+        - group.luces_cocina_grp
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*LUCES: OFF*'
+          message: >
+            >>> EVENTO: Luces Encendidas por Corte de Luz
+
+            >>> LUCES: Apagado General de Luces
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -551,7 +591,6 @@
           title: '*ALARMA*'
           message: >
             >>> URGENTE HA: Prosegur No Responde (NMAP)
-
 
 - id: alarma_boton_panico_on
   alias: 'Alarma Boton Panico On'
@@ -592,7 +631,6 @@
           title: '*ALARMA*'
           message: >
             >>> URGENTE: DESARMADO
-
 
 - id: alarma_away_intrusion
   alias: 'Alarma Away Intrusion'

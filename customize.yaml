@@ -17,6 +17,9 @@ sensor.time_utc:
   friendly_name: Hora (UTC)
 sensor.ssl_certificate_expiry:
   friendly_name: SSL Cert
+sensor.last_boot:
+  friendly_name: Último Reinicio del Sistema
+
 #
 # YAHOO WEATHER
 #

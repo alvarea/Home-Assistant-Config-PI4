@@ -14,24 +14,35 @@ default_view:
     - group.estudio_view
     - group.system_view
     - group.config_view
-    - group.alarma_grp
-    - group.family_home_grp
+    - group.main_alarma_grp
+    - group.main_family_home_grp
+    - group.main_system_grp
 
-family_home_grp:
+main_system_grp:
+  name: Estado del Sistema
+  view: no
+  entities:
+    - sensor.last_boot
+    - sensor.time
+    - sun.sun
+    - sensor.sun_next_rising
+    - sensor.sun_next_setting
+
+main_alarma_grp:
+  name: Alarma
+  view: no
+  entities:
+    - alarm_control_panel.ha
+    - input_boolean.alarm_mode
+    - input_select.home_last_change
+
+main_family_home_grp:
   name: Family @ Home?
   entities:
     - input_boolean.home_mfc
     - input_boolean.home_aac
     - input_boolean.home_paf
     - input_boolean.home_aaf
-
-family_track_grp:
-  name: Family Tracking
-  entities:
-    - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-    - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MF
-    - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
-    - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
 
 alarma_view:
   name: Panel Control Alarma
@@ -47,7 +58,6 @@ alarma_grp:
   entities:
     - alarm_control_panel.ha
     - input_boolean.alarm_mode
-    - input_select.home_last_change
 
 sensor_entrada_grp:
   name: Sensores Entrada
@@ -66,6 +76,15 @@ tracking_view:
     - group.track_aac_grp
     - group.track_mfc_grp
     - group.track_child_grp
+
+# NO USADO AHORA
+family_geofency_grp:
+  name: Family Tracking
+  entities:
+    - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
+    - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MF
+    - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+    - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
 
 track_aac_grp:
   name: Agustín Tracking
@@ -215,11 +234,10 @@ system_view:
 hassbian_grp:
   name: System Status
   entities:
-    - sensor.last_boot
     - sensor.uptime
     - sensor.time
     - sensor.ssl_certificate_expiry
-    - sun.sun
+
 
 pi3status_grp:
   name: PI3 System Status
@@ -250,7 +268,9 @@ config_view:
   icon: mdi:settings
   entities:
       - group.notify_telegram_grp
-      - group.msg_control_grp
+      - group.automation_grp
+      #- group.msg_control_grp
+
 
 notify_telegram_grp:
   name: Notificaciones Telegram
@@ -269,3 +289,15 @@ msg_control_grp:
     - input_text.mensaje_tit
     - input_text.mensaje_msg
 
+automation_grp:
+  name: Reglas Control Luces
+  view: no
+  entities:
+    - automation.l01_luces_on_entrada_segun_sensor
+    - automation.l02_luces_off_entrada_segun_sensor
+    - automation.l03_luces_on_exterior_puesta_sol_15m
+    - automation.l04_luces_off_exterior_si_family_home_05m
+    - automation.l05_luces_off_exterior_amanecer_180m
+    - automation.l06_luces_on_salon_puesta_sol_30m
+    - automation.l07_luces_off_salon_si_medianoche
+    - automation.l08_luces_off_home_si_es_de_dia
