@@ -268,7 +268,8 @@ config_view:
   icon: mdi:settings
   entities:
       - group.notify_telegram_grp
-      - group.automation_grp
+      - group.reglas_luces_grp
+      - group.reglas_alarma_grp
       #- group.msg_control_grp
 
 
@@ -289,7 +290,18 @@ msg_control_grp:
     - input_text.mensaje_tit
     - input_text.mensaje_msg
 
-automation_grp:
+reglas_alarma_grp:
+  name: Reglas Control Alarma/Tracking
+  view: no
+  entities:
+    - automation.a1_intrusion_con_alarma_armado_away
+    - automation.a2_intrusion_con_alarma_armado_parcial
+    - automation.a3_alarma_boton_panico_on
+    - automation.a4_alarma_boton_panico_off
+    - automation.f01_family_away
+    - automation.f02_family_at_home
+
+reglas_luces_grp:
   name: Reglas Control Luces
   view: no
   entities:

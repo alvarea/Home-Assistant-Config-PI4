@@ -296,11 +296,11 @@
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-- id: family_away
-  alias: 'Family Away'
+- id: F01_family_away
+  alias: 'F01 Family Away'
   trigger:
     platform: state
-    entity_id: group.family_home_grp
+    entity_id: group.main_family_home_grp
     from: 'on'
     to: 'off'
   action:
@@ -325,18 +325,18 @@
 
             >>> ALARMA: Armado Total
 
-- id: family_at_home
-  alias: 'Family at Home'
+- id: F02_family_at_home
+  alias: 'F02 Family at Home'
   trigger:
     - platform: state
-      entity_id: group.family_home_grp
+      entity_id: group.main_family_home_grp
       from: 'off'
       to: 'on'
   action:
     # Script encendido Luz piloto si es de noche
     - service: script.turn_on
       entity_id: script.luces_on_family_home
-    # Servicio Alarma Armado Total
+    # Servicio Alarma Desarmado
     - service: alarm_control_panel.alarm_disarm
       data:
         entity_id: alarm_control_panel.ha
@@ -353,6 +353,179 @@
             >>> LUCES: Luces entrada On
 
             >>> ALARMA: Desarmado
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# ALARMA: Armado y Control de la Alarma                                       #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+
+- id: A1_intrusion_alarma_away
+  alias: 'A1 Intrusión con Alarma Armado Away'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e55903
+      from: 'off'
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: alarm_control_panel.ha
+      state: armed_away
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.alarm_mode
+    - service: xiaomi_aqara.play_ringtone
+      data:
+        gw_mac: 78:11:DC:B7:88:FA
+        ringtone_id: 1
+        ringtone_vol: 100
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA*'
+          message: >
+            >>> URGENTE: ALARMA EN CASA
+
+            >>> ZONA: Entrada
+
+            >>> SIRENA: Sirena sonando
+
+    # Script Envio Fotos Cámaras Telegram
+    - service: script.turn_on
+      entity_id: script.telegram_alarm_send_photo
+
+- id: A2_intrusion_alarma_home
+  alias: 'A2 Intrusión con Alarma Armado Parcial'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c
+      from: 'off'
+      to: 'on'
+  condition:
+    - condition: state
+      entity_id: alarm_control_panel.ha
+      state: armed_home
+  action:
+    - service: homeassistant.turn_on
+      entity_id: input_boolean.alarm_mode
+    - service: xiaomi_aqara.play_ringtone
+      data:
+        gw_mac: 78:11:DC:B7:88:FA
+        ringtone_id: 1
+        ringtone_vol: 100
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA*'
+          message: >
+            >>> URGENTE: ALARMA EN CASA
+
+            >>> ZONA: Entrada
+
+            >>> SIRENA: Sirena sonando
+
+    # Script Envio Fotos Cámaras Telegram
+    - service: script.turn_on
+      entity_id: script.telegram_alarm_send_photo
+
+
+- id: A3_alarma_boton_panico_on
+  alias: 'A3 Alarma Boton Panico On'
+  trigger:
+    platform: state
+    entity_id: input_boolean.alarm_mode
+    from: 'off'
+    to: 'on'
+  action:
+    - service: xiaomi_aqara.play_ringtone
+      data:
+        gw_mac: 78:11:DC:B7:88:FA
+        ringtone_id: 1
+        ringtone_vol: 100
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA*'
+          message: >
+            >>> URGENTE: BOTON PANICO ACTIVADO
+
+
+- id: A4_alarma_boton_panico_off
+  alias: 'A4 Alarma Boton Panico Off'
+  trigger:
+    platform: state
+    entity_id: input_boolean.alarm_mode
+    from: 'on'
+    to: 'off'
+  action:
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: 78:11:DC:B7:88:FA
+    # Servicio Alarma Desarmado
+    - service: alarm_control_panel.alarm_disarm
+      data:
+        entity_id: alarm_control_panel.ha
+        code: !secret alarm_control_code
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA*'
+          message: >
+            >>> URGENTE: BOTON PANICO APAGADO
+
+            >>> PANEL ALARMA: DESARMADO
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# CONTROL DEL SISTEMA                                                         #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+
+#
+# CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
+#
+- id: ssl_expiry_notification
+  alias: 'SSL expiry notification'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ssl_certificate_expiry
+    below: 21
+  action:
+    service: script.turn_on
+    entity_id: script.notifica_evento
+    data:
+      variables:
+        title: '*CERTIFICADO SSL*'
+        message: >
+          >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
+
+
+- id: alarma_prosegur_device_check
+  alias: 'Prosegur Device Tracking Check'
+  trigger:
+    platform: state
+    entity_id: device_tracker.prosegur
+    from: 'home'
+    to: 'away'
+    for: '05:00:00'
+  action:
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA*'
+          message: >
+            >>> URGENTE HA: Prosegur No Responde (NMAP)
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -434,7 +607,7 @@
   alias: 'L04 Luces Off Exterior Si Family Home +05m'
   trigger:
     - platform: state
-      entity_id: group.family_home_grp
+      entity_id: group.main_family_home_grp
       from: 'off'
       to: 'on'
     - platform: time
@@ -445,7 +618,7 @@
       - condition: time
         after: '00:00:00'
       - condition: state
-        entity_id: group.family_home_grp
+        entity_id: group.main_family_home_grp
         state: 'on'
   action:
     - delay: 0:05
@@ -494,7 +667,7 @@
       offset: "-00:30:00"
   condition:
     condition: state
-    entity_id: group.family_home_grp
+    entity_id: group.main_family_home_grp
     state: 'on'
   action:
     - service: light.turn_on
@@ -568,127 +741,3 @@
             >>> EVENTO: Luces Encendidas por Corte de Luz
 
             >>> LUCES: Apagado General de Luces
-
-#-----------------------------------------------------------------------------#
-#                                                                             #
-# ALARMA: Armado y Control de la Alarma                                       #
-#                                                                             #
-#-----------------------------------------------------------------------------#
-
-- id: alarma_prosegur_device_check
-  alias: 'Prosegur Device Tracking Check'
-  trigger:
-    platform: state
-    entity_id: device_tracker.prosegur
-    from: 'home'
-    to: 'away'
-    for: '05:00:00'
-  action:
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
-      data:
-        variables:
-          title: '*ALARMA*'
-          message: >
-            >>> URGENTE HA: Prosegur No Responde (NMAP)
-
-- id: alarma_boton_panico_on
-  alias: 'Alarma Boton Panico On'
-  trigger:
-    platform: state
-    entity_id: input_boolean.alarm_mode
-    from: 'off'
-    to: 'on'
-  action:
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: 78:11:DC:B7:88:FA
-        ringtone_id: 1
-        ringtone_vol: 100
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
-      data:
-        variables:
-          title: '*ALARMA*'
-          message: >
-            >>> URGENTE: ALARMA EN CASA
-
-- id: alarma_boton_panico_off
-  alias: 'Alarma Boton Panico Off'
-  trigger:
-    platform: state
-    entity_id: input_boolean.alarm_mode
-    from: 'on'
-    to: 'off'
-  action:
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: 78:11:DC:B7:88:FA
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
-      data:
-        variables:
-          title: '*ALARMA*'
-          message: >
-            >>> URGENTE: DESARMADO
-
-- id: alarma_away_intrusion
-  alias: 'Alarma Away Intrusion'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e55903
-      to: 'on'
-    - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c
-      to: 'on'
-  condition:
-    - condition: state
-      entity_id: alarm_control_panel.ha
-      state: armed_away
-  action:
-    - service: homeassistant.turn_on
-      entity_id: input_boolean.alarm_mode
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: 78:11:DC:B7:88:FA
-        ringtone_id: 1
-        ringtone_vol: 100
-    # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
-      data:
-        variables:
-          title: '*ALARMA*'
-          message: >
-            >>> URGENTE: ALARMA EN CASA
-
-            >>> ZONA: Sensor Entrada
-
-            >>> SIRENA: Sirena sonando
-    # Script Envio Fotos Cámaras Telegram
-    - service: script.turn_on
-      entity_id: script.telegram_alarm_send_photo
-
-#-----------------------------------------------------------------------------#
-#                                                                             #
-# CONTROL DEL SISTEMA                                                         #
-#                                                                             #
-#-----------------------------------------------------------------------------#
-
-#
-# CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
-#
-- id: ssl_expiry_notification
-  alias: 'SSL expiry notification'
-  trigger:
-    platform: numeric_state
-    entity_id: sensor.ssl_certificate_expiry
-    below: 21
-  action:
-    service: script.turn_on
-    entity_id: script.notifica_evento
-    data:
-      variables:
-        title: 'CERTIFICADO SSL'
-        message: >
-          >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
