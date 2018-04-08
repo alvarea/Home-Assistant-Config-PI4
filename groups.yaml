@@ -304,6 +304,7 @@ reglas_tracking_grp:
   name: Reglas Tracking
   view: no
   entities:
+    - input_select.sleep_at_home
     - automation.t01_family_away
     - automation.t02_family_at_home
 

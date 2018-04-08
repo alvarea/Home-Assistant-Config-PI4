@@ -225,6 +225,15 @@ input_select:
      - 'Paloma'
     initial: 'Agustín'
     icon: mdi:home-account
+  sleep_at_home:
+    name: Duermen en Casa
+    options:
+     - '1'
+     - '2'
+     - '3'
+     - '4'
+    initial: '4'
+    icon: mdi:home-account
 
 # AAC. Mensaje para Notificaciones
 input_text:

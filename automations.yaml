@@ -134,6 +134,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Malen
+    - service: python_script.people_home
 
 - id: update_tracker_to_home_mfc
   alias: 'Away to Home MFC'
@@ -157,6 +158,8 @@
       data:
         entity_id: input_select.home_last_change
         option: Malen
+    - service: python_script.people_home
+
 #
 # PALOMA: Control Presencia => input_boolean.home_paf
 #
@@ -178,6 +181,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Paloma
+    - service: python_script.people_home
 
 - id: update_nmap_to_not_home_paf
   alias: 'Home 2 Away PAF NMAP'
@@ -204,6 +208,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Paloma
+    - service: python_script.people_home
 
 - id: update_tracker_to_home_paf
   alias: 'Away to Home PAF'
@@ -225,6 +230,8 @@
       data:
         entity_id: input_select.home_last_change
         option: Paloma
+    - service: python_script.people_home
+
 #
 # AGU: Control Presencia => input_boolean.agu
 #
@@ -246,6 +253,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agu
+    - service: python_script.people_home
 
 - id: update_nmap_to_not_home_aaf
   alias: 'Home 2 Away AAF NMAP'
@@ -272,6 +280,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agu
+    - service: python_script.people_home
 
 - id: update_tracker_to_home_aaf
   alias: 'Away to Home AAF'
@@ -293,6 +302,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agu
+    - service: python_script.people_home
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -611,10 +621,9 @@
 - id: L04_luces_off_exterior_family_home
   alias: 'L04 Luces Off Exterior Si Family Home +05m'
   trigger:
-    #- platform: state
-    #  entity_id: group.family_home_grp
-    #  from: 'off'
-    #  to: 'on'
+    - platform: state
+      entity_id: sensor.people_home
+      to: '3'
     - platform: time
       at: '00:01:00'
   condition:
