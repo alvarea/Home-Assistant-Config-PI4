@@ -29,6 +29,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agustín
+    - service: python_script.people_home
 
 - id: update_nmap_to_not_home_aac
   alias: 'Home 2 Away AAC NMAP'
@@ -55,6 +56,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agustín
+    - service: python_script.people_home
 
 - id: update_tracker_to_home_aac
   alias: 'Away to Home AAC'
@@ -78,6 +80,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agustín
+    - service: python_script.people_home
 
 
 #
@@ -104,6 +107,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Malen
+    - service: python_script.people_home
 
 - id: update_nmap_to_not_home_mfc
   alias: 'Home 2 Away MFC NMAP'
@@ -292,15 +296,16 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# FAMILY AT HOME: Control Home/Away                                           #
+# TRACKING FAMILY AT HOME: Control Home/Away                                  #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-- id: F01_family_away
-  alias: 'F01 Family Away'
+- id: T01_family_away
+  alias: 'T01 Family Away'
   trigger:
+    # Ya no hay nadie en casa
     platform: state
-    entity_id: group.main_family_home_grp
+    entity_id: group.family_home_grp
     from: 'on'
     to: 'off'
   action:
@@ -317,7 +322,7 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*FAMILY@HOME: NO*'
+          title: '*FAMILY_HOME: NO*'
           message: >
             >>> EVENTO: Último en Salir {{ states('input_select.home_last_change') }}
 
@@ -325,11 +330,12 @@
 
             >>> ALARMA: Armado Total
 
-- id: F02_family_at_home
-  alias: 'F02 Family at Home'
+- id: T02_family_at_home
+  alias: 'T02 Family at Home'
   trigger:
+    # Hay alguien en casa
     - platform: state
-      entity_id: group.main_family_home_grp
+      entity_id: group.family_home_grp
       from: 'off'
       to: 'on'
   action:
@@ -346,7 +352,7 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*FAMILY@HOME: SI*'
+          title: '*FAMILY_HOME: SI*'
           message: >
             >>> EVENTO: Ha entrado {{ states('input_select.home_last_change') }}
 
@@ -359,7 +365,6 @@
 # ALARMA: Armado y Control de la Alarma                                       #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-
 - id: A1_intrusion_alarma_away
   alias: 'A1 Intrusión con Alarma Armado Away'
   trigger:
@@ -606,10 +611,10 @@
 - id: L04_luces_off_exterior_family_home
   alias: 'L04 Luces Off Exterior Si Family Home +05m'
   trigger:
-    - platform: state
-      entity_id: group.main_family_home_grp
-      from: 'off'
-      to: 'on'
+    #- platform: state
+    #  entity_id: group.family_home_grp
+    #  from: 'off'
+    #  to: 'on'
     - platform: time
       at: '00:01:00'
   condition:
@@ -617,8 +622,9 @@
     conditions:
       - condition: time
         after: '00:00:00'
+      # Hay alguien en casa
       - condition: state
-        entity_id: group.main_family_home_grp
+        entity_id: group.family_home_grp
         state: 'on'
   action:
     - delay: 0:05
@@ -631,16 +637,16 @@
         variables:
           title: '*LUCES: OFF*'
           message: >
-            >>> EVENTO: Medianoche y Family@Home
+            >>> EVENTO: Es Medianoche
 
             >>> LUCES: Alumbrado Exterior Off
 
 - id: L05_luces_off_exterior_sunrise
-  alias: 'L05 Luces Off Exterior Amanecer -180m'
+  alias: 'L05 Luces Off Exterior Amanecer -240m'
   trigger:
     - platform: sun
       event: sunrise
-      offset: "-03:00:00"
+      offset: "-04:00:00"
   condition:
     condition: state
     entity_id: switch.wall_switch_right_158d0002236e75
@@ -655,19 +661,20 @@
         variables:
           title: '*LUCES: OFF*'
           message: >
-            >>> EVENTO: Amanecer en 2 horas
+            >>> EVENTO: Amanecer en 4 horas
 
             >>> LUCES: Alumbrado Exterior Off
 
 - id: L06_luces_on_salon_sunset
-  alias: 'L06 Luces On Salon Puesta Sol -30m'
+  alias: 'L06 Luces On Salon Puesta Sol -1h'
   trigger:
     - platform: sun
       event: sunset
-      offset: "-00:30:00"
+      offset: "-01:00:00"
   condition:
+    # Hay alguien en casa
     condition: state
-    entity_id: group.main_family_home_grp
+    entity_id: group.family_home_grp
     state: 'on'
   action:
     - service: light.turn_on
@@ -679,7 +686,7 @@
         variables:
           title: '*LUCES: ON*'
           message: >
-            >>> EVENTO: El sol se pone en 30min
+            >>> EVENTO: El sol se pone en 1hora
 
             >>> LUCES: Luces Salón ON
 

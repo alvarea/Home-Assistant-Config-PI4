@@ -14,11 +14,11 @@ default_view:
     - group.estudio_view
     - group.system_view
     - group.config_view
-    - group.main_alarma_grp
-    - group.main_family_home_grp
-    - group.main_system_grp
+    - group.alarma_grp
+    - group.family_home_grp
+    - group.system_grp
 
-main_system_grp:
+system_grp:
   name: Estado del Sistema
   view: no
   entities:
@@ -28,7 +28,7 @@ main_system_grp:
     - sensor.sun_next_rising
     - sensor.sun_next_setting
 
-main_alarma_grp:
+alarma_grp:
   name: Alarma
   view: no
   entities:
@@ -36,9 +36,10 @@ main_alarma_grp:
     - input_boolean.alarm_mode
     - input_select.home_last_change
 
-main_family_home_grp:
+family_home_grp:
   name: Family @ Home?
   entities:
+    - sensor.people_home
     - input_boolean.home_mfc
     - input_boolean.home_aac
     - input_boolean.home_paf
@@ -49,10 +50,10 @@ alarma_view:
   icon: mdi:security-home
   view: yes
   entities:
-    - group.alarma_grp
+    - group.alarm_panel_grp
     - group.sensor_entrada_grp
 
-alarma_grp:
+alarm_panel_grp:
   name: Alarma
   view: no
   entities:
@@ -269,9 +270,9 @@ config_view:
   entities:
       - group.notify_telegram_grp
       - group.reglas_luces_grp
+      - group.reglas_tracking_grp
       - group.reglas_alarma_grp
-      #- group.msg_control_grp
-
+      - group.msg_control_grp
 
 notify_telegram_grp:
   name: Notificaciones Telegram
@@ -291,18 +292,23 @@ msg_control_grp:
     - input_text.mensaje_msg
 
 reglas_alarma_grp:
-  name: Reglas Control Alarma/Tracking
+  name: Reglas Alarma
   view: no
   entities:
     - automation.a1_intrusion_con_alarma_armado_away
     - automation.a2_intrusion_con_alarma_armado_parcial
     - automation.a3_alarma_boton_panico_on
     - automation.a4_alarma_boton_panico_off
-    - automation.f01_family_away
-    - automation.f02_family_at_home
+
+reglas_tracking_grp:
+  name: Reglas Tracking
+  view: no
+  entities:
+    - automation.t01_family_away
+    - automation.t02_family_at_home
 
 reglas_luces_grp:
-  name: Reglas Control Luces
+  name: Reglas Luces
   view: no
   entities:
     - automation.l01_luces_on_entrada_segun_sensor

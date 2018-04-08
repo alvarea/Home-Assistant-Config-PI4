@@ -26,6 +26,9 @@ frontend:
 # Enables configuration UI
 config:
 
+# AAC. Enable Python Scripts
+python_script:
+
 http:
   api_password: !secret http_api_password
   ssl_certificate: /etc/letsencrypt/live/alvarea.duckdns.org/fullchain.pem
@@ -290,7 +293,7 @@ sensor:
       - temp_max
       - wind_speed
       - humidity
-#
+
 # AAC. Platform Template
 #
   - platform: template
@@ -359,7 +362,7 @@ sensor:
                         {% else %}
                            battery-outline
                         {% endif %}'
-
+#
 # AAC. XIAOMI AQARA GATEWAY
 xiaomi_aqara:
   gateways:
