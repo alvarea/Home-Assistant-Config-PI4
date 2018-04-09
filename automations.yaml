@@ -505,6 +505,14 @@
 # CONTROL DEL SISTEMA                                                         #
 #                                                                             #
 #-----------------------------------------------------------------------------#
+- id: hass_startup_automation
+  alias: hass_startup_scripts
+  trigger:
+    platform: homeassistant
+    # Event can also be 'shutdown'
+    event: start
+  action:
+    - service: python_script.people_home
 
 #
 # CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.

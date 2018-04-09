@@ -225,7 +225,7 @@ input_select:
      - 'Paloma'
     initial: 'Agustín'
     icon: mdi:home-account
-  sleep_at_home:
+  family_sleep_home:
     name: Duermen en Casa
     options:
      - '1'
@@ -307,16 +307,28 @@ sensor:
 #
   - platform: template
     sensors:
+      # Todos en Casa:  IF sensor.family_home == input_select.family_sleep_home TRUE
+      family_all_home:
+        value_template: >-
+          {% if states.sensor.family_home|int == states.input_select.family_sleep_home|int %}
+            on
+          {% else %}
+            off
+          {% endif %}
+        friendly_name: 'Todos en Casa'
+        icon_template: mdi:home-heart
+      # Sol Próximo Aterdecer
       sun_next_setting:
         value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting)  | timestamp_custom("%H:%M") }}'
         friendly_name: 'Próxima Puesta de Sol'
         icon_template: mdi:weather-sunset-down
+      # Sol Próximo Amanecer
       sun_next_rising:
         value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising)  | timestamp_custom("%H:%M") }}'
         friendly_name: 'Próxima Salida de Sol'
         icon_template: mdi:weather-sunset-up
+      # Batería Sensor Xiaomi Entrada. binary_sensor.motion_sensor_158d0001e55903
       bateria_presencia_entrada:
-        # binary_sensor.motion_sensor_158d0001e55903
         value_template: "{{ states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level|default(-1)|int if states.binary_sensor.motion_sensor_158d0001e55903 is not none }}"
         friendly_name: 'Batería Sensor Presencia Entrada'
         unit_of_measurement: '%'

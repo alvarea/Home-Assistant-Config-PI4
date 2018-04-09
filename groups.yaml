@@ -15,6 +15,7 @@ default_view:
     - group.system_view
     - group.config_view
     - group.alarma_grp
+    - group.family_status_grp
     - group.family_home_grp
     - group.system_grp
 
@@ -34,12 +35,18 @@ alarma_grp:
   entities:
     - alarm_control_panel.ha
     - input_boolean.alarm_mode
+
+family_status_grp:
+  name: Family Status
+  entities:
+    - sensor.family_home
+    - sensor.family_all_home
+    - input_select.family_sleep_home
     - input_select.home_last_change
 
 family_home_grp:
   name: Family @ Home?
   entities:
-    - sensor.people_home
     - input_boolean.home_mfc
     - input_boolean.home_aac
     - input_boolean.home_paf
@@ -304,7 +311,6 @@ reglas_tracking_grp:
   name: Reglas Tracking
   view: no
   entities:
-    - input_select.sleep_at_home
     - automation.t01_family_away
     - automation.t02_family_at_home
 

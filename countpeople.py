@@ -8,7 +8,7 @@ for entity_id in hass.states.entity_ids('device_tracker'):
         state.state == 'home'):
             home = home + 1
 
-hass.states.set('sensor.people_home', home, {
+hass.states.set('sensor.family_home', home, {
     'unit_of_measurement': 'personas',
     'friendly_name': '¿Gente en Casa?'
 })
