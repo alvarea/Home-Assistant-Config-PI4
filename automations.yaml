@@ -29,7 +29,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agustín
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 - id: update_nmap_to_not_home_aac
   alias: 'Home 2 Away AAC NMAP'
@@ -56,7 +56,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agustín
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 - id: update_tracker_to_home_aac
   alias: 'Away to Home AAC'
@@ -80,8 +80,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agustín
-    - service: python_script.people_home
-
+    - service: python_script.countpeople
 
 #
 # MALEN: Control Presencia =>  input_boolean.home_mfc
@@ -107,7 +106,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Malen
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 - id: update_nmap_to_not_home_mfc
   alias: 'Home 2 Away MFC NMAP'
@@ -134,7 +133,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Malen
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 - id: update_tracker_to_home_mfc
   alias: 'Away to Home MFC'
@@ -158,7 +157,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Malen
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 #
 # PALOMA: Control Presencia => input_boolean.home_paf
@@ -181,7 +180,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Paloma
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 - id: update_nmap_to_not_home_paf
   alias: 'Home 2 Away PAF NMAP'
@@ -208,7 +207,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Paloma
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 - id: update_tracker_to_home_paf
   alias: 'Away to Home PAF'
@@ -230,7 +229,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Paloma
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 #
 # AGU: Control Presencia => input_boolean.agu
@@ -253,7 +252,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agu
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 - id: update_nmap_to_not_home_aaf
   alias: 'Home 2 Away AAF NMAP'
@@ -280,7 +279,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agu
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 - id: update_tracker_to_home_aaf
   alias: 'Away to Home AAF'
@@ -302,7 +301,7 @@
       data:
         entity_id: input_select.home_last_change
         option: Agu
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -512,7 +511,7 @@
     # Event can also be 'shutdown'
     event: start
   action:
-    - service: python_script.people_home
+    - service: python_script.countpeople
 
 #
 # CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
@@ -629,19 +628,21 @@
 - id: L04_luces_off_exterior_family_home
   alias: 'L04 Luces Off Exterior Si Family Home +05m'
   trigger:
+    # Todos duermen y están en casa
     - platform: state
-      entity_id: sensor.people_home
-      to: '3'
+      entity_id: binary_sensor.family_all_home
+      from: 'off'
+      to: 'on'
     - platform: time
       at: '00:01:00'
   condition:
     condition: and
     conditions:
       - condition: time
-        after: '00:00:00'
-      # Hay alguien en casa
+        after: '23:59:00'
+      # Están todos en casa
       - condition: state
-        entity_id: group.family_home_grp
+        entity_id: binary_sensor.family_all_home
         state: 'on'
   action:
     - delay: 0:05

@@ -40,12 +40,12 @@ family_status_grp:
   name: Family Status
   entities:
     - sensor.family_home
-    - sensor.family_all_home
-    - input_select.family_sleep_home
-    - input_select.home_last_change
+    - binary_sensor.family_all_home
+    - sensor.family_sleep_home
+    - sensor.family_last_tracking
 
 family_home_grp:
-  name: Family @ Home?
+  name: Family Home?
   entities:
     - input_boolean.home_mfc
     - input_boolean.home_aac
@@ -311,6 +311,7 @@ reglas_tracking_grp:
   name: Reglas Tracking
   view: no
   entities:
+    - input_select.family_sleep_home
     - automation.t01_family_away
     - automation.t02_family_at_home
 

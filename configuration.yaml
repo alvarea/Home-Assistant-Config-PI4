@@ -250,9 +250,10 @@ media_player:
   - platform: firetv
     name: FireTV Cocina
 
+
 sensor:
 #
-# AAC. Sensores del Sistema
+# AAC. Sensores Sistema
 #
   - platform: time_date
     display_options:
@@ -279,7 +280,7 @@ sensor:
       - type: swap_use_percent
       - type: last_boot
 #
-# AAC. Sensores de Previsiones de Tiempo
+# AAC. Sensor Previsiones de Tiempo
 #
   - platform: yweather
     woeid: 90231690
@@ -302,21 +303,21 @@ sensor:
       - temp_max
       - wind_speed
       - humidity
-
-# AAC. Platform Template
+#
+# AAC. Sensor Platform Template
 #
   - platform: template
     sensors:
-      # Todos en Casa:  IF sensor.family_home == input_select.family_sleep_home TRUE
-      family_all_home:
-        value_template: >-
-          {% if states.sensor.family_home|int == states.input_select.family_sleep_home|int %}
-            on
-          {% else %}
-            off
-          {% endif %}
-        friendly_name: 'Todos en Casa'
-        icon_template: mdi:home-heart
+      # Gente que duerme en casa
+      family_sleep_home:
+        value_template: "{{ states('input_select.family_sleep_home') }}"
+        friendly_name: 'Duermen en Casa'
+        icon_template: mdi:home-variant
+      # Último Tracking
+      family_last_tracking:
+        value_template: "{{ states('input_select.home_last_change') }}"
+        friendly_name: 'Último Tracking'
+        icon_template: mdi:home-map-marker
       # Sol Próximo Aterdecer
       sun_next_setting:
         value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting)  | timestamp_custom("%H:%M") }}'
@@ -384,7 +385,28 @@ sensor:
                            battery-outline
                         {% endif %}'
 #
+# AAC. Sensores Binarios
+#
+#{{ states.sensor.family_home|int == states.sensor.family_sleep_home|int }}
+binary_sensor:
+  - platform: template
+    sensors:
+      # Todos en Casa:  IF sensor.family_home >= sensor.family_sleep_home TRUE
+      family_all_home:
+        value_template: >-
+          {% if states('sensor.family_home')|int >= states('sensor.family_sleep_home')|int %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: 'Todos en Casa'
+        icon_template: mdi:home-map-marker
+        entity_id:
+          - sensor.family_home
+          - sensor.family_sleep_home
+#
 # AAC. XIAOMI AQARA GATEWAY
+#
 xiaomi_aqara:
   gateways:
     - mac: 78:11:DC:B7:88:FA
@@ -410,12 +432,19 @@ alarm_control_panel:
     disarmed:
       trigger_time: 0
 
-
-# AAC. PROSEGUR
-#alarm_control_panel:
-#  - platform: totalconnect
-#    username: agustin.alvarezconesa@gmail.com
-#    password: Casuario2018
+#
+# AAC. Restaurar valores tras reinicio
+#
+#recorder:
+#  include:
+#    domains:
+#      - binary_sensor
+#      - sensor
+#      - input_boolean
+#      - input_text
+#      - input_select
+#      - switch
+#      - media_player
 
 # AAC. TV Sony
 # media_player:
