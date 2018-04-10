@@ -43,6 +43,7 @@ family_status_grp:
     - binary_sensor.family_all_home
     - sensor.family_sleep_home
     - sensor.family_last_tracking
+    #- input_text.family_last_tracking
 
 family_home_grp:
   name: Family Home?
@@ -323,7 +324,8 @@ reglas_luces_grp:
     - automation.l02_luces_off_entrada_segun_sensor
     - automation.l03_luces_on_exterior_puesta_sol_15m
     - automation.l04_luces_off_exterior_si_family_home_05m
-    - automation.l05_luces_off_exterior_amanecer_180m
-    - automation.l06_luces_on_salon_puesta_sol_30m
-    - automation.l07_luces_off_salon_si_medianoche
-    - automation.l08_luces_off_home_si_es_de_dia
+    - automation.l05_luces_off_exterior_amanecer_240m
+    - automation.l06_luces_on_salon_puesta_sol_1h
+    - automation.l07_luces_off_si_medianoche
+    - automation.l08_luces_off_al_amanecer_2h
+    - automation.l09_luces_off_al_amanecer

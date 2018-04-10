@@ -216,15 +216,6 @@ input_select:
      - 'IOS'
     initial: Telegram
     icon: mdi:bell-ring
-  home_last_change:
-    name: Last Home Tracking
-    options:
-     - 'Agustín'
-     - 'Malen'
-     - 'Agu'
-     - 'Paloma'
-    initial: 'Agustín'
-    icon: mdi:home-account
   family_sleep_home:
     name: Duermen en Casa
     options:
@@ -243,7 +234,10 @@ input_text:
   mensaje_msg:
     name: Cuerpo Notificaciones
     initial: <OK>
-
+  family_last_tracking:
+    name: Input Text Último Tracking
+    initial: ''
+    icon: mdi:home-map-marker
 
 # AAC. Mediaplayer FireTV
 media_player:
@@ -315,8 +309,8 @@ sensor:
         icon_template: mdi:home-variant
       # Último Tracking
       family_last_tracking:
-        value_template: "{{ states('input_select.home_last_change') }}"
-        friendly_name: 'Último Tracking'
+        value_template: "{{ states('input_text.family_last_tracking') }}"
+        friendly_name: 'Fámily Último Tracking'
         icon_template: mdi:home-map-marker
       # Sol Próximo Aterdecer
       sun_next_setting:

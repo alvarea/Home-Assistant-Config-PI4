@@ -119,12 +119,11 @@ luces_on_family_home:
     - service: light.turn_on
       entity_id: light.hue_entrada
 
-luces_off_family_away:
-  alias: 'Family Away Luces OFF'
+luces_off:
+  alias: 'Luces Central OFF'
   sequence:
     - service: light.turn_off
       entity_id:
-        - group.luces_entrada_grp
         - group.luces_cocina_grp
         - group.luces_salon_grp
         - group.luces_estudio_grp
