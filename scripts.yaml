@@ -119,6 +119,7 @@ luces_on_family_home:
     - service: light.turn_on
       entity_id: light.hue_entrada
 
+# Apagado General Interior Casa menos Entrada/Pasillo
 luces_off:
   alias: 'Luces Central OFF'
   sequence:
@@ -127,3 +128,4 @@ luces_off:
         - group.luces_cocina_grp
         - group.luces_salon_grp
         - group.luces_estudio_grp
+

@@ -310,7 +310,7 @@ sensor:
       # Último Tracking
       family_last_tracking:
         value_template: "{{ states('input_text.family_last_tracking') }}"
-        friendly_name: 'Fámily Último Tracking'
+        friendly_name: 'Family Tracking'
         icon_template: mdi:home-map-marker
       # Sol Próximo Aterdecer
       sun_next_setting:

@@ -23,11 +23,12 @@ system_grp:
   name: Estado del Sistema
   view: no
   entities:
-    - sensor.last_boot
     - sensor.time
     - sun.sun
     - sensor.sun_next_rising
     - sensor.sun_next_setting
+    - sensor.last_boot
+    - sensor.ssl_certificate_expiry
 
 alarma_grp:
   name: Alarma
@@ -236,21 +237,13 @@ system_view:
   icon: mdi:server
   name: System Status
   entities:
-    - group.hassbian_grp
     - group.pi3status_grp
     - group.track_nmap_grp
-
-hassbian_grp:
-  name: System Status
-  entities:
-    - sensor.uptime
-    - sensor.time
-    - sensor.ssl_certificate_expiry
-
 
 pi3status_grp:
   name: PI3 System Status
   entities:
+    - sensor.uptime
     - sensor.load_15m
     - sensor.processor_use
     - sensor.memory_use_percent
@@ -327,5 +320,4 @@ reglas_luces_grp:
     - automation.l05_luces_off_exterior_amanecer_240m
     - automation.l06_luces_on_salon_puesta_sol_1h
     - automation.l07_luces_off_si_medianoche
-    - automation.l08_luces_off_al_amanecer_2h
-    - automation.l09_luces_off_al_amanecer
+    - automation.l08_luces_off_al_amanecer

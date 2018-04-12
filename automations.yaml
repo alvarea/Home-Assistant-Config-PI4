@@ -336,11 +336,7 @@
         variables:
           title: '*FAMILY_HOME: NO*'
           message: >
-            >>> EVENTO: Último en Salir {{ states('input_text.family_last_tracking') }}
-
-            >>> LUCES: Luces interior Off
-
-            >>> ALARMA: Armado Total
+            >>> EVENTO: Último en Salir {{ states('sensor.family_last_tracking') }}
 
 - id: T02_family_at_home
   alias: 'T02 Family at Home'
@@ -366,11 +362,7 @@
         variables:
           title: '*FAMILY_HOME: SI*'
           message: >
-            >>> EVENTO: Ha entrado {{ states('input_text.family_last_tracking') }}
-
-            >>> LUCES: Luces entrada On
-
-            >>> ALARMA: Desarmado
+            >>> EVENTO: Último en Entrar {{ states('sensor.family_last_tracking') }}
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -658,12 +650,12 @@
         variables:
           title: '*LUCES: OFF*'
           message: >
-            >>> EVENTO: Es Medianoche
+            >>> EVENTO: Es Medianoche y todos en casa
 
             >>> LUCES: Alumbrado Exterior Off
 
 - id: L05_luces_off_exterior_sunrise
-  alias: 'L05 Luces Off Exterior Amanecer -240m'
+  alias: 'L05 Luces Off Exterior Amanecer -4h'
   trigger:
     - platform: sun
       event: sunrise
@@ -709,7 +701,7 @@
           message: >
             >>> EVENTO: El sol se pone en 1hora
 
-            >>> LUCES: Luces Salón ON
+            >>> LUCES: Luces Salón On
 
 - id: L07_luces_off_midnight
   alias: 'L07 Luces Off si Medianoche'
@@ -717,7 +709,7 @@
     - platform: time
       at: "00:00:00"
   action:
-    # Script Luces Central Apagado Total
+    # Script Luces Apagado Interior Casa
     - service: script.turn_on
       entity_id: script.luces_off
     # Notifica a Familia
@@ -729,19 +721,16 @@
           message: >
             >>> EVENTO: Medianoche
 
-            >>> LUCES: Luces Off
+            >>> LUCES: Luces Interior Off
 
 - id: L08_luces_off_home_sunrise
-  alias: 'L08 Luces Off Al Amanecer -2h'
+  alias: 'L08 Luces Off Al Amanecer'
   trigger:
     - platform: sun
       event: sunrise
-      offset: "-02:00:00"
   condition:
-    condition: and
+    condition: or
     conditions:
-      - condition: time
-        before: '15:00:00'
       - condition: state
         entity_id: group.luces_salon_grp
         state: 'on'
@@ -752,41 +741,7 @@
         entity_id: group.luces_cocina_grp
         state: 'on'
   action:
-    # Script Luces Central Apagado Total
-    - service: script.turn_on
-      entity_id: script.luces_off
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*LUCES: OFF*'
-          message: >
-            >>> EVENTO: Luces encendidas al amanecer -2h
-
-            >>> LUCES: Apagado total
-
-- id: L09_luces_off_home_sunrise
-  alias: 'L09 Luces Off Al Amanecer'
-  trigger:
-    - platform: sun
-      event: sunrise
-  condition:
-    condition: and
-    conditions:
-      - condition: time
-        before: '15:00:00'
-      - condition: state
-        entity_id: group.luces_salon_grp
-        state: 'on'
-      - condition: state
-        entity_id: group.luces_estudio_grp
-        state: 'on'
-      - condition: state
-        entity_id: group.luces_cocina_grp
-        state: 'on'
-  action:
-    # Script Luces Central Apagado Total
+    # Script Luces Apagado Interior Casa
     - service: script.turn_on
       entity_id: script.luces_off
     # Notifica a Familia
