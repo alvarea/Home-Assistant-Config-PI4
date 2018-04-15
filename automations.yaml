@@ -5,6 +5,71 @@
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
+###############################################################
+## UPDATE META TRACKER Presence
+################################################################
+
+# NMAP ==> prob_given_true: 0.8 - prob_given_false: 0.2
+#   - entity_id: device_tracker.aac_iphone_nmap
+#   - entity_id: device_tracker.mfc_iphone_nmap
+#   - entity_id: 'device_tracker.pi_rashmiphone'
+#   - entity_id: 'device_tracker.pi_alokphone'
+
+# IOS APP ==> prob_given_true: 0.99 - prob_given_false: 0.10
+#   - device_tracker.aac_ios
+#   - device_tracker.mfc_ios
+#   - entity_id: 'device_tracker.rashmiappiphone'
+#   - entity_id: 'device_tracker.alokiosiphone'
+
+# OWNTRACK ==> prob_given_true: 0.99 - prob_given_false: 0.4
+#   - device_tracker.aac_iphone_owntrack
+#   - device_tracker.mfc_iphone_owntrack
+#   - entity_id: 'device_tracker.rashmisiphone'
+#   - entity_id: 'device_tracker.myiphone'
+
+# GEOFENCY ==> prob_given_true: 0.99 - prob_given_false: 0.1
+#   - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
+#   - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 # MFC
+#   - entity_id: 'device_tracker.6b00226793104872afb9248f8a45f957'
+#   - entity_id: 'device_tracker.3a196aa7e85e4ab5bee4e3d3af667a09'
+
+- id: update_meta_tracker
+  alias: "Update Device Meta Tracker"
+  initial_state: 'on'
+  trigger:
+    # Delayed action for router-based and Owntracks trackers that are not 100% reliable
+    - platform: state
+      entity_id:
+        - device_tracker.aac_iphone_nmap      # NMAP
+        - device_tracker.mfc_iphone_nmap      # NMAP
+        - device_tracker.aac_iphone_owntrack  # OWNTRACK
+        - device_tracker.mfc_iphone_owntrack  # OWNTRACK
+      to: 'not_home'
+      for: '00:07:00'
+    - platform: state
+      entity_id:
+        - device_tracker.aac_iphone_owntrack  # OWNTRACK
+        - device_tracker.mfc_iphone_owntrack  # OWNTRACK
+      to: 'home'
+    - platform: state
+      entity_id:
+        - device_tracker.aac_iphone_nmap      # NMAP
+        - device_tracker.mfc_iphone_nmap      # NMAP
+      to: 'home'
+      for: '00:00:30'
+    - platform: state
+      entity_id:
+        - device_tracker.aac_ios                          # IOSAPP
+        - device_tracker.mfc_ios                          # IOSAPP
+        - device_tracker.b8b52a3bf0384e72a268705d9b06e496 # AAC
+        - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 # MFC
+  action:
+    - service: script.updatetracker
+      data_template:
+        entityid: '{{trigger.entity_id}}'
+        fromstate: '{{trigger.from_state.state}}'
+        tostate: '{{trigger.to_state.state}}'
+
 #
 # AGUSTIN: Control Presencia => Booleean input_boolean.acchome
 #
@@ -30,9 +95,6 @@
       entity_id: input_text.family_last_tracking
       data_template:
         value: "{{ states.input_boolean.home_aac.attributes.friendly_name }}"
-        #{% states.input_boolean.home_aac.attributes.friendly_name %}
-        #{{ states('input_boolean.home_aac') }}
-        #"-" as_timestamp(sensor.time)|timestamp_custom("%H:%M") }}
 
 - id: update_nmap_to_not_home_aac
   alias: 'Home 2 Away AAC NMAP'

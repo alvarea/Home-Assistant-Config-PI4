@@ -99,6 +99,8 @@ family_geofency_grp:
 track_aac_grp:
   name: Agustín Tracking
   entities:
+    - binary_sensor.agustin_home
+    - device_tracker.meta_aac
     - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
     - device_tracker.aac_iphone_owntrack
     - device_tracker.aac_ios
@@ -109,6 +111,7 @@ track_aac_grp:
 track_mfc_grp:
   name: Malen Tracking
   entities:
+    - binary_sensor.malen_home
     - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
     - device_tracker.mfc_iphone_owntrack_mfc
     - device_tracker.mfc_ios

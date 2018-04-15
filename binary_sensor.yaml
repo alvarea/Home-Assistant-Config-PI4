@@ -1,0 +1,96 @@
+#
+# AAC. Sensores Binarios
+#
+#{{ states.sensor.family_home|int == states.sensor.family_sleep_home|int }}
+
+  - platform: template
+    sensors:
+      # Todos en Casa:  IF sensor.family_home >= sensor.family_sleep_home TRUE
+      family_all_home:
+        value_template: >-
+          {% if states('sensor.family_home')|int >= states('sensor.family_sleep_home')|int %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: 'Todos en Casa'
+        icon_template: mdi:home-map-marker
+        entity_id:
+          - sensor.family_home
+          - sensor.family_sleep_home
+
+# NMAP ==> prob_given_true: 0.8 - prob_given_false: 0.2
+#   - entity_id: device_tracker.aac_iphone_nmap
+#   - entity_id: device_tracker.mfc_iphone_nmap
+#   - entity_id: 'device_tracker.pi_rashmiphone'
+#   - entity_id: 'device_tracker.pi_alokphone'
+
+# IOS APP ==> prob_given_true: 0.99 - prob_given_false: 0.10
+#   - device_tracker.aac_ios
+#   - device_tracker.mfc_ios
+#   - entity_id: 'device_tracker.rashmiappiphone'
+#   - entity_id: 'device_tracker.alokiosiphone'
+
+# OWNTRACK ==> prob_given_true: 0.99 - prob_given_false: 0.4
+#   - device_tracker.aac_iphone_owntrack
+#   - device_tracker.mfc_iphone_owntrack
+#   - entity_id: 'device_tracker.rashmisiphone'
+#   - entity_id: 'device_tracker.myiphone'
+
+# GEOFENCY ==> prob_given_true: 0.99 - prob_given_false: 0.1
+#   - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
+#   - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 # MFC
+#   - entity_id: 'device_tracker.6b00226793104872afb9248f8a45f957'
+#   - entity_id: 'device_tracker.3a196aa7e85e4ab5bee4e3d3af667a09'
+
+  - platform: 'bayesian'
+    prior: 0.75
+    name: 'Malen Home'
+    probability_threshold: 0.95
+    observations:
+      - entity_id: 'device_tracker.mfc_iphone_nmap'
+        prob_given_true: 0.8
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.mfc_ios'  # IOS APP
+        prob_given_true: 0.99
+        prob_given_false: 0.10
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.mfc_iphone_owntrack' # OWNTRACK
+        prob_given_true: 0.99
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.e3c67d6b51bf445ba241a0045bfe0222' # GEOFENCY
+        prob_given_true: 0.99
+        prob_given_false: 0.1
+        platform: 'state'
+        to_state: 'home'
+
+  - platform: 'bayesian'
+    prior: 0.50
+    name: 'Agustín Home'
+    probability_threshold: 0.95
+    observations:
+      - entity_id: 'device_tracker.acc_iphone_nmap'
+        prob_given_true: 0.8
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.acc_ios'  # IOS APP
+        prob_given_true: 0.99
+        prob_given_false: 0.10
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.acc_iphone_owntrack' # OWNTRACK
+        prob_given_true: 0.99
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.b8b52a3bf0384e72a268705d9b06e496' # GEOFENCY
+        prob_given_true: 0.99
+        prob_given_false: 0.1
+        platform: 'state'
+        to_state: 'home'

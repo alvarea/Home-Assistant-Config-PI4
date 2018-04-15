@@ -17,6 +17,13 @@ group: !include groups.yaml
 script: !include scripts.yaml
 automation: !include automations.yaml
 
+binary_sensor: !include binary_sensor.yaml
+#input_select: !include input_select.yaml
+#input_boolean: !include input_boolean.yaml
+#input_number: !include input_number.yaml
+#input_text: !include input_text.yaml
+
+
 # Show links to resources in log and frontend
 #introduction:
 
@@ -97,6 +104,26 @@ hue:
 # AAC. Dispositivos Apple IOS
 ios:
 
+# AAC. ALARM MANUAL CONTROL PANEL
+#
+# Status:  Disarmed => Armed (Home/Night/Away) => Triggered => Disarmed
+#
+alarm_control_panel:
+  - platform: manual
+    name: HA
+    code: !secret alarm_control_code
+    # Pending: The time in seconds of the pending time before effecting a state change. Default is 60 seconds.
+    # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
+    # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
+    armed_home:
+      pending_time: 0
+      delay_time: 0
+    armed_away:
+      pending_time: 30
+      delay_time: 15
+    disarmed:
+      trigger_time: 0
+
 notify:
   - platform: group # notification group for IOS
     name: ios
@@ -165,6 +192,7 @@ device_tracker:
     consider_home: 0:10:00
     exclude:
      - 192.168.0.23
+
 
 # AAC. Interruptores control presencia Family
 input_boolean:
@@ -378,53 +406,13 @@ sensor:
                         {% else %}
                            battery-outline
                         {% endif %}'
-#
-# AAC. Sensores Binarios
-#
-#{{ states.sensor.family_home|int == states.sensor.family_sleep_home|int }}
-binary_sensor:
-  - platform: template
-    sensors:
-      # Todos en Casa:  IF sensor.family_home >= sensor.family_sleep_home TRUE
-      family_all_home:
-        value_template: >-
-          {% if states('sensor.family_home')|int >= states('sensor.family_sleep_home')|int %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Todos en Casa'
-        icon_template: mdi:home-map-marker
-        entity_id:
-          - sensor.family_home
-          - sensor.family_sleep_home
-#
+
 # AAC. XIAOMI AQARA GATEWAY
 #
 xiaomi_aqara:
   gateways:
     - mac: 78:11:DC:B7:88:FA
       key: AD58F3C5D30D405C
-
-# AAC. ALARM MANUAL CONTROL PANEL
-#
-# Status:  Disarmed => Armed (Home/Night/Away) => Triggered => Disarmed
-#
-alarm_control_panel:
-  - platform: manual
-    name: HA
-    code: !secret alarm_control_code
-    # Pending: The time in seconds of the pending time before effecting a state change. Default is 60 seconds.
-    # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
-    # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
-    armed_home:
-      pending_time: 0
-      delay_time: 0
-    armed_away:
-      pending_time: 30
-      delay_time: 15
-    disarmed:
-      trigger_time: 0
 
 #
 # AAC. Restaurar valores tras reinicio
