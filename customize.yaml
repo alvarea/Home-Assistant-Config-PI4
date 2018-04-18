@@ -5,6 +5,19 @@ alarm_control_panel.ha:
 input_select.home_last_change:
   friendly_name: Último Tracking
 
+# SENSORES BAYESIAN TRACKING FAMILY HOME
+#
+binary_sensor.family_home_mfc:
+  friendly_name: Malen
+binary_sensor.family_home_aac:
+  friendly_name: Agustín
+binary_sensor.family_home_paf:
+  friendly_name: Paloma
+binary_sensor.family_home_aaf:
+  friendly_name: Agu
+
+# SOL Y TIEMPO
+#
 sun.sun:
   friendly_name: Sol
 sensor.moon:

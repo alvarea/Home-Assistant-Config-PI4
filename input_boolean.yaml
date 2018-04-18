@@ -1,0 +1,39 @@
+
+# AAC. Interruptores control presencia Family
+  home_mfc:
+    name: Malen
+    initial: on
+    icon: mdi:cellphone-iphone
+  home_aac:
+    name: Agustin
+    initial: on
+    icon: mdi:cellphone-iphone
+  home_paf:
+    name: Paloma
+    initial: on
+    icon: mdi:cellphone-iphone
+  home_aaf:
+    name: Agu
+    initial: on
+    icon: mdi:cellphone-iphone
+  notify_mfc:
+    name: Notificaciones Malen
+    initial: off
+    icon: mdi:bell-ring
+  notify_aac:
+    name: Notificaciones Agustin
+    initial: on
+    icon: mdi:bell-ring
+  notify_paf:
+    name: Notificaciones Paloma
+    initial: off
+    icon: mdi:bell-ring
+  notify_aaf:
+    name: Notificaciones Agu
+    initial: off
+    icon: mdi:bell-ring
+# AAC. Interruptores control alarma y notificaciones
+  alarm_mode:
+    name: Alarma Botón Pánico
+    initial: off
+    icon: mdi:security-home

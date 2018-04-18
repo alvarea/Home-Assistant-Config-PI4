@@ -1,13 +1,8 @@
-
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# FAMILY TRACKING Control Home/Away                                           #
+# FAMILY META TRACKER HOME/AWAY                                               #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-
-###############################################################
-## UPDATE META TRACKER Presence
-################################################################
 
 # NMAP ==> prob_given_true: 0.8 - prob_given_false: 0.2
 #   - entity_id: device_tracker.aac_iphone_nmap
@@ -29,7 +24,9 @@
 
 # GEOFENCY ==> prob_given_true: 0.99 - prob_given_false: 0.1
 #   - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-#   - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 # MFC
+#   - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
+#   - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+#   - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
 #   - entity_id: 'device_tracker.6b00226793104872afb9248f8a45f957'
 #   - entity_id: 'device_tracker.3a196aa7e85e4ab5bee4e3d3af667a09'
 
@@ -42,6 +39,8 @@
       entity_id:
         - device_tracker.aac_iphone_nmap      # NMAP
         - device_tracker.mfc_iphone_nmap      # NMAP
+        - device_tracker.paf_iphone_nmap      # NMAP
+        - device_tracker.aaf_iphone_nmap      # NMAP
         - device_tracker.aac_iphone_owntrack  # OWNTRACK
         - device_tracker.mfc_iphone_owntrack  # OWNTRACK
       to: 'not_home'
@@ -55,6 +54,8 @@
       entity_id:
         - device_tracker.aac_iphone_nmap      # NMAP
         - device_tracker.mfc_iphone_nmap      # NMAP
+        - device_tracker.paf_iphone_nmap      # NMAP
+        - device_tracker.aaf_iphone_nmap      # NMAP
       to: 'home'
       for: '00:00:30'
     - platform: state
@@ -63,310 +64,14 @@
         - device_tracker.mfc_ios                          # IOSAPP
         - device_tracker.b8b52a3bf0384e72a268705d9b06e496 # AAC
         - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 # MFC
+        - device_tracker.93e3d52336a54d4d898b204abdf3ee94 # PAF
+        - device_tracker.bef743fa74f2464ba458612ad3e1c195 # AAF
   action:
     - service: script.updatetracker
       data_template:
         entityid: '{{trigger.entity_id}}'
         fromstate: '{{trigger.from_state.state}}'
         tostate: '{{trigger.to_state.state}}'
-
-#
-# AGUSTIN: Control Presencia => Booleean input_boolean.acchome
-#
-- id: update_tracker_to_not_home_aac
-  alias: 'Home 2 Away AAC'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id:
-        - device_tracker.aac_ios
-        - device_tracker.aac_iphone_owntrack
-        - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-      to: 'not_home'
-  condition:
-    condition: state
-    entity_id: input_boolean.home_aac
-    state: 'on'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: input_boolean.home_aac
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_aac.attributes.friendly_name }}"
-
-- id: update_nmap_to_not_home_aac
-  alias: 'Home 2 Away AAC NMAP'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id: device_tracker.aac_iphone_nmap
-      to: 'not_home'
-      for: '00:10:00'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: input_boolean.home_aac
-        state: 'on'
-      - condition: time
-        after: '08:00:00'
-      - condition: time
-        before: '23:59:00'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: input_boolean.home_aac
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_aac.attributes.friendly_name }}"
-
-- id: update_tracker_to_home_aac
-  alias: 'Away to Home AAC'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id:
-        - device_tracker.aac_ios
-        - device_tracker.aac_iphone_nmap
-        - device_tracker.aac_iphone_owntrack
-        - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-      to: 'home'
-  condition:
-    condition: state
-    entity_id: input_boolean.home_aac
-    state: 'off'
-  action:
-    - service: homeassistant.turn_on
-      entity_id: input_boolean.home_aac
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_aac.attributes.friendly_name }}"
-#
-# MALEN: Control Presencia =>  input_boolean.home_mfc
-#
-- id: update_tracker_to_not_home_mfc
-  alias: 'Home 2 Away MFC'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id:
-        - device_tracker.mfc_ios
-        - device_tracker.mfc_iphone_owntrack
-        - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 # MFC
-      to: 'not_home'
-  condition:
-    condition: state
-    entity_id: input_boolean.home_mfc
-    state: 'on'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: input_boolean.home_mfc
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_mfc.attributes.friendly_name }}"
-
-- id: update_nmap_to_not_home_mfc
-  alias: 'Home 2 Away MFC NMAP'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id: device_tracker.mfc_iphone_nmap
-      to: 'not_home'
-      for: '00:10:00'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: input_boolean.home_mfc
-        state: 'on'
-      - condition: time
-        after: '08:00:00'
-      - condition: time
-        before: '23:59:00'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: input_boolean.home_mfc
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_mfc.attributes.friendly_name }}"
-
-- id: update_tracker_to_home_mfc
-  alias: 'Away to Home MFC'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id:
-        - device_tracker.mfc_ios
-        - device_tracker.mfc_iphone_nmap
-        - device_tracker.mfc_iphone_owntrack_mfc
-        - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
-      to: 'home'
-  condition:
-    condition: state
-    entity_id: input_boolean.home_mfc
-    state: 'off'
-  action:
-    - service: homeassistant.turn_on
-      entity_id: input_boolean.home_mfc
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_mfc.attributes.friendly_name }}"
-
-#
-# PALOMA: Control Presencia => input_boolean.home_paf
-#
-- id: update_tracker_to_not_home_paf
-  alias: 'Home 2 Away PAF'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id: device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
-      to: 'not_home'
-  condition:
-    condition: state
-    entity_id: input_boolean.home_paf
-    state: 'on'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: input_boolean.home_paf
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_paf.attributes.friendly_name }}"
-
-- id: update_nmap_to_not_home_paf
-  alias: 'Home 2 Away PAF NMAP'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id: device_tracker.paf_iphone_nmap
-      to: 'not_home'
-      for: '00:10:00'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: input_boolean.home_paf
-        state: 'on'
-      - condition: time
-        after: '08:00:00'
-      - condition: time
-        before: '23:59:00'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: input_boolean.home_paf
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_paf.attributes.friendly_name }}"
-
-- id: update_tracker_to_home_paf
-  alias: 'Away to Home PAF'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id:
-        - device_tracker.paf_iphone_nmap
-        - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
-      to: 'home'
-  condition:
-    condition: state
-    entity_id: input_boolean.home_paf
-    state: 'off'
-  action:
-    - service: homeassistant.turn_on
-      entity_id: input_boolean.home_paf
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_paf.attributes.friendly_name }}"
-
-#
-# AGU: Control Presencia => input_boolean.agu
-#
-- id: update_tracker_to_not_home_aaf
-  alias: 'Home 2 Away AAF'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id: device_tracker.bef743fa74f2464ba458612ad3e1c195
-      to: 'not_home'
-  condition:
-    condition: state
-    entity_id: input_boolean.home_aaf
-    state: 'on'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: input_boolean.home_aaf
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_aaf.attributes.friendly_name }}"
-
-- id: update_nmap_to_not_home_aaf
-  alias: 'Home 2 Away AAF NMAP'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id: device_tracker.aaf_iphone_nmap
-      to: 'not_home'
-      for: '00:10:00'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: input_boolean.home_aaf
-        state: 'on'
-      - condition: time
-        after: '08:00:00'
-      - condition: time
-        before: '23:59:00'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: input_boolean.home_aaf
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_aaf.attributes.friendly_name }}"
-
-- id: update_tracker_to_home_aaf
-  alias: 'Away to Home AAF'
-  initial_state: True
-  trigger:
-    - platform: state
-      entity_id:
-        - device_tracker.aaf_iphone_nmap
-        - device_tracker.bef743fa74f2464ba458612ad3e1c195
-      to: 'home'
-  condition:
-    condition: state
-    entity_id: input_boolean.home_aaf
-    state: 'off'
-  action:
-    - service: homeassistant.turn_on
-      entity_id: input_boolean.home_aaf
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: "{{ states.input_boolean.home_aaf.attributes.friendly_name }}"
-
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -379,7 +84,7 @@
   trigger:
     # Ya no hay nadie en casa
     platform: state
-    entity_id: group.family_home_grp
+    entity_id: binary_sensor.family_any_home
     from: 'on'
     to: 'off'
   action:
@@ -405,7 +110,7 @@
   trigger:
     # Hay alguien en casa
     - platform: state
-      entity_id: group.family_home_grp
+      entity_id: binary_sensor.family_any_home
       from: 'off'
       to: 'on'
   action:
@@ -443,9 +148,14 @@
       from: 'off'
       to: 'on'
   condition:
-    - condition: state
-      entity_id: alarm_control_panel.ha
-      state: armed_away
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: alarm_control_panel.ha
+        state: armed_away
+      - condition: state
+        entity_id: binary_sensor.family_any_home
+        state: 'off'
   action:
     - service: homeassistant.turn_on
       entity_id: input_boolean.alarm_mode

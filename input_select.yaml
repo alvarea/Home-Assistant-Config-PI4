@@ -1,0 +1,18 @@
+# AAC. Modo Notificaciones
+  home_notify:
+    name: Notificaciones
+    options:
+     - 'Off'
+     - 'Telegram'
+     - 'IOS'
+    initial: Telegram
+    icon: mdi:bell-ring
+  family_sleep_home:
+    name: Duermen en Casa
+    options:
+     - '1'
+     - '2'
+     - '3'
+     - '4'
+    initial: '4'
+    icon: mdi:home-account

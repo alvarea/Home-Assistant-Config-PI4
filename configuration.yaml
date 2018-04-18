@@ -17,12 +17,12 @@ group: !include groups.yaml
 script: !include scripts.yaml
 automation: !include automations.yaml
 
+sensor: !include sensor.yaml
 binary_sensor: !include binary_sensor.yaml
-#input_select: !include input_select.yaml
-#input_boolean: !include input_boolean.yaml
+input_boolean: !include input_boolean.yaml
+input_select: !include input_select.yaml
+input_text: !include input_text.yaml
 #input_number: !include input_number.yaml
-#input_text: !include input_text.yaml
-
 
 # Show links to resources in log and frontend
 #introduction:
@@ -33,7 +33,7 @@ frontend:
 # Enables configuration UI
 config:
 
-# AAC. Enable Python Scripts
+# Enable Python Scripts
 python_script:
 
 http:
@@ -66,25 +66,6 @@ history:
 
 # View all events in a logbook
 logbook:
-
-# Enables a map showing the location of tracked devices
-map:
-
-zone:
-  - name: Heineken
-    latitude: 37.3876837
-    longitude: -5.9645631
-    icon: mdi:beer
-    radius: 50
-  - name: Faeca
-    latitude: 37.393004
-    longitude: -5.957486
-    icon: mdi:tree
-    radius: 50
-  - name: Casa Abuela
-    latitude: 37.3748
-    longitude: -6.0530
-    icon: mdi:home-account
 
 # Track the sun
 sun:
@@ -124,6 +105,63 @@ alarm_control_panel:
     disarmed:
       trigger_time: 0
 
+# AAC. GENERIC IP CAMERA
+camera:
+  - platform: generic
+    still_image_url: https://api.sat24.com/mostrecent/SP/visual5hdcomplete%20width=500%20height=304
+    name: Weather Satelite
+  - platform: generic
+    still_image_url: http://192.168.0.12:8080/snapshot.cgi
+    name: IPcam12 Estudio
+    username: admin
+    password: !secret IPcam12
+  - platform: generic
+    still_image_url: http://192.168.0.11/snapshot/image0.jpg
+    name: IPcam11 Cocina
+    username: admin
+    password: !secret IPcam11
+
+apple_tv:
+  - host: 192.168.0.19
+    login_id: 00000000-5540-7268-ea1c-2a4e4d154343
+    name: Apple TV
+    credentials: 906CB00CF5F3A299:84CB3B3A11823C334BD48BAB463C0B625392E4BEF4F2817F19361BE285C0BEB1
+
+# AAC. Mediaplayer FireTV
+media_player:
+  - platform: firetv
+    name: FireTV Cocina
+
+# AAC. MQTT - BROKER: CLOUDMQTT
+mqtt:
+  broker: m23.cloudmqtt.com
+  port: 11024
+  client_id: hass_alvarea
+  keepalive: 60
+  username: HASS
+  password: !secret cloudmqtt
+
+# AAC. XIAOMI AQARA GATEWAY
+#
+xiaomi_aqara:
+  gateways:
+    - mac: 78:11:DC:B7:88:FA
+      key: AD58F3C5D30D405C
+
+# AAC. NMAP, OWNTRACKS
+device_tracker:
+  - platform: geofency
+  - platform: owntracks
+    mqtt_topic: "owntracks/#"
+  - platform: nmap_tracker
+    hosts:
+      - 192.168.0.10
+      - 192.168.0.50-99
+    home_interval: 10
+    consider_home: 0:10:00
+    exclude:
+     - 192.168.0.23
+
 notify:
   - platform: group # notification group for IOS
     name: ios
@@ -148,271 +186,24 @@ telegram_bot:
       - !secret telegram_chat_mfc
       - !secret telegram_chat_fam
 
-# AAC. GENERIC IP CAMERA
-camera:
-  - platform: generic
-    still_image_url: https://api.sat24.com/mostrecent/SP/visual5hdcomplete%20width=500%20height=304
-    name: Weather Satelite
-  - platform: generic
-    still_image_url: http://192.168.0.12:8080/snapshot.cgi
-    name: IPcam12 Estudio
-    username: admin
-    password: !secret IPcam12
-  - platform: generic
-    still_image_url: http://192.168.0.11/snapshot/image0.jpg
-    name: IPcam11 Cocina
-    username: admin
-    password: !secret IPcam11
+# Enables a map showing the location of tracked devices
+map:
 
-apple_tv:
-  - host: 192.168.0.19
-    login_id: 00000000-5540-7268-ea1c-2a4e4d154343
-    name: Apple TV
-    credentials: 906CB00CF5F3A299:84CB3B3A11823C334BD48BAB463C0B625392E4BEF4F2817F19361BE285C0BEB1
-
-# AAC. MQTT - BROKER: CLOUDMQTT
-mqtt:
-  broker: m23.cloudmqtt.com
-  port: 11024
-  client_id: hass_alvarea
-  keepalive: 60
-  username: HASS
-  password: !secret cloudmqtt
-
-# AAC. NMAP, OWNTRACKS
-device_tracker:
-  - platform: geofency
-  - platform: owntracks
-    mqtt_topic: "owntracks/#"
-  - platform: nmap_tracker
-    hosts:
-      - 192.168.0.10
-      - 192.168.0.50-99
-    home_interval: 10
-    consider_home: 0:10:00
-    exclude:
-     - 192.168.0.23
-
-
-# AAC. Interruptores control presencia Family
-input_boolean:
-  home_mfc:
-    name: Malen
-    initial: on
-    icon: mdi:cellphone-iphone
-  home_aac:
-    name: Agustin
-    initial: on
-    icon: mdi:cellphone-iphone
-  home_paf:
-    name: Paloma
-    initial: on
-    icon: mdi:cellphone-iphone
-  home_aaf:
-    name: Agu
-    initial: on
-    icon: mdi:cellphone-iphone
-  notify_mfc:
-    name: Notificaciones Malen
-    initial: on
-    icon: mdi:bell-ring
-  notify_aac:
-    name: Notificaciones Agustin
-    initial: on
-    icon: mdi:bell-ring
-  notify_paf:
-    name: Notificaciones Paloma
-    initial: off
-    icon: mdi:bell-ring
-  notify_aaf:
-    name: Notificaciones Agu
-    initial: off
-    icon: mdi:bell-ring
-# AAC. Interruptores control alarma y notificaciones
-  alarm_mode:
-    name: Alarma Botón Pánico
-    initial: off
-    icon: mdi:security-home
-
-# AAC. Modo Notificaciones
-input_select:
-  home_notify:
-    name: Notificaciones
-    options:
-     - 'Off'
-     - 'Telegram'
-     - 'IOS'
-    initial: Telegram
-    icon: mdi:bell-ring
-  family_sleep_home:
-    name: Duermen en Casa
-    options:
-     - '1'
-     - '2'
-     - '3'
-     - '4'
-    initial: '4'
+zone:
+  - name: Heineken
+    latitude: 37.3876837
+    longitude: -5.9645631
+    icon: mdi:beer
+    radius: 50
+  - name: Faeca
+    latitude: 37.393004
+    longitude: -5.957486
+    icon: mdi:tree
+    radius: 50
+  - name: Casa Abuela
+    latitude: 37.3748
+    longitude: -6.0530
     icon: mdi:home-account
-
-# AAC. Mensaje para Notificaciones
-input_text:
-  mensaje_tit:
-    name: Titulo Notificaciones
-    initial: <OK>
-  mensaje_msg:
-    name: Cuerpo Notificaciones
-    initial: <OK>
-  family_last_tracking:
-    name: Input Text Último Tracking
-    initial: ''
-    icon: mdi:home-map-marker
-
-# AAC. Mediaplayer FireTV
-media_player:
-  - platform: firetv
-    name: FireTV Cocina
-
-
-sensor:
-#
-# AAC. Sensores Sistema
-#
-  - platform: time_date
-    display_options:
-      - 'time'
-  - platform: uptime
-    unit_of_measurement: hours
-  - platform: moon
-  - platform: cert_expiry
-    host: alvarea.duckdns.org
-    port: 443
-  - platform: systemmonitor
-    resources:
-      - type: load_15m
-      - type: processor_use
-      - type: memory_use_percent
-      - type: memory_use
-      - type: memory_free
-      - type: disk_use_percent
-        arg: /
-      - type: disk_use
-        arg: /
-      - type: disk_free
-        arg: /
-      - type: swap_use_percent
-      - type: last_boot
-#
-# AAC. Sensor Previsiones de Tiempo
-#
-  - platform: yweather
-    woeid: 90231690
-    name: Hoy
-    monitored_conditions:
-      - weather
-      - temperature
-      - temp_min
-      - temp_max
-      - wind_speed
-      - humidity
-  - platform: yweather
-    woeid: 90231690
-    forecast: 1
-    name: Mañana
-    monitored_conditions:
-      - weather
-      - temperature
-      - temp_min
-      - temp_max
-      - wind_speed
-      - humidity
-#
-# AAC. Sensor Platform Template
-#
-  - platform: template
-    sensors:
-      # Gente que duerme en casa
-      family_sleep_home:
-        value_template: "{{ states('input_select.family_sleep_home') }}"
-        friendly_name: 'Duermen en Casa'
-        icon_template: mdi:home-variant
-      # Último Tracking
-      family_last_tracking:
-        value_template: "{{ states('input_text.family_last_tracking') }}"
-        friendly_name: 'Family Tracking'
-        icon_template: mdi:home-map-marker
-      # Sol Próximo Aterdecer
-      sun_next_setting:
-        value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting)  | timestamp_custom("%H:%M") }}'
-        friendly_name: 'Próxima Puesta de Sol'
-        icon_template: mdi:weather-sunset-down
-      # Sol Próximo Amanecer
-      sun_next_rising:
-        value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising)  | timestamp_custom("%H:%M") }}'
-        friendly_name: 'Próxima Salida de Sol'
-        icon_template: mdi:weather-sunset-up
-      # Batería Sensor Xiaomi Entrada. binary_sensor.motion_sensor_158d0001e55903
-      bateria_presencia_entrada:
-        value_template: "{{ states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level|default(-1)|int if states.binary_sensor.motion_sensor_158d0001e55903 is not none }}"
-        friendly_name: 'Batería Sensor Presencia Entrada'
-        unit_of_measurement: '%'
-        icon_template: '{% if states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level == 100 %}
-                           mdi:battery
-                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 90 %}
-                           mdi:battery-90
-                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 80 %}
-                           mdi:battery-80
-                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 70 %}
-                           mdi:battery-70
-                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 60 %}
-                           mdi:battery-60
-                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 50 %}
-                           mdi:battery-50
-                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 40 %}
-                           mdi:battery-40
-                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 30 %}
-                           mdi:battery-30
-                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 20 %}
-                           mdi:battery-20
-                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 10 %}
-                           mdi:battery-10
-                        {% else %}
-                           battery-outline
-                        {% endif %}'
-      bateria_puerta_entrada:
-        # binary_sensor.door_window_sensor_158d00022b393c
-        friendly_name: 'Batería Sensor Puerta Entrada'
-        value_template: "{{ states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level|default(-1)|int if states.binary_sensor.door_window_sensor_158d00022b393c is not none }}"
-        unit_of_measurement: '%'
-        icon_template: '{% if states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level == 100 %}
-                           mdi:battery
-                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 90 %}
-                           mdi:battery-90
-                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 80 %}
-                           mdi:battery-80
-                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 70 %}
-                           mdi:battery-70
-                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 60 %}
-                           mdi:battery-60
-                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 50 %}
-                           mdi:battery-50
-                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 40 %}
-                           mdi:battery-40
-                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 30 %}
-                           mdi:battery-30
-                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 20 %}
-                           mdi:battery-20
-                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 10 %}
-                           mdi:battery-10
-                        {% else %}
-                           battery-outline
-                        {% endif %}'
-
-# AAC. XIAOMI AQARA GATEWAY
-#
-xiaomi_aqara:
-  gateways:
-    - mac: 78:11:DC:B7:88:FA
-      key: AD58F3C5D30D405C
 
 #
 # AAC. Restaurar valores tras reinicio
