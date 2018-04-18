@@ -95,9 +95,9 @@ tracking_view:
 track_aac_grp:
   name: Agustín Tracking
   entities:
+    - sensor.meta_track_aac
     - binary_sensor.family_home_aac
     - sensor.baye_probability_aac
-    - sensor.meta_track_aac
     - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
     - device_tracker.aac_iphone_owntrack
     - device_tracker.aac_ios
@@ -108,9 +108,9 @@ track_aac_grp:
 track_mfc_grp:
   name: Malen Tracking
   entities:
+    - sensor.meta_track_mfc
     - binary_sensor.family_home_mfc
     - sensor.baye_probability_mfc
-    - sensor.meta_track_mfc
     - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
     - device_tracker.mfc_iphone_owntrack_mfc
     - device_tracker.mfc_ios
@@ -121,18 +121,18 @@ track_mfc_grp:
 track_paf_grp:
   name: Paloma Tracking
   entities:
+    - sensor.meta_track_paf
     - binary_sensor.family_home_paf
     - sensor.baye_probability_paf
-    - sensor.meta_track_paf
     - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
     - device_tracker.paf_iphone_nmap
 
 track_aaf_grp:
   name: Agu Tracking
   entities:
+    - sensor.meta_track_aaf
     - binary_sensor.family_home_aaf
     - sensor.baye_probability_aaf
-    - sensor.meta_track_aaf
     - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
     - device_tracker.aaf_iphone_nmap
 

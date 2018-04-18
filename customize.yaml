@@ -8,13 +8,13 @@ input_select.home_last_change:
 # SENSORES BAYESIAN TRACKING FAMILY HOME
 #
 binary_sensor.family_home_mfc:
-  friendly_name: Malen
+  friendly_name: Malen en Casa
 binary_sensor.family_home_aac:
-  friendly_name: Agustín
+  friendly_name: Agustín en Casa
 binary_sensor.family_home_paf:
-  friendly_name: Paloma
+  friendly_name: Paloma en Casa
 binary_sensor.family_home_aaf:
-  friendly_name: Agu
+  friendly_name: Agu en Casa
 
 # SOL Y TIEMPO
 #
@@ -28,10 +28,6 @@ sensor.time:
   friendly_name: Hora
 sensor.time_utc:
   friendly_name: Hora (UTC)
-sensor.ssl_certificate_expiry:
-  friendly_name: SSL Cert
-sensor.last_boot:
-  friendly_name: Último Reinicio del Sistema
 
 #
 # YAHOO WEATHER
@@ -70,9 +66,6 @@ sensor.processor_use:
   friendly_name: '%CPU'
 sensor.memory_use_percent:
   friendly_name: '%Memory'
-sensor.last_boot:
-  friendly_name: 'Last Boot'
-  icon: mdi:server-security
 sensor.memory_free:
   unit_of_measurement: MB
 sensor.memory_use:
@@ -85,6 +78,10 @@ sensor.disk_free_:
   friendly_name: 'Disk free'
 sensor.swap_use_percent:
   friendly_name: '%Swapping'
+sensor.ssl_certificate_expiry:
+  friendly_name: SSL Cert
+sensor.last_boot:
+  friendly_name: Último Reinicio del Sistema
 
 #
 # XIAOMI AQARA GATEWAY + SENSORS

@@ -3,7 +3,6 @@
 # SCRIPTS DEVICE TRACKER                                                      #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-
 updatetracker:
   alias: 'Update tracker'
   sequence:
@@ -13,23 +12,22 @@ updatetracker:
     - condition: template
       value_template: '{{fromstate != tostate}}'
     - service: python_script.countpeople
-    - service: logbook.log
-      data_template:
-        name: "Meta-tracker: "
-        message: >-
-          {{ states[entityid.split('.')[0]][entityid.split('.')[1]].name }} is {{ tostate }} at {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
     - service: input_text.set_value
       entity_id: input_text.family_last_tracking
       data_template:
         value: >-
           {{ states[entityid.split('.')[0]][entityid.split('.')[1]].name }}, {{ tostate }}, {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
+    #- service: logbook.log
+    #  data_template:
+    #    name: "Meta-tracker: "
+    #    message: >-
+    #      {{ states[entityid.split('.')[0]][entityid.split('.')[1]].name }} is {{ tostate }} at {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # SCRIPTS GENERICOS DE NOTIFICACIONES                                         #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-
 notifica_alarma:
   alias: 'Mensaje Alarma'
   sequence:

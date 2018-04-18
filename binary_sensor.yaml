@@ -1,8 +1,6 @@
 #
 # AAC. Sensores Binarios
 #
-#{{ states.sensor.family_home|int == states.sensor.family_sleep_home|int }}
-
   - platform: template
     sensors:
       # Todos en Casa:  IF sensor.family_home >= sensor.family_sleep_home THEN TRUE

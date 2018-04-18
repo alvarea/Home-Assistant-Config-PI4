@@ -1,5 +1,35 @@
 #-----------------------------------------------------------------------------#
 #                                                                             #
+# ARRANQUE/PARADA DEL SISTEMA                                                 #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+- id: hass_startup_automation
+  alias: hass_startup_scripts
+  trigger:
+    platform: homeassistant
+    # Event can also be 'shutdown'
+    event: start
+  action:
+    #
+    # Llamada al script python para inicializar meta-trackers
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
+    #
+    # Llamada al contador de personas que actualiza sensor.family_home
+    - service: python_script.countpeople
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
 # FAMILY META TRACKER HOME/AWAY                                               #
 #                                                                             #
 #-----------------------------------------------------------------------------#
@@ -265,20 +295,6 @@
             >>> URGENTE: BOTON PANICO APAGADO
 
             >>> PANEL ALARMA: DESARMADO
-
-#-----------------------------------------------------------------------------#
-#                                                                             #
-# CONTROL DEL SISTEMA                                                         #
-#                                                                             #
-#-----------------------------------------------------------------------------#
-- id: hass_startup_automation
-  alias: hass_startup_scripts
-  trigger:
-    platform: homeassistant
-    # Event can also be 'shutdown'
-    event: start
-  action:
-    - service: python_script.countpeople
 
 #
 # CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.

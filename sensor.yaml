@@ -11,44 +11,48 @@
       # Último Tracking
       family_last_tracking:
         value_template: "{{ states('input_text.family_last_tracking') }}"
-        friendly_name: 'Family Tracking'
+        friendly_name: 'Último Tracking'
         icon_template: mdi:home-map-marker
 
       # Meta tracker AAC, MFC, PAF, AAF
       meta_track_aac:
         value_template: "{{ states('device_tracker.meta_aac') if states('device_tracker.meta_aac') is not none }}"
-        friendly_name: 'Meta-tracker Agustín'
-        icon_template: mdi:account-location
+        friendly_name: 'AAC Meta-tracker'
+        entity_picture_template: "{{ states.device_tracker.meta_aac.attributes.entity_picture if states('device_tracker.meta_aac') is not none }}"
       meta_track_mfc:
         value_template: "{{ states('device_tracker.meta_mfc') if states('device_tracker.meta_mfc') is not none }}"
-        friendly_name: 'Meta-tracker Malen'
-        icon_template: mdi:account-location
+        friendly_name: 'MFC Meta-tracker'
+        entity_picture_template: "{{ states.device_tracker.meta_mfc.attributes.entity_picture if states('device_tracker.meta_mfc') is not none }}"
       meta_track_paf:
         value_template: "{{ states('device_tracker.meta_paf') if states('device_tracker.meta_paf') is not none }}"
-        friendly_name: 'Meta-tracker Paloma'
-        icon_template: mdi:account-location
+        friendly_name: 'PAF Meta-tracker'
+        entity_picture_template: "{{ states.device_tracker.meta_paf.attributes.entity_picture if states('device_tracker.meta_paf') is not none }}"
       meta_track_aaf:
         value_template: "{{ states('device_tracker.meta_aaf') if states('device_tracker.meta_aaf') is not none }}"
-        friendly_name: 'Meta-tracker Agu'
-        icon_template: mdi:account-location
+        friendly_name: 'AAF Meta-tracker'
+        entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('device_tracker.meta_aaf') is not none }}"
 
       # Bayesian Binarysensor tracker AAC, MFC, PAF, AAF ==> Probability
       baye_probability_aac:
         value_template: "{{ ((states.binary_sensor.family_home_aac.attributes.probability)|float *100)|round(2) }}"
-        friendly_name: '%Probabilidad Agustin'
+        friendly_name: 'Probabilidad Agustin'
         icon_template: mdi:account-location
+        unit_of_measurement: '%'
       baye_probability_mfc:
         value_template: "{{ ((states.binary_sensor.family_home_mfc.attributes.probability)|float *100)|round(2) }}"
-        friendly_name: '%Probabilidad Malen'
+        friendly_name: 'Probabilidad Malen'
         icon_template: mdi:account-location
+        unit_of_measurement: '%'
       baye_probability_paf:
         value_template: "{{ ((states.binary_sensor.family_home_paf.attributes.probability)|float *100)|round(2) }}"
-        friendly_name: '%Probabilidad Paloma'
+        friendly_name: 'Probabilidad Paloma'
         icon_template: mdi:account-location
+        unit_of_measurement: '%'
       baye_probability_aaf:
         value_template: "{{ ((states.binary_sensor.family_home_aaf.attributes.probability)|float *100)|round(2) }}"
-        friendly_name: '%Probabilidad Agu'
+        friendly_name: 'Probabilidad Agu'
         icon_template: mdi:account-location
+        unit_of_measurement: '%'
 
       # Batería Sensor Xiaomi Entrada. binary_sensor.motion_sensor_158d0001e55903
       bateria_presencia_entrada:
