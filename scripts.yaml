@@ -4,7 +4,7 @@
 #                                                                             #
 #-----------------------------------------------------------------------------#
 updatetracker:
-  alias: 'Update tracker'
+  alias: 'Update Meta-Tracker'
   sequence:
     - service: python_script.meta_device_tracker
       data_template:
@@ -22,6 +22,22 @@ updatetracker:
     #    name: "Meta-tracker: "
     #    message: >-
     #      {{ states[entityid.split('.')[0]][entityid.split('.')[1]].name }} is {{ tostate }} at {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
+
+reset_metatracker:
+  alias: 'Reset Meta-Tracker'
+  sequence:
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

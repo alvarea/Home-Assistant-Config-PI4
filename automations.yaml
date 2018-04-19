@@ -10,24 +10,24 @@
     # Event can also be 'shutdown'
     event: start
   action:
+    # Para todas las reglas durante el arranque del sistema
+    - service: automation.turn_off
+      data:
+        entity_id:
+          - group.all_automations
     #
     # Llamada al script python para inicializar meta-trackers
-    - service: python_script.meta_device_tracker
-      data_template:
-        entity_id: device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-    - service: python_script.meta_device_tracker
-      data_template:
-        entity_id: device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
-    - service: python_script.meta_device_tracker
-      data_template:
-        entity_id: device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
-    - service: python_script.meta_device_tracker
-      data_template:
-        entity_id: device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
+    - service: script.reset_metatracker
     #
     # Llamada al contador de personas que actualiza sensor.family_home
     - service: python_script.countpeople
-
+    #
+    # 30" espera y arranca reglas
+    - delay: 30
+    - service: automation.turn_on
+      data:
+        entity_id:
+          - group.all_automations
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # FAMILY META TRACKER HOME/AWAY                                               #
@@ -159,7 +159,7 @@
         variables:
           title: '*FAMILY_HOME: SI*'
           message: >
-            >>> EVENTO: Último en Entrar {{ states('sensor.family_last_tracking') }}
+            >>> EVENTO: Primero en Entrar {{ states('sensor.family_last_tracking') }}
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
