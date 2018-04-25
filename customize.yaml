@@ -86,10 +86,14 @@ sensor.last_boot:
 #
 # XIAOMI AQARA GATEWAY + SENSORS
 #
+# Estudio
+#
 light.gateway_light_7811dcb788fa:
   friendly_name: Gateway Luz Estudio
 sensor.illumination_7811dcb788fa:
   friendly_name: Sensor Luz Estudio
+# Entrada
+#
 binary_sensor.door_window_sensor_158d00022b393c:
   friendly_name: Sensor Puerta Entrada
   icon: mdi:door
@@ -103,3 +107,20 @@ switch.wall_switch_left_158d0002236e75:
 switch.wall_switch_right_158d0002236e75:
   friendly_name: Luces Exterior
   icon: mdi:lightbulb-outline
+# Cocina
+#
+binary_sensor.smoke_sensor_158d0001fd321c:
+  friendly_name: Detector Incendios
+  icon: mdi:fire
+
+# Salón
+#
+binary_sensor.door_window_sensor_158d00022b393c:
+  friendly_name: Sensor Puerta Salón
+  icon: mdi:door
+sensor.pressure_158d00022b65ff:
+  friendly_name: Sensor Presión Atm. Salón
+  icon: mdi:gauge
+sensor.temperature_158d00022b65ff:
+  friendly_name: Sensor Temperatura Salón
+  icon: mdi:oil-temperature

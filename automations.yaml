@@ -170,11 +170,15 @@
   alias: 'A1 Intrusión con Alarma Armado Away'
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e55903
+      entity_id: binary_sensor.motion_sensor_158d0001e55903 # Sensor Presencia Entrada
       from: 'off'
       to: 'on'
     - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c # Sensor Puerta Entrada
+      from: 'off'
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c # Sensor Puerta Salón
       from: 'off'
       to: 'on'
   condition:

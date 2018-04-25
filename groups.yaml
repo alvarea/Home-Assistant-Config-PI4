@@ -65,6 +65,9 @@ alarma_view:
   entities:
     - group.alarm_panel_grp
     - group.sensor_entrada_grp
+    - group.sensor_salon_grp
+    - group.sensor_cocina_grp
+    - group.sensor_baterias_grp
 
 alarm_panel_grp:
   name: Alarma
@@ -78,9 +81,31 @@ sensor_entrada_grp:
   view: no
   entities:
     - binary_sensor.door_window_sensor_158d00022b393c
-    - sensor.bateria_puerta_entrada
     - binary_sensor.motion_sensor_158d0001e55903
+
+sensor_cocina_grp:
+  name: Sensores Cocina
+  view: no
+  entities:
+    - binary_sensor.smoke_sensor_158d0001fd321c
+
+sensor_salon_grp:
+  name: Sensores Salón
+  view: no
+  entities:
+    - binary_sensor.door_window_sensor_158d00022b393c
+    - sensor.temperature_158d00022b65ff
+    - sensor.pressure_158d00022b65ff
+
+sensor_baterias_grp:
+  name: Baterías Sensores
+  view: no
+  entities:
     - sensor.bateria_presencia_entrada
+    - sensor.bateria_puerta_entrada
+    - sensor.bateria_puerta_salon
+    - sensor.bateria_temperatura_salon
+    - sensor.bateria_detector_incendios
 
 tracking_view:
   view: yes
