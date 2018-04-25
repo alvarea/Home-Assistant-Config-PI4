@@ -178,7 +178,7 @@
       from: 'off'
       to: 'on'
     - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c # Sensor Puerta Salón
+      entity_id: binary_sensor.door_window_sensor_158d000201e2e7 # Sensor Puerta Salón
       from: 'off'
       to: 'on'
   condition:

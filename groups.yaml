@@ -93,7 +93,7 @@ sensor_salon_grp:
   name: Sensores Salón
   view: no
   entities:
-    - binary_sensor.door_window_sensor_158d00022b393c
+    - binary_sensor.door_window_sensor_158d000201e2e7
     - sensor.temperature_158d00022b65ff
     - sensor.pressure_158d00022b65ff
 
