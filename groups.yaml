@@ -63,18 +63,10 @@ alarma_view:
   icon: mdi:security-home
   view: yes
   entities:
-    - group.alarm_panel_grp
     - group.sensor_entrada_grp
     - group.sensor_salon_grp
     - group.sensor_cocina_grp
     - group.sensor_baterias_grp
-
-alarm_panel_grp:
-  name: Alarma
-  view: no
-  entities:
-    - alarm_control_panel.ha
-    - input_boolean.alarm_mode
 
 sensor_entrada_grp:
   name: Sensores Entrada
@@ -95,6 +87,7 @@ sensor_salon_grp:
   entities:
     - binary_sensor.door_window_sensor_158d000201e2e7
     - sensor.temperature_158d00022b65ff
+    - sensor.humidity_158d00022b65ff
     - sensor.pressure_158d00022b65ff
 
 sensor_baterias_grp:

@@ -124,3 +124,6 @@ sensor.pressure_158d00022b65ff:
 sensor.temperature_158d00022b65ff:
   friendly_name: Sensor Temperatura Salón
   icon: mdi:oil-temperature
+sensor.humidity_158d00022b65ff:
+  friendly_name: Sensor Humedad Salón
+  icon: mdi:water-percent
