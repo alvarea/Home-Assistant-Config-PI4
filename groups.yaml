@@ -35,7 +35,7 @@ alarma_grp:
   view: no
   entities:
     - alarm_control_panel.ha
-    - input_boolean.alarm_mode
+    - input_boolean.panic_button
 
 family_status_grp:
   name: Family Status
@@ -63,10 +63,19 @@ alarma_view:
   icon: mdi:security-home
   view: yes
   entities:
+    - group.sirena_grp
     - group.sensor_entrada_grp
+    - group.sensor_estudio_grp
     - group.sensor_salon_grp
     - group.sensor_cocina_grp
+    - group.sensor_dormitorios_grp
     - group.sensor_baterias_grp
+
+sirena_grp:
+  name: Sirena Alarma
+  view: no
+  entities:
+    - input_boolean.alarm_siren_status
 
 sensor_entrada_grp:
   name: Sensores Entrada
@@ -74,6 +83,14 @@ sensor_entrada_grp:
   entities:
     - binary_sensor.door_window_sensor_158d00022b393c
     - binary_sensor.motion_sensor_158d0001e55903
+    - sensor.illumination_158d0001e55903
+
+sensor_estudio_grp:
+  name: Sensores Estudio
+  view: no
+  entities:
+    - binary_sensor.motion_sensor_158d0001e464a6
+    - sensor.illumination_158d0001e464a6
 
 sensor_cocina_grp:
   name: Sensores Cocina
@@ -86,9 +103,17 @@ sensor_salon_grp:
   view: no
   entities:
     - binary_sensor.door_window_sensor_158d000201e2e7
+    - binary_sensor.motion_sensor_158d0001e05661
     - sensor.temperature_158d00022b65ff
     - sensor.humidity_158d00022b65ff
     - sensor.pressure_158d00022b65ff
+    - sensor.illumination_7811dcb788fa
+
+sensor_dormitorios_grp:
+  name: Sensores Dormitorios
+  view: no
+  entities:
+    - binary_sensor.door_window_sensor_158d000201dddb
 
 sensor_baterias_grp:
   name: Baterías Sensores
@@ -96,9 +121,12 @@ sensor_baterias_grp:
   entities:
     - sensor.bateria_presencia_entrada
     - sensor.bateria_puerta_entrada
+    - sensor.bateria_presencia_salon
     - sensor.bateria_puerta_salon
+    - sensor.bateria_presencia_estudio
     - sensor.bateria_temperatura_salon
     - sensor.bateria_detector_incendios
+    - sensor.bateria_ventana_paf
 
 tracking_view:
   view: yes
@@ -206,7 +234,6 @@ luces_view:
 luces_entrada_grp:
   name: Luces Entrada
   entities:
-    - sensor.illumination_158d0001e55903
     - switch.wall_switch_left_158d0002236e75
     - light.hue_entrada
     - light.hue_pasillo
@@ -228,12 +255,11 @@ luces_salon_grp:
     - light.hue_cilindro
     - light.hue_seises
     - light.hue_lectura
+    - light.gateway_light_7811dcb788fa
 
 luces_estudio_grp:
   name: Luces Estudio
   entities:
-    - sensor.illumination_7811dcb788fa
-    - light.gateway_light_7811dcb788fa
     - light.hue_estudio
 
 cocina_view:
@@ -327,10 +353,13 @@ reglas_alarma_grp:
   name: Reglas Alarma
   view: no
   entities:
-    - automation.a1_intrusion_con_alarma_armado_away
-    - automation.a2_intrusion_con_alarma_armado_parcial
+    - input_boolean.alarm_siren_setup
+    - automation.a0_alarma_incendios
+    - automation.a1_alarma_armado_away
+    - automation.a2_alarma_armado_home
     - automation.a3_alarma_boton_panico_on
     - automation.a4_alarma_boton_panico_off
+    - automation.a5_alarma_sirena_off
 
 reglas_tracking_grp:
   name: Reglas Tracking
@@ -344,11 +373,13 @@ reglas_luces_grp:
   name: Reglas Luces
   view: no
   entities:
-    - automation.l01_luces_on_entrada_segun_sensor
-    - automation.l02_luces_off_entrada_segun_sensor
-    - automation.l03_luces_on_exterior_puesta_sol_15m
-    - automation.l04_luces_off_exterior_si_family_home_05m
-    - automation.l05_luces_off_exterior_amanecer_240m
-    - automation.l06_luces_on_salon_puesta_sol_1h
-    - automation.l07_luces_off_si_medianoche
-    - automation.l08_luces_off_al_amanecer
+    - automation.l01_luces_on_exterior_sunset
+    - automation.l02_luces_off_exterior_all_family_home
+    - automation.l03_luces_off_exterior_amanecer_4h
+    - automation.l04_luces_on_salon_puesta_sol_1h
+    - automation.l05_luces_off_medianoche
+    - automation.l06_luces_off_amanecer
+    - automation.l07_luces_on_entrada_segun_sensor
+    - automation.l08_luces_off_entrada_segun_sensor
+    - automation.l09_luces_on_estudio_segun_sensor
+    - automation.l10_luces_off_estudio_segun_sensor

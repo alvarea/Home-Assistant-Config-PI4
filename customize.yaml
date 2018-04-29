@@ -88,10 +88,11 @@ sensor.last_boot:
 #
 # Estudio
 #
-light.gateway_light_7811dcb788fa:
-  friendly_name: Gateway Luz Estudio
-sensor.illumination_7811dcb788fa:
+binary_sensor.motion_sensor_158d0001e464a6:
+  friendly_name: Sensor Presencia Estudio
+sensor.illumination_158d0001e464a6:
   friendly_name: Sensor Luz Estudio
+
 # Entrada
 #
 binary_sensor.door_window_sensor_158d00022b393c:
@@ -115,6 +116,10 @@ binary_sensor.smoke_sensor_158d0001fd321c:
 
 # Salón
 #
+light.gateway_light_7811dcb788fa:
+  friendly_name: Gateway Luz
+sensor.illumination_7811dcb788fa:
+  friendly_name: Gateway Sensor Luz
 binary_sensor.door_window_sensor_158d000201e2e7:
   friendly_name: Sensor Puerta Salón
   icon: mdi:door
@@ -127,3 +132,11 @@ sensor.temperature_158d00022b65ff:
 sensor.humidity_158d00022b65ff:
   friendly_name: Sensor Humedad Salón
   icon: mdi:water-percent
+binary_sensor.motion_sensor_158d0001e05661:
+  friendly_name: Sensor Presencia Salón
+
+# Dormitorio PAF
+#
+binary_sensor.door_window_sensor_158d000201dddb:
+  friendly_name: Sensor Ventana PAF
+  icon: mdi:window-closed

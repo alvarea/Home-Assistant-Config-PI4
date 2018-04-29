@@ -92,7 +92,7 @@ ios:
 alarm_control_panel:
   - platform: manual
     name: HA
-    code: !secret alarm_control_code
+    # code: !secret alarm_control_code
     # Pending: The time in seconds of the pending time before effecting a state change. Default is 60 seconds.
     # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
     # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds

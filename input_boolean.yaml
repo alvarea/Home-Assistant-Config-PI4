@@ -33,7 +33,16 @@
     initial: off
     icon: mdi:bell-ring
 # AAC. Interruptores control alarma y notificaciones
-  alarm_mode:
+  panic_button:
     name: Alarma Botón Pánico
     initial: off
     icon: mdi:security-home
+    # AAC. Interruptores control alarma y notificaciones
+  alarm_siren_status:
+    name: Sirena Alarma
+    initial: off
+    icon: mdi:alarm-light
+  alarm_siren_setup:
+    name: Setup Sirena Alarma
+    initial: off
+    icon: mdi:alarm-light

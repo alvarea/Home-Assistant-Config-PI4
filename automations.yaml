@@ -166,19 +166,40 @@
 # ALARMA: Armado y Control de la Alarma                                       #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-- id: A1_intrusion_alarma_away
-  alias: 'A1 Intrusión con Alarma Armado Away'
+- id: A0_alarma_incendios
+  alias: 'A0 Alarma Incendios'
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e55903 # Sensor Presencia Entrada
+      entity_id: binary_sensor.smoke_sensor_158d0001fd321c
       from: 'off'
       to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.alarma_siren_on
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA FUEGO*'
+          message: >
+            >>> URGENTE: ALARMA INCENDIO
+
+    # Script Envio Fotos Cámaras Telegram
+    - service: script.turn_on
+      entity_id: script.telegram_alarm_send_photo
+
+- id: A1_alarma_away
+  alias: 'A1 Alarma Armado Away'
+  trigger:
     - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c # Sensor Puerta Entrada
-      from: 'off'
-      to: 'on'
-    - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d000201e2e7 # Sensor Puerta Salón
+      entity_id:
+        - binary_sensor.motion_sensor_158d0001e55903      # Sensor Presencia Entrada
+        - binary_sensor.door_window_sensor_158d00022b393c # Sensor Puerta Entrada
+        - binary_sensor.motion_sensor_158d0001e05661      # Sensor Presencia Salón
+        - binary_sensor.door_window_sensor_158d000201e2e7 # Sensor Puerta Salón
+        - binary_sensor.motion_sensor_158d0001e464a6      # Sensor Presencia Estudio
+        - binary_sensor.door_window_sensor_158d000201dddb # Sensor Ventana PAF
       from: 'off'
       to: 'on'
   condition:
@@ -191,13 +212,8 @@
         entity_id: binary_sensor.family_any_home
         state: 'off'
   action:
-    - service: homeassistant.turn_on
-      entity_id: input_boolean.alarm_mode
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: 78:11:DC:B7:88:FA
-        ringtone_id: 1
-        ringtone_vol: 100
+    - service: script.turn_on
+      entity_id: script.alarma_sirena_on
     # Script Notificación Alarma
     - service: script.turn_on
       entity_id: script.notifica_alarma
@@ -205,21 +221,22 @@
         variables:
           title: '*ALARMA*'
           message: >
-            >>> URGENTE: ALARMA EN CASA
+            >>> URGENTE: SENSOR DISPARADO
 
-            >>> ZONA: Entrada
-
-            >>> SIRENA: Sirena sonando
+            >>> ZONA: {{ trigger.entity_id }}
 
     # Script Envio Fotos Cámaras Telegram
     - service: script.turn_on
       entity_id: script.telegram_alarm_send_photo
 
-- id: A2_intrusion_alarma_home
-  alias: 'A2 Intrusión con Alarma Armado Parcial'
+- id: A2_alarma_home
+  alias: 'A2 Alarma Armado Home'
   trigger:
     - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c
+      entity_id:
+        - binary_sensor.door_window_sensor_158d00022b393c # Sensor Puerta Entrada
+        - binary_sensor.door_window_sensor_158d000201e2e7 # Sensor Puerta Salón
+        - binary_sensor.door_window_sensor_158d000201dddb # Sensor Ventana PAF
       from: 'off'
       to: 'on'
   condition:
@@ -227,13 +244,8 @@
       entity_id: alarm_control_panel.ha
       state: armed_home
   action:
-    - service: homeassistant.turn_on
-      entity_id: input_boolean.alarm_mode
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: 78:11:DC:B7:88:FA
-        ringtone_id: 1
-        ringtone_vol: 100
+    - service: script.turn_on
+      entity_id: script.alarma_sirena_on
     # Script Notificación Alarma
     - service: script.turn_on
       entity_id: script.notifica_alarma
@@ -241,11 +253,9 @@
         variables:
           title: '*ALARMA*'
           message: >
-            >>> URGENTE: ALARMA EN CASA
+            >>> URGENTE: SENSOR PERIMETRO DISPARADO
 
-            >>> ZONA: Entrada
-
-            >>> SIRENA: Sirena sonando
+            >>> ZONA: {{ trigger.entity_id }}
 
     # Script Envio Fotos Cámaras Telegram
     - service: script.turn_on
@@ -256,15 +266,12 @@
   alias: 'A3 Alarma Boton Panico On'
   trigger:
     platform: state
-    entity_id: input_boolean.alarm_mode
+    entity_id: input_boolean.panic_button
     from: 'off'
     to: 'on'
   action:
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: 78:11:DC:B7:88:FA
-        ringtone_id: 1
-        ringtone_vol: 100
+    - service: script.turn_on
+      entity_id: script.alarma_sirena_on
     - service: script.turn_on
       entity_id: script.notifica_alarma
       data:
@@ -273,23 +280,16 @@
           message: >
             >>> URGENTE: BOTON PANICO ACTIVADO
 
-
 - id: A4_alarma_boton_panico_off
   alias: 'A4 Alarma Boton Panico Off'
   trigger:
     platform: state
-    entity_id: input_boolean.alarm_mode
+    entity_id: input_boolean.panic_button
     from: 'on'
     to: 'off'
   action:
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: 78:11:DC:B7:88:FA
-    # Servicio Alarma Desarmado
-    - service: alarm_control_panel.alarm_disarm
-      data:
-        entity_id: alarm_control_panel.ha
-        code: !secret alarm_control_code
+    - service: script.turn_on
+      entity_id: script.alarma_sirena_off
     - service: script.turn_on
       entity_id: script.notifica_alarma
       data:
@@ -298,8 +298,15 @@
           message: >
             >>> URGENTE: BOTON PANICO APAGADO
 
-            >>> PANEL ALARMA: DESARMADO
-
+- id: A5_alarma_sirena_off
+  alias: 'A5 Alarma Sirena Off'
+  trigger:
+    platform: state
+    entity_id: input_boolean.alarm_siren
+    to: 'off'
+  action:
+    - service: script.turn_on
+      entity_id: script.alarma_sirena_off
 #
 # CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
 #
@@ -342,56 +349,8 @@
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-- id: L01_luces_on_entrada_on_sensor
-  alias: 'L01 Luces On Entrada Según Sensor'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e55903
-      to: 'on'
-    - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c
-      to: 'on'
-  condition:
-    condition: or  # 'when dark' condition: either after sunset or before sunrise
-    conditions:
-      - condition: sun
-        after: sunset
-        after_offset: "-1:00:00"
-      - condition: sun
-        before: sunrise
-        before_offset: "+3:00:00"
-  #condition:
-    #condition: numeric_state
-    #entity_id: sensor.temperature
-    #below: 10
-    #condition: template
-    #value_template: '{{ states.sensor.illumination_158d0001e55903.state < 10 }}'
-  action:
-    - service: light.turn_on
-      entity_id: light.hue_entrada
-      data:
-        brightness: 120
-        rgb_color: [255, 0, 0]
-
-- id: L02_luz_off_entrada_off_sensor
-  alias: 'L02 Luces Off Entrada Según Sensor'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e55903
-      to: 'off'
-      for:
-        minutes: 5
-    - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c
-      to: 'off'
-      for:
-        minutes: 5
-  action:
-    - service: light.turn_off
-      entity_id: light.hue_entrada
-
-- id: L03_luces_on_exterior_sunset
-  alias: 'L03 Luces On Exterior Puesta Sol +15m'
+- id: L01_luces_on_exterior_sunset
+  alias: 'L01 Luces On Exterior Sunset'
   trigger:
     - platform: sun
       event: sunset
@@ -412,10 +371,10 @@
 
             >>> LUCES: Alumbrado Exterior ON
 
-- id: L04_luces_off_exterior_family_home
-  alias: 'L04 Luces Off Exterior Si Family Home +05m'
+- id: L02_luces_off_exterior_all_family_home
+  alias: 'L02 Luces Off Exterior All Family Home'
   trigger:
-    # Todos duermen y están en casa
+    # Los que duermen ya están en casa
     - platform: state
       entity_id: binary_sensor.family_all_home
       from: 'off'
@@ -426,7 +385,10 @@
     condition: and
     conditions:
       - condition: time
-        after: '23:59:00'
+        after: '00:00:00'
+      - condition: state
+        entity_id: switch.wall_switch_right_158d0002236e75 # Luces exterior
+        state: 'on'
       # Están todos en casa
       - condition: state
         entity_id: binary_sensor.family_all_home
@@ -446,8 +408,8 @@
 
             >>> LUCES: Alumbrado Exterior Off
 
-- id: L05_luces_off_exterior_sunrise
-  alias: 'L05 Luces Off Exterior Amanecer -4h'
+- id: L03_luces_off_exterior_sunrise
+  alias: 'L03 Luces Off Exterior Amanecer -4h'
   trigger:
     - platform: sun
       event: sunrise
@@ -470,8 +432,8 @@
 
             >>> LUCES: Alumbrado Exterior Off
 
-- id: L06_luces_on_salon_sunset
-  alias: 'L06 Luces On Salon Puesta Sol -1h'
+- id: L04_luces_on_salon_sunset
+  alias: 'L04 Luces On Salon Puesta Sol -1h'
   trigger:
     - platform: sun
       event: sunset
@@ -495,8 +457,8 @@
 
             >>> LUCES: Luces Salón On
 
-- id: L07_luces_off_midnight
-  alias: 'L07 Luces Off si Medianoche'
+- id: L05_luces_off_midnight
+  alias: 'L05 Luces Off Medianoche'
   trigger:
     - platform: time
       at: "00:00:00"
@@ -515,8 +477,8 @@
 
             >>> LUCES: Luces Interior Off
 
-- id: L08_luces_off_home_sunrise
-  alias: 'L08 Luces Off Al Amanecer'
+- id: L06_luces_off_home_sunrise
+  alias: 'L06 Luces Off Amanecer'
   trigger:
     - platform: sun
       event: sunrise
@@ -546,3 +508,81 @@
             >>> EVENTO: Luces encendidas al amanecer
 
             >>> LUCES: Apagado total
+
+- id: L07_luces_on_entrada_on_sensor
+  alias: 'L07 Luces On Entrada Según Sensor'
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.motion_sensor_158d0001e55903
+        - binary_sensor.door_window_sensor_158d00022b393c
+      to: 'on'
+  condition:
+    condition: or  # 'when dark' condition: either after sunset or before sunrise
+    conditions:
+      - condition: sun
+        after: sunset
+        after_offset: "-1:00:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "+3:00:00"
+  #condition:
+    #condition: numeric_state
+    #entity_id: sensor.temperature
+    #below: 10
+    #condition: template
+    #value_template: '{{ states.sensor.illumination_158d0001e55903.state < 10 }}'
+  action:
+    - service: light.turn_on
+      entity_id: light.hue_entrada
+      data:
+        brightness: 120
+        rgb_color: [255, 0, 0]
+
+- id: L08_luz_off_entrada_off_sensor
+  alias: 'L08 Luces Off Entrada Según Sensor'
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.motion_sensor_158d0001e55903
+        - binary_sensor.door_window_sensor_158d00022b393c
+      to: 'off'
+      for:
+        minutes: 5
+  action:
+    - service: light.turn_off
+      entity_id: light.hue_entrada
+
+- id: L09_luces_on_estudio_on_sensor
+  alias: 'L09 Luces On Estudio Según Sensor'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e464a6
+      to: 'on'
+  condition:
+    condition: or  # 'when dark' condition: either after sunset or before sunrise
+    conditions:
+      - condition: sun
+        after: sunset
+        after_offset: "-1:30:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "+3:00:00"
+  action:
+    - service: light.turn_on
+      entity_id: light.hue_estudio
+      data:
+        brightness: 180
+        rgb_color: [256, 187, 106]
+
+- id: L10_luz_off_estudio_off_sensor
+  alias: 'L10 Luces Off Estudio Según Sensor'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e464a6
+      to: 'off'
+      for:
+        minutes: 10
+  action:
+    - service: light.turn_off
+      entity_id: light.hue_estudio

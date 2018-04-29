@@ -1,5 +1,33 @@
 #-----------------------------------------------------------------------------#
 #                                                                             #
+# ALARMA y SIRENAS                                                            #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+alarma_sirena_off:
+  alias: 'Sirena Off Alarma'
+  sequence:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.alarm_siren_status
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: 78:11:DC:B7:88:FA
+
+alarma_sirena_on:
+  alias: 'Sirena On Alarma'
+  sequence:
+    # IF Alarm_Siren_Setup = OFF CANCEL
+    - condition: template
+      value_template: "{% if is_state('input_boolean.alarm_siren_setup', 'Off') %}true{% endif %}"
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.alarm_siren_status
+    - service: xiaomi_aqara.play_ringtone
+      data:
+        gw_mac: 78:11:DC:B7:88:FA
+        ringtone_id: 2
+        ringtone_vol: 100
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
 # SCRIPTS DEVICE TRACKER                                                      #
 #                                                                             #
 #-----------------------------------------------------------------------------#
