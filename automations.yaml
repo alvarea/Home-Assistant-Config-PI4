@@ -567,13 +567,13 @@
         after_offset: "-1:30:00"
       - condition: sun
         before: sunrise
-        before_offset: "+3:00:00"
+        before_offset: "1:30:00"
   action:
     - service: light.turn_on
       entity_id: light.hue_estudio
       data:
         brightness: 180
-        rgb_color: [256, 187, 106]
+        rgb_color: [255, 187, 106]
 
 - id: L10_luz_off_estudio_off_sensor
   alias: 'L10 Luces Off Estudio Según Sensor'
