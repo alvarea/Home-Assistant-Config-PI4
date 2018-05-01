@@ -22,7 +22,7 @@ binary_sensor: !include binary_sensor.yaml
 input_boolean: !include input_boolean.yaml
 input_select: !include input_select.yaml
 input_text: !include input_text.yaml
-#input_number: !include input_number.yaml
+input_number: !include input_number.yaml
 
 # Show links to resources in log and frontend
 #introduction:
@@ -87,8 +87,23 @@ ios:
 
 # AAC. ALARM MANUAL CONTROL PANEL
 #
-# Status:  Disarmed => Armed (Home/Night/Away) => Triggered => Disarmed
+#   TRANSICION: Disarmed => Armed (Home/Night/Away) => Triggered => Disarmed
 #
+#   STATUS      DURACION TRANSICION               DESCRIPCION
+#   ========    =============================     ==================================================
+#   DISARMED    Permanante                        Estado inicial de alarma desarmada
+#
+#   PENDING     <PENDING_TIME>                    Estado transición a ARMED durante <pending_time> Segundos
+#
+#   ARMED_AWAY  Permanante                        Estado de alarma ARMED HOME / ARMED AWAY
+#
+#   PENDING     <PENDING_TIME> + <DELAY_TIME>     Estado transición a TRIGGERED durante <pending_time> + <delay_time> Segundos
+#
+#   TRIGGERED   <TRIGGER_TIME>                    Estado de alarma TRIGGERED durante <trigger_time> segundos
+#
+#   ARMED_AWAY  Permanante                        Estado anterior de alarma armada
+#
+
 alarm_control_panel:
   - platform: manual
     name: HA
@@ -96,13 +111,13 @@ alarm_control_panel:
     # Pending: The time in seconds of the pending time before effecting a state change. Default is 60 seconds.
     # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
     # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
-    pending_time: 30
-    delay_time: 15
+    pending_time: 15
+    delay_time: 0
     trigger_time: 60
     disarmed:
-      trigger_time: 0
+      trigger_time: 0 # the disarmed state never triggers the alarm;
     armed_home:
-      pending_time: 5
+      pending_time: 0
       delay_time: 0
 
 # AAC. GENERIC IP CAMERA
@@ -145,7 +160,7 @@ mqtt:
 #
 xiaomi_aqara:
   gateways:
-    - mac: 78:11:DC:B7:88:FA
+    - mac: !secret xiaomi_gateway
       key: AD58F3C5D30D405C
 
 # AAC. NMAP, OWNTRACKS

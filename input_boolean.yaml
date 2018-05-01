@@ -38,11 +38,14 @@
     initial: off
     icon: mdi:security-home
     # AAC. Interruptores control alarma y notificaciones
-  alarm_siren_status:
+  alarm_status:
     name: Sirena Alarma
-    initial: off
+    initial: on
     icon: mdi:alarm-light
   alarm_siren_setup:
     name: Setup Sirena Alarma
     initial: off
     icon: mdi:alarm-light
+  mute_xiaomi_gw_sounds:
+    name: Mute Sonidos Gateway
+    icon: mdi:volume-off

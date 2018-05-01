@@ -134,6 +134,8 @@ sensor.humidity_158d00022b65ff:
   icon: mdi:water-percent
 binary_sensor.motion_sensor_158d0001e05661:
   friendly_name: Sensor Presencia Salón
+sensor.illumination_158d0001e05661:
+  friendly_name: Sensor Luz Salón
 
 # Dormitorio PAF
 #

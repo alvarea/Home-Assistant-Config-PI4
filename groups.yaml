@@ -14,7 +14,7 @@ default_view:
     - group.estudio_view
     - group.system_view
     - group.config_view
-    - group.alarma_grp
+    - group.panel_alarma_grp
     - group.family_home_grp
     - group.family_status_grp
     - group.system_grp
@@ -23,7 +23,7 @@ system_grp:
   name: Estado del Sistema
   view: no
   entities:
-    - sensor.time
+    #- sensor.time
     - sun.sun
     - sensor.sun_next_rising
     - sensor.sun_next_setting
@@ -31,13 +31,12 @@ system_grp:
     - sensor.last_boot
     - sensor.ssl_certificate_expiry
 
-alarma_grp:
+panel_alarma_grp:
   name: Alarma
   view: no
   entities:
     - alarm_control_panel.ha
-    - binary_sensor.alarm_zone
-    - sensor.alarm_last_trigger
+
 
 family_status_grp:
   name: Family Status
@@ -65,6 +64,7 @@ alarma_view:
   icon: mdi:security-home
   view: yes
   entities:
+    - group.alarma_status_grp
     - group.sirena_grp
     - group.sensor_entrada_grp
     - group.sensor_estudio_grp
@@ -72,11 +72,18 @@ alarma_view:
     - group.sensor_cocina_grp
     - group.sensor_dormitorios_grp
 
-sirena_grp:
-  name: Sirena Alarma
+alarma_status_grp:
+  name: Estado Alarma
   view: no
   entities:
-    - input_boolean.alarm_siren_status
+    - input_boolean.alarm_status
+    - binary_sensor.alarm_zone
+    - sensor.alarm_last_trigger
+
+sirena_grp:
+  name: Botón Pánico
+  view: no
+  entities:
     - input_boolean.panic_button
 
 sensor_entrada_grp:
@@ -106,6 +113,7 @@ sensor_salon_grp:
   entities:
     - binary_sensor.door_window_sensor_158d000201e2e7
     - binary_sensor.motion_sensor_158d0001e05661
+    - sensor.illumination_158d0001e05661
     - sensor.temperature_158d00022b65ff
     - sensor.humidity_158d00022b65ff
     - sensor.pressure_158d00022b65ff
@@ -319,7 +327,7 @@ config_view:
       - group.reglas_luces_grp
       - group.reglas_tracking_grp
       - group.sensor_baterias_grp
-      - group.msg_control_grp
+      - group.xiaomi_gateway_grp
 
 notify_telegram_grp:
   name: Notificaciones Telegram
@@ -385,3 +393,13 @@ sensor_baterias_grp:
     - sensor.bateria_temperatura_salon
     - sensor.bateria_detector_incendios
     - sensor.bateria_ventana_paf
+
+xiaomi_gateway_grp:
+  name: Sirena Xiaomi Gateway
+  view: no
+  entities:
+    - input_boolean.mute_xiaomi_gw_sounds
+    - input_number.xiaomi_gw_volume
+    - input_number.xiaomi_gw_loop_delay
+    - input_select.xiaomi_gw_pending_sound
+    - input_select.xiaomi_gw_alarm_sound

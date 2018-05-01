@@ -3,67 +3,72 @@
 # ALARMA y SIRENAS                                                            #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-alarma_sirena_off:
-  alias: 'Sirena Off Alarma'
+# xiaomi_aqara.play_ringtone
+# { "gw_mac" : "78:11:DC:B7:88:FA",
+# "ringtone_id" : "11",
+# "ringtone_vol" : "20"
+
+# xiaomi_aqara.stop_ringtone
+# { "gw_mac" : "78:11:DC:B7:88:FA" }
+
+xiaomi_play_off:
+  alias: 'Xiaomi Play Off Sound'
   sequence:
+    ### Turn on gateway mute NOT to play sound ###
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+    ### Stop ringtone sound --> didn't seem to work due to loop ###
+    - service: xiaomi.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    ### Wait 1 seconds & then turn off gateway mute ###
+    - delay:
+        seconds: 1
     - service: input_boolean.turn_off
-      entity_id: input_boolean.alarm_siren_status
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: 78:11:DC:B7:88:FA
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
 
-alarma_sirena_on_pending:
-  alias: 'Sirena On Alarma Pending'
+xiaomi_play_sel_sound:
+  alias: "Xiaomi Loop Play Sound"
+  sequence:
+    - condition: state
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+      state: 'off'
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: "{{ states.input_select.xiaomi_gw_pending_sound.state.split('-')[0] }}"
+        ringtone_vol: "{{ states.input_number.xiaomi_gw_volume.state|int }}"
+    - delay: '00:00:{{ states.input_number.xiaomi_gw_loop_delay.state | int }}'
+    - service: script.xiaomi_play_sel_sound_loop
+
+xiaomi_play_sel_sound_loop:
+  alias: "Play selected sound in Loop"
+  sequence:
+    - condition: state
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+      state: 'off'
+    - delay: '00:00:{{ states.input_number.xiaomi_gw_loop_delay.state | int }}'
+    - service: script.xiaomi_play_sel_sound
+
+xiaomi_play_sel_sound_alarma:
+  alias: "Single Play Sound"
   sequence:
     - service: input_boolean.turn_on
-      entity_id: input_boolean.alarm_siren_status
-    - service: xiaomi_aqara.play_ringtone
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+    - service: xiaomi.stop_ringtone
       data:
-        gw_mac: 78:11:DC:B7:88:FA
-        ringtone_id: 10
-        ringtone_vol: 50
-
-alarma_sirena_on:
-  alias: 'Sirena On Alarma'
-  sequence:
-    # IF Alarm_Siren_Setup = OFF CANCEL
-    # When a condition does not return true, the script will finish
-    - condition: template
-      value_template: "{% if is_state('input_boolean.alarm_siren_setup', 'on') %} true {% endif %}"
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.alarm_siren_status
+        gw_mac: !secret xiaomi_gateway
     - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: 78:11:DC:B7:88:FA
-        ringtone_id: 2
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: "{{ states.input_select.xiaomi_gw_alarm_sound.state.split('-')[0] }}"
         ringtone_vol: 100
-
-alarma_activa_notificacion:
-  alias: 'Alarma Activa Notificación'
-  sequence:
-    - service: script.turn_on
-      entity_id: script.alarma_sirena_on
-
-    # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
-      data:
-        variables:
-          title: '*ALARMA*'
-          message: >
-            >>> URGENTE: SENSOR DISPARADO
-
-            >>> ZONA: {{ states('sensor.alarm_last_trigger') }}
-
-    # Script Envio Fotos Cámaras Telegram
-    #- service: script.turn_on
-    #  entity_id: script.telegram_alarm_send_photo
 
 alarma_desarmada_notificacion:
   alias: 'Alarma Desarmada Notificación'
   sequence:
     - service: script.turn_on
-      entity_id: script.alarma_sirena_off
+      entity_id: script.xiaomi_play_off
 
     # Script Notificación Alarma
     - service: script.turn_on

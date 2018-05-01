@@ -1,94 +1,29 @@
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# ARRANQUE/PARADA DEL SISTEMA                                                 #
-#                                                                             #
-#-----------------------------------------------------------------------------#
-- id: hass_startup_automation
-  alias: hass_startup_scripts
-  trigger:
-    platform: homeassistant
-    # Event can also be 'shutdown'
-    event: start
-  action:
-    # Para todas las reglas durante el arranque del sistema
-    - service: automation.turn_off
-      data:
-        entity_id:
-          - group.all_automations
-    #
-    # Llamada al script python para inicializar meta-trackers
-    - service: script.reset_meta_tracker
-    #
-    # Llamada al script python para inicializar meta-alarm_trigger
-    - service: script.reset_meta_alarm_trigger
-    #
-    # Llamada al contador de personas que actualiza sensor.family_home
-    - service: python_script.countpeople
-    #
-    # 30" espera y arranca reglas
-    - delay: 30
-    - service: automation.turn_on
-      data:
-        entity_id:
-          - group.all_automations
-
-#
-# CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
-#
-- id: S1_ssl_expiry_notification
-  alias: 'S1 SSL expiry notification'
-  trigger:
-    platform: numeric_state
-    entity_id: sensor.ssl_certificate_expiry
-    below: 21
-  action:
-    service: script.turn_on
-    entity_id: script.notifica_evento
-    data:
-      variables:
-        title: '*CERTIFICADO SSL*'
-        message: >
-          >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
-
-#
-# ALARMA AUTOMATICA SENSOR HUMO/FUEGO COCINA
-#
-- id: F1_alarma_fuego_cocina
-  alias: 'F1 Alarma Fuego Cocina'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.smoke_sensor_158d0001fd321c
-      from: 'off'
-      to: 'on'
-  action:
-    - service: script.turn_on
-      entity_id: script.alarma_siren_on
-    # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
-      data:
-        variables:
-          title: '*ALARMA FUEGO*'
-          message: >
-            >>> URGENTE: ALARMA FUEGO COCINA
-
-    # Script Envio Fotos Cámaras Telegram
-    - service: script.turn_on
-      entity_id: script.telegram_alarm_send_photo
-
-#-----------------------------------------------------------------------------#
-#                                                                             #
 # ALARMA: Armado y Control de la Alarma                                       #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-# xiaomi_aqara.play_ringtone
-# { "gw_mac" : "78:11:DC:B7:88:FA",
-# "ringtone_id" : "13",
-# "ringtone_vol" : "20"
+#
+# REGLA: ALARMA MODO TRANSICION PENDING
+#
+- id: A0_alarma_pending
+  alias: 'A0 Alarma Pending'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.ha
+      to: 'pending'
+  action:
+    # Activa Sonido Xiaomi en Bucle
+    ### Turn off gateway mute to play sound
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+    ### Play ringtone sound in loop until arm is done
+    - service: script.turn_on
+      entity_id: script.xiaomi_play_sel_sound
 
-# xiaomi_aqara.stop_ringtone
-# { "gw_mac" : "78:11:DC:B7:88:FA" }
-
+#
+# REGLA: ARMADO COMPLETADO PARA SONIDO XIAOMI_GW
+#
 - id: A1_alarma_armado_ok
   alias: 'A1 Alarma Armado OK'
   trigger:
@@ -100,41 +35,56 @@
       to: 'armed_away'
   action:
     - service: script.turn_on
-      entity_id: script.alarma_sirena_off
+      entity_id: script.xiaomi_play_off
 
-- id: A2_alarma_pending
-  alias: 'A2 Alarma Pending'
+#
+# REGLA: NOTIFICACION COMPLETA DESARMADO
+#
+- id: A2_alarma_desarmada
+  alias: 'A2 Alarma Desarmado'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
-      to: 'pending'
-  action:
-    - service: script.turn_on
-      entity_id: script.alarma_sirena_on_pending
-
-- id: A3_alarma_desarmada
-  alias: 'A3 Alarma Desarmado'
-  trigger:
-    - platform: state
-      entity_id: alarm_control_panel.ha
-      #from: 'triggered'
+      from: 'triggered'
       to: 'disarmed'
   action:
     - service: script.turn_on
+      entity_id: script.xiaomi_play_off
+    - service: script.turn_on
       entity_id: script.alarma_desarmada_notificacion
-
-- id: A5_alarma_disparada
-  alias: 'A5 Alarma Disparada'
+#
+# REGLA: ALARMA DISPARADA ACTIVA SIRENA + NOTIFICACION COMPLETA
+#
+- id: A3_alarma_disparada
+  alias: 'A3 Alarma Disparada'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
       to: 'triggered'
   action:
+    # Activa Sonido Alarma en Xiaomi_GW
     - service: script.turn_on
-      entity_id: script.alarma_activa_notificacion
+      entity_id: script.xiaomi_play_sel_sound_alarma
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA*'
+          message: >
+            >>> URGENTE: SENSOR DISPARADO
 
-- id: A6_alarma_arm_away_zona_trigger
-  alias: 'A6 Alarma Away Trigger'
+            >>> ZONA: {{ states('sensor.alarm_zone') }}
+
+    # Script Envio Fotos Cámaras Telegram
+    #- service: script.turn_on
+    #  entity_id: script.telegram_alarm_send_photo
+
+#
+# REGLA: TRIGGER ALARMA POR SENSOR EN ARMADO AWAY
+#
+- id: A4_alarma_trigger_armed_away
+  alias: 'A4 Alarma Trigger Armado Away'
   trigger:
     - platform: state
       entity_id:
@@ -160,13 +110,12 @@
         entity_id: '{{trigger.entity_id}}'
     - service: alarm_control_panel.alarm_trigger
       entity_id: alarm_control_panel.ha
-    #- service: input_text.set_value
-    #  entity_id: input_text.alarm_trigger
-    #  data_template:
-    #    value: '{{ trigger.entity_id }}'
 
-- id: A7_alarma_arm_home_trigger
-  alias: 'A7 Alarma Home Trigger'
+#
+# REGLA: TRIGGER ALARMA POR SENSOR EN ARMADO HOME
+#
+- id: A4_alarma_trigger_armed_home
+  alias: 'A4 Alarma Trigger Armado Home'
   trigger:
     - platform: state
       entity_id:
@@ -185,7 +134,9 @@
         entity_id: '{{trigger.entity_id}}'
     - service: alarm_control_panel.alarm_trigger
       entity_id: alarm_control_panel.ha
-
+#
+#=====================================================
+#
 - id: A8_alarma_boton_panico_on
   alias: 'A8 Alarma Boton Panico On'
   trigger:
@@ -609,3 +560,81 @@
   action:
     - service: light.turn_off
       entity_id: light.hue_estudio
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# ARRANQUE/PARADA DEL SISTEMA                                                 #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+- id: hass_startup_automation
+  alias: hass_startup_scripts
+  trigger:
+    platform: homeassistant
+    # Event can also be 'shutdown'
+    event: start
+  action:
+    # Para todas las reglas durante el arranque del sistema
+    - service: automation.turn_off
+      data:
+        entity_id:
+          - group.all_automations
+    #
+    # Llamada al script python para inicializar meta-trackers
+    - service: script.reset_meta_tracker
+    #
+    # Llamada al script python para inicializar meta-alarm_trigger
+    - service: script.reset_meta_alarm_trigger
+    #
+    # Llamada al contador de personas que actualiza sensor.family_home
+    - service: python_script.countpeople
+    #
+    # 30" espera y arranca reglas
+    - delay: 30
+    - service: automation.turn_on
+      data:
+        entity_id:
+          - group.all_automations
+
+#
+# CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
+#
+- id: S1_ssl_expiry_notification
+  alias: 'S1 SSL expiry notification'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ssl_certificate_expiry
+    below: 21
+  action:
+    service: script.turn_on
+    entity_id: script.notifica_evento
+    data:
+      variables:
+        title: '*CERTIFICADO SSL*'
+        message: >
+          >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
+
+#
+# ALARMA AUTOMATICA SENSOR HUMO/FUEGO COCINA
+#
+- id: F1_alarma_fuego_cocina
+  alias: 'F1 Alarma Fuego Cocina'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.smoke_sensor_158d0001fd321c
+      from: 'off'
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.alarma_siren_on
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA FUEGO*'
+          message: >
+            >>> URGENTE: ALARMA FUEGO COCINA
+
+    # Script Envio Fotos Cámaras Telegram
+    - service: script.turn_on
+      entity_id: script.telegram_alarm_send_photo
