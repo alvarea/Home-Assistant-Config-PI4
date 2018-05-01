@@ -29,7 +29,7 @@ alarma_sirena_on:
     # IF Alarm_Siren_Setup = OFF CANCEL
     # When a condition does not return true, the script will finish
     - condition: template
-      value_template: "{% if is_state('input_boolean.alarm_siren_setup', 'On') %} true {% endif %}"
+      value_template: "{% if is_state('input_boolean.alarm_siren_setup', 'on') %} true {% endif %}"
     - service: input_boolean.turn_on
       entity_id: input_boolean.alarm_siren_status
     - service: xiaomi_aqara.play_ringtone

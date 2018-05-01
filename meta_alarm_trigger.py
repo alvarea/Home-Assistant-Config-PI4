@@ -9,7 +9,8 @@
 #   data_template:
 #     entity_id: '{{trigger.entity_id}}'
 
-
+# JSON: {"entity_id" : "binary_sensor.motion_sensor_158d0001e55903" }
+# JSON: {"entity_id" : "alarm_control_panel.ha" }
 
 Zona_Entrada = ['binary_sensor.motion_sensor_158d0001e55903',       # Sensor Presencia Entrada
                 'binary_sensor.door_window_sensor_158d00022b393c'   # Sensor Puerta Entrada
@@ -28,41 +29,25 @@ Zona_Dorm_PAF = ['binary_sensor.door_window_sensor_158d000201dddb'  # Sensor Ven
 # Get the entity that triggered the automation
 triggeredEntity = data.get('entity_id')
 
-metaAlarmZone = 'binary_sensor.alarm_zone'
+newSensor = hass.states.get(triggeredEntity)
+newDeviceClass = newSensor.attributes.get('device_class')
+newState = newSensor.attributes.get('friendly_name')
 
-# Set friendly name and the metatracker name based on the entity that triggered
 if triggeredEntity in Zona_Entrada:
-    newFriendlyName = 'Zona Entrada'
     newIcon = 'mdi:door'
 elif triggeredEntity in 'Zona_Salon':
-    newFriendlyName = 'Zona Salón'
     newIcon = 'mdi:sofa'
 elif triggeredEntity in 'Zona_Estudio':
-    newFriendlyName = 'Zona Estudio'
     newIcon = 'mdi:laptop-mac'
 elif triggeredEntity in 'Zona_Dormitorio':
-    newFriendlyName = 'Zona Dormitorio PAF'
     newIcon = 'mdi:window-closed'
 else:
-    metaAlarmZone = None
-    newFriendlyName = None
-    newIcon = None
-
-# Get current & new state
-newState = hass.states.get(triggeredEntity)
-currentState = hass.states.get(metaAlarmZone)
-
-if newState.state is not None:
-    newStatus = newState.state
-else:
-    newStatus = currentState.state
-
-# Get New data
-newDeviceClass = newState.attributes.get('device_class')
+    newState = 'Correcto'
+    newIcon = 'mdi:security-home'
+    newDeviceClass = None
 
 # Create device_tracker.meta entity
-hass.states.set(metaAlarmZone, newStatus, {
-    'friendly_name': newFriendlyName,
+hass.states.set('sensor.alarm_zone', newState, {
     'icon': newIcon,
     'device_class': newDeviceClass
 })

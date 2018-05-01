@@ -98,7 +98,7 @@ alarm_control_panel:
     # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
     pending_time: 30
     delay_time: 15
-    trigger_time: 180
+    trigger_time: 60
     disarmed:
       trigger_time: 0
     armed_home:

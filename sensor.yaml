@@ -15,9 +15,10 @@
         icon_template: mdi:home-map-marker
       # Alarma
       alarm_last_trigger:
-        value_template: "{{ states.binary_sensor.alarm_zone.attributes.friendly_name if states('binary_sensor.alarm_zone') is not none }}"
+        #value_template: "{{ states.binary_sensor.alarm_zone.attributes.friendly_name if states('sensor.alarm_zone') is not none }}"
+        value_template: "{{ states('sensor.alarm_zone') if states('sensor.alarm_zone') is not none }}"
         friendly_name: 'Estado Alarma'
-        icon_template: "{{ states.binary_sensor.alarm_zone.attributes.icon if states('binary_sensor.alarm_zone') is not none }}"
+        icon_template: "{{ states.binary_sensor.alarm_zone.attributes.icon if states('sensor.alarm_zone') is not none }}"
 
       # Meta tracker AAC, MFC, PAF, AAF
       meta_track_aac:
