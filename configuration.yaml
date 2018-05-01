@@ -96,14 +96,14 @@ alarm_control_panel:
     # Pending: The time in seconds of the pending time before effecting a state change. Default is 60 seconds.
     # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
     # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
-    armed_home:
-      pending_time: 0
-      delay_time: 0
-    armed_away:
-      pending_time: 30
-      delay_time: 15
+    pending_time: 30
+    delay_time: 15
+    trigger_time: 180
     disarmed:
       trigger_time: 0
+    armed_home:
+      pending_time: 5
+      delay_time: 0
 
 # AAC. GENERIC IP CAMERA
 camera:

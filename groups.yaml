@@ -15,8 +15,8 @@ default_view:
     - group.system_view
     - group.config_view
     - group.alarma_grp
-    - group.family_status_grp
     - group.family_home_grp
+    - group.family_status_grp
     - group.system_grp
 
 system_grp:
@@ -27,6 +27,7 @@ system_grp:
     - sun.sun
     - sensor.sun_next_rising
     - sensor.sun_next_setting
+    - sensor.uptime
     - sensor.last_boot
     - sensor.ssl_certificate_expiry
 
@@ -35,7 +36,8 @@ alarma_grp:
   view: no
   entities:
     - alarm_control_panel.ha
-    - input_boolean.panic_button
+    - binary_sensor.alarm_zone
+    - sensor.alarm_last_trigger
 
 family_status_grp:
   name: Family Status
@@ -69,13 +71,13 @@ alarma_view:
     - group.sensor_salon_grp
     - group.sensor_cocina_grp
     - group.sensor_dormitorios_grp
-    - group.sensor_baterias_grp
 
 sirena_grp:
   name: Sirena Alarma
   view: no
   entities:
     - input_boolean.alarm_siren_status
+    - input_boolean.panic_button
 
 sensor_entrada_grp:
   name: Sensores Entrada
@@ -114,19 +116,6 @@ sensor_dormitorios_grp:
   view: no
   entities:
     - binary_sensor.door_window_sensor_158d000201dddb
-
-sensor_baterias_grp:
-  name: Baterías Sensores
-  view: no
-  entities:
-    - sensor.bateria_presencia_entrada
-    - sensor.bateria_puerta_entrada
-    - sensor.bateria_presencia_salon
-    - sensor.bateria_puerta_salon
-    - sensor.bateria_presencia_estudio
-    - sensor.bateria_temperatura_salon
-    - sensor.bateria_detector_incendios
-    - sensor.bateria_ventana_paf
 
 tracking_view:
   view: yes
@@ -299,7 +288,6 @@ system_view:
 pi3status_grp:
   name: PI3 System Status
   entities:
-    - sensor.uptime
     - sensor.load_15m
     - sensor.processor_use
     - sensor.memory_use_percent
@@ -326,10 +314,11 @@ config_view:
   view: yes
   icon: mdi:settings
   entities:
+      - group.reglas_alarma_grp
       - group.notify_telegram_grp
       - group.reglas_luces_grp
       - group.reglas_tracking_grp
-      - group.reglas_alarma_grp
+      - group.sensor_baterias_grp
       - group.msg_control_grp
 
 notify_telegram_grp:
@@ -383,3 +372,16 @@ reglas_luces_grp:
     - automation.l08_luces_off_entrada_segun_sensor
     - automation.l09_luces_on_estudio_segun_sensor
     - automation.l10_luces_off_estudio_segun_sensor
+
+sensor_baterias_grp:
+  name: Baterías Sensores
+  view: no
+  entities:
+    - sensor.bateria_presencia_entrada
+    - sensor.bateria_puerta_entrada
+    - sensor.bateria_presencia_salon
+    - sensor.bateria_puerta_salon
+    - sensor.bateria_presencia_estudio
+    - sensor.bateria_temperatura_salon
+    - sensor.bateria_detector_incendios
+    - sensor.bateria_ventana_paf

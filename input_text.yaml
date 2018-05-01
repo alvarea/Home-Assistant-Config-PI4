@@ -9,3 +9,7 @@
     name: Input Text Último Tracking
     initial: ''
     icon: mdi:home-map-marker
+  alarm_trigger:
+    name: Input Text Alarma Trigger
+    initial: ''
+    icon: mdi:security-home
