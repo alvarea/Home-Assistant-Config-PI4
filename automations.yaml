@@ -50,8 +50,14 @@
   action:
     - service: script.turn_on
       entity_id: script.xiaomi_play_off
+    # Script Notificación Alarma
     - service: script.turn_on
-      entity_id: script.alarma_desarmada_notificacion
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA*'
+          message: >
+            >>> URGENTE: DESARMADO OK
 #
 # REGLA: ALARMA DISPARADA ACTIVA SIRENA + NOTIFICACION COMPLETA
 #
@@ -62,9 +68,10 @@
       entity_id: alarm_control_panel.ha
       to: 'triggered'
   action:
-    # Activa Sonido Alarma en Xiaomi_GW
+    # Desactiva Sonido Warning en Xiaomi_GW
     - service: script.turn_on
-      entity_id: script.xiaomi_play_sel_sound_alarma
+      entity_id: script.xiaomi_play_off
+
     # Script Notificación Alarma
     - service: script.turn_on
       entity_id: script.notifica_alarma
@@ -75,6 +82,10 @@
             >>> URGENTE: SENSOR DISPARADO
 
             >>> ZONA: {{ states('sensor.alarm_zone') }}
+
+    # Activa Sonido Alarma en Xiaomi_GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_play_sel_sound_alarma
 
     # Script Envio Fotos Cámaras Telegram
     #- service: script.turn_on

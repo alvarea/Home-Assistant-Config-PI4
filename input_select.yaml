@@ -22,9 +22,11 @@
     initial: '4'
     icon: mdi:home-account
 
-### ALARM PENDING TIME sound to play ###
-  xiaomi_gw_pending_sound:
-    name: "Sonido Tiempo Armado"
+#
+## ALARM WARNING BEFORE ARMED : PENDING TIME
+#
+  xiaomi_gw_sound_warning:
+    name: "Sonido Warning Armado"
     options:
       - "0 - Police car 1"
       - "1 - Police car 2"
@@ -40,9 +42,11 @@
       - "12 - Amuse"
       - "13 - Alarm clock"
     icon: mdi:music-note
-
-### ALARM TRIGGER sound to play ###
-  xiaomi_gw_alarm_sound:
+    initial: '11 - Knock at a door'
+#
+### ALARM TRIGGER SOUND
+#
+  xiaomi_gw_sound_alarm:
     name: "Sonido Alarma"
     options:
       - "0 - Police car 1"
@@ -59,3 +63,4 @@
       - "12 - Amuse"
       - "13 - Alarm clock"
     icon: mdi:music-note
+    initial: '2 - Accident'

@@ -1,8 +1,19 @@
-### Input number to control Xiaomi gateway volume ###
-  xiaomi_gw_volume:
+#
+# Input number to control Xiaomi gateway Volume Alarm Warning (Pending Period)
+  xiaomi_gw_volume_alarm:
     name: Volumen
     mode: slider
-    initial: 10
+    initial: 100
+    min: 0
+    max: 100
+    step: 2
+    icon: mdi:volume-high
+#
+# Input number to control Xiaomi gateway Volume Alarm Warning (Pending Period)
+  xiaomi_gw_volume_warning:
+    name: Volumen
+    mode: slider
+    initial: 50
     min: 0
     max: 100
     step: 2
@@ -10,7 +21,7 @@
 
 ### Input number to control Xiaomi gateway loop delay ###
   xiaomi_gw_loop_delay:
-    name: "Retraso Ciclo"
+    name: "Delay"
     mode: slider
     initial: 1
     min: 0

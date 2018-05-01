@@ -13,6 +13,7 @@ default_view:
     - group.salon_view
     - group.estudio_view
     - group.system_view
+    - group.batery_view
     - group.config_view
     - group.panel_alarma_grp
     - group.family_home_grp
@@ -36,7 +37,6 @@ panel_alarma_grp:
   view: no
   entities:
     - alarm_control_panel.ha
-
 
 family_status_grp:
   name: Family Status
@@ -76,6 +76,7 @@ alarma_status_grp:
   name: Estado Alarma
   view: no
   entities:
+    - alarm_control_panel.ha
     - input_boolean.alarm_status
     - binary_sensor.alarm_zone
     - sensor.alarm_last_trigger
@@ -317,6 +318,26 @@ track_nmap_grp:
     - device_tracker.ipad_mini_nmap
     #- device_tracker.xiaomi_gateway
 
+batery_view:
+  view: yes
+  icon: mdi:battery-50
+  name: Batery Status
+  entities:
+    - group.sensor_baterias_grp
+
+sensor_baterias_grp:
+  name: Baterías Sensores
+  view: no
+  entities:
+    - sensor.bateria_presencia_entrada
+    - sensor.bateria_puerta_entrada
+    - sensor.bateria_presencia_salon
+    - sensor.bateria_puerta_salon
+    - sensor.bateria_presencia_estudio
+    - sensor.bateria_temperatura_salon
+    - sensor.bateria_detector_incendios
+    - sensor.bateria_ventana_paf
+
 config_view:
   name: Configuración
   view: yes
@@ -326,7 +347,6 @@ config_view:
       - group.notify_telegram_grp
       - group.reglas_luces_grp
       - group.reglas_tracking_grp
-      - group.sensor_baterias_grp
       - group.xiaomi_gateway_grp
 
 notify_telegram_grp:
@@ -351,12 +371,13 @@ reglas_alarma_grp:
   view: no
   entities:
     - input_boolean.alarm_siren_setup
-    - automation.a0_alarma_incendios
-    - automation.a1_alarma_armado_away
-    - automation.a2_alarma_armado_home
-    - automation.a3_alarma_boton_panico_on
-    - automation.a4_alarma_boton_panico_off
-    - automation.a5_alarma_sirena_off
+    - automation.a1_alarma_armado_ok
+    - automation.a2_alarma_desarmado
+    - automation.a3_alarma_disparada
+    - automation.a4_alarma_trigger_armado_away
+    - automation.a4_alarma_trigger_armado_home
+    - automation.a8_alarma_boton_panico_on
+    - automation.a9_alarma_boton_panico_off
 
 reglas_tracking_grp:
   name: Reglas Tracking
@@ -381,25 +402,14 @@ reglas_luces_grp:
     - automation.l09_luces_on_estudio_segun_sensor
     - automation.l10_luces_off_estudio_segun_sensor
 
-sensor_baterias_grp:
-  name: Baterías Sensores
-  view: no
-  entities:
-    - sensor.bateria_presencia_entrada
-    - sensor.bateria_puerta_entrada
-    - sensor.bateria_presencia_salon
-    - sensor.bateria_puerta_salon
-    - sensor.bateria_presencia_estudio
-    - sensor.bateria_temperatura_salon
-    - sensor.bateria_detector_incendios
-    - sensor.bateria_ventana_paf
-
 xiaomi_gateway_grp:
   name: Sirena Xiaomi Gateway
   view: no
   entities:
     - input_boolean.mute_xiaomi_gw_sounds
-    - input_number.xiaomi_gw_volume
     - input_number.xiaomi_gw_loop_delay
-    - input_select.xiaomi_gw_pending_sound
-    - input_select.xiaomi_gw_alarm_sound
+    - input_select.xiaomi_gw_sound_warning
+    - input_number.xiaomi_gw_volume_warning
+    - input_select.xiaomi_gw_sound_alarm
+    - input_number.xiaomi_gw_volume_alarm
+
