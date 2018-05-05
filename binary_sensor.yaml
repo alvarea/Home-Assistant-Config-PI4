@@ -1,71 +1,41 @@
 #
 # AAC. Sensores Binarios
 #
-  - platform: template
-    sensors:
-      # Todos en Casa:  IF sensor.family_home >= sensor.family_sleep_home THEN TRUE
-      family_all_home:
-        value_template: >-
-          {% if states('sensor.family_home')|int >= states('sensor.family_sleep_home')|int %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Todos en Casa'
-        icon_template: mdi:home-map-marker
-        entity_id:
-          - sensor.family_home
-          - sensor.family_sleep_home
-      # Alguien en Casa:  IF sensor.family_home > 0 THEN TRUE
-      family_any_home:
-        value_template: >-
-          {% if states('sensor.family_home')|int > 0 %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Alguien en Casa'
-        icon_template: mdi:account-location
-        entity_id:
-          - sensor.family_home
-          - sensor.family_sleep_home
+  # NMAP ==> prob_given_true: 0.8 - prob_given_false: 0.2
+  #   - device_tracker.aac_iphone_nmap
+  #   - device_tracker.mfc_iphone_nmap
+  #   - device_tracker.paf_iphone_nmap
+  #   - device_tracker.aaf_iphone_nmap
+  #   - 'device_tracker.pi_rashmiphone'
+  #   - 'device_tracker.pi_alokphone'
 
-# NMAP ==> prob_given_true: 0.8 - prob_given_false: 0.2
-#   - device_tracker.aac_iphone_nmap
-#   - device_tracker.mfc_iphone_nmap
-#   - device_tracker.paf_iphone_nmap
-#   - device_tracker.aaf_iphone_nmap
+  # IOS APP ==> prob_given_true: 0.99 - prob_given_false: 0.10
+  #   - device_tracker.aac_ios
+  #   - device_tracker.mfc_ios
+  #   - device_tracker.rashmiappiphone
+  #   - device_tracker.alokiosiphone
 
-#   - 'device_tracker.pi_rashmiphone'
-#   - 'device_tracker.pi_alokphone'
+  # OWNTRACK ==> prob_given_true: 0.99 - prob_given_false: 0.4
+  #   - device_tracker.aac_iphone_owntrack
+  #   - device_tracker.mfc_iphone_owntrack
+  #   - device_tracker.rashmisiphone
+  #   - device_tracker.myiphone
 
-# IOS APP ==> prob_given_true: 0.99 - prob_given_false: 0.10
-#   - device_tracker.aac_ios
-#   - device_tracker.mfc_ios
-#   - device_tracker.rashmiappiphone
-#   - device_tracker.alokiosiphone
+  # GEOFENCY ==> prob_given_true: 0.99 - prob_given_false: 0.1
+  #   - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
+  #   - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
+  #   - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+  #   - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
 
-# OWNTRACK ==> prob_given_true: 0.99 - prob_given_false: 0.4
-#   - device_tracker.aac_iphone_owntrack
-#   - device_tracker.mfc_iphone_owntrack
-#   - device_tracker.rashmisiphone
-#   - device_tracker.myiphone
-
-# GEOFENCY ==> prob_given_true: 0.99 - prob_given_false: 0.1
-#   - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-#   - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
-#   - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
-#   - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
-
-# BAYESIAN SENSORS
-#   - binary_sensor.family_home_mfc
-#   - binary_sensor.family_home_aac
-#   - binary_sensor.family_home_paf
-#   - binary_sensor.family_home_aaf
+  # BAYESIAN SENSORS
+  #   - binary_sensor.family_home_mfc
+  #   - binary_sensor.family_home_aac
+  #   - binary_sensor.family_home_paf
+  #   - binary_sensor.family_home_aaf
 
   - platform: 'bayesian'
     prior: 0.60
-    name: 'family_home_mfc'
+    name: 'baye_home_mfc'
     probability_threshold: 0.95
     observations:
       - entity_id: 'device_tracker.mfc_iphone_nmap'
@@ -91,7 +61,7 @@
 
   - platform: 'bayesian'
     prior: 0.60
-    name: 'family_home_aac'
+    name: 'baye_home_aac'
     probability_threshold: 0.95
     observations:
       - entity_id: 'device_tracker.aac_iphone_nmap'
@@ -117,7 +87,7 @@
 
   - platform: 'bayesian'
     prior: 0.66
-    name: 'family_home_paf'
+    name: 'baye_home_paf'
     probability_threshold: 0.96
     observations:
       - entity_id: 'device_tracker.paf_iphone_nmap'
@@ -133,7 +103,7 @@
 
   - platform: 'bayesian'
     prior: 0.66
-    name: 'family_home_aaf'
+    name: 'baye_home_aaf'
     probability_threshold: 0.95
     observations:
       - entity_id: 'device_tracker.aaf_iphone_nmap'
@@ -142,7 +112,62 @@
         platform: 'state'
         to_state: 'home'
       - entity_id: 'device_tracker.bef743fa74f2464ba458612ad3e1c195' #AAF GEOFENCY
-        prob_given_true: 0.99
-        prob_given_false: 0.1
+        prob_given_true: 0.8    # original 0.99
+        prob_given_false: 0.2   # original 0.1
         platform: 'state'
         to_state: 'home'
+
+  - platform: template
+    sensors:
+
+      # Sensores finales de control de presencia basados en el bayesian(on/off) AND input_boolean(on/off) de cada Uno.
+      #
+      family_home_aac:
+        value_template: >-
+          {% if is_state('sensor.home_aac','on') and is_state('binary_sensor.baye_home_aac','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      family_home_mfc:
+        value_template: >-
+          {{ is_state('binary_sensor.baye_home_mfc','on')
+              and is_state('sensor.home_mfc','on') }}
+
+      family_home_paf:
+        value_template: >-
+          {{ is_state('binary_sensor.baye_home_paf','on')
+              and is_state('sensor.home_paf','on') }}
+
+      family_home_aaf:
+        value_template: >-
+          {{ is_state('binary_sensor.baye_home_aaf','on')
+              and is_state('sensor.home_aaf','on') }}
+
+      # Todos en Casa:  IF sensor.family_home >= sensor.family_sleep_home THEN TRUE
+      family_all_home:
+        value_template: >-
+          {% if states('sensor.family_home')|int >= states('sensor.family_sleep_home')|int %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: 'Todos en Casa'
+        icon_template: mdi:home-map-marker
+        entity_id:
+          - sensor.family_home
+          - sensor.family_sleep_home
+      # Alguien en Casa:  IF sensor.family_home > 0 THEN TRUE
+      family_any_home:
+        value_template: >-
+          {% if states('sensor.family_home')|int > 0 %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: 'Alguien en Casa'
+        icon_template: mdi:account-location
+        entity_id:
+          - sensor.family_home
+

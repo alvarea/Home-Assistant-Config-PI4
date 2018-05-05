@@ -6,20 +6,50 @@
 #
 # REGLA: ALARMA MODO TRANSICION PENDING
 #
-- id: A0_alarma_pending
-  alias: 'A0 Alarma Pending'
+#pre_pending_state: disarmed
+#post_pending_state: armed_away
+- id: A0_alarma_disarmed_pending
+  alias: 'A0 Alarma Disarmed To Pending'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
+      from: 'disarmed'
+      to: 'pending'
+  condition:
+    condition: template
+    value_template: '{{ states.alarm_control_panel.ha.attributes.pre_pending_state > "disarmed" }}'
+  action:
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id" : "10005"
+        ringtone_vol" : "50"
+
+- id: A02_alarma_armed_pending
+  alias: 'A02 Alarma Armed ending'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.ha
+      from: 'armed-away'
+      to: 'pending'
+    - platform: state
+      entity_id: alarm_control_panel.ha
+      from: 'armed-home'
       to: 'pending'
   action:
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id" : "10004"
+        ringtone_vol" : "50"
+
     # Activa Sonido Xiaomi en Bucle
     ### Turn off gateway mute to play sound
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.mute_xiaomi_gw_sounds
+    #- service: input_boolean.turn_off
+    #  entity_id: input_boolean.mute_xiaomi_gw_sounds
     ### Play ringtone sound in loop until arm is done
-    - service: script.turn_on
-      entity_id: script.xiaomi_play_sel_sound
+    #- service: script.turn_on
+    #  entity_id: script.xiaomi_play_sel_sound
 
 #
 # REGLA: ARMADO COMPLETADO PARA SONIDO XIAOMI_GW

@@ -3,11 +3,34 @@
 # ALARMA y SIRENAS                                                            #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-# xiaomi_aqara.play_ringtone
-# { "gw_mac" : "78:11:DC:B7:88:FA",
-# "ringtone_id" : "11",
-# "ringtone_vol" : "20"
 
+# 10004: Ringtone AAC ArmadoDesarme:
+#
+# "sistema armado
+# 15 seg para desarmar
+# desarme ahora por favor
+# sistema armado, quedan 3 segundos
+# desarme ahora por favor"
+#
+#{ "gw_mac" : "78:11:DC:B7:88:FA",
+#"ringtone_id" : "10004",
+#"ringtone_vol" : "50"
+#}
+#
+# 10005: Ringtone AAC ArmadoSalgaAhora:
+#
+# "sistema armado
+# 15 seg para salir
+# salga ahora por favor
+# sistema armado, quedan 3 segundos
+# salga ahora por favor"
+#
+# service: xiaomi_aqara.play_ringtone
+#{ "gw_mac" : "78:11:DC:B7:88:FA",
+#"ringtone_id" : "10005",
+#"ringtone_vol" : "50"
+#}
+#
 # xiaomi_aqara.stop_ringtone
 # { "gw_mac" : "78:11:DC:B7:88:FA" }
 
@@ -17,6 +40,7 @@
 #- input_number.xiaomi_gw_volume_warning
 #- input_select.xiaomi_gw_sound_alarm
 #- input_number.xiaomi_gw_volume_alarm
+
 
 xiaomi_play_off:
   alias: 'Xiaomi Play Off Sound'
@@ -68,7 +92,6 @@ xiaomi_play_sel_sound_loop:
       state: 'off'
     - delay: '00:00:{{ states.input_number.xiaomi_gw_loop_delay.state | int }}'
     - service: script.xiaomi_play_sel_sound
-
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

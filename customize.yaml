@@ -16,6 +16,15 @@ binary_sensor.family_home_paf:
 binary_sensor.family_home_aaf:
   friendly_name: Agu en Casa
 
+binary_sensor.baye_home_mfc:
+  friendly_name: Bayesian Malen
+binary_sensor.baye_home_aac:
+  friendly_name: Bayesian Agustín
+binary_sensor.baye_home_paf:
+  friendly_name: Bayesian Paloma
+binary_sensor.baye_home_aaf:
+  friendly_name: Bayesian Agu
+
 # SOL Y TIEMPO
 #
 sun.sun:

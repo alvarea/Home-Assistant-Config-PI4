@@ -9,18 +9,6 @@
      - 'IOS'
     initial: Telegram
     icon: mdi:bell-ring
-#
-# Select Número Personas Duermen en Casa
-#
-  family_sleep_home:
-    name: Duermen en Casa
-    options:
-     - '1'
-     - '2'
-     - '3'
-     - '4'
-    initial: '4'
-    icon: mdi:home-account
 
 #
 ## ALARM WARNING BEFORE ARMED : PENDING TIME
@@ -41,6 +29,8 @@
       - "11 - Knock at a door"
       - "12 - Amuse"
       - "13 - Alarm clock"
+      - "10004 - ArmadoDesarme"
+      - "10005 - ArmadoSalgaAhora"
     icon: mdi:music-note
     initial: '11 - Knock at a door'
 #
