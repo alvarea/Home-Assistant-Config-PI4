@@ -7,30 +7,18 @@
 #
 # REGLA: ARMADO COMPLETADO
 #
-- id: A0_alarma_armado_correcto
-  alias: 'A0 Alarma Armado Correcto'
+- id: A0_alarma_armado_ok
+  alias: 'A0 Alarma Armado OK'
   trigger:
+    - platform: state
+      entity_id: alarm_control_panel.ha
+      to: 'armed_home'
     - platform: state
       entity_id: alarm_control_panel.ha
       to: 'armed_away'
   action:
-    # Aviso Cambio Estado Alarma
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: "11"
-        ringtone_vol: "50"
-
     - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*AVISO ALARMA*'
-          message: >
-            >>> ESTADO: HOMY '{{trigger.to_state.state}}'
+      entity_id: script.xiaomi_play_off
 
 #
 # REGLA: ALARMA MODO TRANSICION PENDING
@@ -61,11 +49,20 @@
   action:
     # Notifica Evento
     #>>> Estado Alarma: {{ state('alarm_control_panel.ha') }}
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*AVISO ALARMA*'
+          message: >
+            >>> ESTADO: ARMANDO HOMMER
+
+    # Stop ringtone sound
     - service: xiaomi_aqara.stop_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
     - service: xiaomi_aqara.play_ringtone
-      data:
+      data_template:
         gw_mac: !secret xiaomi_gateway
         ringtone_id: "10005"
         ringtone_vol: "50"
@@ -82,14 +79,32 @@
       from: 'armed_home'
       to: 'pending'
   action:
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*AVISO ALARMA*'
+          message: >
+            >>> ESTADO: DESARMANDO HOMMER
+
+    # Stop ringtone sound
     - service: xiaomi_aqara.stop_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
     - service: xiaomi_aqara.play_ringtone
-      data:
+      data_template:
         gw_mac: !secret xiaomi_gateway
         ringtone_id: "10004"
         ringtone_vol: "50"
+
+    # Activa Sonido Xiaomi en Bucle
+    ### Turn off gateway mute to play sound
+    #- service: input_boolean.turn_off
+    #  entity_id: input_boolean.mute_xiaomi_gw_sounds
+    ### Play ringtone sound in loop until arm is done
+    #- service: script.turn_on
+    #  entity_id: script.xiaomi_play_sel_sound
 
 #
 # REGLA: NOTIFICACION COMPLETA DESARMADO
@@ -102,27 +117,17 @@
       from: 'triggered'
       to: 'disarmed'
   action:
-    # Aviso Cambio Estado Alarma
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: "11"
-        ringtone_vol: "50"
+    - service: script.turn_on
+      entity_id: script.xiaomi_play_off
     # Script Notificación Alarma
     - service: script.turn_on
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_alarma
       data:
         variables:
           title: '*ALARMA*'
           message: >
-            >>> URGENTE: HOMY DESARMADO OK
-
-            >>> ESTADO: {{ states('alarm_control_panel.ha') }}
-
+            >>> URGENTE: DESARMADO OK
+#
 # REGLA: ALARMA ACTIVA SIRENA + NOTIFICACION COMPLETA
 #
 - id: A4_alarma_disparada
@@ -132,27 +137,24 @@
       entity_id: alarm_control_panel.ha
       to: 'triggered'
   action:
-    # Aviso Cambio Estado Alarma
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: "2"
-        ringtone_vol: "50"
-
-   # Script Notificación Alarma
+    # Desactiva Sonido Warning en Xiaomi_GW
     - service: script.turn_on
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-      entity_id: script.notifica_evento
+      entity_id: script.xiaomi_play_off
+
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
       data:
         variables:
           title: '*ALARMA*'
           message: >
-            >>> URGENTE: HOMY ALARMA ACTIVADA
+            >>> URGENTE: SENSOR DISPARADO
 
             >>> ZONA: {{ states('sensor.alarm_zone') }}
+
+    # Activa Sonido Alarma en Xiaomi_GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_play_sel_sound_alarma
 
     # Script Envio Fotos Cámaras Telegram
     #- service: script.turn_on
@@ -226,8 +228,7 @@
     - service: script.turn_on
       entity_id: script.alarma_sirena_on
     - service: script.turn_on
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_alarma
       data:
         variables:
           title: '*ALARMA*'
@@ -245,8 +246,7 @@
     - service: script.turn_on
       entity_id: script.alarma_sirena_off
     - service: script.turn_on
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_alarma
       data:
         variables:
           title: '*ALARMA*'

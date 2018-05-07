@@ -40,31 +40,68 @@
 #- input_select.xiaomi_gw_sound_alarm
 #- input_number.xiaomi_gw_volume_alarm
 
-xiaomi_gw_play_ringtone:
-  alias: "Xiaomi GW Sonido Aviso"
+xiaomi_play_alarm_ringtone:
+  alias: "Single Play Alarm Ringtone"
   sequence:
-    - service: script.turn_on
-      entity_id: script.xiaomi_play_off
+    # Activa Sonido Alarma
     - service: xiaomi_aqara.play_ringtone
-      data:
+      data_template:
         gw_mac: !secret xiaomi_gateway
-        ringtone_id: "11"
-        ringtone_vol: "50"
-        #ringtone_id: "{{ states.input_select.xiaomi_gw_sound_warning.state.split('-')[0] }}"
-        #ringtone_vol: "{{ states.input_number.xiaomi_gw_volume_warning.state|int }}"
+        ringtone_id: "{{ ringtone }}"
+        ringtone_vol: "{{ volume }}"
 
-xiaomi_gw_play_alarm:
-  alias: "Xiaomi GW Sonido Alarm"
+
+xiaomi_play_off:
+  alias: 'Xiaomi Play Off Sound'
   sequence:
-    - service: script.turn_on
-      entity_id: script.xiaomi_play_off
-    - service: xiaomi_aqara.play_ringtone
+    ### Turn on gateway mute NOT to play sound ###
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+    ### Stop ringtone sound
+    - service: xiaomi_aqara.stop_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
-        ringtone_id: "3"
-        ringtone_vol: "50"
+    ### Wait seconds & then turn off gateway mute ###
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+
+xiaomi_play_sel_sound_alarma:
+  alias: "Single Play Sound"
+  sequence:
+    # Activa Sonido Alarma
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: 2
+        ringtone_vol: 50
         #ringtone_id: "{{ states.input_select.xiaomi_gw_sound_alarm.state.split('-')[0] }}"
         #ringtone_vol: "{{ states.input_number.xiaomi_gw_volume_alarm.state|int }}"
+
+xiaomi_play_sel_sound:
+  alias: "Xiaomi Loop Play Sound"
+  sequence:
+    - condition: state
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+      state: 'off'
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: "{{ states.input_select.xiaomi_gw_sound_warning.state.split('-')[0] }}"
+        ringtone_vol: "{{ states.input_number.xiaomi_gw_volume_warning.state|int }}"
+    - delay: '00:00:{{ states.input_number.xiaomi_gw_loop_delay.state | int }}'
+    - service: script.xiaomi_play_sel_sound_loop
+
+xiaomi_play_sel_sound_loop:
+  alias: "Play selected sound in Loop"
+  sequence:
+    - condition: state
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+      state: 'off'
+    - delay: '00:00:{{ states.input_number.xiaomi_gw_loop_delay.state | int }}'
+    - service: script.xiaomi_play_sel_sound
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
