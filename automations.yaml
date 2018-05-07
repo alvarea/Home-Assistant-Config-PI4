@@ -21,8 +21,8 @@
     - service: xiaomi_aqara.play_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
-        ringtone_id: "11"
-        ringtone_vol: "50"
+        ringtone_id: 11
+        ringtone_vol: 50
 
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -67,8 +67,8 @@
     - service: xiaomi_aqara.play_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
-        ringtone_id: "10005"
-        ringtone_vol: "50"
+        ringtone_id: 10005
+        ringtone_vol: 50
 
 - id: A2_alarma_armed_pending
   alias: 'A2 Alarma Desarmando'
@@ -88,8 +88,8 @@
     - service: xiaomi_aqara.play_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
-        ringtone_id: "10004"
-        ringtone_vol: "50"
+        ringtone_id: 10004
+        ringtone_vol: 50
 
 #
 # REGLA: NOTIFICACION COMPLETA DESARMADO
@@ -109,8 +109,8 @@
     - service: xiaomi_aqara.play_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
-        ringtone_id: "11"
-        ringtone_vol: "50"
+        ringtone_id: 11
+        ringtone_vol: 50
     # Script Notificación Alarma
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -139,8 +139,8 @@
     - service: xiaomi_aqara.play_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
-        ringtone_id: "2"
-        ringtone_vol: "50"
+        ringtone_id: 2
+        ringtone_vol: 50
 
    # Script Notificación Alarma
     - service: script.turn_on

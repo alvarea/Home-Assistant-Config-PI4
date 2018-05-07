@@ -48,8 +48,8 @@ xiaomi_gw_play_ringtone:
     - service: xiaomi_aqara.play_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
-        ringtone_id: "11"
-        ringtone_vol: "50"
+        ringtone_id: 11
+        ringtone_vol: 50
         #ringtone_id: "{{ states.input_select.xiaomi_gw_sound_warning.state.split('-')[0] }}"
         #ringtone_vol: "{{ states.input_number.xiaomi_gw_volume_warning.state|int }}"
 
@@ -61,8 +61,8 @@ xiaomi_gw_play_alarm:
     - service: xiaomi_aqara.play_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
-        ringtone_id: "3"
-        ringtone_vol: "50"
+        ringtone_id: 3
+        ringtone_vol: 50
         #ringtone_id: "{{ states.input_select.xiaomi_gw_sound_alarm.state.split('-')[0] }}"
         #ringtone_vol: "{{ states.input_number.xiaomi_gw_volume_alarm.state|int }}"
 
