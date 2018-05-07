@@ -259,6 +259,7 @@ cocina_view:
   name: Cocina
   entities:
     - light.hue_cocina
+    - group.alarma_sensor_cocina_grp
     - camera.ipcam11_cocina
     - media_player.firetv_cocina
 
