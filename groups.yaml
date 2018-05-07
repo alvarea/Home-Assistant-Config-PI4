@@ -3,7 +3,6 @@ default_view:
   icon: mdi:home-assistant
   name: Home View
   entities:
-    - group.alarma_view
     - group.tracking_view
     - group.tiempo_view
     - group.camaras_view
@@ -15,10 +14,27 @@ default_view:
     - group.system_view
     - group.batery_view
     - group.config_view
-    - group.panel_alarma_grp
-    - group.family_home_grp
     - group.family_status_grp
+    - group.family_home_grp
     - group.system_grp
+
+family_status_grp:
+  name: Homy Status
+  entities:
+    - alarm_control_panel.ha
+    - sensor.family_home
+    - binary_sensor.family_any_home
+    - binary_sensor.family_all_home
+    - sensor.family_sleep_home
+
+family_home_grp:
+  name: Family Home?
+  entities:
+    - sensor.family_last_tracking
+    - binary_sensor.family_home_aac
+    - binary_sensor.family_home_mfc
+    - binary_sensor.family_home_paf
+    - binary_sensor.family_home_aaf
 
 system_grp:
   name: Estado del Sistema
@@ -31,33 +47,6 @@ system_grp:
     - sensor.uptime
     - sensor.last_boot
     - sensor.ssl_certificate_expiry
-
-panel_alarma_grp:
-  name: Alarma
-  view: no
-  entities:
-    - alarm_control_panel.ha
-
-family_status_grp:
-  name: Family Status
-  entities:
-    - sensor.family_home
-    - binary_sensor.family_any_home
-    - binary_sensor.family_all_home
-    - sensor.family_sleep_home
-    - sensor.family_last_tracking
-    - device_tracker.meta_aac
-    - device_tracker.meta_mfc
-    - device_tracker.meta_paf
-    - device_tracker.meta_aaf
-
-family_home_grp:
-  name: Family Home?
-  entities:
-    - binary_sensor.family_home_aac
-    - binary_sensor.family_home_mfc
-    - binary_sensor.family_home_paf
-    - binary_sensor.family_home_aaf
 
 alarma_view:
   name: Panel Control Alarma
@@ -285,7 +274,7 @@ salon_view:
     - media_player.apple_tv
 
 sensor_salon_grp:
-  name: Sensores Salón
+  name: Temperatura Salón
   view: no
   entities:
     - sensor.temperature_158d00022b65ff
@@ -298,6 +287,7 @@ estudio_view:
   icon: mdi:laptop-mac
   name: Estudio
   entities:
+    - group.alarma_sensor_estudio_grp
     - group.luces_estudio_grp
     - camera.ipcam12_estudio
 
@@ -416,16 +406,16 @@ reglas_luces_grp:
   name: Reglas Luces
   view: no
   entities:
-    - automation.l01_luces_on_exterior_sunset
-    - automation.l02_luces_off_exterior_all_family_home
-    - automation.l03_luces_off_exterior_amanecer_4h
-    - automation.l04_luces_on_salon_puesta_sol_1h
-    - automation.l05_luces_off_medianoche
-    - automation.l06_luces_off_amanecer
-    - automation.l07_luces_on_entrada_segun_sensor
-    - automation.l08_luces_off_entrada_segun_sensor
-    - automation.l09_luces_on_estudio_segun_sensor
-    - automation.l10_luces_off_estudio_segun_sensor
+    - automation.a0_alarma_armado_correcto
+    - automation.a10_alarma_sirena_off
+    - automation.a1_alarma_armando
+    - automation.a2_alarma_desarmando
+    - automation.a3_alarma_activa_a_desarmado
+    - automation.a4_alarma_disparada
+    - automation.a5_alarma_trigger_armado_away
+    - automation.a6_alarma_trigger_armado_home
+    - automation.a8_alarma_boton_panico_on
+    - automation.a9_alarma_boton_panico_off
 
 xiaomi_gateway_grp:
   name: Sirena Xiaomi Gateway
