@@ -1,0 +1,283 @@
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# ALARMA y SIRENAS                                                            #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+
+# 10004: Ringtone AAC ArmadoDesarme:
+#
+# "sistema armado
+# 15 seg para desarmar
+# desarme ahora por favor
+# sistema armado, quedan 3 segundos
+# desarme ahora por favor"
+#
+#{ "gw_mac" : "78:11:DC:B7:88:FA",
+#"ringtone_id" : "10004",
+#"ringtone_vol" : "50"
+#}
+#
+# 10005: Ringtone AAC ArmadoSalgaAhora:
+#
+# "sistema armado
+# 15 seg para salir
+# salga ahora por favor
+# sistema armado, quedan 3 segundos
+# salga ahora por favor"
+#
+#{ "gw_mac" : "78:11:DC:B7:88:FA",
+#"ringtone_id" : "10005",
+#"ringtone_vol" : "50"
+#}
+#
+# xiaomi_aqara.stop_ringtone
+# { "gw_mac" : "78:11:DC:B7:88:FA" }
+
+#- input_boolean.mute_xiaomi_gw_sounds
+#- input_number.xiaomi_gw_loop_delay
+#- input_select.xiaomi_gw_sound_warning
+#- input_number.xiaomi_gw_volume_warning
+#- input_select.xiaomi_gw_sound_alarm
+#- input_number.xiaomi_gw_volume_alarm
+
+xiaomi_play_alarm_ringtone:
+  alias: "Single Play Alarm Ringtone"
+  sequence:
+    # Activa Sonido Alarma
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: "{{ ringtone }}"
+        ringtone_vol: "{{ volume }}"
+
+
+xiaomi_play_off:
+  alias: 'Xiaomi Play Off Sound'
+  sequence:
+    ### Turn on gateway mute NOT to play sound ###
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+    ### Stop ringtone sound
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    ### Wait seconds & then turn off gateway mute ###
+    - delay:
+        seconds: 2
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+
+xiaomi_play_sel_sound_alarma:
+  alias: "Single Play Sound"
+  sequence:
+    # Activa Sonido Alarma
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: 2
+        ringtone_vol: 50
+        #ringtone_id: "{{ states.input_select.xiaomi_gw_sound_alarm.state.split('-')[0] }}"
+        #ringtone_vol: "{{ states.input_number.xiaomi_gw_volume_alarm.state|int }}"
+
+xiaomi_play_sel_sound:
+  alias: "Xiaomi Loop Play Sound"
+  sequence:
+    - condition: state
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+      state: 'off'
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: "{{ states.input_select.xiaomi_gw_sound_warning.state.split('-')[0] }}"
+        ringtone_vol: "{{ states.input_number.xiaomi_gw_volume_warning.state|int }}"
+    - delay: '00:00:{{ states.input_number.xiaomi_gw_loop_delay.state | int }}'
+    - service: script.xiaomi_play_sel_sound_loop
+
+xiaomi_play_sel_sound_loop:
+  alias: "Play selected sound in Loop"
+  sequence:
+    - condition: state
+      entity_id: input_boolean.mute_xiaomi_gw_sounds
+      state: 'off'
+    - delay: '00:00:{{ states.input_number.xiaomi_gw_loop_delay.state | int }}'
+    - service: script.xiaomi_play_sel_sound
+
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# SCRIPTS DEVICE TRACKER                                                      #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+updatetracker:
+  alias: 'Update Meta-Tracker'
+  sequence:
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: '{{entityid}}'
+    - condition: template
+      value_template: '{{fromstate != tostate}}'
+    - service: python_script.countpeople
+    - service: input_text.set_value
+      entity_id: input_text.family_last_tracking
+      data_template:
+        value: >-
+          {{ states[entityid.split('.')[0]][entityid.split('.')[1]].name }}, {{ tostate }}, {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
+    #- service: logbook.log
+    #  data_template:
+    #    name: "Meta-tracker: "
+    #    message: >-
+    #      {{ states[entityid.split('.')[0]][entityid.split('.')[1]].name }} is {{ tostate }} at {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
+
+reset_meta_tracker:
+  alias: 'Reset Meta-Tracker'
+  sequence:
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+    - service: python_script.meta_device_tracker
+      data_template:
+        entity_id: device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
+
+reset_meta_alarm_trigger:
+  alias: 'Reset Meta-Alarm-Trigger'
+  sequence:
+    - service: python_script.meta_alarm_trigger
+      data_template:
+        entity_id: sensor.alarm_last_trigger
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# SCRIPTS GENERICOS DE NOTIFICACIONES                                         #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+notifica_alarma:
+  alias: 'Mensaje Alarma'
+  sequence:
+  # Actualiza el valor de input_text.mensaje_tit con el título recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_tit
+    data_template:
+      value: "{{ title }}"
+
+  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_msg
+    data_template:
+      value: "{{ message }}"
+
+  # Notificación Telegram
+  - service: notify.telegram_family
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+
+ # Notificación IOS
+  - service: notify.ios_aac_ios
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+
+telegram_alarm_send_photos:
+  alias: 'Telegram Alarm Send Foto'
+  sequence:
+    - service: notify.telegram_family
+      data:
+        title: '*ALARMA*'
+        message: Fotos Cámaras Seguridad
+        data:
+          photo:
+            - url: http://192.168.0.11/snapshot/image0.jpg
+              caption: Cámara Cocina
+            - url: http://192.168.0.12:8080/snapshot.cgi
+              caption: Cámara Estudio
+
+notifica_evento:
+  alias: 'Notifica Evento Informativo'
+  sequence:
+  # IF HOME_NOTIFY = OFF CANCEL
+  - condition: template
+    value_template: "{% if not is_state('input_select.home_notify', 'Off') %}true{% endif %}"
+
+  # Actualiza el valor de input_text.mensaje_tit con el título recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_tit
+    data_template:
+      value: "{{ title }}"
+
+  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_msg
+    data_template:
+      value: "{{ message }}"
+
+  # Llamada a Scripts Notificación Telegram
+  - service: script.turn_on
+    entity_id: script.notifica_telegram_aac
+  - service: script.turn_on
+    entity_id: script.notifica_telegram_mfc
+  #- service: script.turn_on
+  #  entity_id: script.notifica_telegram_paf
+  #- service: script.turn_on
+  #  entity_id: script.notifica_telegram_aaf
+
+notifica_telegram_aac:
+  alias: 'Mensaje Telegram AAC'
+  sequence:
+  - condition: state
+    entity_id: input_boolean.notify_aac
+    state: 'on'
+  - service: notify.telegram_aac
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+
+notifica_telegram_mfc:
+  alias: 'Mensaje Telegram MFC'
+  sequence:
+  - condition: state
+    entity_id: input_boolean.notify_mfc
+    state: 'on'
+  - service: notify.telegram_mfc
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# CONTROL DE LUCES Y ALUMBRADO                                                #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+luces_on_family_home:
+  alias: 'Family at Home Piloto ON'
+  sequence:
+    #- condition: template
+    #  value_template: "{% if is_state('sun.sun', 'below_horizon') %}true{% endif %}"
+    - condition: sun
+      after: sunset
+    - service: light.turn_on
+      entity_id: light.hue_entrada
+
+# Apagado General Interior Casa menos Entrada/Pasillo
+luces_off:
+  alias: 'Luces Central OFF'
+  sequence:
+    - service: light.turn_off
+      entity_id:
+        - group.luces_cocina_grp
+        - group.luces_salon_grp
+        - group.luces_estudio_grp
+

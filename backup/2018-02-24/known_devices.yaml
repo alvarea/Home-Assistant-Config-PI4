@@ -1,0 +1,152 @@
+aac_iphone_owntrack:
+  hide_if_away: false
+  icon:
+  mac:
+  name: AAC
+  picture: /local/AAC.jpg
+  track: true
+  vendor: Apple, Inc.
+
+aac_ios:
+  hide_if_away: false
+  icon: mdi:cellphone-iphone
+  mac:
+  name: AAC IOS
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+aac_iphone_nmap:
+  hide_if_away: false
+  icon: mdi:cellphone-iphone
+  mac: D0:C5:F3:94:AC:C4
+  name: AAC NMAP
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+mfc_iphone_owntrack_mfc:
+  hide_if_away: false
+  icon:
+  mac:
+  name: MFC
+  picture: /local/MFC.jpg
+  track: true
+  vendor: Apple, Inc.
+
+mfc_ios:
+  hide_if_away: false
+  icon: mdi:cellphone-iphone
+  mac:
+  name: MFC IOS
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+mfc_iphone_nmap:
+  hide_if_away: false
+  icon: mdi:cellphone-iphone
+  mac: D8:BB:2C:50:0C:F4
+  name: MFC NMAP
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+paf_iphone_owntrack:
+  hide_if_away: false
+  icon:
+  mac:
+  name: PAF
+  picture: /local/PAF.png
+  track: true
+  vendor: Apple, Inc.
+
+paf_iphone_nmap:
+  hide_if_away: false
+  icon: mdi:cellphone-iphone
+  mac: 88:66:A5:46:EF:30
+  name: PAF NMAP
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+aaf_iphone_nmap:
+  hide_if_away: false
+  icon:
+  mac: 80:ED:2C:E3:2E:59
+  name: AAF
+  picture: /local/AAF.png
+  track: true
+  vendor: Apple, Inc.
+
+ipad_nmap:
+  hide_if_away: false
+  icon: mdi:tablet-ipad
+  mac: 78:7E:61:C4:85:F0
+  name: IPAD2
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+ipad_aac:
+  hide_if_away: false
+  icon: mdi:tablet-ipad
+  mac:
+  name: IPAD IOS
+  picture:
+  track: false
+  vendor: Apple, Inc.
+
+ipad_mini_nmap:
+  hide_if_away: false
+  icon: mdi:tablet-ipad
+  mac: 04:52:F3:1E:A3:B2
+  name: IPAD MINI
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+watch_aac:
+  hide_if_away: false
+  icon: mdi:watch
+  mac: 38:C9:86:99:3A:36
+  name: WATCH
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+macbook:
+  hide_if_away: false
+  icon: mdi:laptop-mac
+  mac: 68:A8:6D:1A:FB:1C
+  name: MCBOOK
+  picture:
+  track: true
+  vendor: Apple, Inc.
+
+prosegur:
+  hide_if_away: false
+  icon:
+  mac: 00:23:B6:0F:70:B5
+  name: PROSEGUR
+  picture: /local/prosegur.png
+  track: true
+  vendor: SECURITE COMMUNICATIONS / HONEYWELL
+
+hkesn203981:
+  hide_if_away: false
+  icon: mdi:router-wireless
+  mac: 64:80:99:91:AA:0F
+  name: HK Portatil HP
+  picture:
+  track: false
+  vendor: Intel Corporate
+
+firetvstick:
+  hide_if_away: false
+  icon: mdi:youtube-tv
+  mac: FC:65:DE:BC:D0:57
+  name: fireTV Stick
+  picture:
+  track: false
+  vendor: Amazon Technologies Inc.

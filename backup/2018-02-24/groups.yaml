@@ -1,0 +1,150 @@
+default_view:
+  view: yes
+  icon: mdi:home
+  entities:
+    - group.cocina_view
+    - group.salon_view
+    - group.estudio_view
+    - group.tiempo_view
+    - group.luces_view
+    - group.tracking_view
+    - group.main_grp
+    - group.family_home
+
+main_grp:
+  name: System Status
+  entities:
+    - sensor.time_date
+    - sensor.time_utc
+    - sensor.uptime
+    - sensor.ssl_certificate_expiry
+    - sun.sun
+
+family_home:
+  name: Family @ Home?
+  entities:
+    - input_boolean.mfchome
+    - input_boolean.aachome
+    - input_boolean.pafhome
+    - input_boolean.aafhome
+
+cocina_view:
+  name: Cocina
+  view: yes
+  entities:
+    - group.luces_entrada_grp
+    - camera.ipcam11_cocina
+    - media_player.firetv_cocina
+
+salon_view:
+  name: Salón
+  view: yes
+  entities:
+    - group.luces_salon_grp
+    - media_player.apple_tv
+
+estudio_view:
+  name: Estudio
+  view: yes
+  entities:
+    - group.luces_estudio_grp
+    - camera.ipcam12_salon
+
+tiempo_view:
+  view: yes
+  icon: mdi:weather-partlycloudy
+  entities:
+    - camera.weather_satelite
+    - group.tiempo_hoy_grp
+    - group.tiempo_man_grp
+
+tiempo_hoy_grp:
+  name: Hoy
+  entities:
+    - sensor.hoy_condition
+    - sensor.hoy_temperature
+    - sensor.hoy_temperature_max
+    - sensor.hoy_temperature_min
+    - sensor.hoy_wind_speed
+    - sensor.hoy_humidity
+    - sensor.moon
+
+tiempo_man_grp:
+  name: Previsión Mañana
+  entities:
+    - sensor.manana_condition
+    - sensor.manana_temperature
+    - sensor.manana_temperature_max
+    - sensor.manana_temperature_min
+    - sensor.manana_wind_speed
+    - sensor.manana_humidity
+
+luces_view:
+  icon: mdi:lightbulb-on
+  view: yes
+  entities:
+    - group.luces_entrada_grp
+    - group.luces_salon_grp
+    - group.luces_estudio_grp
+
+luces_entrada_grp:
+  name: Luces Cocina-Entrada
+  entities:
+    - light.hue_cocina
+    - light.hue_entrada
+    - light.hue_pasillo
+
+luces_salon_grp:
+  name: Luces Salon
+  entities:
+    - light.room_salon_tv
+    - light.hue_cilindro
+    - light.hue_seises
+    - light.hue_lectura
+
+luces_estudio_grp:
+  name: Luces Estudio
+  entities:
+    - light.hue_estudio
+
+tracking_view:
+  view: yes
+  icon: mdi:laptop-mac
+  entities:
+    - group.server_grp
+    - group.family_track_grp
+    - group.nmap_track_grp
+
+server_grp:
+  name: Server Information
+  entities:
+    - sensor.cpu_used
+    - sensor.ram_used
+    - sensor.disk_used_
+    - sensor.average_load_5m
+    - sensor.average_load_15m
+
+family_track_grp:
+  name: Owntracks & IOS Tracking
+  entities:
+    - device_tracker.mfc_iphone_owntrack_mfc
+    - device_tracker.aac_iphone_owntrack
+    - device_tracker.paf_iphone_owntrack
+    - device_tracker.mfc_ios
+    - device_tracker.aac_ios
+
+nmap_track_grp:
+  name: NMAP Device Tracking
+  view: no
+  entities:
+    - device_tracker.prosegur
+    - device_tracker.mfc_iphone_nmap
+    - device_tracker.aac_iphone_nmap
+    - device_tracker.paf_iphone_nmap
+    - device_tracker.aaf_iphone_nmap
+    - device_tracker.macbook
+    - device_tracker.ipad_nmap
+    - device_tracker.ipad_mini_nmap
+    - device_tracker.watch_aac
+
+
