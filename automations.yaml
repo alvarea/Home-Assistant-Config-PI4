@@ -14,42 +14,33 @@
       entity_id: alarm_control_panel.ha
       to: 'armed_away'
   action:
-    # Aviso Cambio Estado Alarma
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: 11
-        ringtone_vol: 50
-
     - service: script.turn_on
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*AVISO ALARMA*'
+          title: '*ALARMA HOMY*'
           message: >
-            >>> ESTADO: HOMY '{{trigger.to_state.state}}'
+            >>> ESTADO: Sistema Armado Total
+
+      # >>> MODO: {{ trigger.to_state.state }}
+
+- id: A0_alarma_armado_home_correcto
+  alias: 'A0 Alarma Armado Home Correcto'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.ha
+      to: 'armed_home'
+  action:
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> ESTADO: Sistema Armado Parcial
 
 #
 # REGLA: ALARMA MODO TRANSICION PENDING
-#
-#pre_pending_state: disarmed
-#post_pending_state: armed_away
-# Alarm control panel en la transición desde Disarmed a Armed Away:
-#   post_pending_state: armed_away
-#   pre_pending_state: disarmed
-#   code_format: null
-#
-  #condition:
-  #  condition: template
-  #  value_template: >-
-  #    {% if is_state_attr('alarm_control_panel.ha','post_pending_state','armed_away') %}
-  #      true
-  #    {%else%}
-  #      false
-  #    {%endif%}
 #
 - id: A1_alarma_disarmed_pending
   alias: 'A1 Alarma Armando'
@@ -59,8 +50,6 @@
       from: 'disarmed'
       to: 'pending'
   action:
-    # Notifica Evento
-    #>>> Estado Alarma: {{ state('alarm_control_panel.ha') }}
     - service: xiaomi_aqara.stop_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
@@ -92,14 +81,13 @@
         ringtone_vol: 50
 
 #
-# REGLA: NOTIFICACION COMPLETA DESARMADO
+# REGLA: AVISO Y NOTIFICACION DESARMADO OK
 #
 - id: A3_alarma_activa_desarmada
   alias: 'A3 Alarma Activa a Desarmado'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
-      from: 'triggered'
       to: 'disarmed'
   action:
     # Aviso Cambio Estado Alarma
@@ -117,11 +105,9 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*ALARMA*'
+          title: '*ALARMA HOMY*'
           message: >
-            >>> URGENTE: HOMY DESARMADO OK
-
-            >>> ESTADO: {{ states('alarm_control_panel.ha') }}
+            >>> ESTADO: Desarmado
 
 # REGLA: ALARMA ACTIVA SIRENA + NOTIFICACION COMPLETA
 #
@@ -130,33 +116,23 @@
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
-      to: 'triggered'
+      to: 'triggered'  # triggered
   action:
-    # Aviso Cambio Estado Alarma
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: 2
-        ringtone_vol: 50
-
    # Script Notificación Alarma
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*ALARMA*'
+          title: '*ALARMA HOMY*'
           message: >
-            >>> URGENTE: HOMY ALARMA ACTIVADA
+            >>> URGENTE: ALARMA ACTIVADA
 
             >>> ZONA: {{ states('sensor.alarm_zone') }}
 
     # Script Envio Fotos Cámaras Telegram
-    #- service: script.turn_on
-    #  entity_id: script.telegram_alarm_send_photo
+    - service: script.turn_on
+      entity_id: script.telegram_alarm_send_photo
 
 #
 # REGLA: TRIGGER ALARMA POR SENSOR EN ARMADO AWAY
@@ -230,7 +206,7 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*ALARMA*'
+          title: '*ALARMA HOMY*'
           message: >
             >>> URGENTE: BOTON PANICO ACTIVADO
 
@@ -249,7 +225,7 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*ALARMA*'
+          title: '*ALARMA HOMY*'
           message: >
             >>> URGENTE: BOTON PANICO APAGADO
 
@@ -718,3 +694,25 @@
     # Script Envio Fotos Cámaras Telegram
     - service: script.turn_on
       entity_id: script.telegram_alarm_send_photo
+
+
+
+#
+# INFO REGLA: ALARMA MODO TRANSICION PENDING
+#
+#pre_pending_state: disarmed
+#post_pending_state: armed_away
+# Alarm control panel en la transición desde Disarmed a Armed Away:
+#   post_pending_state: armed_away
+#   pre_pending_state: disarmed
+#   code_format: null
+#
+  #condition:
+  #  condition: template
+  #  value_template: >-
+  #    {% if is_state_attr('alarm_control_panel.ha','post_pending_state','armed_away') %}
+  #      true
+  #    {%else%}
+  #      false
+  #    {%endif%}
+#

@@ -258,9 +258,9 @@ cocina_view:
   icon: mdi:food
   name: Cocina
   entities:
-    - light.hue_cocina
-    - group.alarma_sensor_cocina_grp
     - camera.ipcam11_cocina
+    - group.luces_cocina_grp
+    - group.alarma_sensor_cocina_grp
     - media_player.firetv_cocina
 
 salon_view:
@@ -389,26 +389,7 @@ reglas_alarma_grp:
   view: no
   entities:
     - input_boolean.alarm_siren_setup
-    - automation.a1_alarma_armado_ok
-    - automation.a2_alarma_desarmado
-    - automation.a3_alarma_disparada
-    - automation.a4_alarma_trigger_armado_away
-    - automation.a4_alarma_trigger_armado_home
-    - automation.a8_alarma_boton_panico_on
-    - automation.a9_alarma_boton_panico_off
-
-reglas_tracking_grp:
-  name: Reglas Tracking
-  view: no
-  entities:
-
-
-reglas_luces_grp:
-  name: Reglas Luces
-  view: no
-  entities:
     - automation.a0_alarma_armado_correcto
-    - automation.a10_alarma_sirena_off
     - automation.a1_alarma_armando
     - automation.a2_alarma_desarmando
     - automation.a3_alarma_activa_a_desarmado
@@ -417,6 +398,21 @@ reglas_luces_grp:
     - automation.a6_alarma_trigger_armado_home
     - automation.a8_alarma_boton_panico_on
     - automation.a9_alarma_boton_panico_off
+
+reglas_luces_grp:
+  name: Reglas Luces
+  view: no
+  entities:
+    - automation.l01_luces_on_exterior_sunset
+    - automation.l02_luces_off_exterior_all_family_home
+    - automation.l03_luces_off_exterior_amanecer_4h
+    - automation.l04_luces_on_salon_puesta_sol_1h
+    - automation.l05_luces_off_medianoche
+    - automation.l06_luces_off_amanecer
+    - automation.l07_luces_on_entrada_segun_sensor
+    - automation.l08_luces_off_entrada_segun_sensor
+    - automation.l09_luces_on_estudio_segun_sensor
+    - automation.l10_luces_off_estudio_segun_sensor
 
 xiaomi_gateway_grp:
   name: Sirena Xiaomi Gateway
