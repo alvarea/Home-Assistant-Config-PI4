@@ -43,8 +43,9 @@
 xiaomi_gw_play_ringtone:
   alias: "Xiaomi GW Sonido Aviso"
   sequence:
-    - service: script.turn_on
-      entity_id: script.xiaomi_play_off
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
     - service: xiaomi_aqara.play_ringtone
       data:
         gw_mac: !secret xiaomi_gateway

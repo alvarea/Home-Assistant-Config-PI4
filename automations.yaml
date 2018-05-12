@@ -14,6 +14,16 @@
       entity_id: alarm_control_panel.ha
       to: 'armed_away'
   action:
+    # Aviso Xiaomi GW
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    - service: xiaomi_aqara.play_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: 11
+        ringtone_vol: 50
+    # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
       data:
@@ -31,6 +41,16 @@
       entity_id: alarm_control_panel.ha
       to: 'armed_home'
   action:
+    # Aviso Xiaomi GW
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    - service: xiaomi_aqara.play_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: 11
+        ringtone_vol: 50
+    # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
       data:
@@ -38,7 +58,7 @@
           title: '*ALARMA HOMY*'
           message: >
             >>> ESTADO: Sistema Armado Parcial
-
+            
 #
 # REGLA: ALARMA MODO TRANSICION PENDING
 #
