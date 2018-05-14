@@ -5,6 +5,28 @@
 #-----------------------------------------------------------------------------#
 
 #
+# REGLA: TEST SONIDOS ALARMA
+#
+- id: X1_test
+  alias: 'X1 TEST ON'
+  trigger:
+    - platform: state
+      entity_id: input_boolean.alarm_siren_setup
+      from: 'off'
+      to: 'on'
+  action:
+    #ringtone_vol: "{{ states('input_number.xiaomi_gw_volume_warning') | int }}"
+    #ringtone_id: "{{ states.input_select.xiaomi_gw_sound_warning.state.split('-')[0] }}"
+    #ringtone_vol:
+    # Aviso sonoro con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_ringtone
+      data:
+        variables:
+          tone_id: 11
+          tone_vol: 50
+#
+#
 # REGLA: ARMADO COMPLETADO
 #
 - id: A0_alarma_armado_correcto
@@ -14,15 +36,13 @@
       entity_id: alarm_control_panel.ha
       to: 'armed_away'
   action:
-    # Aviso Xiaomi GW
-    - service: xiaomi_aqara.stop_ringtone
+    # Aviso sonoro con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_ringtone
       data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: 11
-        ringtone_vol: 50
+        variables:
+          tone_id: 11
+          tone_vol: 50
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -41,16 +61,14 @@
       entity_id: alarm_control_panel.ha
       to: 'armed_home'
   action:
-    # Aviso Xiaomi GW
-    - service: xiaomi_aqara.stop_ringtone
+    # Aviso sonoro con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_ringtone
       data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: 11
-        ringtone_vol: 50
-    # Notifica Evento
+        variables:
+          tone_id: 11
+          tone_vol: 50
+  # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
       data:
@@ -110,15 +128,13 @@
       entity_id: alarm_control_panel.ha
       to: 'disarmed'
   action:
-    # Aviso Cambio Estado Alarma
-    - service: xiaomi_aqara.stop_ringtone
+    # Aviso sonoro con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_ringtone
       data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: 11
-        ringtone_vol: 50
+        variables:
+          tone_id: 11
+          tone_vol: 50
     # Script Notificación Alarma
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -138,10 +154,17 @@
       entity_id: alarm_control_panel.ha
       to: 'triggered'  # triggered
   action:
-   # Script Notificación Alarma
+    # Aviso ALARMA con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_ringtone
+      data:
+        variables:
+          tone_id: 2
+          tone_vol: 100
+    # Script Notificación Alarma
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_alarma
       data:
         variables:
           title: '*ALARMA HOMY*'

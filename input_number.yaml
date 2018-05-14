@@ -31,13 +31,3 @@
     max: 100
     step: 2
     icon: mdi:volume-high
-
-### Input number to control Xiaomi gateway loop delay ###
-  xiaomi_gw_loop_delay:
-    name: "Delay"
-    mode: slider
-    initial: 1
-    min: 0
-    max: 15
-    step: 1
-    icon: mdi:loop

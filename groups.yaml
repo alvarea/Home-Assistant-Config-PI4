@@ -317,7 +317,6 @@ track_nmap_grp:
   name: NMAP Device Tracking
   view: no
   entities:
-    - device_tracker.prosegur
     - device_tracker.macbook
     - device_tracker.apple_timecapsule
     - device_tracker.ipad_nmap
@@ -419,7 +418,6 @@ xiaomi_gateway_grp:
   view: no
   entities:
     - input_boolean.mute_xiaomi_gw_sounds
-    - input_number.xiaomi_gw_loop_delay
     - input_select.xiaomi_gw_sound_warning
     - input_number.xiaomi_gw_volume_warning
     - input_select.xiaomi_gw_sound_alarm
