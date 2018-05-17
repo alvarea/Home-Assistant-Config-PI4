@@ -376,10 +376,11 @@
     - service: script.turn_on
       entity_id: script.luces_off
     # Servicio Alarma Armado Total
-    - service: alarm_control_panel.alarm_arm_away
-      data:
-        entity_id: alarm_control_panel.ha
-        code: !secret alarm_control_code
+    #- service: alarm_control_panel.alarm_arm_away
+    #  data:
+    #    entity_id: alarm_control_panel.ha
+    #    code: !secret alarm_control_code
+
     # Notifica a Familia NADIE en Casa
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -402,10 +403,10 @@
     - service: script.turn_on
       entity_id: script.luces_on_family_home
     # Servicio Alarma Desarmado
-    - service: alarm_control_panel.alarm_disarm
-      data:
-        entity_id: alarm_control_panel.ha
-        code: !secret alarm_control_code
+    #- service: alarm_control_panel.alarm_disarm
+    #  data:
+    #    entity_id: alarm_control_panel.ha
+    #    code: !secret alarm_control_code
     # Notifica a Familia Alguien en Casa
     - service: script.turn_on
       entity_id: script.notifica_evento

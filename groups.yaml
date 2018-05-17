@@ -14,14 +14,15 @@ default_view:
     - group.system_view
     - group.batery_view
     - group.config_view
-    - group.family_status_grp
+    - group.homy_status_grp
     - group.family_home_grp
     - group.system_grp
 
-family_status_grp:
+homy_status_grp:
   name: Homy Status
   entities:
     - alarm_control_panel.ha
+    - sensor.time
     - sensor.family_home
     - binary_sensor.family_any_home
     - binary_sensor.family_all_home
@@ -40,7 +41,6 @@ system_grp:
   name: Estado del Sistema
   view: no
   entities:
-    #- sensor.time
     - sun.sun
     - sensor.sun_next_rising
     - sensor.sun_next_setting
