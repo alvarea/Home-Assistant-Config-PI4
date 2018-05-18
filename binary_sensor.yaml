@@ -12,6 +12,7 @@
   # IOS APP ==> prob_given_true: 0.99 - prob_given_false: 0.10
   #   - device_tracker.aac_ios
   #   - device_tracker.mfc_ios
+  #   - device_tracker.paf_ios
   #   - device_tracker.rashmiappiphone
   #   - device_tracker.alokiosiphone
 
@@ -45,7 +46,7 @@
         to_state: 'home'
       - entity_id: 'device_tracker.mfc_ios'  # IOS APP
         prob_given_true: 0.99
-        prob_given_false: 0.10
+        prob_given_false: 0.1
         platform: 'state'
         to_state: 'home'
       - entity_id: 'device_tracker.mfc_iphone_owntrack' # OWNTRACK
@@ -71,7 +72,7 @@
         to_state: 'home'
       - entity_id: 'device_tracker.aac_ios'  # IOS APP
         prob_given_true: 0.99
-        prob_given_false: 0.10
+        prob_given_false: 0.1
         platform: 'state'
         to_state: 'home'
       - entity_id: 'device_tracker.aac_iphone_owntrack' # OWNTRACK
@@ -96,6 +97,11 @@
         platform: 'state'
         to_state: 'home'
       - entity_id: 'device_tracker.93e3d52336a54d4d898b204abdf3ee94' #PAF GEOFENCY
+        prob_given_true: 0.8
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.paf_ios'  # IOS APP
         prob_given_true: 0.8
         prob_given_false: 0.2
         platform: 'state'

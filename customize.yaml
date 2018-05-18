@@ -101,6 +101,15 @@ binary_sensor.motion_sensor_158d0001e464a6:
   friendly_name: Sensor Presencia Estudio
 sensor.illumination_158d0001e464a6:
   friendly_name: Sensor Luz Estudio
+sensor.pressure_158d00022c6a47:
+  friendly_name: Sensor Presión Atm. Estudio
+  icon: mdi:gauge
+sensor.temperature_158d00022c6a47:
+  friendly_name: Sensor Temperatura Estudio
+  icon: mdi:oil-temperature
+sensor.humidity_158d00022c6a47:
+  friendly_name: Sensor Humedad Estudio
+  icon: mdi:water-percent
 
 # Entrada
 #
@@ -117,6 +126,7 @@ switch.wall_switch_left_158d0002236e75:
 switch.wall_switch_right_158d0002236e75:
   friendly_name: Luces Exterior
   icon: mdi:lightbulb-outline
+
 # Cocina
 #
 binary_sensor.smoke_sensor_158d0001fd321c:
@@ -146,8 +156,26 @@ binary_sensor.motion_sensor_158d0001e05661:
 sensor.illumination_158d0001e05661:
   friendly_name: Sensor Luz Salón
 
+# Salita Plancha
+#
+binary_sensor.door_window_sensor_158d00020457e0:
+  friendly_name: Sensor Ventana Plancha
+  icon: mdi:window-closed
+
 # Dormitorio PAF
 #
 binary_sensor.door_window_sensor_158d000201dddb:
   friendly_name: Sensor Ventana PAF
+  icon: mdi:window-closed
+
+# Dormitorio AAF
+#
+binary_sensor.door_window_sensor_158d00020910b1:
+  friendly_name: Sensor Ventana AAF
+  icon: mdi:window-closed
+
+# Dormitorio MFC-AAF
+#
+binary_sensor.door_window_sensor_158d00020b7c27:
+  friendly_name: Sensor Ventana MFC-AAC
   icon: mdi:window-closed

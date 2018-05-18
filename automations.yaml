@@ -459,6 +459,8 @@
     conditions:
       - condition: time
         after: '00:00:00'
+      - condition: time
+        before: '20:00:00'
       - condition: state
         entity_id: switch.wall_switch_right_158d0002236e75 # Luces exterior
         state: 'on'

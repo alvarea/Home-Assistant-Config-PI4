@@ -110,6 +110,9 @@ alarma_sensor_dormitorios_grp:
   view: no
   entities:
     - binary_sensor.door_window_sensor_158d000201dddb
+    - binary_sensor.door_window_sensor_158d00020b7c27
+    - binary_sensor.door_window_sensor_158d00020457e0
+    - binary_sensor.door_window_sensor_158d00020910b1
 
 tracking_view:
   view: yes
@@ -160,7 +163,10 @@ track_paf_grp:
     - binary_sensor.baye_home_paf
     - sensor.baye_probability_paf
     - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+    - device_tracker.paf_ios
     - device_tracker.paf_iphone_nmap
+    - sensor.iphone_paf_battery_level_2
+    - sensor.iphone_paf_battery_state_2
 
 track_aaf_grp:
   name: Agu Tracking
@@ -172,6 +178,8 @@ track_aaf_grp:
     - sensor.baye_probability_aaf
     - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
     - device_tracker.aaf_iphone_nmap
+    - sensor.a2f_battery_level_2
+    - sensor.a2f_battery_state_2
 
 camaras_view:
   view: yes
@@ -289,8 +297,18 @@ estudio_view:
   name: Estudio
   entities:
     - group.alarma_sensor_estudio_grp
+    - group.sensor_estudio_grp
     - group.luces_estudio_grp
     - camera.ipcam12_estudio
+
+sensor_estudio_grp:
+  name: Temperatura Estudio
+  view: no
+  entities:
+    - sensor.temperature_158d00022c6a47
+    - sensor.humidity_158d00022c6a47
+    - sensor.pressure_158d00022c6a47
+    - sensor.illumination_158d0001e464a6
 
 system_view:
   view: yes
@@ -328,20 +346,42 @@ batery_view:
   icon: mdi:battery-50
   name: Batery Status
   entities:
-    - group.sensor_baterias_grp
+    - group.sensor_bat_entrada_grp
+    - group.sensor_bat_salon_grp
+    - group.sensor_bat_estudio_grp
+    - group.sensor_bat_dormitorios_grp
 
-sensor_baterias_grp:
-  name: Baterías Sensores
+sensor_bat_entrada_grp:
+  name: Baterías Entrada/Cocina
   view: no
   entities:
+    - sensor.bateria_detector_incendios
     - sensor.bateria_presencia_entrada
     - sensor.bateria_puerta_entrada
+
+sensor_bat_salon_grp:
+  name: Baterías Salón
+  view: no
+  entities:
     - sensor.bateria_presencia_salon
     - sensor.bateria_puerta_salon
-    - sensor.bateria_presencia_estudio
     - sensor.bateria_temperatura_salon
-    - sensor.bateria_detector_incendios
-    - sensor.bateria_ventana_paf
+
+sensor_bat_estudio_grp:
+  name: Baterías Estudio
+  view: no
+  entities:
+    - sensor.bateria_presencia_estudio
+    - sensor.bateria_temperatura_estudio
+
+sensor_bat_dormitorios_grp:
+  name: Baterías Dormitorios
+  view: no
+  entities:
+     - sensor.bateria_ventana_paf
+     - sensor.bateria_ventana_mfc
+     - sensor.bateria_ventana_aaf
+     - sensor.bateria_ventana_salita
 
 config_view:
   name: Configuración
