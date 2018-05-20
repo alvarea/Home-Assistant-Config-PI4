@@ -81,10 +81,10 @@
         icon_template: mdi:account-location
         unit_of_measurement: '%'
 
-      # Batería Sensor Xiaomi Entrada. binary_sensor.motion_sensor_158d0001e55903
+      # Batería Sensor Xiaomi Entrada Interior. binary_sensor.motion_sensor_158d0001e55903
       bateria_presencia_entrada:
         value_template: "{{ states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level|default(-1)|int if states.binary_sensor.motion_sensor_158d0001e55903 is not none }}"
-        friendly_name: 'Batería Sensor Presencia Entrada'
+        friendly_name: 'Batería Sensor Entrada Interior'
         unit_of_measurement: '%'
         icon_template: '{% if states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level == 100 %}
                            mdi:battery
@@ -105,6 +105,34 @@
                         {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 20 %}
                            mdi:battery-20
                         {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      # Batería Sensor Xiaomi Entrada EXTERIOR. binary_sensor.motion_sensor_158d0001e637f6
+      bateria_presencia_entrada_ext:
+        value_template: "{{ states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level|default(-1)|int if states.binary_sensor.motion_sensor_158d0001e637f6 is not none }}"
+        friendly_name: 'Batería Sensor Entrada Exterior'
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
                            battery-outline

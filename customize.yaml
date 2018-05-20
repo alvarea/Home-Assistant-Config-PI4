@@ -34,7 +34,7 @@ sensor.moon:
 sensor.date:
   friendly_name: Fecha
 sensor.time:
-  friendly_name: Hora
+  friendly_name: Hora Actual
 sensor.time_utc:
   friendly_name: Hora (UTC)
 
@@ -116,16 +116,24 @@ sensor.humidity_158d00022c6a47:
 binary_sensor.door_window_sensor_158d00022b393c:
   friendly_name: Sensor Puerta Entrada
   icon: mdi:door
-binary_sensor.motion_sensor_158d0001e55903:
-  friendly_name: Sensor Presencia Entrada
-sensor.illumination_158d0001e55903:
-  friendly_name: Sensor Luz Entrada
+# Xiaomi Switch
 switch.wall_switch_left_158d0002236e75:
   friendly_name: Luz Techo Entrada
   icon: mdi:ceiling-light
 switch.wall_switch_right_158d0002236e75:
   friendly_name: Luces Exterior
   icon: mdi:lightbulb-outline
+# Xiaomi Sensor Presencia Interior
+binary_sensor.motion_sensor_158d0001e55903:
+  friendly_name: Sensor Presencia Entrada
+sensor.illumination_158d0001e55903:
+  friendly_name: Sensor Luz Entrada
+
+# Xiaomi Sensor Presencia Exterior
+binary_sensor.motion_sensor_158d0001e637f6:
+  friendly_name: Sensor Presencia Exterior
+sensor.illumination_158d0001e637f6:
+  friendly_name: Sensor Luz Exterior
 
 # Cocina
 #

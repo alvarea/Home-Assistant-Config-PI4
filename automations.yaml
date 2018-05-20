@@ -185,12 +185,8 @@
   trigger:
     - platform: state
       entity_id:
-        - binary_sensor.motion_sensor_158d0001e55903      # Sensor Presencia Entrada
-        - binary_sensor.door_window_sensor_158d00022b393c # Sensor Puerta Entrada
-        - binary_sensor.motion_sensor_158d0001e05661      # Sensor Presencia Salón
-        - binary_sensor.door_window_sensor_158d000201e2e7 # Sensor Puerta Salón
-        - binary_sensor.motion_sensor_158d0001e464a6      # Sensor Presencia Estudio
-        - binary_sensor.door_window_sensor_158d000201dddb # Sensor Ventana PAF
+        - group.sensores_home
+        - group.sensores_away
       to: 'on'
   condition:
     condition: and
@@ -198,9 +194,6 @@
       - condition: state
         entity_id: alarm_control_panel.ha
         state: armed_away
-      #- condition: state
-      #  entity_id: binary_sensor.family_any_home
-      #  state: 'off'
   action:
     - service: python_script.meta_alarm_trigger
       data_template:
@@ -216,9 +209,7 @@
   trigger:
     - platform: state
       entity_id:
-        - binary_sensor.door_window_sensor_158d00022b393c # Sensor Puerta Entrada
-        - binary_sensor.door_window_sensor_158d000201e2e7 # Sensor Puerta Salón
-        - binary_sensor.door_window_sensor_158d000201dddb # Sensor Ventana PAF
+        - group.sensores_home
       from: 'off'
       to: 'on'
   condition:
@@ -346,6 +337,7 @@
       entity_id:
         - device_tracker.aac_ios                          # IOSAPP
         - device_tracker.mfc_ios                          # IOSAPP
+        - device_tracker.paf_ios                          # IOSAPP
         - device_tracker.b8b52a3bf0384e72a268705d9b06e496 # AAC
         - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 # MFC
         - device_tracker.93e3d52336a54d4d898b204abdf3ee94 # PAF
@@ -651,17 +643,39 @@
         brightness: 180
         rgb_color: [255, 187, 106]
 
-- id: L10_luz_off_estudio_off_sensor
-  alias: 'L10 Luces Off Estudio Según Sensor'
+
+- id: L10_luces_on_exterior_sensor
+  alias: 'L10 Luces On Exterior Según Sensor'
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e464a6
-      to: 'off'
-      for:
-        minutes: 10
+      entity_id: binary_sensor.motion_sensor_158d0001e637f6
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.wall_switch_right_158d0002236e75
+        state: 'off'
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0001e637f6
+        below: 10
   action:
-    - service: light.turn_off
-      entity_id: light.hue_estudio
+    - service: switch.turn_on
+      entity_id: switch.wall_switch_right_158d0002236e75
+    - delay: '00:05:00'
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*LUCES: ON*'
+          message: >
+            >>> EVENTO: Sensor Presencia Exterior Activado
+
+            >>> LUCES: Alumbrado Encendido 5'
+
+    - service: switch.turn_off
+      entity_id: switch.wall_switch_right_158d0002236e75
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
