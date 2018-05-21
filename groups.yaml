@@ -3,9 +3,6 @@ default_view:
   icon: mdi:home-assistant
   name: Home View
   entities:
-    - sensor.family_home
-    - binary_sensor.family_any_home
-    - binary_sensor.family_all_home
     - group.tracking_view
     - group.tiempo_view
     - group.camaras_view
@@ -24,6 +21,7 @@ homy_status_grp:
   name: Homy Status
   entities:
     - alarm_control_panel.ha
+    - sensor.family_home
     - sensor.time
     - sun.sun
     - sensor.sun_next_rising
@@ -40,6 +38,8 @@ family_home_grp:
     - binary_sensor.family_home_mfc
     - binary_sensor.family_home_paf
     - binary_sensor.family_home_aaf
+    - binary_sensor.family_any_home
+    - binary_sensor.family_all_home
     - sensor.family_sleep_home
 
 alarma_view:
@@ -139,6 +139,7 @@ tracking_view:
     - group.track_mfc_grp
     - group.track_paf_grp
     - group.track_aaf_grp
+    - group.track_batery_grp
 
 track_aac_grp:
   name: Agustín Tracking
@@ -152,8 +153,6 @@ track_aac_grp:
     - device_tracker.aac_iphone_owntrack
     - device_tracker.aac_ios
     - device_tracker.aac_iphone_nmap
-    - sensor.iphoneaac_battery_level_3
-    - sensor.iphoneaac_battery_state_2
 
 track_mfc_grp:
   name: Malen Tracking
@@ -167,8 +166,6 @@ track_mfc_grp:
     - device_tracker.mfc_iphone_owntrack_mfc
     - device_tracker.mfc_ios
     - device_tracker.mfc_iphone_nmap
-    - sensor.iphonemalen_battery_level_2
-    - sensor.iphonemalen_battery_state
 
 track_paf_grp:
   name: Paloma Tracking
@@ -181,8 +178,6 @@ track_paf_grp:
     - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
     - device_tracker.paf_ios
     - device_tracker.paf_iphone_nmap
-    - sensor.iphone_paf_battery_level_2
-    - sensor.iphone_paf_battery_state_2
 
 track_aaf_grp:
   name: Agu Tracking
@@ -194,8 +189,6 @@ track_aaf_grp:
     - sensor.baye_probability_aaf
     - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
     - device_tracker.aaf_iphone_nmap
-    - sensor.a2f_battery_level_2
-    - sensor.a2f_battery_state_2
 
 camaras_view:
   view: yes
@@ -362,10 +355,23 @@ batery_view:
   icon: mdi:battery-50
   name: Batery Status
   entities:
+    - group.iphone_battery_grp
     - group.sensor_bat_entrada_grp
     - group.sensor_bat_salon_grp
     - group.sensor_bat_estudio_grp
     - group.sensor_bat_dormitorios_grp
+
+iphone_battery_grp:
+  name: Iphone Battery Tracking
+  entities:
+    - sensor.iphoneaac_battery_level_3
+    - sensor.iphoneaac_battery_state_2
+    - sensor.iphonemalen_battery_level_2
+    - sensor.iphonemalen_battery_state
+    - sensor.iphone_paf_battery_level_2
+    - sensor.iphone_paf_battery_state_2
+    - sensor.a2f_battery_level_2
+    - sensor.a2f_battery_state_2
 
 sensor_bat_entrada_grp:
   name: Baterías Entrada/Cocina
@@ -466,10 +472,8 @@ reglas_luces_grp:
     - automation.l05_luces_off_medianoche
     - automation.l06_luces_off_amanecer
     - automation.l07_luces_on_entrada_segun_sensor
-    - automation.l08_luces_off_entrada_segun_sensor
+    - automation.l08_luces_on_exterior_segun_sensor
     - automation.l09_luces_on_estudio_segun_sensor
-    - automation.l10_luces_on_exterior_segun_sensor
-
 
 xiaomi_gateway_grp:
   name: Sirena Xiaomi Gateway

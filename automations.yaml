@@ -593,33 +593,51 @@
       - condition: sun
         before: sunrise
         before_offset: "+3:00:00"
-  #condition:
-    #condition: numeric_state
-    #entity_id: sensor.temperature
-    #below: 10
-    #condition: template
-    #value_template: '{{ states.sensor.illumination_158d0001e55903.state < 10 }}'
   action:
     - service: light.turn_on
       entity_id: light.hue_entrada
       data:
         brightness: 120
         rgb_color: [255, 0, 0]
-
-- id: L08_luz_off_entrada_off_sensor
-  alias: 'L08 Luces Off Entrada Según Sensor'
-  trigger:
-    - platform: state
-      entity_id:
-        - binary_sensor.motion_sensor_158d0001e55903
-        - binary_sensor.door_window_sensor_158d00022b393c
-      from: 'on'
-      to: 'off'
-      for:
-        minutes: 5
-  action:
+    - delay: '00:05:00'
     - service: light.turn_off
       entity_id: light.hue_entrada
+
+- id: L08_luces_on_exterior_sensor
+  alias: 'L08 Luces On Exterior Según Sensor'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e637f6
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.wall_switch_right_158d0002236e75
+        state: 'off'
+      - condition: sun
+        after: sunset
+        after_offset: "+01:00:00"
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0001e637f6
+        below: 1
+  action:
+    - service: switch.turn_on
+      entity_id: switch.wall_switch_right_158d0002236e75
+    - delay: '00:05:00'
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*LUCES: ON*'
+          message: >
+            >>> EVENTO: Sensor Presencia Exterior Activado
+
+            >>> LUCES: Alumbrado Encendido 5'
+
+    - service: switch.turn_off
+      entity_id: switch.wall_switch_right_158d0002236e75
 
 - id: L09_luces_on_estudio_on_sensor
   alias: 'L09 Luces On Estudio Según Sensor'
@@ -642,40 +660,6 @@
       data:
         brightness: 180
         rgb_color: [255, 187, 106]
-
-
-- id: L10_luces_on_exterior_sensor
-  alias: 'L10 Luces On Exterior Según Sensor'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e637f6
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: switch.wall_switch_right_158d0002236e75
-        state: 'off'
-      - condition: numeric_state
-        entity_id: sensor.illumination_158d0001e637f6
-        below: 10
-  action:
-    - service: switch.turn_on
-      entity_id: switch.wall_switch_right_158d0002236e75
-    - delay: '00:05:00'
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*LUCES: ON*'
-          message: >
-            >>> EVENTO: Sensor Presencia Exterior Activado
-
-            >>> LUCES: Alumbrado Encendido 5'
-
-    - service: switch.turn_off
-      entity_id: switch.wall_switch_right_158d0002236e75
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
