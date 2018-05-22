@@ -4,6 +4,13 @@
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
+#   data:
+#     variables:
+#       tone_id: >-
+#         {{ states.input_select.xiaomi_gw_sound_warning.state.split('-')[0] }}
+#       tone_vol: >
+#         {{ states('input_number.xiaomi_gw_volume_warning') }}
+#
 #
 # REGLA: TEST SONIDOS ALARMA
 #
@@ -15,17 +22,10 @@
       from: 'off'
       to: 'on'
   action:
-    #ringtone_vol: "{{ states('input_number.xiaomi_gw_volume_warning') | int }}"
-    #ringtone_id: "{{ states.input_select.xiaomi_gw_sound_warning.state.split('-')[0] }}"
     #ringtone_vol:
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
       entity_id: script.xiaomi_gw_play_ringtone
-      data:
-        variables:
-          tone_id: 11
-          tone_vol: 50
-#
 #
 # REGLA: ARMADO COMPLETADO
 #
@@ -39,10 +39,6 @@
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
       entity_id: script.xiaomi_gw_play_ringtone
-      data:
-        variables:
-          tone_id: 11
-          tone_vol: 50
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -64,10 +60,6 @@
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
       entity_id: script.xiaomi_gw_play_ringtone
-      data:
-        variables:
-          tone_id: 11
-          tone_vol: 50
   # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -88,14 +80,9 @@
       from: 'disarmed'
       to: 'pending'
   action:
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: 10005
-        ringtone_vol: 50
+     # Aviso sonoro con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_ringtone
 
 - id: A2_alarma_armed_pending
   alias: 'A2 Alarma Desarmando'
@@ -116,7 +103,8 @@
       data:
         gw_mac: !secret xiaomi_gateway
         ringtone_id: 10004
-        ringtone_vol: 50
+        ringtone_vol: >-
+            {{ states('input_number.xiaomi_gw_volume_warning') | int }}
 
 #
 # REGLA: AVISO Y NOTIFICACION DESARMADO OK
@@ -131,10 +119,6 @@
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
       entity_id: script.xiaomi_gw_play_ringtone
-      data:
-        variables:
-          tone_id: 11
-          tone_vol: 50
     # Script Notificación Alarma
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -156,11 +140,7 @@
   action:
     # Aviso ALARMA con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_ringtone
-      data:
-        variables:
-          tone_id: 2
-          tone_vol: 100
+      entity_id: script.xiaomi_gw_play_alarm
     # Script Notificación Alarma
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -233,8 +213,10 @@
     from: 'off'
     to: 'on'
   action:
+    # Aviso ALARMA con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.alarma_sirena_on
+      entity_id: script.xiaomi_gw_play_alarm
+    # Notifica Telegram
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
       entity_id: script.notifica_evento
@@ -252,10 +234,12 @@
     from: 'on'
     to: 'off'
   action:
-    - service: script.turn_on
-      entity_id: script.alarma_sirena_off
-    - service: script.turn_on
+    # Aviso Xiaomi GW
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
+    - service: script.turn_on
       entity_id: script.notifica_evento
       data:
         variables:
@@ -263,15 +247,6 @@
           message: >
             >>> URGENTE: BOTON PANICO APAGADO
 
-- id: A10_alarma_sirena_off
-  alias: 'A10 Alarma Sirena Off'
-  trigger:
-    platform: state
-    entity_id: input_boolean.alarm_siren
-    to: 'off'
-  action:
-    - service: script.turn_on
-      entity_id: script.alarma_sirena_off
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

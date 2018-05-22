@@ -3,11 +3,11 @@ default_view:
   icon: mdi:home-assistant
   name: Home View
   entities:
+    - group.alarma_view
     - group.tracking_view
-    - group.tiempo_view
     - group.camaras_view
+    - group.tiempo_view
     - group.luces_view
-    - group.entrada_view
     - group.cocina_view
     - group.salon_view
     - group.estudio_view
@@ -16,19 +16,17 @@ default_view:
     - group.config_view
     - group.homy_status_grp
     - group.family_home_grp
+    - group.main_sensor_grp
 
 homy_status_grp:
-  name: Homy Status
+  name: Estado General Homy
   entities:
     - alarm_control_panel.ha
     - sensor.family_home
     - sensor.time
-    - sun.sun
-    - sensor.sun_next_rising
-    - sensor.sun_next_setting
-    - sensor.uptime
-    - sensor.last_boot
-    - sensor.ssl_certificate_expiry
+    - binary_sensor.family_any_home
+    - binary_sensor.family_all_home
+    #- sensor.family_sleep_home
 
 family_home_grp:
   name: Family Home?
@@ -38,9 +36,16 @@ family_home_grp:
     - binary_sensor.family_home_mfc
     - binary_sensor.family_home_paf
     - binary_sensor.family_home_aaf
-    - binary_sensor.family_any_home
-    - binary_sensor.family_all_home
-    - sensor.family_sleep_home
+
+main_sensor_grp:
+  name: Sensores Principales
+  entities:
+    - sensor.temperature_158d00022b65ff
+    - sensor.temperature_158d00022c6a47
+    - sun.sun
+    - sensor.moon
+    - sensor.sun_next_setting
+    - sensor.sun_next_rising
 
 alarma_view:
   name: Panel Control Alarma
@@ -216,7 +221,6 @@ tiempo_hoy_grp:
     - sensor.hoy_temperature_min
     - sensor.hoy_wind_speed
     - sensor.hoy_humidity
-    - sensor.moon
 
 tiempo_man_grp:
   name: Previsión Mañana
@@ -298,7 +302,7 @@ sensor_salon_grp:
     - sensor.temperature_158d00022b65ff
     - sensor.humidity_158d00022b65ff
     - sensor.pressure_158d00022b65ff
-    - sensor.illumination_7811dcb788fa
+    #- sensor.illumination_7811dcb788fa
 
 estudio_view:
   view: yes
@@ -324,17 +328,33 @@ system_view:
   icon: mdi:server
   name: System Status
   entities:
-    - group.pi3status_grp
+    - group.hass_status_grp
+    - group.pi3cpuram_grp
+    - group.pi3storage_grp
     - group.track_nmap_grp
 
-pi3status_grp:
-  name: PI3 System Status
+hass_status_grp:
+  view: no
+  icon: mdi:server
+  name: System Status
+  entities:
+    - sensor.date
+    - sensor.uptime
+    - sensor.last_boot
+    - sensor.ssl_certificate_expiry
+
+pi3cpuram_grp:
+  name: PI3 CPU & RAM
   entities:
     - sensor.load_15m
     - sensor.processor_use
     - sensor.memory_use_percent
     - sensor.memory_use
     - sensor.memory_free
+
+pi3storage_grp:
+  name: PI3 Almacenamiento
+  entities:
     - sensor.disk_use_percent_
     - sensor.disk_use_
     - sensor.disk_free_

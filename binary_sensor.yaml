@@ -89,7 +89,7 @@
   - platform: 'bayesian'
     prior: 0.66
     name: 'baye_home_paf'
-    probability_threshold: 0.96
+    probability_threshold: 0.98
     observations:
       - entity_id: 'device_tracker.paf_iphone_nmap'
         prob_given_true: 0.8

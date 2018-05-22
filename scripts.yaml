@@ -58,8 +58,28 @@ xiaomi_gw_play_ringtone:
     - service: xiaomi_aqara.play_ringtone
       data_template:
         gw_mac: !secret xiaomi_gateway
-        ringtone_id: "{{ tone_id }}"
-        ringtone_vol: "{{ tone_vol }}"
+        ringtone_id: >-
+            {{ states.input_select.xiaomi_gw_sound_warning.state.split('-')[0] }}
+        ringtone_vol: >-
+            {{ states('input_number.xiaomi_gw_volume_warning') | int }}
+
+xiaomi_gw_play_alarm:
+  alias: "Xiaomi GW Sonido Alarma"
+  sequence:
+    # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
+    - condition: template
+      value_template: "{% if is_state('input_boolean.mute_xiaomi_gw_sounds', 'off') %}true{% endif %}"
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: >-
+            {{ states.input_select.xiaomi_gw_sound_alarm.state.split('-')[0] }}
+        ringtone_vol: >-
+            {{ states('input_number.xiaomi_gw_volume_alarm') | int}}
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

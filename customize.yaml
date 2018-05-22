@@ -100,15 +100,15 @@ sensor.last_boot:
 binary_sensor.motion_sensor_158d0001e464a6:
   friendly_name: Sensor Presencia Estudio
 sensor.illumination_158d0001e464a6:
-  friendly_name: Sensor Luz Estudio
+  friendly_name: Luz Estudio
 sensor.pressure_158d00022c6a47:
-  friendly_name: Sensor Presión Atm. Estudio
+  friendly_name: Presión Atm. Estudio
   icon: mdi:gauge
 sensor.temperature_158d00022c6a47:
-  friendly_name: Sensor Temperatura Estudio
+  friendly_name: Temperatura Estudio
   icon: mdi:oil-temperature
 sensor.humidity_158d00022c6a47:
-  friendly_name: Sensor Humedad Estudio
+  friendly_name: Humedad Estudio
   icon: mdi:water-percent
 
 # Entrada
@@ -151,16 +151,16 @@ binary_sensor.door_window_sensor_158d000201e2e7:
   friendly_name: Sensor Puerta Salón
   icon: mdi:door
 sensor.pressure_158d00022b65ff:
-  friendly_name: Sensor Presión Atm. Salón
+  friendly_name: Presión Atm. Salón
   icon: mdi:gauge
 sensor.temperature_158d00022b65ff:
-  friendly_name: Sensor Temperatura Salón
+  friendly_name: Temperatura Salón
   icon: mdi:oil-temperature
 sensor.humidity_158d00022b65ff:
-  friendly_name: Sensor Humedad Salón
+  friendly_name: Humedad Salón
   icon: mdi:water-percent
 binary_sensor.motion_sensor_158d0001e05661:
-  friendly_name: Sensor Presencia Salón
+  friendly_name: Presencia Salón
 sensor.illumination_158d0001e05661:
   friendly_name: Sensor Luz Salón
 

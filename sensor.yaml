@@ -464,6 +464,7 @@
 #
   - platform: time_date
     display_options:
+      - 'date'
       - 'time'
   - platform: uptime
     unit_of_measurement: hours
