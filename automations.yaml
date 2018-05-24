@@ -50,8 +50,8 @@
 
       # >>> MODO: {{ trigger.to_state.state }}
 
-- id: A0_alarma_armado_home_correcto
-  alias: 'A0 Alarma Armado Home Correcto'
+- id: A0b_alarma_armado_home_correcto
+  alias: 'A0b Alarma Armado Home Correcto'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -81,8 +81,15 @@
       to: 'pending'
   action:
      # Aviso sonoro con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_ringtone
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: 10005
+        ringtone_vol: >-
+            {{ states('input_number.xiaomi_gw_volume_warning') | int }}
 
 - id: A2_alarma_armed_pending
   alias: 'A2 Alarma Desarmando'
@@ -100,7 +107,7 @@
       data:
         gw_mac: !secret xiaomi_gateway
     - service: xiaomi_aqara.play_ringtone
-      data:
+      data_template:
         gw_mac: !secret xiaomi_gateway
         ringtone_id: 10004
         ringtone_vol: >-
@@ -592,7 +599,6 @@
         state: 'off'
       - condition: sun
         after: sunset
-        after_offset: "+01:00:00"
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e637f6
         below: 1

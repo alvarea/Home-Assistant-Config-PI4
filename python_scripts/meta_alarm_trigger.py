@@ -22,7 +22,11 @@ Zona_Salon = ['binary_sensor.motion_sensor_158d0001e05661',         # Sensor Pre
 
 Zona_Estudio = ['binary_sensor.motion_sensor_158d0001e464a6']        # Sensor Presencia Estudio
 
-Zona_Dorm_PAF = ['binary_sensor.door_window_sensor_158d000201dddb']  # Sensor Ventana PAF
+Zona_Dormitorio = ['binary_sensor.door_window_sensor_158d000201dddb',
+                    'binary_sensor.door_window_sensor_158d00020b7c27',
+                    'binary_sensor.door_window_sensor_158d00020457e0',
+                    'binary_sensor.door_window_sensor_158d00020910b1'
+]
 
 # Get the entity that triggered the automation
 triggeredEntity = data.get('entity_id')
