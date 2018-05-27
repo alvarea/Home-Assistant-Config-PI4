@@ -51,5 +51,6 @@ else:
 # Create device_tracker.meta entity
 hass.states.set('sensor.alarm_zone', newState, {
     'icon': newIcon,
+    'friendly_name': 'Última Alarma',
     'device_class': newDeviceClass
 })

@@ -65,15 +65,14 @@ alarma_status_grp:
   view: no
   entities:
     - alarm_control_panel.ha
-    - input_boolean.alarm_status
-    - binary_sensor.alarm_zone
-    - sensor.alarm_last_trigger
+    - sensor.alarm_zone
 
 alarma_sirena_grp:
   name: Botón Pánico
   view: no
   entities:
     - input_boolean.panic_button
+    - script.alarma_boton_panico
 
 alarma_sensor_entrada_grp:
   name: Sensores Entrada
@@ -472,14 +471,14 @@ reglas_alarma_grp:
   entities:
     - input_boolean.alarm_siren_setup
     - automation.a0_alarma_armado_correcto
-    - automation.a1_alarma_armando
-    - automation.a2_alarma_desarmando
-    - automation.a3_alarma_activa_a_desarmado
-    - automation.a4_alarma_disparada
-    - automation.a5_alarma_trigger_armado_away
-    - automation.a6_alarma_trigger_armado_home
-    - automation.a8_alarma_boton_panico_on
-    - automation.a9_alarma_boton_panico_off
+    - automation.a1_alarma_armado_home_correcto
+    - automation.a2_alarma_armando
+    - automation.a3_alarma_desarmando
+    - automation.a4_alarma_activa_a_desarmado
+    - automation.a5_alarma_disparada
+    - automation.a6_alarma_trigger_armado_away
+    - automation.a7_alarma_trigger_armado_home
+    - automation.a8_alarma_boton_panico_off
 
 reglas_luces_grp:
   name: Reglas Luces
@@ -493,7 +492,6 @@ reglas_luces_grp:
     - automation.l06_luces_off_amanecer
     - automation.l07_luces_on_entrada_segun_sensor
     - automation.l08_luces_on_exterior_segun_sensor
-    - automation.l09_luces_on_estudio_segun_sensor
 
 xiaomi_gateway_grp:
   name: Sirena Xiaomi Gateway

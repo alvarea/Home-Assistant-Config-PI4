@@ -4,6 +4,10 @@ alarm_control_panel.ha:
   friendly_name: Panel Control Alarma
 input_select.home_last_change:
   friendly_name: Último Tracking
+input_boolean.panic_button:
+  icon: mdi:key-variant
+script.alarma_boton_panico:
+  icon: mdi:alarm-light
 
 # SENSORES BAYESIAN TRACKING FAMILY HOME
 #

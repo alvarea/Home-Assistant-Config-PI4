@@ -80,6 +80,26 @@ xiaomi_gw_play_alarm:
         ringtone_vol: >-
             {{ states('input_number.xiaomi_gw_volume_alarm') | int}}
 
+alarma_boton_panico:
+  alias: 'Alarma Boton Panico'
+  sequence:
+    - condition: template
+      value_template: "{% if is_state('input_boolean.panic_button', 'on') %}true{% endif %}"
+    # Aviso ALARMA con Xiaomi GW
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_alarm
+    # Notifica Telegram
+    - service: script.turn_on
+      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> URGENTE: BOTON PANICO ACTIVADO
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -157,27 +177,25 @@ notifica_alarma:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
- # Notificación IOS
+  # Notificación Telegram
+  - service: notify.telegram_family
+    data:
+      title: '*ALARMA*'
+      message: Cámaras Seguridad
+      data:
+        photo:
+          - url: http://192.168.0.11/snapshot/image0.jpg
+            caption: Cámara Cocina
+          - url: http://192.168.0.12:8080/snapshot.cgi
+            caption: Cámara Estudio
+
+  # Notificación IOS
   - service: notify.ios_aac_ios
     data_template:
       title: >
         {{ states('input_text.mensaje_tit') }}
       message: >
         {{ states('input_text.mensaje_msg') }}
-
-telegram_alarm_send_photos:
-  alias: 'Telegram Alarm Send Foto'
-  sequence:
-    - service: notify.telegram_family
-      data:
-        title: '*ALARMA*'
-        message: Fotos Cámaras Seguridad
-        data:
-          photo:
-            - url: http://192.168.0.11/snapshot/image0.jpg
-              caption: Cámara Cocina
-            - url: http://192.168.0.12:8080/snapshot.cgi
-              caption: Cámara Estudio
 
 notifica_evento:
   alias: 'Notifica Evento Informativo'

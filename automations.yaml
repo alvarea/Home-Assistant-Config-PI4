@@ -50,8 +50,8 @@
 
       # >>> MODO: {{ trigger.to_state.state }}
 
-- id: A0b_alarma_armado_home_correcto
-  alias: 'A0b Alarma Armado Home Correcto'
+- id: A1_alarma_armado_home_correcto
+  alias: 'A1 Alarma Armado Home Correcto'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -72,8 +72,8 @@
 #
 # REGLA: ALARMA MODO TRANSICION PENDING
 #
-- id: A1_alarma_disarmed_pending
-  alias: 'A1 Alarma Armando'
+- id: A2_alarma_disarmed_pending
+  alias: 'A2 Alarma Armando'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -91,8 +91,8 @@
         ringtone_vol: >-
             {{ states('input_number.xiaomi_gw_volume_warning') | int }}
 
-- id: A2_alarma_armed_pending
-  alias: 'A2 Alarma Desarmando'
+- id: A3_alarma_armed_pending
+  alias: 'A3 Alarma Desarmando'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -116,8 +116,8 @@
 #
 # REGLA: AVISO Y NOTIFICACION DESARMADO OK
 #
-- id: A3_alarma_activa_desarmada
-  alias: 'A3 Alarma Activa a Desarmado'
+- id: A4_alarma_activa_desarmada
+  alias: 'A4 Alarma Activa a Desarmado'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -138,8 +138,8 @@
 
 # REGLA: ALARMA ACTIVA SIRENA + NOTIFICACION COMPLETA
 #
-- id: A4_alarma_disparada
-  alias: 'A4 Alarma Disparada'
+- id: A5_alarma_disparada
+  alias: 'A5 Alarma Disparada'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -160,15 +160,11 @@
 
             >>> ZONA: {{ states('sensor.alarm_zone') }}
 
-    # Script Envio Fotos Cámaras Telegram
-    - service: script.turn_on
-      entity_id: script.telegram_alarm_send_photo
-
 #
 # REGLA: TRIGGER ALARMA POR SENSOR EN ARMADO AWAY
 #
-- id: A5_alarma_trigger_armed_away
-  alias: 'A5 Alarma Trigger Armado Away'
+- id: A6_alarma_trigger_armed_away
+  alias: 'A6 Alarma Trigger Armado Away'
   trigger:
     - platform: state
       entity_id:
@@ -191,8 +187,8 @@
 #
 # REGLA: TRIGGER ALARMA POR SENSOR EN ARMADO HOME
 #
-- id: A6_alarma_trigger_armed_home
-  alias: 'A6 Alarma Trigger Armado Home'
+- id: A7_alarma_trigger_armed_home
+  alias: 'A7 Alarma Trigger Armado Home'
   trigger:
     - platform: state
       entity_id:
@@ -210,31 +206,10 @@
     - service: alarm_control_panel.alarm_trigger
       entity_id: alarm_control_panel.ha
 #
-#=====================================================
+# REGLA: TRIGGER APAGADO BOTON PANICO
 #
-- id: A8_alarma_boton_panico_on
-  alias: 'A8 Alarma Boton Panico On'
-  trigger:
-    platform: state
-    entity_id: input_boolean.panic_button
-    from: 'off'
-    to: 'on'
-  action:
-    # Aviso ALARMA con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm
-    # Notifica Telegram
-    - service: script.turn_on
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*ALARMA HOMY*'
-          message: >
-            >>> URGENTE: BOTON PANICO ACTIVADO
-
-- id: A9_alarma_boton_panico_off
-  alias: 'A9 Alarma Boton Panico Off'
+- id: A8_alarma_boton_panico_off
+  alias: 'A8 Alarma Boton Panico Off'
   trigger:
     platform: state
     entity_id: input_boolean.panic_button
@@ -253,7 +228,6 @@
           title: '*ALARMA HOMY*'
           message: >
             >>> URGENTE: BOTON PANICO APAGADO
-
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -349,12 +323,6 @@
     # Script Luces Apagado Total
     - service: script.turn_on
       entity_id: script.luces_off
-    # Servicio Alarma Armado Total
-    #- service: alarm_control_panel.alarm_arm_away
-    #  data:
-    #    entity_id: alarm_control_panel.ha
-    #    code: !secret alarm_control_code
-
     # Notifica a Familia NADIE en Casa
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -376,12 +344,6 @@
     # Script encendido Luz piloto si es de noche
     - service: script.turn_on
       entity_id: script.luces_on_family_home
-    # Servicio Alarma Desarmado
-    #- service: alarm_control_panel.alarm_disarm
-    #  data:
-    #    entity_id: alarm_control_panel.ha
-    #    code: !secret alarm_control_code
-    # Notifica a Familia Alguien en Casa
     - service: script.turn_on
       entity_id: script.notifica_evento
       data:
@@ -576,6 +538,8 @@
         before: sunrise
         before_offset: "+3:00:00"
   action:
+    - service: automation.turn_off
+      entity_id: automation.l07_luces_on_entrada_segun_sensor
     - service: light.turn_on
       entity_id: light.hue_entrada
       data:
@@ -584,6 +548,8 @@
     - delay: '00:05:00'
     - service: light.turn_off
       entity_id: light.hue_entrada
+    - service: automation.turn_on
+      entity_id: automation.l07_luces_on_entrada_segun_sensor
 
 - id: L08_luces_on_exterior_sensor
   alias: 'L08 Luces On Exterior Según Sensor'
@@ -599,10 +565,12 @@
         state: 'off'
       - condition: sun
         after: sunset
-      - condition: numeric_state
-        entity_id: sensor.illumination_158d0001e637f6
-        below: 1
+      #- condition: numeric_state
+      #  entity_id: sensor.illumination_158d0001e637f6
+      #  below: 1
   action:
+    - service: automation.turn_off
+      entity_id: automation.L08_luces_on_exterior_sensor
     - service: switch.turn_on
       entity_id: switch.wall_switch_right_158d0002236e75
     - delay: '00:05:00'
@@ -619,28 +587,8 @@
 
     - service: switch.turn_off
       entity_id: switch.wall_switch_right_158d0002236e75
-
-- id: L09_luces_on_estudio_on_sensor
-  alias: 'L09 Luces On Estudio Según Sensor'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e464a6
-      to: 'on'
-  condition:
-    condition: or  # 'when dark' condition: either after sunset or before sunrise
-    conditions:
-      - condition: sun
-        after: sunset
-        after_offset: "-0:15:00"
-      - condition: sun
-        before: sunrise
-        before_offset: "1:30:00"
-  action:
-    - service: light.turn_on
-      entity_id: light.hue_estudio
-      data:
-        brightness: 180
-        rgb_color: [255, 187, 106]
+    - service: automation.turn_on
+      entity_id: automation.L08_luces_on_exterior_sensor
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -664,7 +612,7 @@
     - service: script.reset_meta_tracker
     #
     # Llamada al script python para inicializar meta-alarm_trigger
-    - service: script.reset_meta_alarm_trigger
+    #- service: script.reset_meta_alarm_trigger
     #
     # Llamada al contador de personas que actualiza sensor.family_home
     - service: python_script.countpeople
@@ -714,13 +662,7 @@
         variables:
           title: '*ALARMA FUEGO*'
           message: >
-            >>> URGENTE: ALARMA FUEGO COCINA
-
-    # Script Envio Fotos Cámaras Telegram
-    - service: script.turn_on
-      entity_id: script.telegram_alarm_send_photo
-
-
+            >>> URGENTE: SENSOR HUMO COCINA
 
 #
 # INFO REGLA: ALARMA MODO TRANSICION PENDING

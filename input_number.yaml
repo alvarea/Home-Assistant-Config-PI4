@@ -16,7 +16,7 @@
   xiaomi_gw_volume_alarm:
     name: Volumen
     mode: slider
-    initial: 100
+    initial: 80
     min: 0
     max: 100
     step: 2
@@ -26,7 +26,7 @@
   xiaomi_gw_volume_warning:
     name: Volumen
     mode: slider
-    initial: 50
+    initial: 20
     min: 0
     max: 100
     step: 2

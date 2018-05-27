@@ -1,0 +1,48 @@
+#
+# CODIGO TEMPORAL EXCLUIDO
+#
+
+- id: L09_luces_on_estudio_on_sensor
+  alias: 'L09 Luces On Estudio Según Sensor'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e464a6
+      to: 'on'
+  condition:
+    condition: or  # 'when dark' condition: either after sunset or before sunrise
+    conditions:
+      - condition: sun
+        after: sunset
+        after_offset: "-0:15:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "1:30:00"
+  action:
+    - service: light.turn_on
+      entity_id: light.hue_estudio
+      data:
+        brightness: 180
+        rgb_color: [255, 187, 106]
+
+
+- id: A8_alarma_boton_panico_on
+  alias: 'A8 Alarma Boton Panico On'
+  trigger:
+    platform: state
+    entity_id: input_boolean.panic_button
+    from: 'off'
+    to: 'on'
+    #value_template: "{{ states('input_number.panic_button_code') | int = 2309 }}"
+  action:
+    # Aviso ALARMA con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_alarm
+    # Notifica Telegram
+    - service: script.turn_on
+      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> URGENTE: BOTON PANICO ACTIVADO
