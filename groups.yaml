@@ -83,6 +83,7 @@ alarma_sensor_entrada_grp:
     - sensor.illumination_158d0001e55903
     - binary_sensor.motion_sensor_158d0001e637f6
     - sensor.illumination_158d0001e637f6
+    - binary_sensor.cube_158d00024a4a62
 
 alarma_sensor_estudio_grp:
   name: Sensores Estudio
@@ -478,7 +479,8 @@ reglas_alarma_grp:
     - automation.a5_alarma_disparada
     - automation.a6_alarma_trigger_armado_away
     - automation.a7_alarma_trigger_armado_home
-    - automation.a8_alarma_boton_panico_off
+    - automation.a8_alarma_magic_cube
+    - automation.a9_alarma_boton_panico_off
 
 reglas_luces_grp:
   name: Reglas Luces

@@ -117,6 +117,11 @@ sensor.humidity_158d00022c6a47:
 
 # Entrada
 #
+# Xiaomi Magic Cube
+binary_sensor.cube_158d00024a4a62:
+  friendly_name: Magic Cube
+  icon: mdi:cube-outline
+
 binary_sensor.door_window_sensor_158d00022b393c:
   friendly_name: Sensor Puerta Entrada
   icon: mdi:door

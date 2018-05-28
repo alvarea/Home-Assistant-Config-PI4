@@ -205,11 +205,47 @@
         entity_id: '{{trigger.entity_id}}'
     - service: alarm_control_panel.alarm_trigger
       entity_id: alarm_control_panel.ha
+
+#
+# REGLA: MAGIC CUBE ALARMA ARMADO
+#
+# Available events are flip90, flip180, move, tap_twice, shake_air, swing, alert, free_fall and rotate.
+# The component stores the last action as the attribute last_action.
+- id: A8_alarma_magic_cube
+  alias: 'A8 Alarma Magic Cube'
+  trigger:
+    platform: event
+    event_type: cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00024a4a62
+      action_type: shake_air
+  condition:
+    # "{{ states.binary_sensor.cube_158d00024a4a62.last_action = 'flip90' }}"
+    condition: template
+    value_template: >-
+      {% if is_state_attr('binary_sensor.cube_158d00024a4a62','last_action','flip90') %}
+        true
+      {%else%}
+        false
+      {%endif%}
+  action:
+    # Aviso Xiaomi GW
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> URGENTE: DESARMADO CUBE
+
 #
 # REGLA: TRIGGER APAGADO BOTON PANICO
 #
-- id: A8_alarma_boton_panico_off
-  alias: 'A8 Alarma Boton Panico Off'
+- id: A9_alarma_boton_panico_off
+  alias: 'A9 Alarma Boton Panico Off'
   trigger:
     platform: state
     entity_id: input_boolean.panic_button
