@@ -401,6 +401,7 @@ sensor_bat_entrada_grp:
     - sensor.bateria_presencia_entrada
     - sensor.bateria_presencia_entrada_ext
     - sensor.bateria_puerta_entrada
+    - sensor.bateria_magic_cube
 
 sensor_bat_salon_grp:
   name: Baterías Salón
@@ -471,11 +472,11 @@ reglas_alarma_grp:
   view: no
   entities:
     - input_boolean.alarm_siren_setup
-    - automation.a0_alarma_armado_correcto
-    - automation.a1_alarma_armado_home_correcto
-    - automation.a2_alarma_armando
-    - automation.a3_alarma_desarmando
-    - automation.a4_alarma_activa_a_desarmado
+    - automation.a0_alarma_disarmed_to_pending
+    - automation.a1_alarma_armed_to_pending
+    - automation.a2_alarma_armado_away
+    - automation.a3_alarma_armado_home
+    - automation.a4_alarma_desarmada
     - automation.a5_alarma_disparada
     - automation.a6_alarma_trigger_armado_away
     - automation.a7_alarma_trigger_armado_home

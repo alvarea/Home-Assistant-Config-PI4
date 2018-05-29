@@ -80,6 +80,30 @@ xiaomi_gw_play_alarm:
         ringtone_vol: >-
             {{ states('input_number.xiaomi_gw_volume_alarm') | int}}
 
+#
+#  data_template:
+#     entityid: '{{trigger.entity_id}}'
+#     fromstate: '{{trigger.from_state.state}}'
+#     tostate: '{{trigger.to_state.state}}'
+#
+alarma_to_pending:
+  alias: "Alarma Disarmed to Pending"
+  sequence:
+    - condition: template
+      value_template: '{{fromstate != tostate}}'
+
+    # Aviso sonoro con Xiaomi GW
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: '{{ringtone_msg}}'
+        ringtone_vol: >
+          {{ states('input_number.xiaomi_gw_volume_warning') | int }}
+
+
 alarma_boton_panico:
   alias: 'Alarma Boton Panico'
   sequence:
