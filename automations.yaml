@@ -32,7 +32,7 @@
 # REGLA: ALARMA DISARMED A <PENDING>
 #
 - id: A0_alarma_disarmed_pending
-  alias: 'A0 Alarma Disarmed to Pending'
+  alias: 'A0 Alarm Disarmed to Pending'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -50,7 +50,7 @@
 # REGLA: ALARMA ARMED A <PENDING>
 #
 - id: A1_alarma_armed_pending
-  alias: 'A1 Alarma Armed to Pending'
+  alias: 'A1 Alarm Armed to Pending'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -71,8 +71,8 @@
 #
 # REGLA: ARMADO COMPLETADO
 #
-- id: A2_alarma_armado_correcto
-  alias: 'A2 Alarma Armado Away'
+- id: A2_alarm_armado_correcto
+  alias: 'A2 Alarm Armed Away'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -93,7 +93,7 @@
       # >>> MODO: {{ trigger.to_state.state }}
 
 - id: A3_alarma_armado_home_correcto
-  alias: 'A3 Alarma Armado Home'
+  alias: 'A3 Alarm Armed Home'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -115,7 +115,7 @@
 # REGLA: AVISO Y NOTIFICACION DESARMADO OK
 #
 - id: A4_alarma_activa_desarmada
-  alias: 'A4 Alarma Desarmada'
+  alias: 'A4 Alarm Disarmed'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -134,35 +134,11 @@
           message: >
             >>> ESTADO: Desarmado
 
-# REGLA: ALARMA ACTIVA SIRENA + NOTIFICACION COMPLETA
-#
-- id: A5_alarma_disparada
-  alias: 'A5 Alarma Disparada'
-  trigger:
-    - platform: state
-      entity_id: alarm_control_panel.ha
-      to: 'triggered'  # triggered
-  action:
-    # Aviso ALARMA con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm
-    # Script Notificación Alarma
-    - service: script.turn_on
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-      entity_id: script.notifica_alarma
-      data:
-        variables:
-          title: '*ALARMA HOMY*'
-          message: >
-            >>> URGENTE: ALARMA ACTIVADA
-
-            >>> ZONA: {{ states('sensor.alarm_zone') }}
-
 #
 # REGLA: TRIGGER ALARMA POR SENSOR EN ARMADO AWAY
 #
-- id: A6_alarma_trigger_armed_away
-  alias: 'A6 Alarma Trigger Armado Away'
+- id: A5_alarma_trigger_armed_away
+  alias: 'A5 Alarm Trigger Armed Away'
   trigger:
     - platform: state
       entity_id:
@@ -185,12 +161,11 @@
 #
 # REGLA: TRIGGER ALARMA POR SENSOR EN ARMADO HOME
 #
-- id: A7_alarma_trigger_armed_home
-  alias: 'A7 Alarma Trigger Armado Home'
+- id: A6_alarma_trigger_armed_home
+  alias: 'A6 Alarm Trigger Armed Home'
   trigger:
     - platform: state
-      entity_id:
-        - group.sensores_home
+      entity_id: group.sensores_home
       from: 'off'
       to: 'on'
   condition:
@@ -204,13 +179,37 @@
     - service: alarm_control_panel.alarm_trigger
       entity_id: alarm_control_panel.ha
 
+# REGLA: ALARMA ACTIVA SIRENA + NOTIFICACION COMPLETA
+#
+- id: A7_alarma_disparada
+  alias: 'A7 Alarm Triggered'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.ha
+      to: 'triggered'  # triggered
+  action:
+    # Aviso ALARMA con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_alarm
+    # Script Notificación Alarma
+    - service: script.turn_on
+      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> URGENTE: ALARMA ACTIVADA
+
+            >>> ZONA: {{ states('sensor.alarm_zone') }}
+
 #
 # REGLA: MAGIC CUBE ALARMA ARMADO
 #
 # Available events are flip90, flip180, move, tap_twice, shake_air, swing, alert, free_fall and rotate.
 # The component stores the last action as the attribute last_action.
 - id: A8_alarma_magic_cube
-  alias: 'A8 Alarma Magic Cube'
+  alias: 'A8 Alarm Magic Cube'
   trigger:
     platform: event
     event_type: cube_action
@@ -243,7 +242,7 @@
 # REGLA: TRIGGER APAGADO BOTON PANICO
 #
 - id: A9_alarma_boton_panico_off
-  alias: 'A9 Alarma Boton Panico Off'
+  alias: 'A9 Alarm Boton Panico Off'
   trigger:
     platform: state
     entity_id: input_boolean.panic_button
@@ -387,6 +386,50 @@
           title: '*FAMILY_HOME: SI*'
           message: >
             >>> EVENTO: Primero en Entrar {{ states('sensor.family_last_tracking') }}
+
+- id: T03_Armed_home_family_at_home
+  alias: 'T03 Armed Home Family at Home'
+  trigger:
+    # Los que duermen ya están en casa
+    - platform: state
+      entity_id: binary_sensor.family_all_home
+      from: 'off'
+      to: 'on'
+    - platform: time
+      at: '00:01:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: group.sensores_home
+        state: 'off'
+      - condition: state
+        entity_id: alarm_control_panel.ha
+        state: disarmed
+      - condition: time
+        after: '00:00:00'
+      - condition: sun
+        before: sunrise
+        before_offset: "-00:30:00"
+      # Están todos en casa
+      - condition: state
+        entity_id: binary_sensor.family_all_home
+        state: 'on'
+  action:
+    - service: alarm_control_panel.alarm_trigger
+      entity_id: alarm_control_panel.ha
+    # Aviso sonoro con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_ringtone
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> ESTADO: Sistema Armado Parcial
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

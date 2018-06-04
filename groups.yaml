@@ -449,6 +449,7 @@ setup_family_home:
     - input_number.family_sleep_home
     - automation.t01_family_away
     - automation.t02_family_at_home
+    - automation.t03_armed_home_family_at_home
 
 notify_telegram_grp:
   name: Notificaciones Telegram
@@ -472,16 +473,16 @@ reglas_alarma_grp:
   view: no
   entities:
     - input_boolean.alarm_siren_setup
-    - automation.a0_alarma_disarmed_to_pending
-    - automation.a1_alarma_armed_to_pending
-    - automation.a2_alarma_armado_away
-    - automation.a3_alarma_armado_home
-    - automation.a4_alarma_desarmada
-    - automation.a5_alarma_disparada
-    - automation.a6_alarma_trigger_armado_away
-    - automation.a7_alarma_trigger_armado_home
-    - automation.a8_alarma_magic_cube
-    - automation.a9_alarma_boton_panico_off
+    - automation.a0_alarm_disarmed_to_pending
+    - automation.a1_alarm_armed_to_pending
+    - automation.a2_alarm_armed_away
+    - automation.a3_alarm_armed_home
+    - automation.a4_alarm_disarmed
+    - automation.a5_alarm_trigger_armado_away
+    - automation.a6_alarm_trigger_armado_home
+    - automation.a7_alarm_triggered
+    - automation.a8_alarm_magic_cube
+    - automation.a9_alarm_boton_panico_off
 
 reglas_luces_grp:
   name: Reglas Luces

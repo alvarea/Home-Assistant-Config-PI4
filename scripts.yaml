@@ -103,7 +103,6 @@ alarma_to_pending:
         ringtone_vol: >
           {{ states('input_number.xiaomi_gw_volume_warning') | int }}
 
-
 alarma_boton_panico:
   alias: 'Alarma Boton Panico'
   sequence:
