@@ -481,8 +481,9 @@ reglas_alarma_grp:
     - automation.a5_alarm_trigger_armado_away
     - automation.a6_alarm_trigger_armado_home
     - automation.a7_alarm_triggered
-    - automation.a8_alarm_magic_cube
-    - automation.a9_alarm_boton_panico_off
+    - automation.a8_alarm_boton_panico_off
+    - automation.a9_Sunrise_armed_home_disarm
+    - automation.a10_alarm_magic_cube
 
 reglas_luces_grp:
   name: Reglas Luces

@@ -43,7 +43,7 @@
     initial: on
     icon: mdi:alarm-light
   alarm_siren_setup:
-    name: Setup Sirena Alarma
+    name: Test Sirena Alarma
     initial: off
     icon: mdi:alarm-light
   mute_xiaomi_gw_sounds:

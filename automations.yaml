@@ -204,12 +204,68 @@
             >>> ZONA: {{ states('sensor.alarm_zone') }}
 
 #
+# REGLA: TRIGGER APAGADO BOTON PANICO
+#
+- id: A8_alarma_boton_panico_off
+  alias: 'A8 Alarm Boton Panico Off'
+  trigger:
+    platform: state
+    entity_id: input_boolean.panic_button
+    from: 'on'
+    to: 'off'
+  action:
+    # Aviso Xiaomi GW
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> URGENTE: BOTON PANICO APAGADO
+
+- id: A9_Sunrise_armed_home_disarm
+  alias: 'A9 Sunrise Armed Home Disarm'
+  trigger:
+    # Los que duermen ya están en casa
+    - platform: sun
+      event: sunrise
+      offset: "+00:30:00"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: alarm_control_panel.ha
+        state: armed_home
+      # Hay alguien en casa
+      - condition: state
+        entity_id: binary_sensor.family_any_home
+        state: 'on'
+  action:
+    - service: alarm_control_panel.disarm
+      entity_id: alarm_control_panel.ha
+    # Aviso sonoro con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_ringtone
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> ESTADO: Desarmado al amanecer.
+
+#
 # REGLA: MAGIC CUBE ALARMA ARMADO
 #
 # Available events are flip90, flip180, move, tap_twice, shake_air, swing, alert, free_fall and rotate.
 # The component stores the last action as the attribute last_action.
-- id: A8_alarma_magic_cube
-  alias: 'A8 Alarm Magic Cube'
+- id: A10_alarma_magic_cube
+  alias: 'A10 Alarm Magic Cube'
   trigger:
     platform: event
     event_type: cube_action
@@ -238,29 +294,6 @@
           message: >
             >>> URGENTE: DESARMADO CUBE
 
-#
-# REGLA: TRIGGER APAGADO BOTON PANICO
-#
-- id: A9_alarma_boton_panico_off
-  alias: 'A9 Alarm Boton Panico Off'
-  trigger:
-    platform: state
-    entity_id: input_boolean.panic_button
-    from: 'on'
-    to: 'off'
-  action:
-    # Aviso Xiaomi GW
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*ALARMA HOMY*'
-          message: >
-            >>> URGENTE: BOTON PANICO APAGADO
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -407,16 +440,16 @@
         entity_id: alarm_control_panel.ha
         state: disarmed
       - condition: time
-        after: '00:00:00'
+        after: '00:01:00'
       - condition: sun
         before: sunrise
-        before_offset: "-00:30:00"
       # Están todos en casa
       - condition: state
         entity_id: binary_sensor.family_all_home
         state: 'on'
   action:
-    - service: alarm_control_panel.alarm_trigger
+    - delay: 0:05
+    - service: alarm_control_panel.arm_home
       entity_id: alarm_control_panel.ha
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
@@ -429,7 +462,6 @@
           title: '*ALARMA HOMY*'
           message: >
             >>> ESTADO: Sistema Armado Parcial
-
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
