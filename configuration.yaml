@@ -149,12 +149,18 @@ media_player:
 
 # AAC. MQTT - BROKER: CLOUDMQTT
 mqtt:
-  broker: m23.cloudmqtt.com
-  port: 11024
-  client_id: hass_alvarea
+  broker: alvarea.duckdns.org
+  port: 1883
+  client_id: hassbian_alvarea
   keepalive: 60
-  username: HASS
-  password: !secret cloudmqtt
+  username: hassbian_mqtt
+  password: !secret hassbian_mqtt
+#  broker: m23.cloudmqtt.com
+#  port: 11024
+#  client_id: hass_alvarea
+#  keepalive: 60
+#  username: HASS
+#  password: !secret cloudmqtt
 
 # AAC. XIAOMI AQARA GATEWAY
 #
