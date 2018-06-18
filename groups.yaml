@@ -73,6 +73,7 @@ alarma_sirena_grp:
   entities:
     - input_boolean.panic_button
     - script.alarma_boton_panico
+    - switch.sonoff_sw1_sirena
 
 alarma_sensor_entrada_grp:
   name: Sensores Entrada
@@ -156,7 +157,6 @@ track_aac_grp:
     - sensor.baye_probability_aac
     - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
     - device_tracker.aac_iphone_owntrack
-    - device_tracker.aac_iphone2_owntrack
     - device_tracker.aac_ios
     - device_tracker.aac_iphone_nmap
 
@@ -170,7 +170,6 @@ track_mfc_grp:
     - sensor.baye_probability_mfc
     - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
     - device_tracker.mfc_iphone_owntrack
-    - device_tracker.mfc_iphone_owntrack_mfc
     - device_tracker.mfc_ios
     - device_tracker.mfc_iphone_nmap
 
@@ -281,6 +280,7 @@ cocina_view:
   icon: mdi:food
   name: Cocina
   entities:
+    - switch.sonoff_sw2_thesub
     - camera.ipcam11_cocina
     - group.luces_cocina_grp
     - group.alarma_sensor_cocina_grp

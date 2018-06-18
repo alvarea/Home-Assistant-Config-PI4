@@ -155,6 +155,9 @@ mqtt:
   keepalive: 60
   username: hassbian_mqtt
   password: !secret hassbian_mqtt
+  discovery: true
+  discovery_prefix: homeassistant
+
 #  broker: m23.cloudmqtt.com
 #  port: 11024
 #  client_id: hass_alvarea
@@ -227,6 +230,7 @@ zone:
     latitude: 37.3748
     longitude: -6.0530
     icon: mdi:home-account
+
 
 #
 # AAC. Restaurar valores tras reinicio
