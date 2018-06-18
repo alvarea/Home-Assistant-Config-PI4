@@ -323,3 +323,19 @@ alumbrado_ext_timer:
       entity_id: switch.wall_switch_right_158d0002236e75
     - service: automation.turn_on
       entity_id: automation.L08_luces_on_exterior_sensor
+
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# SCRIPTS DE ARRANQUE DEL SISTEMA                                             #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+sonoff_initialize:
+  alias: 'Arranque Interruptores SONOFF'
+  sequence:
+    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
+    - service: switch.turn_off
+      entity_id: switch.sonoff_sw1_sirena
+    # SONOFF_SW2 THESUB ==> ON
+    - service: switch.turn_on
+      entity_id: switch.sonoff_sw2_thesub

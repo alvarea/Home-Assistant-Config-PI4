@@ -8,6 +8,10 @@ input_boolean.panic_button:
   icon: mdi:key-variant
 script.alarma_boton_panico:
   icon: mdi:alarm-light
+switch.sonoff_sw1_sirena:
+  friendly_name: Alarma Sirena Interior
+  icon: mdi:alarm-snooze
+
 
 # SENSORES BAYESIAN TRACKING FAMILY HOME
 #
@@ -149,6 +153,10 @@ sensor.illumination_158d0001e637f6:
 binary_sensor.smoke_sensor_158d0001fd321c:
   friendly_name: Detector Incendios
   icon: mdi:fire
+
+switch.sonoff_sw2_thesub:
+  friendly_name: Barril Cerveza TheSub
+  icon: mdi:beer
 
 # Salón
 #

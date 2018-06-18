@@ -707,8 +707,11 @@
     # Llamada al script python para inicializar meta-alarm_trigger
     #- service: script.reset_meta_alarm_trigger
     #
+    # Llamada al script de inicialización de interruptores Sonoff
+    - service: script.sonoff_initialize
+    #
     # Llamada al contador de personas que actualiza sensor.family_home
-    - service: python_script.countpeople
+    - service: python_script.countpeople    #
     #
     # 30" espera y arranca reglas
     - delay: 30
