@@ -3,6 +3,12 @@
 #
   - platform: template
     sensors:
+      # Alarma SONOFF_SW1 SIRENA INTERIOR
+      sonoff_sw1_sirena:
+        value_template: "{{ states('switch.sonoff_sw1_sirena') }}"
+        friendly_name: 'Alarma Sirena Interior'
+        icon_template: mdi:alarm-light
+
       # Gente que duerme en casa
       family_sleep_home:
         value_template: "{{ states('input_number.family_sleep_home')|int }}"

@@ -72,8 +72,8 @@ alarma_sirena_grp:
   view: no
   entities:
     - input_boolean.panic_button
+    - sensor.sonoff_sw1_sirena
     - script.alarma_boton_panico
-    - switch.sonoff_sw1_sirena
 
 alarma_sensor_entrada_grp:
   name: Sensores Entrada

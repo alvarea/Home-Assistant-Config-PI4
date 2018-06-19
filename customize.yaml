@@ -7,7 +7,7 @@ input_select.home_last_change:
 input_boolean.panic_button:
   icon: mdi:key-variant
 script.alarma_boton_panico:
-  icon: mdi:alarm-light
+  icon: mdi:arrow-collapse-down
 switch.sonoff_sw1_sirena:
   friendly_name: Alarma Sirena Interior
   icon: mdi:alarm-snooze

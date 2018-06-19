@@ -130,11 +130,11 @@ camera:
     name: IPcam12 Estudio
     username: admin
     password: !secret IPcam12
-  #- platform: generic
-  #  still_image_url: http://192.168.0.11/snapshot/image0.jpg
-  #  name: IPcam11 Cocina
-  #  username: admin
-  #  password: !secret IPcam11
+  - platform: generic
+    still_image_url: http://192.168.0.11/snapshot/image0.jpg
+    name: IPcam11 Cocina
+    username: admin
+    password: !secret IPcam11
 
 apple_tv:
   - host: 192.168.0.19

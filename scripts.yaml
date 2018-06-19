@@ -104,7 +104,7 @@ alarma_to_pending:
           {{ states('input_number.xiaomi_gw_volume_warning') | int }}
 
 alarma_boton_panico:
-  alias: 'Alarma Boton Panico'
+  alias: 'Boton Panico ON'
   sequence:
     - condition: template
       value_template: "{% if is_state('input_boolean.panic_button', 'on') %}true{% endif %}"
@@ -114,6 +114,11 @@ alarma_boton_panico:
         gw_mac: !secret xiaomi_gateway
     - service: script.turn_on
       entity_id: script.xiaomi_gw_play_alarm
+    # Retraso 5"
+    - delay: '00:00:10'
+    # SONOFF_SW1_SIRENA INTERIOR ==> ON
+    - service: switch.turn_on
+      entity_id: switch.sonoff_sw1_sirena
     # Notifica Telegram
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -123,6 +128,12 @@ alarma_boton_panico:
           title: '*ALARMA HOMY*'
           message: >
             >>> URGENTE: BOTON PANICO ACTIVADO
+
+    # Retraso 10'
+    - delay: '00:10:00'
+    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
+    - service: switch.turn_off
+      entity_id: switch.sonoff_sw1_sirena
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
