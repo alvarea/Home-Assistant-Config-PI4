@@ -103,7 +103,7 @@ alarma_to_pending:
         ringtone_vol: >
           {{ states('input_number.xiaomi_gw_volume_warning') | int }}
 
-alarma_boton_panico:
+alarma_boton_panico_on:
   alias: 'Boton Panico ON'
   sequence:
     - condition: template
@@ -114,8 +114,8 @@ alarma_boton_panico:
         gw_mac: !secret xiaomi_gateway
     - service: script.turn_on
       entity_id: script.xiaomi_gw_play_alarm
-    # Retraso 5"
-    - delay: '00:00:10'
+    # Retraso 8"
+    - delay: '00:00:08'
     # SONOFF_SW1_SIRENA INTERIOR ==> ON
     - service: switch.turn_on
       entity_id: switch.sonoff_sw1_sirena
@@ -129,11 +129,30 @@ alarma_boton_panico:
           message: >
             >>> URGENTE: BOTON PANICO ACTIVADO
 
-    # Retraso 10'
-    - delay: '00:10:00'
+    # Retraso 5'
+    - delay: '00:05:00'
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
       entity_id: switch.sonoff_sw1_sirena
+
+alarma_boton_panico_off:
+  alias: 'Boton Panico OFF'
+  sequence:
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
+    - service: switch.turn_off
+      entity_id: switch.sonoff_sw1_sirena
+    # Notifica Telegram
+    - service: script.turn_on
+      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> URGENTE: BOTON PANICO DESACTIVADO
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

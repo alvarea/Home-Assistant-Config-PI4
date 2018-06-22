@@ -214,18 +214,8 @@
     from: 'on'
     to: 'off'
   action:
-    # Aviso Xiaomi GW
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*ALARMA HOMY*'
-          message: >
-            >>> URGENTE: BOTON PANICO APAGADO
+    # Llamada a script desactivado botón pánico.
+    - service: script.alarma_boton_panico_off
 
 - id: A9_Sunrise_armed_home_disarm
   alias: 'A9 Sunrise Armed Home Disarm'
