@@ -18,5 +18,6 @@ for entity_id in hass.states.entity_ids('input_boolean'):
 
 hass.states.set('sensor.family_sleep_home', sleep, {
     'unit_of_measurement': 'personas',
-    'friendly_name': '¿Duermen en Casa?'
+    'friendly_name': '¿Duermen en Casa?',
+    'icon': 'mdi:sleep'
 })
