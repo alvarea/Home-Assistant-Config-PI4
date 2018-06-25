@@ -1,21 +1,43 @@
+#
+# INTERRUPTORES BOOLEAN => ON/OFF Tracking Family
+#
+  family_home_mfc:
+    name: Tracking Malen on/off
+    initial: on
+    icon: mdi:cellphone-iphone
+  family_home_aac:
+    name: Tracking Agustin on/off
+    initial: on
+    icon: mdi:cellphone-iphone
+  family_home_paf:
+    name: Tracking Paloma on/off
+    initial: on
+    icon: mdi:cellphone-iphone
+  family_home_aaf:
+    name: Tracking Agu on/off
+    initial: on
+    icon: mdi:cellphone-iphone
 
-# AAC. Interruptores control presencia Family
-  home_mfc:
-    name: Malen
+
+# INTERRUPTORES BOOLEAN => ON/OFF DUERME EN CASA
+#
+  family_sleep_home_mfc:
+    name: Malen Duerme en Casa
     initial: on
-    icon: mdi:cellphone-iphone
-  home_aac:
-    name: Agustin
+    icon: mdi:sleep
+  family_sleep_home_aac:
+    name: Agustin Duerme en Casa
     initial: on
-    icon: mdi:cellphone-iphone
-  home_paf:
-    name: Paloma
+    icon: mdi:sleep
+  family_sleep_home_paf:
+    name: Paloma Duerme en Casa
     initial: on
-    icon: mdi:cellphone-iphone
-  home_aaf:
-    name: Agu
+    icon: mdi:sleep
+  family_sleep_home_aaf:
+    name: Agu Duerme en Casa
     initial: on
-    icon: mdi:cellphone-iphone
+    icon: mdi:sleep
+
   notify_mfc:
     name: Notificaciones Malen
     initial: off

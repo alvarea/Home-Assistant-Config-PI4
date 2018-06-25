@@ -26,7 +26,7 @@ homy_status_grp:
     - sensor.time
     - binary_sensor.family_any_home
     - binary_sensor.family_all_home
-    #- sensor.family_sleep_home
+    - sensor.family_sleep_home
 
 family_home_grp:
   name: Family Home?
@@ -72,8 +72,8 @@ alarma_sirena_grp:
   view: no
   entities:
     - input_boolean.panic_button
-    - sensor.sonoff_sw1_sirena
     - script.alarma_boton_panico
+    - sensor.sonoff_sw1_sirena
 
 alarma_sensor_entrada_grp:
   name: Sensores Entrada
@@ -151,8 +151,9 @@ track_aac_grp:
   name: Agustín Tracking
   entities:
     - sensor.meta_track_aac
+    - input_boolean.family_sleep_home_aac
     - binary_sensor.family_home_aac
-    - sensor.home_aac
+    - sensor.family_home_aac
     - binary_sensor.baye_home_aac
     - sensor.baye_probability_aac
     - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
@@ -160,41 +161,51 @@ track_aac_grp:
     - device_tracker.aac_ios
     - device_tracker.aac_iphone_nmap
 
+    - input_boolean.family_home_aac
+
 track_mfc_grp:
   name: Malen Tracking
   entities:
     - sensor.meta_track_mfc
+    - input_boolean.family_sleep_home_mfc
     - binary_sensor.family_home_mfc
-    - sensor.home_mfc
+    - sensor.family_home_mfc
     - binary_sensor.baye_home_mfc
     - sensor.baye_probability_mfc
     - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
     - device_tracker.mfc_iphone_owntrack
     - device_tracker.mfc_ios
     - device_tracker.mfc_iphone_nmap
+    - input_boolean.family_home_mfc
+
 
 track_paf_grp:
   name: Paloma Tracking
   entities:
     - sensor.meta_track_paf
+    - input_boolean.family_sleep_home_paf
     - binary_sensor.family_home_paf
-    - sensor.home_paf
+    - sensor.family_home_paf
     - binary_sensor.baye_home_paf
     - sensor.baye_probability_paf
     - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
     - device_tracker.paf_ios
     - device_tracker.paf_iphone_nmap
 
+    - input_boolean.family_home_paf
+
 track_aaf_grp:
   name: Agu Tracking
   entities:
     - sensor.meta_track_aaf
+    - input_boolean.family_sleep_home_aaf
     - binary_sensor.family_home_aaf
-    - sensor.home_aaf
+    - sensor.family_home_aaf
     - binary_sensor.baye_home_aaf
     - sensor.baye_probability_aaf
     - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
     - device_tracker.aaf_iphone_nmap
+    - input_boolean.family_home_aaf
 
 camaras_view:
   view: yes
@@ -255,6 +266,7 @@ luces_exterior_grp:
   name: Luces Exterior
   entities:
     - switch.wall_switch_right_158d0002236e75
+    - switch.sonoff_sw2_luces_jardin
 
 luces_cocina_grp:
   name: Luces Cocina
@@ -435,25 +447,21 @@ config_view:
   icon: mdi:settings
   entities:
       - group.setup_family_home
-      - group.xiaomi_gateway_grp
-      - group.reglas_alarma_grp
-      - group.notify_telegram_grp
-      - group.reglas_luces_grp
+      - group.setup_sirenas_grp
+      - group.setup_telegram_grp
+      - group.setup_reglas_alarma_grp
+      - group.setup_reglas_luces_grp
 
 setup_family_home:
   name: Tracking Family Home
   view: no
   entities:
-    - input_boolean.home_mfc
-    - input_boolean.home_aac
-    - input_boolean.home_paf
-    - input_boolean.home_aaf
     - input_number.family_sleep_home
     - automation.t01_family_away
     - automation.t02_family_at_home
     - automation.t03_armed_home_family_at_home
 
-notify_telegram_grp:
+setup_telegram_grp:
   name: Notificaciones Telegram
   view: no
   entities:
@@ -463,14 +471,7 @@ notify_telegram_grp:
     - input_boolean.notify_paf
     - input_boolean.notify_aaf
 
-msg_control_grp:
-  name: Notificaciones
-  view: no
-  entities:
-    - input_text.mensaje_tit
-    - input_text.mensaje_msg
-
-reglas_alarma_grp:
+setup_reglas_alarma_grp:
   name: Reglas Alarma
   view: no
   entities:
@@ -483,11 +484,11 @@ reglas_alarma_grp:
     - automation.a5_alarm_trigger_armado_away
     - automation.a6_alarm_trigger_armado_home
     - automation.a7_alarm_triggered
-    - automation.a8_alarm_boton_panico_off
-    - automation.a9_Sunrise_armed_home_disarm
+    - automation.a8_alarm_home_auto_disarm
+    - automation.a9_alarm_boton_panico_off
     - automation.a10_alarm_magic_cube
 
-reglas_luces_grp:
+setup_reglas_luces_grp:
   name: Reglas Luces
   view: no
   entities:
@@ -500,8 +501,8 @@ reglas_luces_grp:
     - automation.l07_luces_on_entrada_segun_sensor
     - automation.l08_luces_on_exterior_segun_sensor
 
-xiaomi_gateway_grp:
-  name: Sirena Xiaomi Gateway
+setup_sirenas_grp:
+  name: Sirenas
   view: no
   entities:
     - input_boolean.mute_xiaomi_gw_sounds
@@ -509,4 +510,11 @@ xiaomi_gateway_grp:
     - input_number.xiaomi_gw_volume_warning
     - input_select.xiaomi_gw_sound_alarm
     - input_number.xiaomi_gw_volume_alarm
+    - switch.sonoff_sw1_sirena
 
+msg_control_grp:
+  name: Notificaciones
+  view: no
+  entities:
+    - input_text.mensaje_tit
+    - input_text.mensaje_msg

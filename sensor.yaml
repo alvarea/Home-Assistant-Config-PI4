@@ -1,5 +1,5 @@
 #
-# AAC. PLATFORM TEMPLATE
+# SENSOR
 #
   - platform: template
     sensors:
@@ -10,10 +10,11 @@
         icon_template: mdi:alarm-light
 
       # Gente que duerme en casa
-      family_sleep_home:
-        value_template: "{{ states('input_number.family_sleep_home')|int }}"
-        friendly_name: 'Duermen en Casa'
-        icon_template: mdi:home-variant
+      #family_sleep_home:
+      #  value_template: "{{ states('input_number.family_sleep_home')|int }}"
+      #  friendly_name: 'Duermen en Casa'
+      #  icon_template: mdi:home-variant
+
       # Último Tracking
       family_last_tracking:
         value_template: "{{ states('input_text.family_last_tracking') }}"
@@ -39,29 +40,29 @@
       meta_track_aaf:
         friendly_name: 'AAF Meta-tracker'
         entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('device_tracker.meta_aaf') is not none }}"
-        value_template: "{{ states('device_tracker.meta_aaf') if is_state('sensor.home_aaf','on') and states('device_tracker.meta_aaf') is not none }}"
+        value_template: "{{ states('device_tracker.meta_aaf') if is_state('sensor.family_home_aaf','on') and states('device_tracker.meta_aaf') is not none }}"
 
         #value_template: >-
         #  {% if is_state('binary_sensor.baye_home_mfc','on')
-        #      and is_state('sensor.home_mfc','on') }}
+        #      and is_state('sensor.family_home_mfc','on') }}
 
       # Sensores read-only de configuración on/off Tracking Family Home AAC, MFC, PAF, AAF
-      # input_boolean.home_mfc,input_boolean.home_aac,input_boolean.home_paf,input_boolean.home_aaf
+      # input_boolean.family_home_mfc,input_boolean.family_home_aac,input_boolean.family_home_paf,input_boolean.family_home_aaf
       #
-      home_aac:
-        value_template: "{{ states('input_boolean.home_aac') if states('input_boolean.home_aac') is not none }}"
+      family_home_aac:
+        value_template: "{{ states('input_boolean.family_home_aac') if states('input_boolean.family_home_aac') is not none }}"
         friendly_name: 'Iphone AAC operativo'
         icon_template: mdi:cellphone-iphone
-      home_mfc:
-        value_template: "{{ states('input_boolean.home_mfc') if states('input_boolean.home_mfc') is not none }}"
+      family_home_mfc:
+        value_template: "{{ states('input_boolean.family_home_mfc') if states('input_boolean.family_home_mfc') is not none }}"
         friendly_name: 'Iphone MFC operativo'
         icon_template: mdi:cellphone-iphone
-      home_paf:
-        value_template: "{{ states('input_boolean.home_paf') if states('input_boolean.home_paf') is not none }}"
+      family_home_paf:
+        value_template: "{{ states('input_boolean.family_home_paf') if states('input_boolean.family_home_paf') is not none }}"
         friendly_name: 'Iphone PAF operativo'
         icon_template: mdi:cellphone-iphone
-      home_aaf:
-        value_template: "{{ states('input_boolean.home_aaf') if states('input_boolean.home_aaf') is not none }}"
+      family_home_aaf:
+        value_template: "{{ states('input_boolean.family_home_aaf') if states('input_boolean.family_home_aaf') is not none }}"
         friendly_name: 'Iphone AAF operativo'
         icon_template: mdi:cellphone-iphone
 

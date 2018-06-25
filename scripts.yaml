@@ -3,7 +3,6 @@
 # ALARMA y SIRENAS                                                            #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-
 # 10004: Ringtone AAC ArmadoDesarme:
 #
 # "sistema armado
@@ -103,7 +102,7 @@ alarma_to_pending:
         ringtone_vol: >
           {{ states('input_number.xiaomi_gw_volume_warning') | int }}
 
-alarma_boton_panico_on:
+alarma_boton_panico:
   alias: 'Boton Panico ON'
   sequence:
     - condition: template
@@ -114,8 +113,8 @@ alarma_boton_panico_on:
         gw_mac: !secret xiaomi_gateway
     - service: script.turn_on
       entity_id: script.xiaomi_gw_play_alarm
-    # Retraso 8"
-    - delay: '00:00:08'
+    # Retraso 5"
+    - delay: '00:00:05'
     # SONOFF_SW1_SIRENA INTERIOR ==> ON
     - service: switch.turn_on
       entity_id: switch.sonoff_sw1_sirena
@@ -329,6 +328,7 @@ luces_off:
         - group.luces_cocina_grp
         - group.luces_salon_grp
         - group.luces_estudio_grp
+        - group.luces_entrada_grp
 
 alumbrado_ext_timer:
   alias: 'Luces Exterior Timer'

@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Home-Assistant-Config.iml" filepath="$PROJECT_DIR$/.idea/Home-Assistant-Config.iml" />
-      <module fileurl="file:///Volumes/homeassistant/.idea/homeassistant.iml" filepath="/Volumes/homeassistant/.idea/homeassistant.iml" />
       <module fileurl="file:///private/var/folders/jk/3bpmfn39521dv64qtz9bz1bh0000gn/T/known_devices.yaml/.idea/known_devices.yaml.iml" filepath="/private/var/folders/jk/3bpmfn39521dv64qtz9bz1bh0000gn/T/known_devices.yaml/.idea/known_devices.yaml.iml" />
     </modules>
   </component>

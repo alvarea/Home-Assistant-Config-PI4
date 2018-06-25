@@ -174,3 +174,71 @@ sensor.illumination_158d0001e464a6:
   name:
   platform: xiaomi_aqara
   unique_id: lux158d0001e464a6
+sensor.a2f_battery_level:
+  name:
+  platform: ios
+  unique_id: level_a2f
+sensor.a2f_battery_state:
+  name:
+  platform: ios
+  unique_id: state_a2f
+sensor.iphone_paf_battery_level:
+  name:
+  platform: ios
+  unique_id: level_iphone_paf
+sensor.iphone_paf_battery_level_2:
+  name:
+  platform: ios
+  unique_id: level_paf_ios
+sensor.iphone_paf_battery_state:
+  name:
+  platform: ios
+  unique_id: state_iphone_paf
+sensor.iphone_paf_battery_state_2:
+  name:
+  platform: ios
+  unique_id: state_paf_ios
+sensor.a2f_battery_level_2:
+  name:
+  platform: ios
+  unique_id: level_aaf_ios
+sensor.a2f_battery_state_2:
+  name:
+  platform: ios
+  unique_id: state_aaf_ios
+binary_sensor.door_window_sensor_158d00020b7c27:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d00020b7c27
+binary_sensor.door_window_sensor_158d00020457e0:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d00020457e0
+binary_sensor.door_window_sensor_158d00020910b1:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d00020910b1
+sensor.temperature_158d00022c6a47:
+  name:
+  platform: xiaomi_aqara
+  unique_id: temperature158d00022c6a47
+sensor.humidity_158d00022c6a47:
+  name:
+  platform: xiaomi_aqara
+  unique_id: humidity158d00022c6a47
+sensor.pressure_158d00022c6a47:
+  name:
+  platform: xiaomi_aqara
+  unique_id: pressure158d00022c6a47
+binary_sensor.motion_sensor_158d0001e637f6:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d0001e637f6
+sensor.illumination_158d0001e637f6:
+  name:
+  platform: xiaomi_aqara
+  unique_id: lux158d0001e637f6
+binary_sensor.cube_158d00024a4a62:
+  name:
+  platform: xiaomi_aqara
+  unique_id: cube158d00024a4a62

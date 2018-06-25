@@ -3,14 +3,6 @@
 # ALARMA: Armado y Control de la Alarma                                       #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-
-#   data:
-#     variables:
-#       tone_id: >-
-#         {{ states.input_select.xiaomi_gw_sound_warning.state.split('-')[0] }}
-#       tone_vol: >
-#         {{ states('input_number.xiaomi_gw_volume_warning') }}
-#
 #
 # REGLA: TEST SONIDOS ALARMA
 #
@@ -203,22 +195,10 @@
 
             >>> ZONA: {{ states('sensor.alarm_zone') }}
 
+# REGLA: TRIGGER DESARMADO AUTOMATICO AL AMANECER
 #
-# REGLA: TRIGGER APAGADO BOTON PANICO
-#
-- id: A8_alarma_boton_panico_off
-  alias: 'A8 Alarm Boton Panico Off'
-  trigger:
-    platform: state
-    entity_id: input_boolean.panic_button
-    from: 'on'
-    to: 'off'
-  action:
-    # Llamada a script desactivado botón pánico.
-    - service: script.alarma_boton_panico_off
-
-- id: A9_Sunrise_armed_home_disarm
-  alias: 'A9 Sunrise Armed Home Disarm'
+- id: A8_alarm_home_auto_disarm
+  alias: 'A9 Alarm Home Auto Disarm'
   trigger:
     # Los que duermen ya están en casa
     - platform: sun
@@ -249,6 +229,21 @@
           message: >
             >>> ESTADO: Desarmado al amanecer.
 
+#
+# REGLA: TRIGGER APAGADO BOTON PANICO
+#
+- id: A9_alarm_boton_panico_off
+  # alias: 'A9 Alarm Boton Panico Off'
+  trigger:
+    platform: state
+    entity_id: input_boolean.panic_button
+    from: 'on'
+    to: 'off'
+  action:
+    # Llamada a script desactivado botón pánico.
+    - service: script.alarma_boton_panico_off
+
+#
 #
 # REGLA: MAGIC CUBE ALARMA ARMADO
 #
@@ -453,6 +448,20 @@
           title: '*ALARMA HOMY*'
           message: >
             >>> ESTADO: Sistema Armado Parcial
+
+- id: T04_family_sleep_home
+  alias: 'T04 Sleep Family Home'
+  trigger:
+    # Hay alguien en casa
+    - platform: state
+      entity_id:
+        - input_boolean.family_sleep_home_mfc
+        - input_boolean.family_sleep_home_acc
+        - input_boolean.family_sleep_home_paf
+        - input_boolean.family_sleep_home_aaf
+  action:
+    # Llamada al contador de personas que actualiza sensor.family_home
+    - service: python_script.countpeople
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -691,17 +700,17 @@
         entity_id:
           - group.all_automations
     #
-    # Llamada al script python para inicializar meta-trackers
+    # Llamada al script para inicializar meta-trackers
     - service: script.reset_meta_tracker
     #
-    # Llamada al script python para inicializar meta-alarm_trigger
+    # Llamada al script para inicializar meta-alarm_trigger
     #- service: script.reset_meta_alarm_trigger
     #
     # Llamada al script de inicialización de interruptores Sonoff
     - service: script.sonoff_initialize
     #
     # Llamada al contador de personas que actualiza sensor.family_home
-    - service: python_script.countpeople    #
+    - service: python_script.countpeople
     #
     # 30" espera y arranca reglas
     - delay: 30
