@@ -23,19 +23,21 @@ homy_status_grp:
   entities:
     - sensor.time
     - alarm_control_panel.ha
-    - sensor.family_home
     - binary_sensor.family_any_home
     - binary_sensor.family_all_home
-    - sensor.family_sleep_home
+    - sensor.uptime
+    - sensor.ssl_certificate_expiry
 
 family_home_grp:
   name: Family Home?
   entities:
+    - sensor.family_home
     - sensor.family_last_tracking
     - binary_sensor.family_home_aac
     - binary_sensor.family_home_mfc
     - binary_sensor.family_home_paf
     - binary_sensor.family_home_aaf
+    - sensor.family_sleep_home
 
 main_sensor_grp:
   name: Sensores Principales

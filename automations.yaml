@@ -541,8 +541,8 @@
     entity_id: switch.wall_switch_right_158d0002236e75
     state: 'on'
   action:
-    - service: switch.turn_off
-      entity_id: switch.wall_switch_right_158d0002236e75
+    # Apagado Luces exterior
+    - service: script.luces_exterior_off
     # Notifica a Familia
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -552,7 +552,7 @@
           message: >
             >>> EVENTO: Amanecer en 4 horas
 
-            >>> LUCES: Alumbrado Exterior Off
+            >>> LUCES: Luces Exterior Off
 
 - id: L04_luces_on_salon_sunset
   alias: 'L04 Luces On Salon Puesta Sol -1h'
@@ -585,9 +585,10 @@
     - platform: time
       at: "00:00:00"
   action:
+    # Script Apagado Luces exterior
+    - service: script.luces_exterior_off
     # Script Luces Apagado Interior Casa
-    - service: script.turn_on
-      entity_id: script.luces_off
+    - service: script.luces_off
     # Notifica a Familia
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -597,7 +598,7 @@
           message: >
             >>> EVENTO: Medianoche
 
-            >>> LUCES: Luces Interior Off
+            >>> LUCES: Luces de toda la casa Off
 
 - id: L06_luces_off_home_sunrise
   alias: 'L06 Luces Off Amanecer'
@@ -661,25 +662,26 @@
     - service: automation.turn_on
       entity_id: automation.l07_luces_on_entrada_segun_sensor
 
-- id: L08_luces_on_exterior_sensor
-  alias: 'L08 Luces On Exterior Según Sensor'
+- id: l08_luces_on_exterior_segun_sensor
+  alias: 'L08 Luces On Exterior Segun Sensor'
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001e637f6
       to: 'on'
   condition:
-    condition: and
+    condition: or  # 'when dark' condition: either after sunset or before sunrise
     conditions:
-      - condition: state
-        entity_id: switch.wall_switch_right_158d0002236e75
-        state: 'off'
       - condition: sun
         after: sunset
-      #- condition: numeric_state
-      #  entity_id: sensor.illumination_158d0001e637f6
-      #  below: 1
+        after_offset: "-1:00:00"
+      - condition: sun
+        before: sunrise
+        before_offset: "-1:00:00"
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0001e637f6
+        below: 1
   action:
-    - service: script.alumbrado_ext_timer
+    - service: script.luces_exterior_timer
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -717,6 +719,10 @@
       data:
         entity_id:
           - group.all_automations
+    # Reglas deshabilitadas temporalmente
+    - service: automation.turn_off
+      entity_id: automation.l02_luces_off_exterior_all_family_home
+
 
 #
 # CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.

@@ -363,11 +363,11 @@ luces_off:
         - group.luces_estudio_grp
         - group.luces_entrada_grp
 
-alumbrado_ext_timer:
+luces_exterior_timer:
   alias: 'Luces Exterior Timer'
   sequence:
     - service: automation.turn_off
-      entity_id: automation.L08_luces_on_exterior_sensor
+      entity_id: automation.l08_luces_on_exterior_segun_sensor
     - service: switch.turn_on
       entity_id: switch.wall_switch_right_158d0002236e75
     # Notifica a Familia
@@ -385,8 +385,15 @@ alumbrado_ext_timer:
     - service: switch.turn_off
       entity_id: switch.wall_switch_right_158d0002236e75
     - service: automation.turn_on
-      entity_id: automation.L08_luces_on_exterior_sensor
+      entity_id: automation.l08_luces_on_exterior_segun_sensor
 
+luces_exterior_off:
+  alias: 'Luces Exterior OFF'
+  sequence:
+    - service: switch.turn_off
+      entity_id:
+        - switch.wall_switch_right_158d0002236e75
+        - switch.sonoff_sw2_luces_jardin
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
