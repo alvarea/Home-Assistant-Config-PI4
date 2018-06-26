@@ -12,6 +12,10 @@ switch.sonoff_sw1_sirena:
   friendly_name: Alarma Sirena Interior
   icon: mdi:alarm-snooze
 
+# PANEL CONTROL ALARMA
+sensor.family_sleep_home:
+  friendly_name: ¿Duermen en Casa?s
+  icon: mdi:sleep
 
 # SENSORES BAYESIAN TRACKING FAMILY HOME
 #

@@ -21,9 +21,9 @@ default_view:
 homy_status_grp:
   name: Estado General Homy
   entities:
+    - sensor.time
     - alarm_control_panel.ha
     - sensor.family_home
-    - sensor.time
     - binary_sensor.family_any_home
     - binary_sensor.family_all_home
     - sensor.family_sleep_home
@@ -259,6 +259,7 @@ luces_entrada_grp:
     - switch.wall_switch_left_158d0002236e75
     - light.hue_entrada
     - light.hue_pasillo
+    - light.gateway_light_7811dcb788fa
 
 luces_exterior_grp:
   name: Luces Exterior
@@ -278,7 +279,6 @@ luces_salon_grp:
     - light.hue_cilindro
     - light.hue_seises
     - light.hue_lectura
-    - light.gateway_light_7811dcb788fa
 
 luces_estudio_grp:
   name: Luces Estudio

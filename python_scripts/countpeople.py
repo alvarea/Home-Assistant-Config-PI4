@@ -6,7 +6,8 @@ for entity_id in hass.states.entity_ids('binary_sensor'):
 
 hass.states.set('sensor.family_home', home, {
     'unit_of_measurement': 'personas',
-    'friendly_name': '¿Gente en Casa?'
+    'friendly_name': '¿Gente en Casa?',
+    'icon': 'mdi:home'
 })
 
 sleep = 0
