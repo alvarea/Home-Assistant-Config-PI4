@@ -14,21 +14,25 @@ default_view:
     - group.system_view
     - group.batery_view
     - group.config_view
-    - group.homy_status_grp
-    - group.family_home_grp
-    - group.main_sensor_grp
+    - group.main_alarm_status_grp
+    - group.main_homy_status_grp
+    - group.main_family_status_grp
+    - group.main_sensor_status_grp
 
-homy_status_grp:
+main_alarm_status_grp:
+  name: Estado Alarma
+  entities:
+    - alarm_control_panel.ha
+
+main_homy_status_grp:
   name: Estado General Homy
   entities:
     - sensor.time
-    - alarm_control_panel.ha
+    - sensor.uptime
     - binary_sensor.family_any_home
     - binary_sensor.family_all_home
-    - sensor.uptime
-    - sensor.ssl_certificate_expiry
 
-family_home_grp:
+main_family_status_grp:
   name: Family Home?
   entities:
     - sensor.family_home
@@ -39,7 +43,7 @@ family_home_grp:
     - binary_sensor.family_home_aaf
     - sensor.family_sleep_home
 
-main_sensor_grp:
+main_sensor_status_grp:
   name: Sensores Principales
   entities:
     - sensor.temperature_158d00022b65ff
@@ -48,6 +52,7 @@ main_sensor_grp:
     - sensor.moon
     - sensor.sun_next_setting
     - sensor.sun_next_rising
+    - sensor.ssl_certificate_expiry
 
 alarma_view:
   name: Panel Control Alarma
@@ -64,7 +69,6 @@ alarma_view:
 
 alarma_status_grp:
   name: Estado Alarma
-  view: no
   entities:
     - alarm_control_panel.ha
     - sensor.alarm_zone
@@ -446,17 +450,15 @@ config_view:
   view: yes
   icon: mdi:settings
   entities:
-      - group.setup_family_home
       - group.setup_sirenas_grp
       - group.setup_telegram_grp
-      - group.setup_reglas_alarma_grp
       - group.setup_reglas_luces_grp
+      - group.setup_reglas_alarma_grp
 
 setup_family_home:
   name: Tracking Family Home
   view: no
   entities:
-    - input_number.family_sleep_home
     - automation.t01_family_away
     - automation.t02_family_at_home
     - automation.t03_armed_home_family_at_home

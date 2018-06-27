@@ -322,11 +322,12 @@ luces_on_entrada_sensor:
 
 luz_on_armed_home:
   alias: 'Luces On Entrada si Sensor'
-  # Check Panel Alarma == Disarmed, Armed Away ==> Exit
   sequence:
+    # When a condition does not return true, the script will finish
+    # Check Panel Alarma <> armed_home ==> Exit
     - condition: state
       entity_id: alarm_control_panel.ha
-      state: disarmed
+      state: 'armed_home'
     # Enciende Piloto Azul Alarma
     - service: light.turn_on
       entity_id: light.gateway_light_7811dcb788fa

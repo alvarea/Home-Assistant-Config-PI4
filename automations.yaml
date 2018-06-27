@@ -116,6 +116,9 @@
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
       entity_id: script.xiaomi_gw_play_ringtone
+    # Apaga Luz Piloto Gateway
+    - service: light.turn_off
+      entity_id: light.gateway_light_7811dcb788fa
     # Script Notificación Alarma
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -662,7 +665,7 @@
     - service: automation.turn_on
       entity_id: automation.l07_luces_on_entrada_segun_sensor
 
-- id: l08_luces_on_exterior_segun_sensor
+- id: L08_luces_on_exterior_segun_sensor
   alias: 'L08 Luces On Exterior Segun Sensor'
   trigger:
     - platform: state
@@ -673,10 +676,10 @@
     conditions:
       - condition: sun
         after: sunset
-        after_offset: "-1:00:00"
+        #after_offset: "-1:00:00"
       - condition: sun
         before: sunrise
-        before_offset: "-1:00:00"
+        #before_offset: "1:00:00"
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e637f6
         below: 1
