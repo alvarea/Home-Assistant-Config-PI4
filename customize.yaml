@@ -158,9 +158,6 @@ binary_sensor.smoke_sensor_158d0001fd321c:
   friendly_name: Detector Incendios
   icon: mdi:fire
 
-switch.sonoff_sw2_thesub:
-  friendly_name: Barril Cerveza TheSub
-  icon: mdi:beer
 
 # Salón
 #
@@ -208,3 +205,9 @@ binary_sensor.door_window_sensor_158d00020910b1:
 binary_sensor.door_window_sensor_158d00020b7c27:
   friendly_name: Sensor Ventana MFC-AAC
   icon: mdi:window-closed
+
+# Exterior
+#
+switch.sonoff_sw2_luces_jardin:
+  friendly_name: Luces Cesped Jardín
+  icon: mdi:track-light

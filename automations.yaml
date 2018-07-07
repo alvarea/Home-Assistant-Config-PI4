@@ -481,8 +481,8 @@
     #- condition: time
     #  before: '23:59:00'
   action:
-    - service: switch.turn_on
-      entity_id: switch.wall_switch_right_158d0002236e75
+    # Encendido Luces Exterior y Jardín
+    - service: script.luces_exterior_on
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -492,7 +492,7 @@
           message: >
             >>> EVENTO: Puesta de sol hace 15min
 
-            >>> LUCES: Alumbrado Exterior ON
+            >>> LUCES: Alumbrado Exterior y Jardín ON
 
 - id: L02_luces_off_exterior_all_family_home
   alias: 'L02 Luces Off Exterior All Family Home'
@@ -520,8 +520,8 @@
         state: 'on'
   action:
     - delay: 0:05
-    - service: switch.turn_off
-      entity_id: switch.wall_switch_right_158d0002236e75
+    # Apagado Luces Exterior y Jardín
+    - service: script.luces_exterior_off
     # Notifica a Familia
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -672,17 +672,22 @@
       entity_id: binary_sensor.motion_sensor_158d0001e637f6
       to: 'on'
   condition:
-    condition: or  # 'when dark' condition: either after sunset or before sunrise
+    condition: and
     conditions:
-      - condition: sun
-        after: sunset
-        #after_offset: "-1:00:00"
-      - condition: sun
-        before: sunrise
-        #before_offset: "1:00:00"
-      - condition: numeric_state
-        entity_id: sensor.illumination_158d0001e637f6
-        below: 1
+      - condition: state
+        entity_id: switch.wall_switch_right_158d0002236e75
+        state: 'off'
+      - condition: or  # 'when dark' condition: either after sunset or before sunrise
+        conditions:
+          - condition: sun
+            after: sunset
+            #after_offset: "-1:00:00"
+          - condition: sun
+            before: sunrise
+            #before_offset: "-00:30:00"
+          - condition: numeric_state
+            entity_id: sensor.illumination_158d0001e637f6
+            below: 1
   action:
     - service: script.luces_exterior_timer
 

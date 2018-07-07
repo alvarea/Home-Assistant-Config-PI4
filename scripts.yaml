@@ -396,6 +396,15 @@ luces_exterior_off:
         - switch.wall_switch_right_158d0002236e75
         - switch.sonoff_sw2_luces_jardin
 
+
+luces_exterior_on:
+  alias: 'Luces Exterior y Jardín On'
+  sequence:
+    - service: switch.turn_on
+      entity_id:
+        - switch.wall_switch_right_158d0002236e75
+        - switch.sonoff_sw2_luces_jardin
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # SCRIPTS DE ARRANQUE DEL SISTEMA                                             #
