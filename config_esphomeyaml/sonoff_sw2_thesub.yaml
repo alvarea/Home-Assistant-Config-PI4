@@ -1,0 +1,34 @@
+esphomeyaml:
+  name: sonoff_sw2_thesub
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: 'TC.alvarea.net'
+  password: '3286202581200'
+  manual_ip:
+    static_ip: 192.168.0.31
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+mqtt:
+  broker: '192.168.0.23'
+  username: 'switch_sonoff'
+  password: '7xnQj7RUc05dHqywDM'
+
+# Enable logging
+logger:
+
+ota:
+
+switch:
+  - platform: gpio
+    name: "Sonoff SW2 TheSub"
+    pin: GPIO12
+
+output:
+  - platform: esp8266_pwm
+    id: sonoff_sw2_green_led
+    pin:
+      number: GPIO13
+      inverted: True

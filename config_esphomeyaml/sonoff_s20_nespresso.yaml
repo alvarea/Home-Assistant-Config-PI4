@@ -1,0 +1,53 @@
+esphomeyaml:
+  name: sonoff_s20_nespresso
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: 'TC.alvarea.net'
+  password: '3286202581200'
+  manual_ip:
+    static_ip: 192.168.0.33
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+
+mqtt:
+  broker: '192.168.0.23'
+  username: 'switch_sonoff'
+  password: '7xnQj7RUc05dHqywDM'
+
+# Enable logging
+logger:
+
+ota:
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Sonoff S20 Nespresso Botón"
+  - platform: status
+    name: "Sonoff S20 Nespresso Status"
+
+
+switch:
+  - platform: gpio
+    name: "Sonoff S20 Nespresso"
+    pin: GPIO12
+
+output:
+  # Register the green LED as a dimmable output ....
+  - platform: esp8266_pwm
+    id: s20_green_led
+    pin:
+      number: GPIO13
+      inverted: True
+
+light:
+  # ... and then make a light out of it.
+  - platform: monochromatic
+    name: "Sonoff S20 Nespresso LED"
+    output: s20_green_led

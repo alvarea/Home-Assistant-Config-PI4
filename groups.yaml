@@ -296,11 +296,21 @@ cocina_view:
   icon: mdi:food
   name: Cocina
   entities:
-    - switch.sonoff_sw2_thesub
+    - group.nespresso_grp
     - camera.ipcam11_cocina
     - group.luces_cocina_grp
     - group.alarma_sensor_cocina_grp
     - media_player.firetv_cocina
+
+nespresso_grp:
+  view: no
+  icon: mdi:coffee
+  name: Nespresso
+  entities:
+    - switch.sonoff_s20_nespresso
+    - binary_sensor.sonoff_s20_nespresso_boton
+    - light.sonoff_s20_nespresso_led
+    - binary_sensor.sonoff_s20_nespresso_status
 
 salon_view:
   view: yes
