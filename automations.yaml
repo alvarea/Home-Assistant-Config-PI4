@@ -1,8 +1,91 @@
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# ARRANQUE/PARADA DEL SISTEMA                                                 #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+- id: hass_startup_automation
+  alias: hass_startup_scripts
+  trigger:
+    platform: homeassistant
+    # Event can also be 'shutdown'
+    event: start
+  action:
+    # Para todas las reglas durante el arranque del sistema
+    - service: automation.turn_off
+      data:
+        entity_id:
+          - group.all_automations
+    #
+    # Llamada al script para inicializar meta-trackers
+    - service: script.reset_meta_tracker
+    #
+    # Llamada al script para inicializar meta-alarm_trigger
+    #- service: script.reset_meta_alarm_trigger
+    #
+    # Llamada al script de inicialización de interruptores Sonoff
+    - service: script.sonoff_initialize
+    #
+    # Llamada al contador de personas que actualiza sensor.family_home
+    - service: python_script.countpeople
+    #
+    # 30" espera y arranca reglas
+    - delay: 30
+    - service: automation.turn_on
+      data:
+        entity_id:
+          - group.all_automations
+    # Reglas deshabilitadas temporalmente
+    - service: automation.turn_off
+      entity_id: automation.l02_luces_off_exterior_all_family_home
+
+
+#
+# CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
+#
+- id: S1_ssl_expiry_notification
+  alias: 'S1 SSL expiry notification'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ssl_certificate_expiry
+    below: 21
+  action:
+    service: script.turn_on
+    entity_id: script.notifica_evento
+    data:
+      variables:
+        title: '*CERTIFICADO SSL*'
+        message: >
+          >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
+
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # ALARMA: Armado y Control de la Alarma                                       #
 #                                                                             #
 #-----------------------------------------------------------------------------#
+
+#
+# ALARMA AUTOMATICA SENSOR HUMO/FUEGO COCINA
+#
+- id: F1_alarma_fuego_cocina
+  alias: 'F1 Alarma Fuego Cocina'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.smoke_sensor_158d0001fd321c
+      from: 'off'
+      to: 'on'
+  action:
+    - service: script.turn_on
+      entity_id: script.alarma_siren_on
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA FUEGO*'
+          message: >
+            >>> URGENTE: SENSOR HUMO COCINA
 #
 # REGLA: TEST SONIDOS ALARMA
 #
@@ -693,86 +776,25 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# ARRANQUE/PARADA DEL SISTEMA                                                 #
+# REGLAS DE CONTROL DE SMART SWITCH SONOFF                                    #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-- id: hass_startup_automation
-  alias: hass_startup_scripts
-  trigger:
-    platform: homeassistant
-    # Event can also be 'shutdown'
-    event: start
-  action:
-    # Para todas las reglas durante el arranque del sistema
-    - service: automation.turn_off
-      data:
-        entity_id:
-          - group.all_automations
-    #
-    # Llamada al script para inicializar meta-trackers
-    - service: script.reset_meta_tracker
-    #
-    # Llamada al script para inicializar meta-alarm_trigger
-    #- service: script.reset_meta_alarm_trigger
-    #
-    # Llamada al script de inicialización de interruptores Sonoff
-    - service: script.sonoff_initialize
-    #
-    # Llamada al contador de personas que actualiza sensor.family_home
-    - service: python_script.countpeople
-    #
-    # 30" espera y arranca reglas
-    - delay: 30
-    - service: automation.turn_on
-      data:
-        entity_id:
-          - group.all_automations
-    # Reglas deshabilitadas temporalmente
-    - service: automation.turn_off
-      entity_id: automation.l02_luces_off_exterior_all_family_home
-
 
 #
-# CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
+# SONOFF S20 - NESSPRESSO
 #
-- id: S1_ssl_expiry_notification
-  alias: 'S1 SSL expiry notification'
-  trigger:
-    platform: numeric_state
-    entity_id: sensor.ssl_certificate_expiry
-    below: 21
-  action:
-    service: script.turn_on
-    entity_id: script.notifica_evento
-    data:
-      variables:
-        title: '*CERTIFICADO SSL*'
-        message: >
-          >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
-
-#
-# ALARMA AUTOMATICA SENSOR HUMO/FUEGO COCINA
-#
-- id: F1_alarma_fuego_cocina
-  alias: 'F1 Alarma Fuego Cocina'
+- id: S1_Sonoff_S20_Boton_On_off
+  alias: 'S1 Sonoff S20 Boton On'
   trigger:
     - platform: state
-      entity_id: binary_sensor.smoke_sensor_158d0001fd321c
+      entity_id: binary_sensor.sonoff_s20_nespresso_boton
       from: 'off'
       to: 'on'
   action:
-    - service: script.turn_on
-      entity_id: script.alarma_siren_on
-    # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
-      data:
-        variables:
-          title: '*ALARMA FUEGO*'
-          message: >
-            >>> URGENTE: SENSOR HUMO COCINA
+    - service: switch.toggle
+      entity_id: switch.sonoff_s20_nespresso
 
-#
+
 # INFO REGLA: ALARMA MODO TRANSICION PENDING
 #
 #pre_pending_state: disarmed

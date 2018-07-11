@@ -158,6 +158,16 @@ binary_sensor.smoke_sensor_158d0001fd321c:
   friendly_name: Detector Incendios
   icon: mdi:fire
 
+switch.sonoff_s20_nespresso:
+  friendly_name: Cafetera Nespresso (S20)
+  icon: mdi:coffee
+binary_sensor.sonoff_s20_nespresso_boton:
+  friendly_name: Sonoff S20 - Botón
+light.sonoff_s20_nespresso_led:
+  friendly_name: Sonoff S20 - Led
+  icon: mdi:flash-circle
+binary_sensor.sonoff_s20_nespresso_status:
+  friendly_name: Sonoff S20 - Status
 
 # Salón
 #
