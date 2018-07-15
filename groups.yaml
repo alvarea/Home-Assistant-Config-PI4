@@ -253,30 +253,18 @@ luces_view:
   view: yes
   name: Luces
   entities:
-    - group.luces_exterior_grp
     - group.luces_jardin_grp
+    - group.luces_exterior_grp
     - group.luces_entrada_grp
     - group.luces_cocina_grp
     - group.luces_salon_grp
     - group.luces_estudio_grp
 
-luces_entrada_grp:
-  name: Luces Entrada
-  entities:
-    - switch.wall_switch_left_158d0002236e75
-    - light.hue_entrada
-    - light.hue_pasillo
-    - light.gateway_light_7811dcb788fa
-
-luces_exterior_grp:
-  name: Luces Exterior
-  entities:
-    - switch.wall_switch_right_158d0002236e75
-
 luces_jardin_grp:
   name: Luces Jardín
   entities:
     - switch.sonoff_sw2_luces_jardin
+    - switch.sonoff_sw4_luces_porche
     - switch.sonoff_4ch_relay_1
     - switch.sonoff_4ch_relay_2
     - switch.sonoff_4ch_relay_3
@@ -285,8 +273,21 @@ luces_jardin_grp:
     - binary_sensor.sonoff_4ch_button_2
     - binary_sensor.sonoff_4ch_button_3
     - binary_sensor.sonoff_4ch_button_4
-    - light.sonoff_4ch_blue_led
+    #- light.sonoff_4ch_blue_led
     - binary_sensor.sonoff_4ch_status
+
+luces_exterior_grp:
+  name: Luces Exterior
+  entities:
+    - switch.wall_switch_right_158d0002236e75
+
+luces_entrada_grp:
+  name: Luces Entrada
+  entities:
+    - switch.wall_switch_left_158d0002236e75
+    - light.hue_entrada
+    - light.hue_pasillo
+    - light.gateway_light_7811dcb788fa
 
 luces_cocina_grp:
   name: Luces Cocina

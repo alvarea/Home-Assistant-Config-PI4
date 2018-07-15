@@ -5,10 +5,10 @@ esphomeyaml:
   board_flash_mode: dout
 
 wifi:
-  ssid: 'TC.alvarea.net'
+  ssid: 'WLANgar.alvarea.net'
   password: '3286202581200'
   manual_ip:
-    static_ip: 192.168.0.32
+    static_ip: 192.168.0.35
     gateway: 192.168.0.1
     subnet: 255.255.255.0
 
@@ -69,7 +69,7 @@ output:
   - platform: esp8266_pwm
     id: blue_led
     pin: GPIO13
-    inverted: False
+    inverted: True
 
 light:
   # ... and then make a light out of it.

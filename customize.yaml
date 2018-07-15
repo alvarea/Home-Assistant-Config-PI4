@@ -219,5 +219,25 @@ binary_sensor.door_window_sensor_158d00020b7c27:
 # Exterior
 #
 switch.sonoff_sw2_luces_jardin:
-  friendly_name: Luces Cesped Jardín
+  friendly_name: Wifi Piscina (SW1)
+  icon: mdi:wifi
+
+switch.sonoff_sw4_luces_porche:
+  friendly_name: Luces Porche Salón (SW4)
+  icon: mdi:ceiling-light
+
+switch.sonoff_4ch_relay_1:
+  friendly_name: Balizas Cesped Jardín (CH1)
+  icon: mdi:lighthouse
+
+switch.sonoff_4ch_relay_2:
+  friendly_name: Foco Olivo3+Yuca (CH2)
   icon: mdi:track-light
+
+switch.sonoff_4ch_relay_3:
+  friendly_name: Foco Olivo1+Cica (CH3)
+  icon: mdi:track-light
+
+switch.sonoff_4ch_relay_4:
+  friendly_name: Puerta Garaje (CH4)
+  icon: mdi:car-side
