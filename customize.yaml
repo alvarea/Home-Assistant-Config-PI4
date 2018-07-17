@@ -223,19 +223,19 @@ switch.sonoff_sw2_luces_jardin:
   icon: mdi:wifi
 
 switch.sonoff_sw4_luces_porche:
-  friendly_name: Luces Porche Salón (SW4)
+  friendly_name: Luces Porche (SW4)
   icon: mdi:ceiling-light
 
 switch.sonoff_4ch_relay_1:
   friendly_name: Balizas Cesped Jardín (CH1)
-  icon: mdi:lighthouse
+  icon: mdi:track-light
 
 switch.sonoff_4ch_relay_2:
-  friendly_name: Foco Olivo3+Yuca (CH2)
+  friendly_name: Focos Piscina (Olivo3+Yuca)(CH2)
   icon: mdi:track-light
 
 switch.sonoff_4ch_relay_3:
-  friendly_name: Foco Olivo1+Cica (CH3)
+  friendly_name: Focos Entrada (Olivo1+Cica)(CH3)
   icon: mdi:track-light
 
 switch.sonoff_4ch_relay_4:

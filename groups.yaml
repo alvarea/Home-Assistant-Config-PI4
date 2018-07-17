@@ -265,9 +265,9 @@ luces_jardin_grp:
   entities:
     - switch.sonoff_sw2_luces_jardin
     - switch.sonoff_sw4_luces_porche
-    - switch.sonoff_4ch_relay_1
-    - switch.sonoff_4ch_relay_2
-    - switch.sonoff_4ch_relay_3
+    - switch.sonoff_4ch_relay_1         # Balizas Cesped Jardín (CH1)
+    - switch.sonoff_4ch_relay_2         # Focos Piscina (Olivo3+Yuca)(CH2)
+    - switch.sonoff_4ch_relay_3         # Focos Entrada (Olivo1+Cica)(CH3)
     - switch.sonoff_4ch_relay_4
     - binary_sensor.sonoff_4ch_button_1
     - binary_sensor.sonoff_4ch_button_2

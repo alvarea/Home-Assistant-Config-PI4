@@ -394,7 +394,7 @@ luces_exterior_off:
     - service: switch.turn_off
       entity_id:
         - switch.wall_switch_right_158d0002236e75
-        - switch.sonoff_sw2_luces_jardin
+        - switch.sonoff_4ch_button_1
 
 
 luces_exterior_on:
@@ -403,7 +403,7 @@ luces_exterior_on:
     - service: switch.turn_on
       entity_id:
         - switch.wall_switch_right_158d0002236e75
-        - switch.sonoff_sw2_luces_jardin
+        - switch.sonoff_4ch_button_1
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
