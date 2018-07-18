@@ -35,7 +35,7 @@ binary_sensor:
 
 switch:
   - platform: gpio
-    name: "Sonoff POW Jardín"
+    name: "Sonoff POW Botón"
     pin: GPIO12
 
 output:

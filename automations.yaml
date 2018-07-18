@@ -764,10 +764,10 @@
         conditions:
           - condition: sun
             after: sunset
-            #after_offset: "-1:00:00"
+            after_offset: "01:00:00"
           - condition: sun
             before: sunrise
-            #before_offset: "-00:30:00"
+            before_offset: "-01:00:00"
           - condition: numeric_state
             entity_id: sensor.illumination_158d0001e637f6
             below: 1
@@ -793,6 +793,63 @@
   action:
     - service: switch.toggle
       entity_id: switch.sonoff_s20_nespresso
+
+#
+# SONOFF 4CH - JARDIN
+#
+#- binary_sensor.sonoff_4ch_button_1
+#- binary_sensor.sonoff_4ch_button_2
+#- binary_sensor.sonoff_4ch_button_3
+#- binary_sensor.sonoff_4ch_button_4
+- id: S1_Sonoff_4CH_Boton1_On_off
+  alias: 'S1 Sonoff 4CH Boton1 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.sonoff_4ch_button_1
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.sonoff_4ch_relay_1
+
+- id: S1_Sonoff_4CH_Boton2_On_off
+  alias: 'S1 Sonoff 4CH Boton2 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.sonoff_4ch_button_2
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.sonoff_4ch_relay_2
+
+- id: S1_Sonoff_4CH_Boton3_On_off
+  alias: 'S1 Sonoff 4CH Boton3 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.sonoff_4ch_button_3
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.sonoff_4ch_relay_3
+
+- id: S1_Sonoff_4CH_Status
+  alias: 'S1 Sonoff 4CH Status'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.sonoff_4ch_status
+      from: 'on'
+      to: 'off'
+  action:
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA FALLO ELECTRICO'
+          message: >
+            >>> URGENTE: CUADRO ELECTRICO JARDIN SIN CORRIENTE
 
 
 # INFO REGLA: ALARMA MODO TRANSICION PENDING

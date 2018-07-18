@@ -227,15 +227,15 @@ switch.sonoff_sw4_luces_porche:
   icon: mdi:ceiling-light
 
 switch.sonoff_4ch_relay_1:
-  friendly_name: Balizas Cesped Jardín (CH1)
+  friendly_name: Balizas Cesped (CH1)
   icon: mdi:track-light
 
 switch.sonoff_4ch_relay_2:
-  friendly_name: Focos Piscina (Olivo3+Yuca)(CH2)
+  friendly_name: Focos Piscina (CH2) # (Olivo3+Yuca)
   icon: mdi:track-light
 
 switch.sonoff_4ch_relay_3:
-  friendly_name: Focos Entrada (Olivo1+Cica)(CH3)
+  friendly_name: Focos Entrada (CH3) # (Olivo1+Cica)
   icon: mdi:track-light
 
 switch.sonoff_4ch_relay_4:

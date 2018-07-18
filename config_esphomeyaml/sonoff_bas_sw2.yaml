@@ -1,11 +1,11 @@
 esphomeyaml:
-  name: sonoff_sw2_lucesjardin
+  name: sonoff_bas_sw2
   platform: ESP8266
   board: esp01_1m
   board_flash_mode: dout
 
 wifi:
-  ssid: 'WLANgar.alvarea.net'
+  ssid: 'WLAN5.alvarea.net'
   password: '3286202581200'
   manual_ip:
     static_ip: 192.168.0.31
@@ -23,12 +23,12 @@ ota:
 
 switch:
   - platform: gpio
-    name: "Sonoff SW2 Luces Jardin"
+    name: "Sonoff Basic SW2"
     pin: GPIO12
 
 output:
   - platform: esp8266_pwm
-    id: sonoff_sw2_green_led
+    id: sonoff_bas_sw2_green_led
     pin:
       number: GPIO13
       inverted: True
