@@ -1,20 +1,19 @@
 #
-# SONOFF BASIC #2 => WIFI PISCINA
+# SONOFF BASIC #3 => NEW PENDIENTE
 #
 esphomeyaml:
-  name: sonoff_bas_sw2
+  name: sonoff_bas_sw3
   platform: ESP8266
   board: esp01_1m
   board_flash_mode: dout
 
 wifi:
-  ssid: 'WLAN.alvarea.net'
+  ssid: 'TC.alvarea.net'
   password: '3286202581200'
   manual_ip:
-    static_ip: 192.168.0.31
+    static_ip: 192.168.0.32
     gateway: 192.168.0.1
     subnet: 255.255.255.0
-
 mqtt:
   broker: '192.168.0.23'
   username: 'switch_sonoff'
@@ -27,12 +26,12 @@ ota:
 
 switch:
   - platform: gpio
-    name: "sonoff basic sw2"
+    name: "sonoff basic sw3"
     pin: GPIO12
 
 output:
   - platform: esp8266_pwm
-    id: sonoff_bas_sw2_green_led
+    id: sonoff_bas_sw3_green_led
     pin:
       number: GPIO13
       inverted: True

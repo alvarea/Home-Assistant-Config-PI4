@@ -98,6 +98,7 @@ alarma_sensor_jardin_grp:
   view: no
   entities:
     - binary_sensor.sonoff_4ch_status
+    - binary_sensor.sonoff_pow_jardin
 
 alarma_sensor_estudio_grp:
   name: Sensores Estudio
@@ -271,13 +272,13 @@ luces_jardin_grp:
   name: Luces Jardín
   entities:
     - switch.sonoff_pow_jardin
-    - binary_sensor.sonoff_pow_jardin
-    - switch.sonoff_sw2_luces_jardin
-    - switch.sonoff_sw4_luces_porche    # Luces Porche Salón
+    - switch.sonoff_basic_sw2           # Equipo Música Piscina
+    - switch.sonoff_basic_sw3           # Pendiente Disponible
+    - switch.sonoff_basic_sw4           # Luces Porche Salón
     - switch.sonoff_4ch_relay_1         # Balizas Cesped Jardín (CH1)
     - switch.sonoff_4ch_relay_2         # Focos Piscina (Olivo3+Yuca)(CH2)
     - switch.sonoff_4ch_relay_3         # Focos Entrada (Olivo1+Cica)(CH3)
-    - switch.sonoff_4ch_relay_4         # Disponible
+    - switch.sonoff_4ch_relay_4         # Pendiente Disponible
     - light.sonoff_4ch_blue_led
 
 luces_exterior_grp:
@@ -542,7 +543,7 @@ setup_sirenas_grp:
     - input_number.xiaomi_gw_volume_warning
     - input_select.xiaomi_gw_sound_alarm
     - input_number.xiaomi_gw_volume_alarm
-    - switch.sonoff_sw1_sirena
+    - switch.sonoff_basic_sw1
 
 msg_control_grp:
   name: Notificaciones

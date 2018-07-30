@@ -1,8 +1,8 @@
 #
-# SONOFF BASIC #2 => WIFI PISCINA
+# SONOFF BASIC #1 => SIRENA ALARMA PASILLO
 #
 esphomeyaml:
-  name: sonoff_bas_sw2
+  name: sonoff_bas_sw1
   platform: ESP8266
   board: esp01_1m
   board_flash_mode: dout
@@ -11,7 +11,7 @@ wifi:
   ssid: 'WLAN.alvarea.net'
   password: '3286202581200'
   manual_ip:
-    static_ip: 192.168.0.31
+    static_ip: 192.168.0.30
     gateway: 192.168.0.1
     subnet: 255.255.255.0
 
@@ -27,12 +27,12 @@ ota:
 
 switch:
   - platform: gpio
-    name: "sonoff basic sw2"
+    name: "sonoff basic sw1"
     pin: GPIO12
 
 output:
   - platform: esp8266_pwm
-    id: sonoff_bas_sw2_green_led
+    id: sonoff_bas_sw1_green_led
     pin:
       number: GPIO13
       inverted: True

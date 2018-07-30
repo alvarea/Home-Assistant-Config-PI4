@@ -8,9 +8,6 @@ input_boolean.panic_button:
   icon: mdi:key-variant
 script.alarma_boton_panico:
   icon: mdi:arrow-collapse-down
-switch.sonoff_sw1_sirena:
-  friendly_name: Alarma Sirena Interior
-  icon: mdi:alarm-snooze
 
 # PANEL CONTROL ALARMA
 sensor.family_sleep_home:
@@ -216,13 +213,22 @@ binary_sensor.door_window_sensor_158d00020b7c27:
   friendly_name: Sensor Ventana MFC-AAC
   icon: mdi:window-closed
 
-# Exterior
+# Interruptores Sonoff
 #
-switch.sonoff_sw2_luces_jardin:
-  friendly_name: Wifi Piscina (SW1)
+
+switch.sonoff_basic_sw1:
+  friendly_name: Alarma Sirena Interior
+  icon: mdi:alarm-snooze
+
+switch.sonoff_basic_sw2:
+  friendly_name: Música Piscina (SW2)
+  icon: mdi:music
+
+switch.sonoff_basic_sw3:
+  friendly_name: Pendiente (SW3)
   icon: mdi:wifi
 
-switch.sonoff_sw4_luces_porche:
+switch.sonoff_basic_sw4:
   friendly_name: Luces Porche (SW4)
   icon: mdi:ceiling-light
 

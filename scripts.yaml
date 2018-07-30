@@ -117,7 +117,7 @@ alarma_boton_panico:
     - delay: '00:00:05'
     # SONOFF_SW1_SIRENA INTERIOR ==> ON
     - service: switch.turn_on
-      entity_id: switch.sonoff_sw1_sirena
+      entity_id: switch.sonoff_basic_sw1
     # Notifica Telegram
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -132,7 +132,7 @@ alarma_boton_panico:
     - delay: '00:05:00'
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
-      entity_id: switch.sonoff_sw1_sirena
+      entity_id: switch.sonoff_basic_sw1
 
 alarma_boton_panico_off:
   alias: 'Boton Panico OFF'
@@ -142,7 +142,7 @@ alarma_boton_panico_off:
         gw_mac: !secret xiaomi_gateway
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
-      entity_id: switch.sonoff_sw1_sirena
+      entity_id: switch.sonoff_basic_sw1
     # Notifica Telegram
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -415,7 +415,5 @@ sonoff_initialize:
   sequence:
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
-      entity_id: switch.sonoff_sw1_sirena
-    # SONOFF_SW2 THESUB ==> ON
-    - service: switch.turn_on
-      entity_id: switch.sonoff_sw2_thesub
+      entity_id: switch.sonoff_basic_sw1
+
