@@ -732,11 +732,11 @@
       - condition: sun
         after: sunset
         # en la puesta de sol + 1h
-        after_offset: "01:00:00"
+        after_offset: "02:00:00"
       - condition: sun
         before: sunrise
         # en el amanecer -1h'
-        before_offset: "-01:00:00"
+        before_offset: "-02:00:00"
   action:
     - service: automation.turn_off
       entity_id: automation.l07_luces_on_entrada_segun_sensor
