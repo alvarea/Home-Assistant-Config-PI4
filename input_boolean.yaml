@@ -77,33 +77,41 @@
 # INTERRUPTORES BOOLEAN => Depuradora Piscina
 #
   piscina_programador_setup:
-    name: Programador Diario On/Off
+    name: Programador On/Off
     initial: on
-    icon: mdi:timer
+    icon: mdi:dip-switch
 
 # INTERRUPTORES BOLLEAN => Programador Diario Luces Jardín
 
   jardin_programador_bas_sw2:
-    name: Automático On/Off SW2
+    name: Prog. Porche Piscina
     initial: on
-    icon: mdi:timer
+    icon: mdi:power-settings
+
+  jardin_programador_bas_sw4:
+    name: Prog. Porche Salón
+    initial: on
+    icon: mdi:power-settings
 
   jardin_programador_ch1:
-    name: Automático On/Off CH1
+    name: Prog. Balizas Cesped
     initial: on
-    icon: mdi:timer
+    icon: mdi:power-settings
 
   jardin_programador_ch2:
-    name: Automático On/Off CH2
+    name: Prog. Focos Piscina
     initial: on
-    icon: mdi:timer
+    icon: mdi:power-settings
 
   jardin_programador_ch3:
-    name: Automático On/Off CH3
+    name: Prog. Focos Entrada
     initial: on
-    icon: mdi:timer
+    icon: mdi:power-settings
 
   jardin_programador_ch4:
-    name: Automático On/Off CH4
+    name: Prog. Focos Tendedero
     initial: on
-    icon: mdi:timer
+    icon: mdi:power-settings
+
+
+

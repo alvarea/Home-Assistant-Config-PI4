@@ -125,12 +125,12 @@
 
   - platform: template
     sensors:
-
       # Sensores finales de control de presencia basados en el bayesian(on/off) AND input_boolean(on/off) de cada Uno.
       #
       family_home_aac:
         value_template: >-
-          {% if is_state('sensor.family_home_aac','on') and is_state('binary_sensor.baye_home_aac','on') %}
+          {% if is_state('sensor.family_home_aac','on')
+              and is_state('binary_sensor.baye_home_aac','on') %}
             true
           {% else %}
             false
@@ -176,4 +176,26 @@
         icon_template: mdi:account-location
         entity_id:
           - sensor.family_home
+
+      # Alarma SONOFF_SW1 SIRENA INTERIOR
+      sonoff_basic_sw1:
+        value_template: >-
+          {% if is_state('switch.sonoff_basic_sw1','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: 'Alarma Sirena Interior'
+        icon_template: mdi:alarm-light
+
+      # JARDIN - DEPURADORA PISCINA
+      piscina_status:
+        value_template: >-
+          {% if is_state('switch.sonoff_pow_sw1','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: 'Estado Depuradora on/off'
+        icon_template: mdi:power
 

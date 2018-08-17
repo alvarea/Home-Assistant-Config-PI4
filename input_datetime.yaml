@@ -2,13 +2,13 @@
 # Programador Depuradora Piscina
 #
   piscina_depuradora_start:
-    name: Depuradora Hora Inicio
+    name: Hora Inicio
     has_date: false
     has_time: true
-    initial: 18:00
+    initial: '18:00'
 
   piscina_depuradora_end:
-    name: Depuradora Hora Final
+    name: Hora Final
     has_date: false
     has_time: true
-    initial: 22:00
+    initial: '22:00'

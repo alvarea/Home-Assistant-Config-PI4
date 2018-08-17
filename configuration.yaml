@@ -120,6 +120,13 @@ alarm_control_panel:
       pending_time: 0
       delay_time: 0
 
+# Timer temporizador depuradora Piscina
+timer:
+  depuradora:
+    name: Duración Depuradora
+    duration: '04:00:00'
+    icon: mdi:timer
+
 # GENERIC IP CAMERA
 camera:
   - platform: generic

@@ -223,14 +223,17 @@ switch.sonoff_basic_sw1:
 # Jardín Depuradora Piscina
 #
 binary_sensor.sonoff_pow_sw1:
-  friendly_name: Status Sonoff POW
+  friendly_name: Sensor Sonoff (POW)
 
 switch.sonoff_pow_sw1:
-  friendly_name: Arranque Manual
-  icon: mdi:dip-switch
+  friendly_name: Arranque Depuradora
+  icon: mdi:swim  # dip-switch
 
 # Jardín Luces
 #
+binary_sensor.sonoff_4ch_status:
+  friendly_name: Sensor Sonoff (4CH)
+
 switch.sonoff_basic_sw2:
   friendly_name: Porche Piscina (SW2)
   icon: mdi:ceiling-light
@@ -242,9 +245,6 @@ switch.sonoff_basic_sw3:
 switch.sonoff_basic_sw4:
   friendly_name: Porche Salón (SW4)
   icon: mdi:ceiling-light
-
-binary_sensor.sonoff_4ch_status:
-  friendly_name: Status Sonoff 4CH
 
 switch.sonoff_4ch_relay_1:
   friendly_name: Balizas Cesped (CH1)
@@ -259,5 +259,6 @@ switch.sonoff_4ch_relay_3:
   icon: mdi:track-light
 
 switch.sonoff_4ch_relay_4:
-  friendly_name: Puerta Garaje (CH4)
-  icon: mdi:car-side
+  friendly_name: Focos Tendedero (CH4)
+  icon: mdi:track-light
+  #icon: mdi:car-side
