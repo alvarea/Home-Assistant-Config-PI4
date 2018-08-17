@@ -216,20 +216,24 @@ binary_sensor.door_window_sensor_158d00020b7c27:
 # Interruptores Sonoff
 #
 
+switch.sonoff_pow_sw1:
+  friendly_name: Manual Depuradora Piscina
+  icon: mdi:dip-switch
+
 switch.sonoff_basic_sw1:
   friendly_name: Alarma Sirena Interior
   icon: mdi:alarm-snooze
 
 switch.sonoff_basic_sw2:
-  friendly_name: Música Piscina (SW2)
-  icon: mdi:music
+  friendly_name: Lámpara Piscina (SW2)
+  icon: mdi:ceiling-light
 
 switch.sonoff_basic_sw3:
   friendly_name: Pendiente (SW3)
   icon: mdi:wifi
 
 switch.sonoff_basic_sw4:
-  friendly_name: Luces Porche (SW4)
+  friendly_name: Porche Salón (SW4)
   icon: mdi:ceiling-light
 
 switch.sonoff_4ch_relay_1:

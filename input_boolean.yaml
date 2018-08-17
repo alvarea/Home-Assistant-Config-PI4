@@ -54,7 +54,8 @@
     name: Notificaciones Agu
     initial: off
     icon: mdi:bell-ring
-# AAC. Interruptores control alarma y notificaciones
+
+# INTERRUPTORES BOOLEAN => Control alarma y notificaciones
   panic_button:
     name: Alarma Botón Pánico
     initial: off
@@ -71,3 +72,9 @@
   mute_xiaomi_gw_sounds:
     name: Mute Sonidos Gateway
     icon: mdi:volume-off
+
+# INTERRUPTORES BOOLEAN => Depuradora Piscina
+  piscina_programador_setup:
+    name: Programador Piscina
+    initial: on
+    icon: mdi:timer

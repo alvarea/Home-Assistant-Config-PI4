@@ -1,11 +1,11 @@
 esphomeyaml:
-  name: sonoff_pow_jardin
+  name: sonoff_pow_sw1
   platform: ESP8266
   board: esp01_1m
   board_flash_mode: dout
 
 wifi:
-  ssid: 'TC.alvarea.net'
+  ssid: 'WLAN.alvarea.net'
   password: '3286202581200'
   manual_ip:
     static_ip: 192.168.0.36
@@ -28,14 +28,14 @@ binary_sensor:
       number: GPIO0
       mode: INPUT_PULLUP
       inverted: True
-    name: "Sonoff POW Jardín"
+    name: "Sonoff POW SW1"
   - platform: status
-    name: "Sonoff POW Jardín"
+    name: "Sonoff POW SW1"
 
 
 switch:
   - platform: gpio
-    name: "Sonoff POW Botón"
+    name: "Sonoff POW SW1"
     pin: GPIO12
 
 output:
@@ -49,5 +49,5 @@ output:
 light:
   # ... and then make a light out of it.
   - platform: monochromatic
-    name: "Sonoff S20 Nespresso LED"
+    name: "Sonoff POW SW1"
     output: pow_green_led

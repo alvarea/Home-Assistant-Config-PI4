@@ -6,11 +6,12 @@ default_view:
     - group.alarma_view
     - group.tracking_view
     - group.camaras_view
-    - group.tiempo_view
+    - group.jardin_view
     - group.luces_view
     - group.cocina_view
     - group.salon_view
     - group.estudio_view
+    - group.tiempo_view
     - group.system_view
     - group.batery_view
     - group.config_view
@@ -98,7 +99,7 @@ alarma_sensor_jardin_grp:
   view: no
   entities:
     - binary_sensor.sonoff_4ch_status
-    - binary_sensor.sonoff_pow_jardin
+    - binary_sensor.sonoff_pow_sw1
 
 alarma_sensor_estudio_grp:
   name: Sensores Estudio
@@ -227,34 +228,13 @@ camaras_view:
     - camera.ipcam11_cocina
     - camera.ipcam12_estudio
 
-tiempo_view:
+camaras_view:
   view: yes
-  icon: mdi:weather-partlycloudy
-  name: El Tiempo
+  icon: mdi:cctv
+  name: Cámaras
   entities:
-    - camera.weather_satelite
-    - group.tiempo_hoy_grp
-    - group.tiempo_man_grp
-
-tiempo_hoy_grp:
-  name: Hoy
-  entities:
-    - sensor.hoy_condition
-    - sensor.hoy_temperature
-    - sensor.hoy_temperature_max
-    - sensor.hoy_temperature_min
-    - sensor.hoy_wind_speed
-    - sensor.hoy_humidity
-
-tiempo_man_grp:
-  name: Previsión Mañana
-  entities:
-    - sensor.manana_condition
-    - sensor.manana_temperature
-    - sensor.manana_temperature_max
-    - sensor.manana_temperature_min
-    - sensor.manana_wind_speed
-    - sensor.manana_humidity
+    - camera.ipcam11_cocina
+    - camera.ipcam12_estudio
 
 luces_view:
   icon: mdi:lightbulb-on
@@ -271,15 +251,13 @@ luces_view:
 luces_jardin_grp:
   name: Luces Jardín
   entities:
-    - switch.sonoff_pow_jardin
-    - switch.sonoff_basic_sw2           # Equipo Música Piscina
-    - switch.sonoff_basic_sw3           # Pendiente Disponible
-    - switch.sonoff_basic_sw4           # Luces Porche Salón
+    - switch.sonoff_basic_sw2           # Lámpara Piscina
+    - switch.sonoff_basic_sw4           # Porche Salón
     - switch.sonoff_4ch_relay_1         # Balizas Cesped Jardín (CH1)
     - switch.sonoff_4ch_relay_2         # Focos Piscina (Olivo3+Yuca)(CH2)
     - switch.sonoff_4ch_relay_3         # Focos Entrada (Olivo1+Cica)(CH3)
     - switch.sonoff_4ch_relay_4         # Pendiente Disponible
-    - light.sonoff_4ch_blue_led
+    # - light.sonoff_4ch_blue_led
 
 luces_exterior_grp:
   name: Luces Exterior
@@ -311,6 +289,43 @@ luces_estudio_grp:
   name: Luces Estudio
   entities:
     - light.hue_estudio
+
+# AAC
+
+jardin_view:
+  view: yes
+  icon: mdi:tree
+  name: Jardín
+  entities:
+    - group.jardin_piscina_grp
+    - group.jardin_sensores_grp
+    - group.jardin_luces_grp
+
+jardin_sensores_grp:
+  name: Sensores Eléctricos
+  entities:
+    - binary_sensor.sonoff_4ch_status
+    - binary_sensor.sonoff_pow_sw1
+
+jardin_piscina_grp:
+  name: Depuradora Piscina
+  entities:
+    - sensor.sonoff_pow_sw1             # Sensor basado en switch
+    - switch.sonoff_pow_sw1             # Switch POW Depuradora Piscina
+    - input_boolean.piscina_programador_setup
+    - input_datetime.piscina_depuradora_start
+    - input_datetime.piscina_depuradora_end
+    #- light.sonoff_pow_sw1              # POW Led Rojo
+
+jardin_luces_grp:
+  name: Luces
+  entities:
+    - switch.sonoff_basic_sw2           # Lámpara Piscina
+    - switch.sonoff_basic_sw3           # Pendiente Disponible
+    - switch.sonoff_basic_sw4           # Porche Salón
+    - switch.sonoff_4ch_relay_1         # Balizas Cesped Jardín (CH1)
+    - switch.sonoff_4ch_relay_2         # Focos Piscina (Olivo3+Yuca)(CH2)
+    - switch.sonoff_4ch_relay_3         # Focos Entrada (Olivo1+Cica)(CH3)
 
 cocina_view:
   view: yes
@@ -371,6 +386,35 @@ sensor_estudio_grp:
     - sensor.humidity_158d00022c6a47
     - sensor.pressure_158d00022c6a47
     - sensor.illumination_158d0001e464a6
+
+tiempo_view:
+  view: yes
+  icon: mdi:weather-partlycloudy
+  name: El Tiempo
+  entities:
+    - camera.weather_satelite
+    - group.tiempo_hoy_grp
+    - group.tiempo_man_grp
+
+tiempo_hoy_grp:
+  name: Hoy
+  entities:
+    - sensor.hoy_condition
+    - sensor.hoy_temperature
+    - sensor.hoy_temperature_max
+    - sensor.hoy_temperature_min
+    - sensor.hoy_wind_speed
+    - sensor.hoy_humidity
+
+tiempo_man_grp:
+  name: Previsión Mañana
+  entities:
+    - sensor.manana_condition
+    - sensor.manana_temperature
+    - sensor.manana_temperature_max
+    - sensor.manana_temperature_min
+    - sensor.manana_wind_speed
+    - sensor.manana_humidity
 
 system_view:
   view: yes

@@ -766,8 +766,8 @@
         conditions:
           - condition: sun
             after: sunset
-            # en la puesta de sol + 1h
-            after_offset: "02:00:00"
+            # en la puesta de sol + 30'
+            after_offset: "00:03:00"
           - condition: sun
             before: sunrise
             # en el amanecer -1h'
@@ -805,6 +805,7 @@
 #- binary_sensor.sonoff_4ch_button_2
 #- binary_sensor.sonoff_4ch_button_3
 #- binary_sensor.sonoff_4ch_button_4
+
 - id: S1_Sonoff_4CH_Boton1_On_off
   alias: 'S1 Sonoff 4CH Boton1 On'
   trigger:
@@ -816,7 +817,7 @@
     - service: switch.toggle
       entity_id: switch.sonoff_4ch_relay_1
 
-- id: S1_Sonoff_4CH_Boton2_On_off
+- id: S2_Sonoff_4CH_Boton2_On_off
   alias: 'S1 Sonoff 4CH Boton2 On'
   trigger:
     - platform: state
@@ -827,7 +828,7 @@
     - service: switch.toggle
       entity_id: switch.sonoff_4ch_relay_2
 
-- id: S1_Sonoff_4CH_Boton3_On_off
+- id: S3_Sonoff_4CH_Boton3_On_off
   alias: 'S1 Sonoff 4CH Boton3 On'
   trigger:
     - platform: state
@@ -838,11 +839,13 @@
     - service: switch.toggle
       entity_id: switch.sonoff_4ch_relay_3
 
-- id: S1_Sonoff_4CH_Status
+- id: S4_Sonoff_4CH_Status
   alias: 'S1 Sonoff 4CH Status'
   trigger:
     - platform: state
-      entity_id: binary_sensor.sonoff_4ch_status
+      entity_id:
+        - binary_sensor.sonoff_4ch_status
+        #- binary_sensor.sonoff_pow_sw1
       from: 'on'
       to: 'off'
   action:
@@ -851,10 +854,39 @@
       entity_id: script.notifica_alarma
       data:
         variables:
-          title: '*ALARMA FALLO ELECTRICO'
+          title: '*ALARMA FALLO ELECTRICO*'
           message: >
             >>> URGENTE: CUADRO ELECTRICO JARDIN SIN CORRIENTE
 
+            >>> ZONA: '{{trigger.entity_id}}'
+
+- id: J01_depuradora_piscina
+  alias: 'J01 Depuradora Piscina'
+  trigger:
+    #- platform: template
+    #  value_template: '{{ states.sensor.time.state == states.sensor.piscina_depuradora_start.state }}'
+    #- platform: template
+    #  value_template: '{{ states.sensor.time.state == states.sensor.piscina_depuradora_end.state }}'
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_depuradora_start.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_depuradora_end.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.sonoff_pow_sw1
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.piscina_programador_setup
+        state: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.sonoff_pow_sw1
+
+#
+# SONOFF POW - DEPURADORA PISCINA
+#
 
 # INFO REGLA: ALARMA MODO TRANSICION PENDING
 #
