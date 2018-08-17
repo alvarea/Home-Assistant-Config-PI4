@@ -487,11 +487,47 @@
         friendly_name: 'Alarma Sirena Interior'
         icon_template: mdi:alarm-light
 
-      # SONOFF POW_SW1 PISCINA
+      # JARDIN - DEPURADORA PISCINA
       sonoff_pow_sw1:
         value_template: "{{ states('switch.sonoff_pow_sw1') }}"
-        friendly_name: 'Status Depuradora Piscina'
+        friendly_name: 'Status Depuradora'
         icon_template: mdi:swim
+
+      # JARDIN - LUCES
+      sonoff_basic_sw2:
+        value_template: "{{ states('switch.sonoff_basic_sw2') }}"
+        friendly_name: 'Lámpara Piscina'
+        icon_template: mdi:ceiling-light
+
+      sonoff_basic_sw3:
+        value_template: "{{ states('switch.sonoff_basic_sw3') }}"
+        friendly_name: 'Pendiente (SW3)'
+        icon_template: mdi:wifi
+
+      sonoff_basic_sw4:
+        value_template: "{{ states('switch.sonoff_basic_sw4') }}"
+        friendly_name: 'Porche Salón'
+        icon_template: mdi:ceiling-light
+
+      sonoff_4ch_relay_1:
+        value_template: "{{ states('switch.sonoff_4ch_relay_1') }}"
+        friendly_name: 'Balizas Cesped'
+        icon_template: mdi:track-light
+
+      sonoff_4ch_relay_2:
+        value_template: "{{ states('switch.sonoff_4ch_relay_2') }}"
+        friendly_name: 'Focos Piscina (Olivo3+Yuca)'
+        icon_template: mdi:track-light
+
+      sonoff_4ch_relay_3:
+        value_template: "{{ states('switch.sonoff_4ch_relay_3') }}"
+        friendly_name: 'Focos Entrada (Olivo1+Cica)'
+        icon_template: mdi:track-light
+
+      sonoff_4ch_relay_4:
+        value_template: "{{ states('switch.sonoff_4ch_relay_4') }}"
+        friendly_name: 'Puerta Garaje'
+        icon_template: mdi:car-side
 
 #
 # AAC. Sensores Rendimiento de PI y CERT_SSL

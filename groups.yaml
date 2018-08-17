@@ -298,19 +298,14 @@ jardin_view:
   name: Jardín
   entities:
     - group.jardin_piscina_grp
-    - group.jardin_sensores_grp
     - group.jardin_luces_grp
-
-jardin_sensores_grp:
-  name: Sensores Eléctricos
-  entities:
-    - binary_sensor.sonoff_4ch_status
-    - binary_sensor.sonoff_pow_sw1
+    - group.jardin_programador_luces_grp
 
 jardin_piscina_grp:
   name: Depuradora Piscina
   entities:
-    - sensor.sonoff_pow_sw1             # Sensor basado en switch
+    - binary_sensor.sonoff_pow_sw1      # Sensor de conectividad sonoff
+    - sensor.sonoff_pow_sw1             # Sensor basado en el switch sonoff POW SW1
     - switch.sonoff_pow_sw1             # Switch POW Depuradora Piscina
     - input_boolean.piscina_programador_setup
     - input_datetime.piscina_depuradora_start
@@ -318,14 +313,24 @@ jardin_piscina_grp:
     #- light.sonoff_pow_sw1              # POW Led Rojo
 
 jardin_luces_grp:
-  name: Luces
+  name: Luces Jardín
   entities:
     - switch.sonoff_basic_sw2           # Lámpara Piscina
-    - switch.sonoff_basic_sw3           # Pendiente Disponible
     - switch.sonoff_basic_sw4           # Porche Salón
     - switch.sonoff_4ch_relay_1         # Balizas Cesped Jardín (CH1)
     - switch.sonoff_4ch_relay_2         # Focos Piscina (Olivo3+Yuca)(CH2)
     - switch.sonoff_4ch_relay_3         # Focos Entrada (Olivo1+Cica)(CH3)
+    - switch.sonoff_4ch_relay_4         #
+
+jardin_programador_luces_grp:
+  name: Programador Luces
+  entities:
+    - binary_sensor.sonoff_4ch_status   # Sensor de conectividad sonoff
+    - input_boolean.jardin_programador_bas_sw2
+    - input_boolean.jardin_programador_ch1
+    - input_boolean.jardin_programador_ch2
+    - input_boolean.jardin_programador_ch3
+    - input_boolean.jardin_programador_ch4
 
 cocina_view:
   view: yes

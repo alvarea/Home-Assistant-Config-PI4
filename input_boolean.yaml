@@ -56,6 +56,7 @@
     icon: mdi:bell-ring
 
 # INTERRUPTORES BOOLEAN => Control alarma y notificaciones
+#
   panic_button:
     name: Alarma Botón Pánico
     initial: off
@@ -74,7 +75,35 @@
     icon: mdi:volume-off
 
 # INTERRUPTORES BOOLEAN => Depuradora Piscina
+#
   piscina_programador_setup:
-    name: Programador Piscina
+    name: Programador Diario On/Off
+    initial: on
+    icon: mdi:timer
+
+# INTERRUPTORES BOLLEAN => Programador Diario Luces Jardín
+
+  jardin_programador_bas_sw2:
+    name: Automático On/Off SW2
+    initial: on
+    icon: mdi:timer
+
+  jardin_programador_ch1:
+    name: Automático On/Off CH1
+    initial: on
+    icon: mdi:timer
+
+  jardin_programador_ch2:
+    name: Automático On/Off CH2
+    initial: on
+    icon: mdi:timer
+
+  jardin_programador_ch3:
+    name: Automático On/Off CH3
+    initial: on
+    icon: mdi:timer
+
+  jardin_programador_ch4:
+    name: Automático On/Off CH4
     initial: on
     icon: mdi:timer

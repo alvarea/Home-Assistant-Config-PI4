@@ -213,19 +213,26 @@ binary_sensor.door_window_sensor_158d00020b7c27:
   friendly_name: Sensor Ventana MFC-AAC
   icon: mdi:window-closed
 
-# Interruptores Sonoff
+
+# Alarma
 #
-
-switch.sonoff_pow_sw1:
-  friendly_name: Manual Depuradora Piscina
-  icon: mdi:dip-switch
-
 switch.sonoff_basic_sw1:
   friendly_name: Alarma Sirena Interior
   icon: mdi:alarm-snooze
 
+# Jardín Depuradora Piscina
+#
+binary_sensor.sonoff_pow_sw1:
+  friendly_name: Status Sonoff POW
+
+switch.sonoff_pow_sw1:
+  friendly_name: Arranque Manual
+  icon: mdi:dip-switch
+
+# Jardín Luces
+#
 switch.sonoff_basic_sw2:
-  friendly_name: Lámpara Piscina (SW2)
+  friendly_name: Porche Piscina (SW2)
   icon: mdi:ceiling-light
 
 switch.sonoff_basic_sw3:
@@ -235,6 +242,9 @@ switch.sonoff_basic_sw3:
 switch.sonoff_basic_sw4:
   friendly_name: Porche Salón (SW4)
   icon: mdi:ceiling-light
+
+binary_sensor.sonoff_4ch_status:
+  friendly_name: Status Sonoff 4CH
 
 switch.sonoff_4ch_relay_1:
   friendly_name: Balizas Cesped (CH1)
