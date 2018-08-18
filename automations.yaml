@@ -860,42 +860,42 @@
 
             >>> ZONA: '{{trigger.entity_id}}'
 
-- id: J01_depuradora_piscina_start
-  alias: 'J01 Depuradora Piscina Arranque'
+#
+# SONOFF POW - DEPURADORA PISCINA
+#
+
+- id: J01_timer_piscina_start
+  alias: 'J01 Timer Piscina Start'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
-    #- platform: template
-    #  value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_end_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
   condition:
     condition: and
     conditions:
       - condition: state
-        entity_id: binary_sensor.sonoff_pow_sw1
-        state: 'on'
-      - condition: state
         entity_id: input_boolean.piscina_programador_setup
         state: 'on'
+      - condition: state # TEMPORAL
+        entity_id: binary_sensor.sonoff_pow_sw1
+        state: 'on'
   action:
-    # Inicia el Timer de la Piscina
-    - service: script.piscina_timer_start
-    #- service: switch.toggle
-    #  entity_id: switch.sonoff_pow_sw1
+    # Timer Programador Diario Piscina
+    - service: script.piscina_timer_start_diario
 
-- id: J01_depuradora_piscina_end
-  alias: 'J01 Depuradora Piscina Parada'
+
+- id: J01_timer_piscina_end
+  alias: 'J01 Timer Piscina End'
   trigger:
     - platform: event
       event_type: timer.finished
       event_data:
-        entity_id: timer.depuradora
+        entity_id: timer.piscina
   action:
+  action:
+    # Timer Programa Manual Piscina
+    - service: script.piscina_timer_start_diario
     # Inicia el Timer de la Piscina
     - service: script.piscina_timer_finish
-
-#
-# SONOFF POW - DEPURADORA PISCINA
-#
 
 # INFO REGLA: ALARMA MODO TRANSICION PENDING
 #

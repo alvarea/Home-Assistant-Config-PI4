@@ -472,22 +472,31 @@
 
       # Sol Próximo Aterdecer
       sun_next_setting:
-        value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting)  | timestamp_custom("%H:%M") }}'
+        value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%H:%M") }}'
         friendly_name: 'Próxima Puesta de Sol'
         icon_template: mdi:weather-sunset-down
       # Sol Próximo Amanecer
       sun_next_rising:
-        value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising)  | timestamp_custom("%H:%M") }}'
+        value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%H:%M") }}'
         friendly_name: 'Próxima Salida de Sol'
         icon_template: mdi:weather-sunset-up
 
       # Piscina depuradora Duracion Timer
-      piscina_timer_duracion:
-        value_template: '{{ states.input_number.piscina_duracion_horas.state | int }}:{{ states.input_number.piscina_duracion_minutos.state | int }}:00'
-        friendly_name: 'Duración'
+      piscina_diario_duracion:
+        value_template: '{{ states.input_number.piscina_diario_horas.state|int }}:{{ states.input_number.piscina_diario_minutos.state|int }}:00'
+        friendly_name: 'Duración Programa Diario'
         icon_template: mdi:timer-sand
 
-#
+      piscina_diario_duracion_fmt:
+        value_template: '{{ as_timestamp(states.piscina_timer_duracion.state) | timestamp_custom("%H:%M") }}'
+        friendly_name: 'Duración Programa Diario FMT'
+        icon_template: mdi:timer-sand
+
+      piscina_manual_segundos:
+        value_template: '{{ states.input_number.piscina_manual_minutos.state |int *60 }}'
+        friendly_name: 'Duración Programa Corto (Seg)'
+        icon_template: mdi:timer-sand
+
 # AAC. Sensores Rendimiento de PI y CERT_SSL
 #
   - platform: time_date

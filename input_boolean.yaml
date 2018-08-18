@@ -85,12 +85,12 @@
 
   jardin_programador_bas_sw2:
     name: Prog. Porche Piscina
-    initial: on
+    initial: off
     icon: mdi:power-settings
 
   jardin_programador_bas_sw4:
     name: Prog. Porche Salón
-    initial: on
+    initial: off
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch1:
@@ -100,17 +100,17 @@
 
   jardin_programador_4ch_ch2:
     name: Prog. Focos Piscina
-    initial: on
+    initial: off
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch3:
     name: Prog. Focos Entrada
-    initial: on
+    initial: off
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch4:
     name: Prog. Focos Tendedero
-    initial: on
+    initial: off
     icon: mdi:power-settings
 
 

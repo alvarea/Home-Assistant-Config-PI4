@@ -266,17 +266,21 @@ switch.sonoff_4ch_relay_4:
 # Scripts Timer Piscina
 #
 script.piscina_timer_start:
-  friendly_name: Timer Piscina - Arranque
+  friendly_name: Timer Piscina - START
   icon: mdi:power
 
 script.piscina_timer_pause:
-  friendly_name: Timer Piscina - Pausa
+  friendly_name: Timer Piscina - PAUSE
   icon: mdi:pause
 
-script.piscina_timer_cancel:
-  friendly_name: Timer Piscina - Cancelar
-  icon: mdi:cancel
+script.piscina_timer_resume:
+  friendly_name: Timer Piscina - RESUME
+  icon: mdi:play-pause
 
 script.piscina_timer_finish:
-  friendly_name: Timer Piscina - Parada
+  friendly_name: Timer Piscina - STOP
+  icon: mdi:power-off
+
+script.piscina_timer_cancel:
+  friendly_name: Timer Piscina - STOP
   icon: mdi:power-off

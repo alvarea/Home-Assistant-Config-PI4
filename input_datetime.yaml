@@ -7,6 +7,12 @@
     has_time: true
     initial: '18:00'
 
+  piscina_start_time:
+    name: Hora Inicio
+    has_date: false
+    has_time: true
+    initial: '18:00'
+
   piscina_end_time:
     name: Hora Final
     has_date: false

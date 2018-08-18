@@ -1,4 +1,5 @@
-# AAC. Mensaje para Notificaciones
+# Mensaje para Notificaciones
+#
   mensaje_tit:
     name: Titulo Notificaciones
     initial: <OK>
@@ -13,3 +14,4 @@
     name: Input Text Alarma Trigger
     initial: ''
     icon: mdi:security-home
+

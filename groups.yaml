@@ -233,30 +233,12 @@ luces_view:
   view: yes
   name: Luces
   entities:
-    - group.luces_jardin_grp
-    - group.luces_exterior_grp
-    - group.luces_entrada_grp
     - group.luces_cocina_grp
-    - group.luces_salon_grp
+    - group.luces_entrada_grp
     - group.luces_estudio_grp
-
-luces_jardin_grp:
-  name: Luces Jardín
-  entities:
-    - switch.sonoff_basic_sw2           # Lámpara Piscina
-    - switch.sonoff_basic_sw4           # Porche Salón
-    - switch.sonoff_4ch_relay_1         # Balizas Cesped Jardín (CH1)
-    - switch.sonoff_4ch_relay_2         # Focos Piscina (Olivo3+Yuca)(CH2)
-    - switch.sonoff_4ch_relay_3         # Focos Entrada (Olivo1+Cica)(CH3)
-    - switch.sonoff_4ch_relay_4         # Pendiente Disponible
-    # - light.sonoff_4ch_blue_led
-
-luces_exterior_grp:
-  name: Luces Exterior
-  entities:
-    - switch.wall_switch_right_158d0002236e75
-    - switch.sonoff_basic_sw2           # Lámpara Piscina
-    - switch.sonoff_basic_sw4           # Porche Salón
+    - group.luces_salon_grp
+    - group.luces_jardin_grp
+    - group.luces_jardin_setup_grp
 
 luces_entrada_grp:
   name: Luces Entrada
@@ -284,49 +266,20 @@ luces_estudio_grp:
   entities:
     - light.hue_estudio
 
-# AAC
-jardin_view:
-  view: yes
-  icon: mdi:tree
-  name: Jardín
-  entities:
-    - group.jardin_piscina_grp
-    - group.jardin_luces_grp
-    - group.jardin_programador_luces_grp
-
-jardin_piscina_grp:
-  name: Depuradora Piscina
-  entities:
-    - binary_sensor.sonoff_pow_sw1      # Sensor de conectividad sonoff
-    - binary_sensor.piscina_status      # Sensor basado en el switch sonoff POW SW1
-    #- switch.sonoff_pow_sw1            # Switch POW Depuradora Piscina
-    - input_boolean.piscina_programador_setup
-    - sensor.piscina_timer_duracion
-    - timer.depuradora
-    - script.piscina_timer_start
-    - script.piscina_timer_finish
-    - script.piscina_timer_pause
-    - script.piscina_timer_cancel
-    - input_datetime.piscina_start_time
-
-    #- input_datetime.piscina_end_time
-    - input_number.piscina_duracion_horas
-    - input_number.piscina_duracion_minutos
-    #- light.sonoff_pow_sw1              # POW Led Rojo
-
-jardin_luces_grp:
+luces_jardin_grp:
   name: Luces Jardín
   entities:
     - switch.wall_switch_right_158d0002236e75
-    - switch.sonoff_basic_sw2           # Lámpara Piscina
-    - switch.sonoff_basic_sw4           # Porche Salón
-    - switch.sonoff_4ch_relay_1         # Balizas Cesped Jardín (CH1)
-    - switch.sonoff_4ch_relay_2         # Focos Piscina (Olivo3+Yuca)(CH2)
-    - switch.sonoff_4ch_relay_3         # Focos Entrada (Olivo1+Cica)(CH3)
-    - switch.sonoff_4ch_relay_4         # Focos Tendedero
+    - switch.sonoff_basic_sw2                   # Lámpara Piscina
+    - switch.sonoff_basic_sw4                   # Porche Salón
+    - switch.sonoff_4ch_relay_1                 # Balizas Cesped Jardín (CH1)
+    - switch.sonoff_4ch_relay_2                 # Focos Piscina (Olivo3+Yuca)(CH2)
+    - switch.sonoff_4ch_relay_3                 # Focos Entrada (Olivo1+Cica)(CH3)
+    - switch.sonoff_4ch_relay_4                 # Pendiente Disponible
+    # - light.sonoff_4ch_blue_led
 
-jardin_programador_luces_grp:
-  name: Conf. Encendido Automático
+luces_jardin_setup_grp:
+  name: Luces Jardín Setup
   entities:
     - binary_sensor.sonoff_4ch_status
     - input_boolean.jardin_programador_bas_sw2
@@ -335,6 +288,47 @@ jardin_programador_luces_grp:
     - input_boolean.jardin_programador_4ch_ch2
     - input_boolean.jardin_programador_4ch_ch3
     - input_boolean.jardin_programador_4ch_ch4
+
+jardin_view:
+  view: yes
+  icon: mdi:swim
+  name: Jardín
+  entities:
+    - group.jardin_piscina_grp
+    - group.jardin_piscina_control
+    - group.jardin_piscina_setup_grp
+
+jardin_piscina_grp:
+  name: Estado Depuradora Piscina
+  entities:
+    #- switch.sonoff_pow_sw1                    # Switch POW Depuradora Piscina OCULTO
+    - binary_sensor.sonoff_pow_sw1              # Sensor de conectividad sonoff
+    - binary_sensor.piscina_status              # Sensor basado en el switch sonoff POW SW1
+    - timer.piscina
+    #- sensor.piscina_manual_segundos
+    - input_number.piscina_manual_minutos
+    #- light.sonoff_pow_sw1                     # POW Led Rojo
+
+jardin_piscina_control:
+  name: Control Manual
+  entities:
+    #- timer.piscina
+    - script.piscina_timer_start
+    - script.piscina_timer_pause
+    - script.piscina_timer_resume
+    - script.piscina_timer_cancel
+    #- script.piscina_timer_cancel
+
+jardin_piscina_setup_grp:
+  name: Programacion Depuradora
+  entities:
+    - input_boolean.piscina_programador_setup
+    - sensor.piscina_diario_duracion
+    - sensor.piscina_diario_duracion_fmt
+    - input_datetime.piscina_start_time
+    - input_datetime.piscina_end_time
+    - input_number.piscina_diario_horas
+    - input_number.piscina_diario_minutos
 
 cocina_view:
   view: yes

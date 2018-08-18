@@ -476,32 +476,50 @@ piscina_timer_start:
   sequence:
     - service: timer.start
       data_template:
-        entity_id: timer.depuradora
-        duration: '{{ states.sensor.piscina_timer_duracion.state}}'
+        entity_id: timer.piscina
+        duration: '{{ states.sensor.piscina_manual_segundos.state}}'
     - service: switch.turn_on
-      entity_id: switch.sonoff_pow_sw1
+      #entity_id: switch.sonoff_pow_sw1
+      entity_id: switch.sonoff_4ch_relay_2
+
+piscina_timer_start_diario:
+  alias: Timer Piscina Start
+  sequence:
+    - service: timer.start
+      data_template:
+        entity_id: timer.piscina
+        duration: '{{ states.sensor.piscina_diario_duracion.state}}'
+    - service: switch.turn_on
+      #entity_id: switch.sonoff_pow_sw1
+      entity_id: switch.sonoff_4ch_relay_2
 
 piscina_timer_pause:
   alias: Timer Piscina Pause
   sequence:
     - service: timer.pause
-      entity_id: timer.depuradora
+      entity_id: timer.piscina
     - service: switch.turn_off
-      entity_id: switch.sonoff_pow_sw1
+      #entity_id: switch.sonoff_pow_sw1
+      entity_id: switch.sonoff_4ch_relay_2
+
+piscina_timer_resume:
+  alias: Timer Piscina Resume
+  sequence:
+    - service: timer.start
+      entity_id: timer.piscina
+    - service: switch.turn_on
+      #entity_id: switch.sonoff_pow_sw1
+      entity_id: switch.sonoff_4ch_relay_2
 
 piscina_timer_cancel:
   alias: Timer Piscina Cancel
   sequence:
     - service: timer.cancel
-      entity_id: timer.depuradora
-
-piscina_timer_finish:
-  alias: Timer Piscina Finish
-  sequence:
-    - service: timer.finish
-      entity_id: timer.depuradora
+      entity_id: timer.piscina
     - service: switch.turn_off
-      entity_id: switch.sonoff_pow_sw1
+      #entity_id: switch.sonoff_pow_sw1
+      entity_id: switch.sonoff_4ch_relay_2
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # SCRIPTS DE ARRANQUE DEL SISTEMA                                             #

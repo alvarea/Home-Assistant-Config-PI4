@@ -30,7 +30,7 @@
     icon: mdi:volume-high
 #
 # Duración Depuradora Piscina
-  piscina_duracion_horas:
+  piscina_diario_horas:
     name: Horas
     mode: slider
     initial: 4
@@ -39,11 +39,21 @@
     step: 1
     icon: mdi:timelapse
 
-  piscina_duracion_minutos:
+  piscina_diario_minutos:
     name: Minutos
     mode: slider
     initial: 0
     min: 0
     max: 60
+    step: 1
+    icon: mdi:timelapse
+
+# Programación Depuradora Piscina
+  piscina_manual_minutos:
+    name: 'Programa Manual (min)'
+    mode: box
+    initial: 1
+    min: 0
+    max: 240
     step: 1
     icon: mdi:timelapse
