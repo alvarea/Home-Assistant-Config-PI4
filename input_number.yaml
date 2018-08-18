@@ -28,5 +28,22 @@
     max: 100
     step: 2
     icon: mdi:volume-high
+#
+# Duración Depuradora Piscina
+  piscina_duracion_horas:
+    name: Horas
+    mode: slider
+    initial: 4
+    min: 0
+    max: 8
+    step: 1
+    icon: mdi:timelapse
 
-
+  piscina_duracion_minutos:
+    name: Minutos
+    mode: slider
+    initial: 0
+    min: 0
+    max: 60
+    step: 1
+    icon: mdi:timelapse

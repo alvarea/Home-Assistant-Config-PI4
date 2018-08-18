@@ -93,22 +93,22 @@
     initial: on
     icon: mdi:power-settings
 
-  jardin_programador_ch1:
+  jardin_programador_4ch_ch1:
     name: Prog. Balizas Cesped
     initial: on
     icon: mdi:power-settings
 
-  jardin_programador_ch2:
+  jardin_programador_4ch_ch2:
     name: Prog. Focos Piscina
     initial: on
     icon: mdi:power-settings
 
-  jardin_programador_ch3:
+  jardin_programador_4ch_ch3:
     name: Prog. Focos Entrada
     initial: on
     icon: mdi:power-settings
 
-  jardin_programador_ch4:
+  jardin_programador_4ch_ch4:
     name: Prog. Focos Tendedero
     initial: on
     icon: mdi:power-settings

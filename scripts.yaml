@@ -405,47 +405,103 @@ luces_exterior_on:
       entity_id: switch.wall_switch_right_158d0002236e75
 
     # Llamada a scripts de control programador luces diario
-    - service: script.luces_jardin_check_ch1
-    - service: script.luces_jardin_check_ch2
-    - service: script.luces_jardin_check_ch3
-    - service: script.luces_jardin_check_ch4
 
-luces_jardin_check_ch1:
+    - service: script.luces_jardin_check_4ch_ch1
+    - service: script.luces_jardin_check_4ch_ch2
+    - service: script.luces_jardin_check_4ch_ch3
+    - service: script.luces_jardin_check_4ch_ch4
+
+luces_jardin_check_bas_sw2:
+  alias: 'Luces On SonoffBAS SW2'
+  sequence:
+  - condition: state
+    entity_id: input_boolean.jardin_programador_bas_sw2
+    state: 'on'
+  - service: switch.turn_on
+    entity_id: switch.jardin_programador_bas_sw2
+
+luces_jardin_check_bas_sw4:
+  alias: 'Luces On SonoffBAS SW4'
+  sequence:
+  - condition: state
+    entity_id: input_boolean.jardin_programador_bas_sw4
+    state: 'on'
+  - service: switch.turn_on
+    entity_id: switch.jardin_programador_bas_sw4
+
+luces_jardin_check_4ch_ch1:
   alias: 'Luces On Sonoff4ch CH1'
   sequence:
   - condition: state
-    entity_id: input_boolean.jardin_programador_ch1
+    entity_id: input_boolean.jardin_programador_4ch_ch1
     state: 'on'
   - service: switch.turn_on
     entity_id: switch.sonoff_4ch_relay_1
 
-luces_jardin_check_ch2:
+luces_jardin_check_4ch_ch2:
   alias: 'Luces On Sonoff4ch CH2'
   sequence:
   - condition: state
-    entity_id: input_boolean.jardin_programador_ch2
+    entity_id: input_boolean.jardin_programador_4ch_ch2
     state: 'on'
   - service: switch.turn_on
     entity_id: switch.sonoff_4ch_relay_2
 
-luces_jardin_check_ch3:
+luces_jardin_check_4ch_ch3:
   alias: 'Luces On Sonoff4ch CH3'
   sequence:
   - condition: state
-    entity_id: input_boolean.jardin_programador_ch3
+    entity_id: input_boolean.jardin_programador_4ch_ch3
     state: 'on'
   - service: switch.turn_on
     entity_id: switch.sonoff_4ch_relay_3
 
-luces_jardin_check_ch4:
+luces_jardin_check_4ch_ch4:
   alias: 'Luces On Sonoff4ch CH4'
   sequence:
   - condition: state
-    entity_id: input_boolean.jardin_programador_ch4
+    entity_id: input_boolean.jardin_programador_4ch_ch4
     state: 'on'
   - service: switch.turn_on
     entity_id: switch.sonoff_4ch_relay_4
 
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# SCRIPTS DE DEPURADORA PISCINA                                               #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+
+piscina_timer_start:
+  alias: Timer Piscina Start
+  sequence:
+    - service: timer.start
+      data_template:
+        entity_id: timer.depuradora
+        duration: '{{ states.sensor.piscina_timer_duracion.state}}'
+    - service: switch.turn_on
+      entity_id: switch.sonoff_pow_sw1
+
+piscina_timer_pause:
+  alias: Timer Piscina Pause
+  sequence:
+    - service: timer.pause
+      entity_id: timer.depuradora
+    - service: switch.turn_off
+      entity_id: switch.sonoff_pow_sw1
+
+piscina_timer_cancel:
+  alias: Timer Piscina Cancel
+  sequence:
+    - service: timer.cancel
+      entity_id: timer.depuradora
+
+piscina_timer_finish:
+  alias: Timer Piscina Finish
+  sequence:
+    - service: timer.finish
+      entity_id: timer.depuradora
+    - service: switch.turn_off
+      entity_id: switch.sonoff_pow_sw1
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # SCRIPTS DE ARRANQUE DEL SISTEMA                                             #

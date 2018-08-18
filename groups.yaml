@@ -299,11 +299,19 @@ jardin_piscina_grp:
   entities:
     - binary_sensor.sonoff_pow_sw1      # Sensor de conectividad sonoff
     - binary_sensor.piscina_status      # Sensor basado en el switch sonoff POW SW1
-    - switch.sonoff_pow_sw1             # Switch POW Depuradora Piscina
+    #- switch.sonoff_pow_sw1            # Switch POW Depuradora Piscina
     - input_boolean.piscina_programador_setup
-    - input_datetime.piscina_depuradora_start
-    - input_datetime.piscina_depuradora_end
+    - sensor.piscina_timer_duracion
     - timer.depuradora
+    - script.piscina_timer_start
+    - script.piscina_timer_finish
+    - script.piscina_timer_pause
+    - script.piscina_timer_cancel
+    - input_datetime.piscina_start_time
+
+    #- input_datetime.piscina_end_time
+    - input_number.piscina_duracion_horas
+    - input_number.piscina_duracion_minutos
     #- light.sonoff_pow_sw1              # POW Led Rojo
 
 jardin_luces_grp:
@@ -323,10 +331,10 @@ jardin_programador_luces_grp:
     - binary_sensor.sonoff_4ch_status
     - input_boolean.jardin_programador_bas_sw2
     - input_boolean.jardin_programador_bas_sw4
-    - input_boolean.jardin_programador_ch1
-    - input_boolean.jardin_programador_ch2
-    - input_boolean.jardin_programador_ch3
-    - input_boolean.jardin_programador_ch4
+    - input_boolean.jardin_programador_4ch_ch1
+    - input_boolean.jardin_programador_4ch_ch2
+    - input_boolean.jardin_programador_4ch_ch3
+    - input_boolean.jardin_programador_4ch_ch4
 
 cocina_view:
   view: yes

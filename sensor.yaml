@@ -481,6 +481,12 @@
         friendly_name: 'Próxima Salida de Sol'
         icon_template: mdi:weather-sunset-up
 
+      # Piscina depuradora Duracion Timer
+      piscina_timer_duracion:
+        value_template: '{{ states.input_number.piscina_duracion_horas.state | int }}:{{ states.input_number.piscina_duracion_minutos.state | int }}:00'
+        friendly_name: 'Duración'
+        icon_template: mdi:timer-sand
+
 #
 # AAC. Sensores Rendimiento de PI y CERT_SSL
 #

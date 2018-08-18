@@ -860,17 +860,13 @@
 
             >>> ZONA: '{{trigger.entity_id}}'
 
-- id: J01_depuradora_piscina
-  alias: 'J01 Depuradora Piscina'
+- id: J01_depuradora_piscina_start
+  alias: 'J01 Depuradora Piscina Arranque'
   trigger:
-    #- platform: template
-    #  value_template: '{{ states.sensor.time.state == states.sensor.piscina_depuradora_start.state }}'
-    #- platform: template
-    #  value_template: '{{ states.sensor.time.state == states.sensor.piscina_depuradora_end.state }}'
     - platform: template
-      value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_depuradora_start.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
-    - platform: template
-      value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_depuradora_end.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+      value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+    #- platform: template
+    #  value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_end_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
   condition:
     condition: and
     conditions:
@@ -881,8 +877,21 @@
         entity_id: input_boolean.piscina_programador_setup
         state: 'on'
   action:
-    - service: switch.toggle
-      entity_id: switch.sonoff_pow_sw1
+    # Inicia el Timer de la Piscina
+    - service: script.piscina_timer_start
+    #- service: switch.toggle
+    #  entity_id: switch.sonoff_pow_sw1
+
+- id: J01_depuradora_piscina_end
+  alias: 'J01 Depuradora Piscina Parada'
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.depuradora
+  action:
+    # Inicia el Timer de la Piscina
+    - service: script.piscina_timer_finish
 
 #
 # SONOFF POW - DEPURADORA PISCINA

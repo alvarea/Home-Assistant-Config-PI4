@@ -226,7 +226,7 @@ binary_sensor.sonoff_pow_sw1:
   friendly_name: Sensor Sonoff (POW)
 
 switch.sonoff_pow_sw1:
-  friendly_name: Arranque Depuradora
+  friendly_name: Switch Sonoff POW
   icon: mdi:swim  # dip-switch
 
 # Jardín Luces
@@ -262,3 +262,21 @@ switch.sonoff_4ch_relay_4:
   friendly_name: Focos Tendedero (CH4)
   icon: mdi:track-light
   #icon: mdi:car-side
+
+# Scripts Timer Piscina
+#
+script.piscina_timer_start:
+  friendly_name: Timer Piscina - Arranque
+  icon: mdi:power
+
+script.piscina_timer_pause:
+  friendly_name: Timer Piscina - Pausa
+  icon: mdi:pause
+
+script.piscina_timer_cancel:
+  friendly_name: Timer Piscina - Cancelar
+  icon: mdi:cancel
+
+script.piscina_timer_finish:
+  friendly_name: Timer Piscina - Parada
+  icon: mdi:power-off
