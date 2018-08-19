@@ -883,35 +883,27 @@
     - service: script.piscina_timer_start_diario
 
 
-- id: J01_timer_piscina_end
-  alias: 'J01 Timer Piscina End'
+- id: J02_timer_piscina_end
+  alias: 'J02 Timer Piscina End'
   trigger:
     - platform: event
       event_type: timer.finished
       event_data:
         entity_id: timer.piscina
   action:
-  action:
-    # Timer Programa Manual Piscina
-    - service: script.piscina_timer_start_diario
     # Inicia el Timer de la Piscina
-    - service: script.piscina_timer_finish
+    - service: script.piscina_timer_cancel
 
-# INFO REGLA: ALARMA MODO TRANSICION PENDING
-#
-#pre_pending_state: disarmed
-#post_pending_state: armed_away
-# Alarm control panel en la transición desde Disarmed a Armed Away:
-#   post_pending_state: armed_away
-#   pre_pending_state: disarmed
-#   code_format: null
-#
-  #condition:
-  #  condition: template
-  #  value_template: >-
-  #    {% if is_state_attr('alarm_control_panel.ha','post_pending_state','armed_away') %}
-  #      true
-  #    {%else%}
-  #      false
-  #    {%endif%}
-#
+- id: J03_set_hora_final_planificado
+  alias: 'J03 Set Hora Final Planificado'
+  trigger:
+    - platform: state
+      entity_id: sensor.piscina_diario_endtime
+    - platform: state
+      entity_id: sensor.piscina_diario_duracion
+  action:
+    # Actualiza Valor input_datetime.piscina_end_time
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.piscina_end_time
+      data_template:
+        time: '{{ states.sensor.piscina_diario_endtime.state }}'

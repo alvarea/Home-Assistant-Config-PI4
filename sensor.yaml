@@ -483,14 +483,18 @@
 
       # Piscina depuradora Duracion Timer
       piscina_diario_duracion:
-        value_template: '{{ states.input_number.piscina_diario_horas.state|int }}:{{ states.input_number.piscina_diario_minutos.state|int }}:00'
+        value_template: '{{ states.input_number.piscina_diario_horas.state|int }}:00:00'
         friendly_name: 'Duración Programa Diario'
         icon_template: mdi:timer-sand
 
-      piscina_diario_duracion_fmt:
-        value_template: '{{ as_timestamp(states.piscina_timer_duracion.state) | timestamp_custom("%H:%M") }}'
-        friendly_name: 'Duración Programa Diario FMT'
+      piscina_diario_endtime:
+        friendly_name: 'Sensor Hora Finalización'
         icon_template: mdi:timer-sand
+        value_template: '{% if states.input_number.piscina_diario_horas.state | int + states.input_datetime.piscina_start_time.attributes.hour | int < 24 %}
+                            {{ states.input_number.piscina_diario_horas.state | int + states.input_datetime.piscina_start_time.attributes.hour | int }}:00:00
+                         {% else %}
+                            {{ states.input_number.piscina_diario_horas.state | int + states.input_datetime.piscina_start_time.attributes.hour | int - 24 }}:00:00
+                         {% endif %}'
 
       piscina_manual_segundos:
         value_template: '{{ states.input_number.piscina_manual_minutos.state |int *60 }}'

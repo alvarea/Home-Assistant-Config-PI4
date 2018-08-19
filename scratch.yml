@@ -1,3 +1,20 @@
+
+{% set curhour = now().hour %}
+{% if now().weekday() in (0,1,2,3,4) %}
+  {% if curhour <= 23 and curhour >= 13 %}
+    homeassistant.turn_on
+  {% else %}
+    homeassistant.turn_off
+  {% endif %}
+{% else %}
+  {% if curhour <= 2 or curhour >= 13 %}
+    homeassistant.turn_on
+  {% else %}
+    homeassistant.turn_off
+  {% endif %}
+{% endif %}
+
+
 #
 # CODIGO TEMPORAL EXCLUIDO
 #
