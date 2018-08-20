@@ -199,3 +199,16 @@
         friendly_name: 'Estado Depuradora on/off'
         icon_template: mdi:power
 
+      piscina_dia_ejecucion:
+        friendly_name: '¿Próxima Ejecución Hoy?'
+        icon_template: mdi:calendar-check
+        value_template:
+                "{% if states.input_select.piscina_programador_dias.state == 'Daily' %}
+                    on
+                 {% elif states.input_select.piscina_programador_dias.state == 'Weekend' and now().weekday() in (0,6) %}
+                    on
+                 {% else %}
+                    off
+                 {% endif %}"
+
+

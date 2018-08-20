@@ -501,6 +501,7 @@
         friendly_name: 'Duración Programa Corto (Seg)'
         icon_template: mdi:timer-sand
 
+
 # AAC. Sensores Rendimiento de PI y CERT_SSL
 #
   - platform: time_date

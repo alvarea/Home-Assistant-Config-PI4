@@ -875,8 +875,8 @@
       - condition: state
         entity_id: input_boolean.piscina_programador_setup
         state: 'on'
-      - condition: state # TEMPORAL
-        entity_id: binary_sensor.sonoff_pow_sw1
+      - condition: state
+        entity_id: binary_sensor.piscina_dia_ejecucion
         state: 'on'
   action:
     # Timer Programador Diario Piscina

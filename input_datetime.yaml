@@ -5,13 +5,11 @@
     name: Inicio Última Ejecución
     has_date: false
     has_time: true
-    initial: '18:00'
 
   piscina_real_end_time:
     name: Fin Última Ejecución
     has_date: false
     has_time: true
-    initial: '22:00'
 
   piscina_start_time:
     name: Hora Inicio Planificado

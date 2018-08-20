@@ -285,9 +285,3 @@ script.piscina_timer_cancel:
   friendly_name: Timer Piscina - STOP
   icon: mdi:power-off
 
-piscina_real_start_time:
-  icon: mdi:clock-outline
-
-piscina_start_time:
-  icon: mdi:clock-outline
-

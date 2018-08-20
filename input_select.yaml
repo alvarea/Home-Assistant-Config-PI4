@@ -1,4 +1,3 @@
-#
 # Modo Notificaciones
 #
   home_notify:
@@ -10,8 +9,16 @@
     initial: Telegram
     icon: mdi:bell-ring
 
-#
-## ALARM WARNING BEFORE ARMED : PENDING TIME
+# Depuradora Piscina
+  piscina_programador_dias:
+    name: Modo Diario/Semanal
+    options:
+     - 'Daily'
+     - 'Weekend'
+    initial: Daily
+    icon: mdi:calendar
+
+# ALARM WARNING BEFORE ARMED : PENDING TIME
 #
   xiaomi_gw_sound_warning:
     name: "Sonido Warning Armado"
@@ -33,8 +40,8 @@
       - "10005 - ArmadoSalgaAhora"
     icon: mdi:music-note
     initial: '11 - Knock at a door'
-#
-### ALARM TRIGGER SOUND
+
+# ALARM TRIGGER SOUND
 #
   xiaomi_gw_sound_alarm:
     name: "Sonido Alarma"

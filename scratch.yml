@@ -15,6 +15,13 @@
 {% endif %}
 
 
+piscina_real_start_time:
+  icon: mdi:clock-outline
+
+piscina_start_time:
+  icon: mdi:clock-outline
+
+
 #
 # CODIGO TEMPORAL EXCLUIDO
 #
