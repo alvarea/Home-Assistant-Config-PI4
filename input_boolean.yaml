@@ -76,7 +76,7 @@
 
 # INTERRUPTORES BOOLEAN => Depuradora Piscina
 #
-  piscina_programador_setup:
+  piscina_programador:
     name: Programador On/Off
     initial: on
     icon: mdi:dip-switch

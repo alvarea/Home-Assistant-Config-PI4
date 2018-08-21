@@ -297,10 +297,11 @@ jardin_piscina_grp:
     #- light.sonoff_pow_sw1                     # POW Led Rojo
     - binary_sensor.sonoff_pow_sw1              # Sensor de conectividad sonoff
     - binary_sensor.piscina_status              # Sensor basado en el switch sonoff POW SW1
-    - binary_sensor.piscina_dia_ejecucion
+    - timer.piscina                             # Timer tiempo de ejecución
+    - binary_sensor.piscina_dia_ejecucion       # Sensor próximo día de ejecución
+    - sensor.piscina_diario_duracion            # Duración programa diario
     - input_datetime.piscina_real_start_time    # Próximo Arranque Real
     - input_datetime.piscina_real_end_time      # Próximo Parada Real
-    - timer.piscina
 
 jardin_piscina_control:
   name: Control Manual
@@ -314,12 +315,11 @@ jardin_piscina_control:
 jardin_piscina_setup_grp:
   name: Programa Automático
   entities:
-    - input_boolean.piscina_programador_setup
+    - input_boolean.piscina_programador
     - input_select.piscina_programador_dias
     - input_number.piscina_diario_horas
     - input_datetime.piscina_start_time       # Proximo Arranque Planificado
     - input_datetime.piscina_end_time         # Proximo Parada Planificado
-    - sensor.piscina_diario_duracion
     #- sensor.piscina_diario_endtime
 
 cocina_view:

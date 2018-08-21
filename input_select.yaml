@@ -11,11 +11,13 @@
 
 # Depuradora Piscina
   piscina_programador_dias:
-    name: Modo Diario/Semanal
+    name: Diario/Semanal
     options:
-     - 'Daily'
+     - 'Diario'
+     - 'Sábado'
+     - 'Domingo'
      - 'Weekend'
-    initial: Daily
+    initial: Diario
     icon: mdi:calendar
 
 # ALARM WARNING BEFORE ARMED : PENDING TIME
