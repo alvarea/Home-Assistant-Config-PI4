@@ -400,16 +400,22 @@ luces_exterior_off:
 luces_exterior_on:
   alias: 'Luces Exterior y Jardín On'
   sequence:
-    # Encendido Luces Jardín
-    - service: switch.turn_on
-      entity_id: switch.wall_switch_right_158d0002236e75
-
     # Llamada a scripts de control programador luces diario
-
+    - service: script.luces_jardin_check_xia_ext
+    - service: script.luces_jardin_check_bas_sw4
     - service: script.luces_jardin_check_4ch_ch1
     - service: script.luces_jardin_check_4ch_ch2
     - service: script.luces_jardin_check_4ch_ch3
     - service: script.luces_jardin_check_4ch_ch4
+
+luces_jardin_check_xia_ext:
+  alias: 'Luces On Faroles Exterior'
+  sequence:
+  - condition: state
+    entity_id: input_boolean.jardin_programador_xia_ext
+    state: 'on'
+  - service: switch.turn_on
+    entity_id: switch.wall_switch_right_158d0002236e75
 
 luces_jardin_check_bas_sw2:
   alias: 'Luces On SonoffBAS SW2'

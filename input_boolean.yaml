@@ -83,6 +83,11 @@
 
 # INTERRUPTORES BOLLEAN => Programador Diario Luces Jardín
 
+  jardin_programador_xia_ext:
+    name: Prog. Faroles Exterior
+    initial: on
+    icon: mdi:power-settings
+
   jardin_programador_bas_sw2:
     name: Prog. Porche Piscina
     initial: off

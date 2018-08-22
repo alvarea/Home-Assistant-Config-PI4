@@ -575,7 +575,7 @@
           message: >
             >>> EVENTO: Puesta de sol hace 15min
 
-            >>> LUCES: Alumbrado Exterior y Jardín ON
+            >>> LUCES: Alumbrado Exterior ON
 
 - id: L02_luces_off_exterior_all_family_home
   alias: 'L02 Luces Off Exterior All Family Home'
@@ -767,7 +767,7 @@
           - condition: sun
             after: sunset
             # en la puesta de sol + 30'
-            after_offset: "00:03:00"
+            after_offset: "00:30:00"
           - condition: sun
             before: sunrise
             # en el amanecer -1h'
@@ -845,7 +845,6 @@
     - platform: state
       entity_id:
         - binary_sensor.sonoff_4ch_status
-        #- binary_sensor.sonoff_pow_sw1
       from: 'on'
       to: 'off'
   action:
@@ -857,6 +856,27 @@
           title: '*ALARMA FALLO ELECTRICO*'
           message: >
             >>> URGENTE: CUADRO ELECTRICO JARDIN SIN CORRIENTE
+
+            >>> ZONA: '{{trigger.entity_id}}'
+
+- id: S5_Sonoff_POW_Status
+  alias: 'S1 Sonoff POW Status'
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.sonoff_pow_sw1
+
+      from: 'on'
+      to: 'off'
+  action:
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA FALLO ELECTRICO*'
+          message: >
+            >>> URGENTE: CUADRO ELECTRICO DEPURADORA PISCINA SIN CORRIENTE
 
             >>> ZONA: '{{trigger.entity_id}}'
 

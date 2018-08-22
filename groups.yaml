@@ -274,6 +274,7 @@ luces_jardin_setup_grp:
   name: Luces Jardín Setup
   entities:
     - binary_sensor.sonoff_4ch_status
+    - input_boolean.jardin_programador_xia_ext
     - input_boolean.jardin_programador_bas_sw2
     - input_boolean.jardin_programador_bas_sw4
     - input_boolean.jardin_programador_4ch_ch1
