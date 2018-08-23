@@ -14,4 +14,7 @@
     name: Input Text Alarma Trigger
     initial: ''
     icon: mdi:security-home
-
+  piscina_duracion_programa:
+    name: Duración Programa Activo
+    initial: ''
+    icon: mdi:timer-sand

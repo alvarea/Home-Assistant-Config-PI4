@@ -62,6 +62,7 @@ alarma_view:
   entities:
     - group.alarma_status_grp
     - group.alarma_sirena_grp
+    - group.alarma_sensor_jardin_grp
     - group.alarma_sensor_entrada_grp
     - group.alarma_sensor_estudio_grp
     - group.alarma_sensor_salon_grp
@@ -81,6 +82,13 @@ alarma_sirena_grp:
     - input_boolean.panic_button
     - script.alarma_boton_panico
     - binary_sensor.sonoff_basic_sw1
+
+alarma_sensor_jardin_grp:
+  name: Sensores Jardín
+  view: no
+  entities:
+    - binary_sensor.sonoff_4ch_status           # Sensor de conectividad sonoff 4CH
+    - binary_sensor.sonoff_pow_sw1              # Sensor de conectividad sonoff POW
 
 alarma_sensor_entrada_grp:
   name: Sensores Entrada
@@ -295,12 +303,12 @@ jardin_piscina_grp:
   name: Estado Depuradora Piscina
   entities:
     #- switch.sonoff_pow_sw1                    # Switch POW Depuradora Piscina OCULTO
-    #- light.sonoff_pow_sw1                     # POW Led Rojo
     - binary_sensor.sonoff_pow_sw1              # Sensor de conectividad sonoff
+    - binary_sensor.piscina_dia_ejecucion       # Sensor Próximo día de ejecució
     - binary_sensor.piscina_status              # Sensor basado en el switch sonoff POW SW1
-    - timer.piscina                             # Timer tiempo de ejecución
-    - binary_sensor.piscina_dia_ejecucion       # Sensor próximo día de ejecución
-    - sensor.piscina_diario_duracion            # Duración programa diario
+    - sensor.piscina_duracion_programa          # Sensor duración programa activo/siguiente
+    #- input_text.piscina_duracion_programa      # Sensor duración programa activo/siguiente
+    - timer.piscina                             # Timer tiempo pendiente de ejecución
     - input_datetime.piscina_real_start_time    # Próximo Arranque Real
     - input_datetime.piscina_real_end_time      # Próximo Parada Real
 
@@ -319,8 +327,9 @@ jardin_piscina_setup_grp:
     - input_boolean.piscina_programador
     - input_select.piscina_programador_dias
     - input_number.piscina_diario_horas
-    - input_datetime.piscina_start_time       # Proximo Arranque Planificado
-    - input_datetime.piscina_end_time         # Proximo Parada Planificado
+    - input_datetime.piscina_start_time         # Proximo Arranque Planificado
+    - input_datetime.piscina_end_time           # Proximo Parada Planificado
+    - sensor.piscina_duracion_planificada       # Duración programa diario
     #- sensor.piscina_diario_endtime
 
 cocina_view:

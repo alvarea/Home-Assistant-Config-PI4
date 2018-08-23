@@ -801,11 +801,6 @@
 #
 # SONOFF 4CH - JARDIN
 #
-#- binary_sensor.sonoff_4ch_button_1
-#- binary_sensor.sonoff_4ch_button_2
-#- binary_sensor.sonoff_4ch_button_3
-#- binary_sensor.sonoff_4ch_button_4
-
 - id: S1_Sonoff_4CH_Boton1_On_off
   alias: 'S1 Sonoff 4CH Boton1 On'
   trigger:
@@ -884,8 +879,8 @@
 # SONOFF POW - DEPURADORA PISCINA
 #
 
-- id: J01_timer_piscina_start
-  alias: 'J01 Timer Piscina Start'
+- id: S06_timer_piscina_start
+  alias: 'S06 Timer Piscina Start'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -903,8 +898,8 @@
     - service: script.piscina_timer_start_diario
 
 
-- id: J02_timer_piscina_end
-  alias: 'J02 Timer Piscina End'
+- id: S06_timer_piscina_end
+  alias: 'S06 Timer Piscina End'
   trigger:
     - platform: event
       event_type: timer.finished
@@ -913,14 +908,19 @@
   action:
     # Inicia el Timer de la Piscina
     - service: script.piscina_timer_cancel
+    # Actualiza Valor Duración Programa Activo
+    - service: input_text.set_value
+      entity_id: input_text.piscina_duracion_programa
+      data_template:
+        value: ''
 
-- id: J03_set_hora_final_planificado
-  alias: 'J03 Set Hora Final Planificado'
+- id: S07_set_hora_final_planificado
+  alias: 'S07 Set Hora Final Planificado'
   trigger:
     - platform: state
       entity_id: sensor.piscina_diario_endtime
     - platform: state
-      entity_id: sensor.piscina_diario_duracion
+      entity_id: sensor.piscina_duracion_planificada
   action:
     # Actualiza Valor input_datetime.piscina_end_time
     - service: input_datetime.set_datetime

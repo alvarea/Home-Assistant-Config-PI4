@@ -223,7 +223,7 @@ switch.sonoff_basic_sw1:
 # Jardín Depuradora Piscina
 #
 binary_sensor.sonoff_pow_sw1:
-  friendly_name: Sensor Sonoff (POW)
+  friendly_name: Cuadro Eléctrico Piscina (POW)
 
 switch.sonoff_pow_sw1:
   friendly_name: Switch Sonoff POW
@@ -232,7 +232,7 @@ switch.sonoff_pow_sw1:
 # Jardín Luces
 #
 binary_sensor.sonoff_4ch_status:
-  friendly_name: Sensor Sonoff (4CH)
+  friendly_name: Cuadro Eléctrico Jardín
 
 switch.sonoff_basic_sw2:
   friendly_name: Porche Piscina (SW2)

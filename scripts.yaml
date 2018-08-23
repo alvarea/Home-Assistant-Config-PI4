@@ -492,6 +492,11 @@ piscina_timer_start:
       entity_id: input_datetime.piscina_real_start_time
       data_template:
         time: '{{ (as_timestamp(now()) | timestamp_custom("%H:%M:%S")) }}'
+    # Actualiza Valor Duración Programa Activo
+    - service: input_text.set_value
+      entity_id: input_text.piscina_duracion_programa
+      data_template:
+        value: '{{ states.sensor.piscina_duracion_manual.state}}'
 
 piscina_timer_start_diario:
   alias: Timer Piscina Start
@@ -499,7 +504,7 @@ piscina_timer_start_diario:
     - service: timer.start
       data_template:
         entity_id: timer.piscina
-        duration: '{{ states.sensor.piscina_diario_duracion.state}}'
+        duration: '{{ states.sensor.piscina_duracion_planificada.state}}'
     - service: switch.turn_on
       entity_id: switch.sonoff_pow_sw1
       #entity_id: switch.sonoff_4ch_relay_2
@@ -508,6 +513,12 @@ piscina_timer_start_diario:
       entity_id: input_datetime.piscina_real_start_time
       data_template:
         time: '{{ (as_timestamp(now()) | timestamp_custom("%H:%M:%S")) }}'
+    # Actualiza Valor Duración Programa Activo
+    - service: input_text.set_value
+      entity_id: input_text.piscina_duracion_programa
+      data_template:
+        value: '{{ states.sensor.piscina_duracion_planificada.state}}'
+
 
 piscina_timer_cancel:
   alias: Timer Piscina Cancel
@@ -522,6 +533,11 @@ piscina_timer_cancel:
       entity_id: input_datetime.piscina_real_end_time
       data_template:
         time: '{{ (as_timestamp(now()) | timestamp_custom("%H:%M:%S")) }}'
+    # Actualiza Valor Duración Programa Activo
+    - service: input_text.set_value
+      entity_id: input_text.piscina_duracion_programa
+      data_template:
+        value: ''
 
 piscina_timer_pause:
   alias: Timer Piscina Pause

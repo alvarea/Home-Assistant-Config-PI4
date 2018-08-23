@@ -481,10 +481,21 @@
         friendly_name: 'Próxima Salida de Sol'
         icon_template: mdi:weather-sunset-up
 
-      # Piscina depuradora Duracion Timer
-      piscina_diario_duracion:
+      # Piscina Duracion Programa Diario-Semanal
+      piscina_duracion_planificada:
         value_template: '{{ states.input_number.piscina_diario_horas.state|int }}:00:00'
-        friendly_name: 'Duración Programa Diario'
+        friendly_name: 'Duración Programa Planificado'
+        icon_template: mdi:timer-sand
+
+      # Piscina Duracion Programa Manual
+      piscina_duracion_manual:
+        value_template: '00:{{ states.input_number.piscina_manual_minutos.state|int }}:00'
+        friendly_name: 'Duración Programa Planificado'
+        icon_template: mdi:timer-sand
+
+      piscina_duracion_programa:
+        value_template: '{{ states.input_text.piscina_duracion_programa.state }}'
+        friendly_name: 'Duración Programa Activo'
         icon_template: mdi:timer-sand
 
       piscina_diario_endtime:

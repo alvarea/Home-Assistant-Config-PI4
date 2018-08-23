@@ -123,7 +123,7 @@ alarm_control_panel:
 # Timer temporizador Depuradora Piscina
 timer:
   piscina:
-    name: Programa Activo (Timer)
+    name: Tiempo Restante (Timer)
     icon: mdi:timer
 
 # GENERIC IP CAMERA
