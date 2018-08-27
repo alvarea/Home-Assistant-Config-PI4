@@ -15,10 +15,15 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '18:00'
+    initial: '19:00'
 
   piscina_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '22:00'
+    initial: '23:00'
+
+  magiccube_last_action1:
+    name: Cube Timestamp
+    has_date: true
+    has_time: true

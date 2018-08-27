@@ -74,6 +74,10 @@ alarma_status_grp:
   entities:
     - alarm_control_panel.ha
     - sensor.alarm_zone
+    - sensor.magiccube_lastaction
+    #- binary_sensor.cube_158d00024a4a62
+    - input_text.magiccube_last_action1
+    - input_datetime.magiccube_last_action1
 
 alarma_sirena_grp:
   name: Botón Pánico
@@ -99,7 +103,6 @@ alarma_sensor_entrada_grp:
     - sensor.illumination_158d0001e55903
     - binary_sensor.motion_sensor_158d0001e637f6
     - sensor.illumination_158d0001e637f6
-    - binary_sensor.cube_158d00024a4a62
 
 alarma_sensor_estudio_grp:
   name: Sensores Estudio
@@ -238,7 +241,6 @@ luces_view:
     - group.luces_estudio_grp
     - group.luces_salon_grp
     - group.luces_jardin_grp
-    - group.luces_jardin_setup_grp
 
 luces_entrada_grp:
   name: Luces Entrada
@@ -278,18 +280,6 @@ luces_jardin_grp:
     - switch.sonoff_4ch_relay_4                 # Pendiente Disponible
     # - light.sonoff_4ch_blue_led
 
-luces_jardin_setup_grp:
-  name: Luces Jardín Setup
-  entities:
-    - binary_sensor.sonoff_4ch_status
-    - input_boolean.jardin_programador_xia_ext
-    - input_boolean.jardin_programador_bas_sw2
-    - input_boolean.jardin_programador_bas_sw4
-    - input_boolean.jardin_programador_4ch_ch1
-    - input_boolean.jardin_programador_4ch_ch2
-    - input_boolean.jardin_programador_4ch_ch3
-    - input_boolean.jardin_programador_4ch_ch4
-
 jardin_view:
   view: yes
   icon: mdi:swim
@@ -298,16 +288,17 @@ jardin_view:
     - group.jardin_piscina_grp
     - group.jardin_piscina_setup_grp
     - group.jardin_piscina_control
+    - history_graph.depuradora_piscina
 
 jardin_piscina_grp:
   name: Estado Depuradora Piscina
   entities:
     #- switch.sonoff_pow_sw1                    # Switch POW Depuradora Piscina OCULTO
     - binary_sensor.sonoff_pow_sw1              # Sensor de conectividad sonoff
-    - binary_sensor.piscina_dia_ejecucion       # Sensor Próximo día de ejecució
+    - binary_sensor.piscina_dia_ejecucion       # Sensor Próximo día de ejecución
     - binary_sensor.piscina_status              # Sensor basado en el switch sonoff POW SW1
-    - sensor.piscina_duracion_programa          # Sensor duración programa activo/siguiente
-    #- input_text.piscina_duracion_programa      # Sensor duración programa activo/siguiente
+    - sensor.piscina_duracion_programa          # Sensor duración programa activo/siguiente minutos
+    #- input_text.piscina_duracion_programa     # Sensor duración programa activo/siguiente
     - timer.piscina                             # Timer tiempo pendiente de ejecución
     - input_datetime.piscina_real_start_time    # Próximo Arranque Real
     - input_datetime.piscina_real_end_time      # Próximo Parada Real
@@ -532,6 +523,7 @@ config_view:
   entities:
       - group.setup_sirenas_grp
       - group.setup_telegram_grp
+      - group.setup_luces_jardin_grp
       - group.setup_reglas_luces_grp
       - group.setup_reglas_alarma_grp
 
@@ -552,6 +544,19 @@ setup_telegram_grp:
     - input_boolean.notify_aac
     - input_boolean.notify_paf
     - input_boolean.notify_aaf
+
+
+setup_luces_jardin_grp:
+  name: Luces Jardín Setup
+  entities:
+    - binary_sensor.sonoff_4ch_status
+    - input_boolean.jardin_programador_xia_ext
+    - input_boolean.jardin_programador_bas_sw2
+    - input_boolean.jardin_programador_bas_sw4
+    - input_boolean.jardin_programador_4ch_ch1
+    - input_boolean.jardin_programador_4ch_ch2
+    - input_boolean.jardin_programador_4ch_ch3
+    - input_boolean.jardin_programador_4ch_ch4
 
 setup_reglas_alarma_grp:
   name: Reglas Alarma

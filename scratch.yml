@@ -1,3 +1,49 @@
+TEMPLATE EDITOR
+================
+
+# Diferencia entre 2 fechas-horas
+{{ as_timestamp(now()) | timestamp_local
+}}
+
+{{
+states.input_datetime.magiccube_last_action1.attributes.timestamp | timestamp_local
+}}
+
+{{
+states.binary_sensor.cube_158d00024a4a62.attributes.last_action
+}}
+
+{{ as_timestamp(now())
+-
+states.input_datetime.magiccube_last_action1.attributes.timestamp < 5
+}}
+
+
+
+
+    # Actualiza Acción ANTERIOR
+    - service: input_text.set_value
+      entity_id: input_text.magiccube_last_action2
+      data_template:
+        value: '{{ states.input_text.magiccube_last_action1.state }}'
+    # Actualiza hora evento ANTERIOR
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.magiccube_last_action2
+      data_template:
+        time: '{{ states.input_datetime.magiccube_last_action1.attributes.timestamp | timestamp_local }}'
+        #time: '{{ states.input_datetime.magiccube_last_action1.attributes.timestamp | timestamp_custom("%H:%M:%S") }}'
+    # Actualiza Acción ULTIMA
+    - service: input_text.set_value
+      entity_id: input_text.magiccube_last_action1
+      data_template:
+        value: '{{ states.binary_sensor.cube_158d00024a4a62.attributes.last_action }}'
+      # Actualiza hora evento ULTIMO
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.magiccube_last_action1
+      data_template:
+        time: '{{ as_timestamp(now()) | timestamp_local }}'
+        #time: '{{ (as_timestamp(now()) | timestamp_custom("%H:%M:%S")) }}'
+
 
 {% set curhour = now().hour %}
 {% if now().weekday() in (0,1,2,3,4) %}

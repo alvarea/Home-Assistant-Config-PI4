@@ -18,3 +18,11 @@
     name: Duración Programa Activo
     initial: ''
     icon: mdi:timer-sand
+  magiccube_last_action1:
+    name: Magic Cube Lastaction1
+    initial: ''
+    icon: mdi:cube-outline
+  magiccube_last_action2:
+    name: Magic Cube Lastaction2
+    initial: ''
+    icon: mdi:cube-outline

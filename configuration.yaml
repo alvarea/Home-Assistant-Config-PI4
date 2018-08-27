@@ -126,6 +126,15 @@ timer:
     name: Tiempo Restante (Timer)
     icon: mdi:timer
 
+history_graph:
+  piscina_dur:
+    entities:
+      - sensor.piscina_duracion_programa
+    name: Depuradora Piscina (Min)
+    hours_to_show: 168
+    refresh: 1800
+
+
 # GENERIC IP CAMERA
 camera:
   - platform: generic

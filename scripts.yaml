@@ -3,7 +3,7 @@
 # ALARMA y SIRENAS                                                            #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-# 10004: Ringtone AAC ArmadoDesarme:
+# 10004: Ringtone ArmadoDesarme:
 #
 # "sistema armado
 # 15 seg para desarmar
@@ -16,7 +16,7 @@
 #"ringtone_vol" : "50"
 #}
 #
-# 10005: Ringtone AAC ArmadoSalgaAhora:
+# 10005: Ringtone ArmadoSalgaAhora:
 #
 # "sistema armado
 # 15 seg para salir
@@ -152,6 +152,89 @@ alarma_boton_panico_off:
           title: '*ALARMA HOMY*'
           message: >
             >>> URGENTE: BOTON PANICO DESACTIVADO
+
+#AAC
+
+magiccube_check_alarm_sequence:
+  alias: 'Alarma MagicCube Alarm Sequence'
+  sequence:
+    - condition: and
+      conditions:
+        - condition: template
+          value_template: '{% if not states.binary_sensor.cube_158d00024a4a62.attributes.last_action | string == "alert" %}true{% endif %}'
+        - condition: template
+          value_template: >-
+            {{ as_timestamp(now()) -
+               states.input_datetime.magiccube_last_action1.attributes.timestamp < 10
+            }}
+    - service: script.magiccube_check_arm_away
+    - service: script.magiccube_check_disarm
+
+magiccube_check_arm_away:
+  alias: 'Alarma MagicCube Arm Away'
+  sequence:
+    - condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ states.binary_sensor.cube_158d00024a4a62.attributes.last_action == "shake_air" }}'
+        - condition: template
+          value_template: '{{ states.input_text.magiccube_last_action1.state == "rotate" }}'
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.ha
+    # Aviso sonoro con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_ringtone
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> ESTADO: Armado Total
+
+magiccube_check_disarm:
+  alias: 'Alarma MagicCube Disarm'
+  sequence:
+    - condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ states.binary_sensor.cube_158d00024a4a62.attributes.last_action == "shake_air" }}'
+        - condition: template
+          value_template: '{{ states.input_text.magiccube_last_action1.state == "move" }}'
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: alarm_control_panel.ha
+    # Aviso sonoro con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.xiaomi_gw_play_ringtone
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> ESTADO: Desarmado
+
+magiccube_update_lastaction:
+  alias: 'Alarma MagicCube Update Last Action'
+  sequence:
+    # Si Last_action = "alert" => CANCEL
+    #- condition: template
+    #  value_template: '{% if not states.binary_sensor.cube_158d00024a4a62.attributes.last_action | string == "alert" %}true{% endif %}'
+    # Actualiza Última Acciónn
+    - service: input_text.set_value
+      entity_id: input_text.magiccube_last_action1
+      data_template:
+        value: '{{ states.binary_sensor.cube_158d00024a4a62.attributes.last_action }}'
+    # Actualiza Hora Último Evento
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.magiccube_last_action1
+      data_template:
+        date: '{{ as_timestamp(now()) | timestamp_custom("%Y-%m-%d") }}'
+        time: '{{ as_timestamp(now()) | timestamp_custom("%H:%M:%S") }}'
+
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

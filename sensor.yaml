@@ -30,10 +30,6 @@
         entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('device_tracker.meta_aaf') is not none }}"
         value_template: "{{ states('device_tracker.meta_aaf') if is_state('sensor.family_home_aaf','on') and states('device_tracker.meta_aaf') is not none }}"
 
-        #value_template: >-
-        #  {% if is_state('binary_sensor.baye_home_mfc','on')
-        #      and is_state('sensor.family_home_mfc','on') }}
-
       # Sensores read-only de configuración on/off Tracking Family Home AAC, MFC, PAF, AAF
       # input_boolean.family_home_mfc,input_boolean.family_home_aac,input_boolean.family_home_paf,input_boolean.family_home_aaf
       #
@@ -75,6 +71,14 @@
         friendly_name: 'Probabilidad Agu'
         icon_template: mdi:account-location
         unit_of_measurement: '%'
+
+      # Sensor para mostrar Movimientos Xiaomi Magicube:
+      # Available events are flip90, flip180, move, tap_twice, shake_air, swing, alert, free_fall and rotate.
+      # The component stores the last action as the attribute last_action.
+      magiccube_lastaction:
+        value_template: "{{ states.binary_sensor.cube_158d00024a4a62.attributes.last_action | string }}"
+        friendly_name: 'Magic Cube'
+        icon_template: mdi:cube-outline
 
       # Batería Sensor Xiaomi Entrada Interior. binary_sensor.motion_sensor_158d0001e55903
       bateria_presencia_entrada:
