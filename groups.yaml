@@ -288,7 +288,7 @@ jardin_view:
     - group.jardin_piscina_grp
     - group.jardin_piscina_setup_grp
     - group.jardin_piscina_control
-    - history_graph.depuradora_piscina
+    - history_graph.duracion_depuradora_piscina
 
 jardin_piscina_grp:
   name: Estado Depuradora Piscina
@@ -562,7 +562,6 @@ setup_reglas_alarma_grp:
   name: Reglas Alarma
   view: no
   entities:
-    - input_boolean.alarm_siren_setup
     - automation.a0_alarm_disarmed_to_pending
     - automation.a1_alarm_armed_to_pending
     - automation.a2_alarm_armed_away
@@ -593,10 +592,13 @@ setup_sirenas_grp:
   view: no
   entities:
     - input_boolean.mute_xiaomi_gw_sounds
-    - input_select.xiaomi_gw_sound_warning
-    - input_number.xiaomi_gw_volume_warning
+    - input_select.xiaomi_gw_sound_alarm_arm
+    - input_number.xiaomi_gw_volume_alarm_arm
+    - input_select.xiaomi_gw_sound_alarm_disarm
+    - input_number.xiaomi_gw_volume_alarm_disarm
     - input_select.xiaomi_gw_sound_alarm
     - input_number.xiaomi_gw_volume_alarm
+    - input_boolean.alarm_siren_setup
     - switch.sonoff_basic_sw1
 
 msg_control_grp:

@@ -20,7 +20,7 @@
         gw_mac: !secret xiaomi_gateway
         ringtone_id: 10005
         ringtone_vol: >-
-            {{ states('input_number.xiaomi_gw_volume_warning') | int }}
+            {{ states('input_number.xiaomi_gw_volume_alarm_arm') | int }}
 
 - id: A3_alarma_armed_pending
   alias: 'A3 Alarma Desarmando'
@@ -42,7 +42,7 @@
         gw_mac: !secret xiaomi_gateway
         ringtone_id: 10004
         ringtone_vol: >-
-            {{ states('input_number.xiaomi_gw_volume_warning') | int }}
+            {{ states('input_number.xiaomi_gw_volume_alarm_arm') | int }}
 
 
 - id: L09_luces_on_estudio_on_sensor

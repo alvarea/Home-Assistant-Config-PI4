@@ -127,10 +127,10 @@ timer:
     icon: mdi:timer
 
 history_graph:
-  piscina_dur:
+  piscina_duracion:
     entities:
       - sensor.piscina_duracion_programa
-    name: Depuradora Piscina (Min)
+    name: Duracion Depuradora Piscina
     hours_to_show: 168
     refresh: 1800
 

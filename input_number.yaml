@@ -9,18 +9,18 @@
     max: 4
     step: 1
     icon: mdi:home-account
-
 #
 # Input number to control Xiaomi gateway Volume Alarm
 
   xiaomi_gw_volume_alarm:
+    name: Volumen
     min: 0
     max: 100
     step: 2
     icon: mdi:volume-high
 #
-# Input number to control Xiaomi gateway Volume Alarm Warning
-  xiaomi_gw_volume_warning:
+# Input number to control Xiaomi gateway Volume Alarm Arm
+  xiaomi_gw_volume_alarm_arm:
     name: Volumen
     mode: slider
     initial: 10
@@ -28,6 +28,17 @@
     max: 100
     step: 2
     icon: mdi:volume-high
+#
+# Input number to control Xiaomi gateway Volume Alarm Disarm
+  xiaomi_gw_volume_alarm_disarm:
+    name: Volumen
+    mode: slider
+    initial: 10
+    min: 0
+    max: 100
+    step: 2
+    icon: mdi:volume-high
+#
 #
 # Duración Depuradora Piscina
   piscina_diario_horas:

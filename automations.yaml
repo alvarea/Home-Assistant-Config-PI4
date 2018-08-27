@@ -100,7 +100,7 @@
     #ringtone_vol:
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_ringtone
+      entity_id: script.xiaomi_gw_play_alarm_arm
 
 
 #
@@ -155,7 +155,7 @@
   action:
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_ringtone
+      entity_id: script.xiaomi_gw_play_alarm_arm
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -176,7 +176,7 @@
   action:
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_ringtone
+      entity_id: script.xiaomi_gw_play_alarm_arm
   # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -198,7 +198,7 @@
   action:
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_ringtone
+      entity_id: script.xiaomi_gw_play_alarm_disarm
     # Apaga Luz Piloto Gateway
     - service: light.turn_off
       entity_id: light.gateway_light_7811dcb788fa
@@ -305,7 +305,7 @@
       entity_id: alarm_control_panel.ha
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_ringtone
+      entity_id: script.xiaomi_gw_play_alarm_disarm
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -508,7 +508,7 @@
       entity_id: alarm_control_panel.ha
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_ringtone
+      entity_id: script.xiaomi_gw_play_alarm_arm
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
