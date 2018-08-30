@@ -284,9 +284,8 @@
 # REGLA: TRIGGER DESARMADO AUTOMATICO AL AMANECER
 #
 - id: A8_alarm_home_auto_disarm
-  alias: 'A9 Alarm Home Auto Disarm'
+  alias: 'A8 Alarm Home Auto Disarm'
   trigger:
-    # Los que duermen ya están en casa
     - platform: sun
       event: sunrise
       #offset: "+00:30:00"
@@ -319,7 +318,7 @@
 # REGLA: TRIGGER APAGADO BOTON PANICO
 #
 - id: A9_alarm_boton_panico_off
-  # alias: 'A9 Alarm Boton Panico Off'
+  alias: 'A9 Alarm Boton Panico Off'
   trigger:
     platform: state
     entity_id: input_boolean.panic_button
@@ -669,27 +668,6 @@
 
             >>> LUCES: Luces de toda la casa Off
 
-- id: L06_luces_off_home_sunrise
-  alias: 'L06 Luces Off Amanecer'
-  trigger:
-    - platform: sun
-      event: sunrise
-  condition:
-    condition: or
-    conditions:
-      - condition: state
-        entity_id: group.luces_salon_grp
-        state: 'on'
-      - condition: state
-        entity_id: group.luces_estudio_grp
-        state: 'on'
-      - condition: state
-        entity_id: group.luces_cocina_grp
-        state: 'on'
-  action:
-    # Script Luces Apagado Interior Casa
-    - service: script.turn_on
-      entity_id: script.luces_off
     # Notifica a Familia
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -768,24 +746,10 @@
 #-----------------------------------------------------------------------------#
 
 #
-# SONOFF S20 - NESSPRESSO
-#
-- id: S1_Sonoff_S20_Boton_On_off
-  alias: 'S1 Sonoff S20 Boton On'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.sonoff_s20_nespresso_boton
-      from: 'off'
-      to: 'on'
-  action:
-    - service: switch.toggle
-      entity_id: switch.sonoff_s20_nespresso
-
-#
 # SONOFF 4CH - JARDIN
 #
-- id: S1_Sonoff_4CH_Boton1_On_off
-  alias: 'S1 Sonoff 4CH Boton1 On'
+- id: S01_Sonoff_4CH_Boton1_On_off
+  alias: 'S01 Sonoff 4CH Boton1 On'
   trigger:
     - platform: state
       entity_id: binary_sensor.sonoff_4ch_button_1
@@ -795,8 +759,8 @@
     - service: switch.toggle
       entity_id: switch.sonoff_4ch_relay_1
 
-- id: S2_Sonoff_4CH_Boton2_On_off
-  alias: 'S1 Sonoff 4CH Boton2 On'
+- id: S02_Sonoff_4CH_Boton2_On_off
+  alias: 'S01 Sonoff 4CH Boton2 On'
   trigger:
     - platform: state
       entity_id: binary_sensor.sonoff_4ch_button_2
@@ -806,8 +770,8 @@
     - service: switch.toggle
       entity_id: switch.sonoff_4ch_relay_2
 
-- id: S3_Sonoff_4CH_Boton3_On_off
-  alias: 'S1 Sonoff 4CH Boton3 On'
+- id: S03_Sonoff_4CH_Boton3_On_off
+  alias: 'S03 Sonoff 4CH Boton3 On'
   trigger:
     - platform: state
       entity_id: binary_sensor.sonoff_4ch_button_3
@@ -817,8 +781,8 @@
     - service: switch.toggle
       entity_id: switch.sonoff_4ch_relay_3
 
-- id: S4_Sonoff_4CH_Status
-  alias: 'S1 Sonoff 4CH Status'
+- id: S04_Sonoff_4CH_Status
+  alias: 'S04 Sonoff 4CH Status'
   trigger:
     - platform: state
       entity_id:
@@ -837,8 +801,8 @@
 
             >>> ZONA: '{{trigger.entity_id}}'
 
-- id: S5_Sonoff_POW_Status
-  alias: 'S1 Sonoff POW Status'
+- id: S05_Sonoff_POW_Status
+  alias: 'S05 Sonoff POW Status'
   trigger:
     - platform: state
       entity_id:
@@ -858,10 +822,9 @@
 
             >>> ZONA: '{{trigger.entity_id}}'
 
-#
+
 # SONOFF POW - DEPURADORA PISCINA
 #
-
 - id: S06_timer_piscina_start
   alias: 'S06 Timer Piscina Start'
   trigger:
@@ -881,8 +844,8 @@
     - service: script.piscina_timer_start_diario
 
 
-- id: S06_timer_piscina_end
-  alias: 'S06 Timer Piscina End'
+- id: S07_timer_piscina_end
+  alias: 'S07 Timer Piscina End'
   trigger:
     - platform: event
       event_type: timer.finished
@@ -897,8 +860,8 @@
       data_template:
         value: ''
 
-- id: S07_set_hora_final_planificado
-  alias: 'S07 Set Hora Final Planificado'
+- id: S08_set_hora_final_planificado
+  alias: 'S08 Set Hora Final Planificado'
   trigger:
     - platform: state
       entity_id: sensor.piscina_diario_endtime
@@ -910,3 +873,51 @@
       entity_id: input_datetime.piscina_end_time
       data_template:
         time: '{{ states.sensor.piscina_diario_endtime.state }}'
+
+# SONOFF S20 - NESSPRESSO
+#
+- id: S09_Sonoff_S20_Boton_On_off
+  alias: 'S09 Sonoff S20 Boton On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.sonoff_s20_nespresso_boton
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.sonoff_s20_nespresso
+
+- id: S10 Sonoff S20 Sunrise Switch On
+  alias: 'S10 SonoffS20 Sunrise Switch On'
+  trigger:
+    - platform: state
+      entity_id:
+        - light.hue_pasillo
+        - light.hue_entrada
+      from: 'off'
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: sun
+        after: sunrise
+        after_offset: '-00:30:00'
+      - condition: state
+        entity_id: light.hue_pasillo
+        state: 'on'
+      # Hay alguien en casa
+      - condition: state
+        entity_id: binary_sensor.family_any_home
+        state: 'on'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.sonoff_s20_nespresso
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*HOMY: BUENOS DIAS*'
+          message: >
+            >>> Nespresso auto-encendida al amanecer.
+            >>> Por favor, apáguela al terminar.

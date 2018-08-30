@@ -1,3 +1,38 @@
+- id: S10 Sonoff S20 Sunrise Switch On
+  alias: 'S10 SonoffS20 Sunrise Switch On'
+  trigger:
+    - platform: state
+      entity_id: light.hue_pasillo
+      from: 'off'
+      to: 'on'
+      # - light.hue_entrada
+  condition:
+    condition: and
+    conditions:
+      - condition: sun
+        after: sunrise
+      - condition: state
+        entity_id: light.hue_pasillo
+        state: on
+      # Hay alguien en casa
+      - condition: state
+        entity_id: binary_sensor.family_any_home
+        state: 'on'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.sonoff_s20_nespresso
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*HOMY: BUENOS DIAS*'
+          message: >
+            >>> Nespresso encendida al amanecer.
+
+
+
+
 TEMPLATE EDITOR
 ================
 
@@ -19,32 +54,6 @@ states.input_datetime.magiccube_last_action1.attributes.timestamp < 5
 }}
 
 
-
-
-    # Actualiza Acción ANTERIOR
-    - service: input_text.set_value
-      entity_id: input_text.magiccube_last_action2
-      data_template:
-        value: '{{ states.input_text.magiccube_last_action1.state }}'
-    # Actualiza hora evento ANTERIOR
-    - service: input_datetime.set_datetime
-      entity_id: input_datetime.magiccube_last_action2
-      data_template:
-        time: '{{ states.input_datetime.magiccube_last_action1.attributes.timestamp | timestamp_local }}'
-        #time: '{{ states.input_datetime.magiccube_last_action1.attributes.timestamp | timestamp_custom("%H:%M:%S") }}'
-    # Actualiza Acción ULTIMA
-    - service: input_text.set_value
-      entity_id: input_text.magiccube_last_action1
-      data_template:
-        value: '{{ states.binary_sensor.cube_158d00024a4a62.attributes.last_action }}'
-      # Actualiza hora evento ULTIMO
-    - service: input_datetime.set_datetime
-      entity_id: input_datetime.magiccube_last_action1
-      data_template:
-        time: '{{ as_timestamp(now()) | timestamp_local }}'
-        #time: '{{ (as_timestamp(now()) | timestamp_custom("%H:%M:%S")) }}'
-
-
 {% set curhour = now().hour %}
 {% if now().weekday() in (0,1,2,3,4) %}
   {% if curhour <= 23 and curhour >= 13 %}
@@ -60,12 +69,6 @@ states.input_datetime.magiccube_last_action1.attributes.timestamp < 5
   {% endif %}
 {% endif %}
 
-
-piscina_real_start_time:
-  icon: mdi:clock-outline
-
-piscina_start_time:
-  icon: mdi:clock-outline
 
 
 #
