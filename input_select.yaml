@@ -22,7 +22,7 @@
 
 # ALARM WARNING BEFORE ARMED : PENDING TIME
 #
-  xiaomi_gw_sound_alarm_arm:
+  xiaomi_sound_alarm_armed:
     name: "Sonido Alarma Armado"
     options:
       - "0 - Police car 1"
@@ -45,7 +45,7 @@
 
 # ALARM WARNING DISARMING
 #
-  xiaomi_gw_sound_alarm_disarm:
+  xiaomi_sound_alarm_disarmed:
     name: "Sonido Alarma Desarmado"
     options:
       - "0 - Police car 1"
@@ -68,7 +68,7 @@
 
 # ALARM TRIGGER SOUND
 #
-  xiaomi_gw_sound_alarm:
+  xiaomi_sound_alarm:
     name: "Sonido Alarma"
     options:
       - "0 - Police car 1"

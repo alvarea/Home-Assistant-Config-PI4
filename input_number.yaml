@@ -10,17 +10,17 @@
     step: 1
     icon: mdi:home-account
 #
-# Input number to control Xiaomi gateway Volume Alarm
+# Input number to control Xiaomi gateway Volume Alarm Triggered
 
-  xiaomi_gw_volume_alarm:
+  xiaomi_volume_alarm:
     name: Volumen
     min: 0
     max: 100
     step: 2
     icon: mdi:volume-high
 #
-# Input number to control Xiaomi gateway Volume Alarm Arm
-  xiaomi_gw_volume_alarm_arm:
+# Input number to control Xiaomi gateway Volume Alarm Armed
+  xiaomi_volume_alarm_armed:
     name: Volumen
     mode: slider
     initial: 10
@@ -30,7 +30,7 @@
     icon: mdi:volume-high
 #
 # Input number to control Xiaomi gateway Volume Alarm Disarm
-  xiaomi_gw_volume_alarm_disarm:
+  xiaomi_volume_alarm_disarmed:
     name: Volumen
     mode: slider
     initial: 10

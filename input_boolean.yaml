@@ -66,11 +66,11 @@
     name: Sirena Alarma
     initial: on
     icon: mdi:alarm-light
-  alarm_siren_setup:
+  alarm_test_sirenas:
     name: Test Sirena Alarma
     initial: off
     icon: mdi:alarm-light
-  mute_xiaomi_gw_sounds:
+  mute_xiaomi_sounds:
     name: Mute Sonidos Gateway
     icon: mdi:volume-off
 

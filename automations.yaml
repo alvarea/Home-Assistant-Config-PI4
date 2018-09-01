@@ -59,6 +59,22 @@
           >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
 
 
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# TAREAS DIARIAS DEL SISTEMA                                                  #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+- id: hass_daily_automations
+  alias: hass_daily_scripts
+  trigger:
+    - platform: time
+      at: '00:01:00'
+  action:
+    # Para todas las reglas durante el arranque del sistema
+    - service: counter.reset
+      entity_id: counter.nespresso_start
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # ALARMA: Armado y Control de la Alarma                                       #
@@ -93,14 +109,14 @@
   alias: 'X1 TEST ON'
   trigger:
     - platform: state
-      entity_id: input_boolean.alarm_siren_setup
+      entity_id: input_boolean.alarm_test_sirenas
       from: 'off'
       to: 'on'
   action:
     #ringtone_vol:
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm_arm
+      entity_id: script.sirena_xiaomi_play_alarm_armed
 
 
 #
@@ -116,7 +132,6 @@
   action:
     - service: script.alarma_to_pending
       data_template:
-        entityid: '{{trigger.entity_id}}'
         fromstate: '{{trigger.from_state.state}}'
         tostate: '{{trigger.to_state.state}}'
         ringtone_msg: 10005
@@ -138,7 +153,6 @@
   action:
     - service: script.alarma_to_pending
       data_template:
-        entityid: '{{trigger.entity_id}}'
         fromstate: '{{trigger.from_state.state}}'
         tostate: '{{trigger.to_state.state}}'
         ringtone_msg: 10004
@@ -155,7 +169,7 @@
   action:
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm_arm
+      entity_id: script.sirena_xiaomi_play_alarm_armed
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -176,7 +190,7 @@
   action:
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm_arm
+      entity_id: script.sirena_xiaomi_play_alarm_armed
   # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -198,7 +212,7 @@
   action:
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm_disarm
+      entity_id: script.sirena_xiaomi_play_alarm_disarmed
     # Apaga Luz Piloto Gateway
     - service: light.turn_off
       entity_id: light.gateway_light_7811dcb788fa
@@ -268,7 +282,7 @@
   action:
     # Aviso ALARMA con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm
+      entity_id: script.xiaomi_play_alarm
     # Script Notificación Alarma
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -304,7 +318,7 @@
       entity_id: alarm_control_panel.ha
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm_disarm
+      entity_id: script.sirena_xiaomi_play_alarm_disarmed
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -326,7 +340,7 @@
     to: 'off'
   action:
     # Llamada a script desactivado botón pánico.
-    - service: script.alarma_boton_panico_off
+    - service: script.alarma_boton_sirenas_off
 
 #
 #
@@ -507,7 +521,7 @@
       entity_id: alarm_control_panel.ha
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm_arm
+      entity_id: script.sirena_xiaomi_play_alarm_armed
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -902,14 +916,26 @@
       - condition: sun
         after: sunrise
         after_offset: '-00:30:00'
+      - condition: time
+        before: '11:00:00'
       - condition: state
         entity_id: light.hue_pasillo
         state: 'on'
+      - condition: state
+        entity_id: counter.nespresso_start
+        state: '0'
       # Hay alguien en casa
       - condition: state
         entity_id: binary_sensor.family_any_home
         state: 'on'
+      - condition: state
+        entity_id: switch.sonoff_s20_nespresso
+        state: 'off'
   action:
+    # Incremento del contador de autoencendido
+    - service: counter.increment
+      entity_id: counter.nespresso_start
+    # Enciende la Nespresso
     - service: switch.turn_on
       entity_id: switch.sonoff_s20_nespresso
     # Notifica Evento

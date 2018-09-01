@@ -3,7 +3,7 @@
 # ALARMA y SIRENAS                                                            #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-# 10004: Ringtone ArmadoDesarme:
+# 10004: Ringtone Sistema_Armado_Desarme:
 #
 # "sistema armado
 # 15 seg para desarmar
@@ -16,7 +16,7 @@
 #"ringtone_vol" : "50"
 #}
 #
-# 10005: Ringtone ArmadoSalgaAhora:
+# 10005: Ringtone Sistema_Armandose_SalgaAhora:
 #
 # "sistema armado
 # 15 seg para salir
@@ -24,85 +24,18 @@
 # sistema armado, quedan 3 segundos
 # salga ahora por favor"
 #
-#{ "gw_mac" : "78:11:DC:B7:88:FA",
-#"ringtone_id" : "10005",
-#"ringtone_vol" : "50"
-#}
-#
-# xiaomi_aqara.stop_ringtone
-# { "gw_mac" : "78:11:DC:B7:88:FA" }
-
-#- input_boolean.mute_xiaomi_gw_sounds
-#- input_select.xiaomi_gw_sound_alarm_arm
-#- input_number.xiaomi_gw_volume_alarm_arm
-#- input_select.xiaomi_gw_sound_alarm
-#- input_number.xiaomi_gw_volume_alarm
-
-
-#{
-#"tone_id" : "11",
-#"tone_vol" : "50"
-#}
-xiaomi_gw_play_alarm_arm:
-  alias: "Alarma Sonido Warning Armado"
-  sequence:
-    # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
-    - condition: template
-      value_template: "{% if is_state('input_boolean.mute_xiaomi_gw_sounds', 'off') %}true{% endif %}"
-
-    # Aviso Xiaomi GW
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data_template:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: >-
-            {{ states.input_select.xiaomi_gw_sound_alarm_arm.state.split('-')[0] }}
-        ringtone_vol: >-
-            {{ states('input_number.xiaomi_gw_volume_alarm_arm') | int }}
-
-xiaomi_gw_play_alarm_disarm:
-  alias: "Alarma Sonido Warning Desarmado"
-  sequence:
-    # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
-    - condition: template
-      value_template: "{% if is_state('input_boolean.mute_xiaomi_gw_sounds', 'off') %}true{% endif %}"
-
-    # Aviso Xiaomi GW
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data_template:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: >-
-            {{ states.input_select.xiaomi_gw_sound_alarm_disarm.state.split('-')[0] }}
-        ringtone_vol: >-
-            {{ states('input_number.xiaomi_gw_volume_alarm_disarm') | int }}
-
-xiaomi_gw_play_alarm:
-  alias: "Xiaomi GW Sonido Alarma"
-  sequence:
-    # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
-    - condition: template
-      value_template: "{% if is_state('input_boolean.mute_xiaomi_gw_sounds', 'off') %}true{% endif %}"
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-    - service: xiaomi_aqara.play_ringtone
-      data_template:
-        gw_mac: !secret xiaomi_gateway
-        ringtone_id: >-
-            {{ states.input_select.xiaomi_gw_sound_alarm.state.split('-')[0] }}
-        ringtone_vol: >-
-            {{ states('input_number.xiaomi_gw_volume_alarm') | int}}
 
 #
-#  data_template:
-#     entityid: '{{trigger.entity_id}}'
+# SCRIPT PARA NOTIFICACION MENSAJES SONOROS PERSONALIZADOS:
+#
+# 10004: Ringtone Sistema_Armado_Desarme:
+# 10005: Ringtone Sistema_Armandose_SalgaAhora:
+#
+# PARÁMETROS ENTRADA:
+#   data_template:
 #     fromstate: '{{trigger.from_state.state}}'
 #     tostate: '{{trigger.to_state.state}}'
+#     ringtone_msg: <nnnnn>
 #
 alarma_to_pending:
   alias: "Alarma Disarmed to Pending"
@@ -119,7 +52,90 @@ alarma_to_pending:
         gw_mac: !secret xiaomi_gateway
         ringtone_id: '{{ringtone_msg}}'
         ringtone_vol: >
-          {{ states('input_number.xiaomi_gw_volume_alarm_arm') | int }}
+          {{ states('input_number.xiaomi_volume_alarm_armed') | int }}
+
+
+# SCRIPT PARA NOTIFICACION MENSAJES SONORO SISTEMA ARMADO
+#
+# {{ states.input_select.xiaomi_sound_alarm_armed.state.split('-')[0] }}
+# {{ states('input_number.xiaomi_volume_alarm_armed') | int }}
+#
+sirena_xiaomi_play_alarm_armed:
+  alias: "Alarma Sonido Warning Armado"
+  sequence:
+    # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
+    - condition: template
+      value_template: "{% if is_state('input_boolean.mute_xiaomi_sounds', 'off') %}true{% endif %}"
+
+    # Aviso Xiaomi GW
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: >-
+            {{ states.input_select.xiaomi_sound_alarm_armed.state.split('-')[0] }}
+        ringtone_vol: >-
+            {{ states('input_number.xiaomi_volume_alarm_armed') | int }}
+
+# SCRIPT PARA NOTIFICACION MENSAJES SONORO SISTEMA ARMADO
+#
+# {{ states.input_select.xiaomi_sound_alarm_disarmed.state.split('-')[0] }}
+# {{ states('input_number.xiaomi_volume_alarm_disarmed') | int }}
+#
+sirena_xiaomi_play_alarm_disarmed:
+  alias: "Alarma Sonido Warning Desarmado"
+  sequence:
+    # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
+    - condition: template
+      value_template: "{% if is_state('input_boolean.mute_xiaomi_sounds', 'off') %}true{% endif %}"
+
+    # Aviso Xiaomi GW
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: >-
+            {{ states.input_select.xiaomi_sound_alarm_disarmed.state.split('-')[0] }}
+        ringtone_vol: >-
+            {{ states('input_number.xiaomi_volume_alarm_disarmed') | int }}
+
+# SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS DISPARO DE ALARMA
+#
+# {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
+# {{ states('input_number.xiaomi_volume_alarm') | int }}
+#
+xiaomi_play_alarm:
+  alias: "Xiaomi GW Sonido Alarma"
+  sequence:
+    # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
+    - condition: template
+      value_template: "{% if is_state('input_boolean.mute_xiaomi_sounds', 'off') %}true{% endif %}"
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: >-
+            {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
+        ringtone_vol: >-
+            {{ states('input_number.xiaomi_volume_alarm') | int}}
+
+# SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS PULSAR EL DOBLE BOTON PANICO
+#
+# La secuencia requerida es:
+# 1. Activar la "llave del botón pánico" con el interruptor: input_boolean.panic_button
+# 2. Pulsar el botón de ESTE script publicado en el frontend: script.alarma_boton_panico
+# 3. Pulsar el botón del script de apagado para cancelar sirenas: script.alarma_boton_sirenas_off
+#
+# Las sirenas se activan en este orden:
+# 1. Sirena interior Xiaomi con el tono configurado para Alarma
+# 2. Retraso de 5 segundos
+# 3. Sirena interior pasillo mediante switch.sonoff_basic_sw1
 
 alarma_boton_panico:
   alias: 'Boton Panico ON'
@@ -131,7 +147,7 @@ alarma_boton_panico:
       data:
         gw_mac: !secret xiaomi_gateway
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm
+      entity_id: script.xiaomi_play_alarm
     # Retraso 5"
     - delay: '00:00:05'
     # SONOFF_SW1_SIRENA INTERIOR ==> ON
@@ -148,29 +164,22 @@ alarma_boton_panico:
             >>> URGENTE: BOTON PANICO ACTIVADO
 
     # Retraso 5'
-    - delay: '00:05:00'
+    #- delay: '00:05:00'
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
-    - service: switch.turn_off
-      entity_id: switch.sonoff_basic_sw1
+    #- service: switch.turn_off
+    #  entity_id: switch.sonoff_basic_sw1
 
-alarma_boton_panico_off:
-  alias: 'Boton Panico OFF'
+alarma_boton_sirenas_off:
+  alias: 'Sirenas Interior OFF'
   sequence:
+    # Sierna ALARMA Xiaomi ==> OFF
     - service: xiaomi_aqara.stop_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
       entity_id: switch.sonoff_basic_sw1
-    # Notifica Telegram
-    - service: script.turn_on
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*ALARMA HOMY*'
-          message: >
-            >>> URGENTE: BOTON PANICO DESACTIVADO
+
 
 #AAC
 
@@ -198,19 +207,14 @@ magiccube_check_arm_away:
           value_template: '{{ states.binary_sensor.cube_158d00024a4a62.attributes.last_action == "shake_air" }}'
         - condition: template
           value_template: '{{ states.input_text.magiccube_last_action1.state == "rotate" }}'
+        - condition: template
+          value_template: '{{ not states.alarm_control_panel.ha.state == "armed_away" }}'
+    # Llamada al service estándar de armado.  Pasa a Pending y luego Armed_Away
     - service: alarm_control_panel.alarm_arm_away
       entity_id: alarm_control_panel.ha
-    # Aviso sonoro con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm_arm
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*ALARMA HOMY*'
-          message: >
-            >>> ESTADO: Armado Total
+    # La notificación se hace mediente la activación de la regla:
+    # alias: 'A2 Alarm Armed Away'
 
 magiccube_check_disarm:
   alias: 'Alarma MagicCube Disarm'
@@ -220,12 +224,15 @@ magiccube_check_disarm:
         - condition: template
           value_template: '{{ states.binary_sensor.cube_158d00024a4a62.attributes.last_action == "shake_air" }}'
         - condition: template
-          value_template: '{{ states.input_text.magiccube_last_action1.state == "move" }}'
+          value_template: '{{ states.input_text.magiccube_last_action1.state == "flip90" }}'
+        - condition: template
+          value_template: '{{ not states.alarm_control_panel.ha.state == "disarmed" }}'
+    # Desactiva Alarma
     - service: alarm_control_panel.alarm_disarm
       entity_id: alarm_control_panel.ha
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm_disarm
+      entity_id: script.sirena_xiaomi_play_alarm_disarmed
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento

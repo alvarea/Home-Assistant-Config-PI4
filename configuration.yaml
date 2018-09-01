@@ -126,6 +126,11 @@ timer:
     name: Tiempo Restante (Timer)
     icon: mdi:timer
 
+counter:
+  nespresso_start:
+    initial: 0
+    step: 1
+
 history_graph:
   piscina_duracion:
     entities:

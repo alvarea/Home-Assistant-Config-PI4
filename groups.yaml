@@ -80,12 +80,13 @@ alarma_status_grp:
     - input_datetime.magiccube_last_action1
 
 alarma_sirena_grp:
-  name: Botón Pánico
+  name: Botón Pánico / Sirena
   view: no
   entities:
+    - binary_sensor.sonoff_basic_sw1
     - input_boolean.panic_button
     - script.alarma_boton_panico
-    - binary_sensor.sonoff_basic_sw1
+    - script.alarma_boton_sirenas_off
 
 alarma_sensor_jardin_grp:
   name: Sensores Jardín
@@ -591,15 +592,15 @@ setup_sirenas_grp:
   name: Sirenas
   view: no
   entities:
-    - input_boolean.mute_xiaomi_gw_sounds
-    - input_select.xiaomi_gw_sound_alarm_arm
-    - input_number.xiaomi_gw_volume_alarm_arm
-    - input_select.xiaomi_gw_sound_alarm_disarm
-    - input_number.xiaomi_gw_volume_alarm_disarm
-    - input_select.xiaomi_gw_sound_alarm
-    - input_number.xiaomi_gw_volume_alarm
-    - input_boolean.alarm_siren_setup
-    - switch.sonoff_basic_sw1
+    - input_boolean.mute_xiaomi_sounds
+    - input_select.xiaomi_sound_alarm_armed
+    - input_number.xiaomi_volume_alarm_armed
+    - input_select.xiaomi_sound_alarm_disarmed
+    - input_number.xiaomi_volume_alarm_disarmed
+    - input_select.xiaomi_sound_alarm
+    - input_number.xiaomi_volume_alarm
+    - input_boolean.alarm_test_sirenas
+    #- switch.sonoff_basic_sw1
 
 msg_control_grp:
   name: Notificaciones

@@ -20,7 +20,7 @@
         gw_mac: !secret xiaomi_gateway
         ringtone_id: 10005
         ringtone_vol: >-
-            {{ states('input_number.xiaomi_gw_volume_alarm_arm') | int }}
+            {{ states('input_number.xiaomi_volume_alarm_disarmed') | int }}
 
 - id: A3_alarma_armed_pending
   alias: 'A3 Alarma Desarmando'
@@ -42,7 +42,7 @@
         gw_mac: !secret xiaomi_gateway
         ringtone_id: 10004
         ringtone_vol: >-
-            {{ states('input_number.xiaomi_gw_volume_alarm_arm') | int }}
+            {{ states('input_number.xiaomi_volume_alarm_armed') | int }}
 
 
 - id: L09_luces_on_estudio_on_sensor
@@ -77,9 +77,9 @@
     to: 'on'
     #value_template: "{{ states('input_number.panic_button_code') | int = 2309 }}"
   action:
-    # Aviso ALARMA con Xiaomi GW
+    # Aviso ALARMA con Xiaomi Sirena
     - service: script.turn_on
-      entity_id: script.xiaomi_gw_play_alarm
+      entity_id: script.xiaomi_play_alarm
     # Notifica Telegram
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
