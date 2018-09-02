@@ -24,14 +24,29 @@ logger:
 
 ota:
 
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Sonoff Basic SW3 Boton"
+  - platform: status
+    name: "Sonoff Basic SW3 Status"
+
 switch:
   - platform: gpio
-    name: "sonoff basic sw3"
+    name: "Sonoff Basic SW3"
     pin: GPIO12
 
 output:
   - platform: esp8266_pwm
-    id: sonoff_bas_sw3_green_led
+    id: basic_sw3_green_led
     pin:
       number: GPIO13
       inverted: True
+
+light:
+  - platform: monochromatic
+    name: "Sonoff Basic SW3 LED"
+    output: basic_sw3_green_led

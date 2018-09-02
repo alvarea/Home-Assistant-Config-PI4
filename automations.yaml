@@ -58,8 +58,6 @@
         message: >
           >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
 
-
-
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # TAREAS DIARIAS DEL SISTEMA                                                  #
@@ -329,7 +327,7 @@
             >>> ESTADO: Desarmado al amanecer.
 
 #
-# REGLA: TRIGGER APAGADO BOTON PANICO
+# REGLA: APAGADO BOTON PANICO
 #
 - id: A9_alarm_boton_panico_off
   alias: 'A9 Alarm Boton Panico Off'
@@ -341,6 +339,23 @@
   action:
     # Llamada a script desactivado botón pánico.
     - service: script.alarma_boton_sirenas_off
+
+#
+# REGLA: BOTON APAGADO SONOFF-SW1 ==> SIRENA OFF
+#
+- id: A10_alarm_sirena_off
+  alias: 'A10 Alarm Sirena Interior Off'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.sonoff_basic_sw1_boton
+    from: 'off'
+    to: 'on'
+  action:
+    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
+    - service: switch.turn_off
+      entity_id: switch.sonoff_basic_sw1
+    - service: light.toggle
+      entity_id: light.sonoff_basic_sw1_led
 
 #
 #
@@ -947,3 +962,37 @@
           message: >
             >>> Nespresso auto-encendida al amanecer.
             >>> Por favor, apáguela al terminar.
+
+#
+# SONOFF BASIC SW2 PORCHE PISCINA
+#
+- id: S11_Sonoff_BAS_SW2_Porche_Piscina
+  alias: 'S11 Sonoff SW2 Porche Piscina'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.sonoff_basic_sw2_boton
+    from: 'off'
+    to: 'on'
+  action:
+    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
+    - service: switch.toogle
+      entity_id: switch.sonoff_basic_sw2
+    - service: light.toggle
+      entity_id: light.sonoff_basic_sw2_led
+
+#
+# SONOFF BASIC SW4 PORCHE SALON
+#
+- id: S12_Sonoff_BAS_SW4_Porche_Piscina
+  alias: 'S12 Sonoff SW4 Porche Piscina'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.sonoff_basic_sw4_boton
+    from: 'off'
+    to: 'on'
+  action:
+    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
+    - service: switch.toogle
+      entity_id: switch.sonoff_basic_sw4
+    - service: light.toggle
+      entity_id: light.sonoff_basic_sw4_led

@@ -1,5 +1,5 @@
 #
-# SONOFF BASIC #2 => WIFI PISCINA
+# SONOFF BASIC #2
 #
 esphomeyaml:
   name: sonoff_bas_sw2
@@ -19,20 +19,35 @@ mqtt:
   broker: '192.168.0.23'
   username: 'switch_sonoff'
   password: '7xnQj7RUc05dHqywDM'
-
 # Enable logging
+
 logger:
 
 ota:
 
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Sonoff Basic SW2 Boton"
+  - platform: status
+    name: "Sonoff Basic SW2 Status"
+
 switch:
   - platform: gpio
-    name: "sonoff basic sw2"
+    name: "Sonoff Basic SW2"
     pin: GPIO12
 
 output:
   - platform: esp8266_pwm
-    id: sonoff_bas_sw2_green_led
+    id: basic_sw2_green_led
     pin:
       number: GPIO13
       inverted: True
+
+light:
+  - platform: monochromatic
+    name: "Sonoff Basic SW2 LED"
+    output: basic_sw2_green_led
