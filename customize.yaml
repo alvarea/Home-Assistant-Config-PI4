@@ -222,6 +222,13 @@ switch.sonoff_basic_sw1:
   friendly_name: Alarma Sirena Interior
   icon: mdi:alarm-snooze
 
+binary_sensor.sonoff_basic_sw1_status:
+  friendly_name: Sensor Sirena (SW1)
+
+light.sonoff_basic_sw1_led:
+  friendly_name: LED Sirena Interior ++(SW1)
+
+
 # Jardín Depuradora Piscina
 #
 binary_sensor.sonoff_pow_sw1:
@@ -240,13 +247,29 @@ switch.sonoff_basic_sw2:
   friendly_name: Porche Piscina (SW2)
   icon: mdi:ceiling-light
 
+binary_sensor.sonoff_basic_sw2_status:
+  friendly_name: Sensor Porche Piscina (SW2)
+
+light.sonoff_basic_sw2_led:
+  friendly_name: LED Porche Piscina (SW2)
+
 switch.sonoff_basic_sw3:
   friendly_name: Pendiente (SW3)
   icon: mdi:wifi
 
+
+#binary_sensor.sonoff_basic_sw3_status
+#light.sonoff_basic_sw3_led
+
 switch.sonoff_basic_sw4:
   friendly_name: Porche Salón (SW4)
   icon: mdi:ceiling-light
+
+binary_sensor.sonoff_basic_sw4_status:
+  friendly_name: Sensor Porche Salón (SW4)
+
+light.sonoff_basic_sw4_led:
+  friendly_name: LED Porche Salón (SW4)
 
 switch.sonoff_4ch_relay_1:
   friendly_name: Balizas Cesped (CH1)

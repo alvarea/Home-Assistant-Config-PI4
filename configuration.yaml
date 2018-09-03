@@ -163,9 +163,9 @@ apple_tv:
     credentials: 906CB00CF5F3A299:84CB3B3A11823C334BD48BAB463C0B625392E4BEF4F2817F19361BE285C0BEB1
 
 # Mediaplayer FireTV
-media_player:
-  - platform: firetv
-    name: FireTV Cocina
+#media_player:
+#  - platform: firetv
+#    name: FireTV Cocina
 
 # MQTT - BROKER: CLOUDMQTT
 mqtt:
