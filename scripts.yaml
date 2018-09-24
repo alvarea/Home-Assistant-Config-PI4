@@ -189,7 +189,7 @@ magiccube_check_alarm_sequence:
     - condition: and
       conditions:
         - condition: template
-          value_template: '{% if not states.binary_sensor.cube_158d00024a4a62.attributes.last_action | string == "alert" %}true{% endif %}'
+          value_template: '{% if not states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action | string == "alert" %}true{% endif %}'
         - condition: template
           value_template: >-
             {{ as_timestamp(now()) -
@@ -204,7 +204,7 @@ magiccube_check_arm_away:
     - condition: and
       conditions:
         - condition: template
-          value_template: '{{ states.binary_sensor.cube_158d00024a4a62.attributes.last_action == "shake_air" }}'
+          value_template: '{{ states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action == "shake_air" }}'
         - condition: template
           value_template: '{{ states.input_text.magiccube_last_action1.state == "rotate" }}'
         - condition: template
@@ -222,7 +222,7 @@ magiccube_check_disarm:
     - condition: and
       conditions:
         - condition: template
-          value_template: '{{ states.binary_sensor.cube_158d00024a4a62.attributes.last_action == "shake_air" }}'
+          value_template: '{{ states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action == "shake_air" }}'
         - condition: template
           value_template: '{{ states.input_text.magiccube_last_action1.state == "flip90" }}'
         - condition: template
@@ -247,12 +247,12 @@ magiccube_update_lastaction:
   sequence:
     # Si Last_action = "alert" => CANCEL
     #- condition: template
-    #  value_template: '{% if not states.binary_sensor.cube_158d00024a4a62.attributes.last_action | string == "alert" %}true{% endif %}'
+    #  value_template: '{% if not states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action | string == "alert" %}true{% endif %}'
     # Actualiza Última Acciónn
     - service: input_text.set_value
       entity_id: input_text.magiccube_last_action1
       data_template:
-        value: '{{ states.binary_sensor.cube_158d00024a4a62.attributes.last_action }}'
+        value: '{{ states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action }}'
     # Actualiza Hora Último Evento
     - service: input_datetime.set_datetime
       entity_id: input_datetime.magiccube_last_action1

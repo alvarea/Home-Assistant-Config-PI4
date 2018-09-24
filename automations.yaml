@@ -369,7 +369,7 @@
     platform: event
     event_type: cube_action
     event_data:
-      entity_id: binary_sensor.cube_158d00024a4a62
+      entity_id: binary_sensor.cube_158d00024a4a62_2
       #action_type: flip90, flip180, move, tap_twice, shake_air
   action:
     - service: script.magiccube_check_alarm_sequence

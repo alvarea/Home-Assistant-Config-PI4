@@ -238,7 +238,7 @@ sensor.illumination_158d0001e637f6:
   name:
   platform: xiaomi_aqara
   unique_id: lux158d0001e637f6
-binary_sensor.cube_158d00024a4a62:
+binary_sensor.cube_158d00024a4a62_2:
   name:
   platform: xiaomi_aqara
   unique_id: cube158d00024a4a62

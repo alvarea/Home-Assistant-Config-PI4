@@ -45,7 +45,7 @@ states.input_datetime.magiccube_last_action1.attributes.timestamp | timestamp_lo
 }}
 
 {{
-states.binary_sensor.cube_158d00024a4a62.attributes.last_action
+states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action
 }}
 
 {{ as_timestamp(now())

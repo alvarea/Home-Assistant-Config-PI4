@@ -75,7 +75,7 @@ alarma_status_grp:
     - alarm_control_panel.ha
     - sensor.alarm_zone
     - sensor.magiccube_lastaction
-    #- binary_sensor.cube_158d00024a4a62
+    #- binary_sensor.cube_158d00024a4a62_2
     - input_text.magiccube_last_action1
     - input_datetime.magiccube_last_action1
 

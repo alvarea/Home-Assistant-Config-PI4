@@ -125,7 +125,7 @@ sensor.humidity_158d00022c6a47:
 # Entrada
 #
 # Xiaomi Magic Cube
-binary_sensor.cube_158d00024a4a62:
+binary_sensor.cube_158d00024a4a62_2:
   friendly_name: Magic Cube
   icon: mdi:cube-outline
 
