@@ -814,43 +814,37 @@
   alias: 'S04 Sonoff 4CH Status'
   trigger:
     - platform: state
-      entity_id:
-        - binary_sensor.sonoff_4ch_status
+      entity_id: binary_sensor.sonoff_4ch_status
       from: 'on'
       to: 'off'
+      for: '00:05:00'
   action:
     # Script Notificación Alarma
     - service: script.turn_on
       entity_id: script.notifica_alarma
       data:
         variables:
-          title: '*ALARMA FALLO ELECTRICO*'
+          title: '*AVISO FALLO ELECTRICO*'
           message: >
             >>> URGENTE: CUADRO ELECTRICO JARDIN SIN CORRIENTE
-
-            >>> ZONA: '{{trigger.entity_id}}'
 
 - id: S05_Sonoff_POW_Status
   alias: 'S05 Sonoff POW Status'
   trigger:
     - platform: state
-      entity_id:
-        - binary_sensor.sonoff_pow_sw1
-
+      entity_id: binary_sensor.sonoff_pow_sw1
       from: 'on'
       to: 'off'
+      for: '00:05:00'
   action:
     # Script Notificación Alarma
     - service: script.turn_on
       entity_id: script.notifica_alarma
       data:
         variables:
-          title: '*ALARMA FALLO ELECTRICO*'
+          title: '*AVISO FALLO ELECTRICO*'
           message: >
             >>> URGENTE: CUADRO ELECTRICO DEPURADORA PISCINA SIN CORRIENTE
-
-            >>> ZONA: '{{trigger.entity_id}}'
-
 
 # SONOFF POW - DEPURADORA PISCINA
 #
@@ -930,15 +924,15 @@
     conditions:
       - condition: sun
         after: sunrise
-        after_offset: '-00:30:00'
+        after_offset: '-02:00:00'
       - condition: time
         before: '11:00:00'
       - condition: state
         entity_id: light.hue_pasillo
         state: 'on'
-      - condition: state
+      - condition: numeric_state
         entity_id: counter.nespresso_start
-        state: '0'
+        below: 2
       # Hay alguien en casa
       - condition: state
         entity_id: binary_sensor.family_any_home
