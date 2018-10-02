@@ -51,7 +51,7 @@
     below: 21
   action:
     service: script.turn_on
-    entity_id: script.notifica_evento
+    entity_id: script.notifica_aviso_debug
     data:
       variables:
         title: '*CERTIFICADO SSL*'
@@ -579,7 +579,7 @@
     - service: script.luces_exterior_on
     # Notifica Evento
     - service: script.turn_on
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_aviso_debug
       data:
         variables:
           title: '*LUCES: ON*'
@@ -618,7 +618,7 @@
     - service: script.luces_exterior_off
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_aviso_debug
       data:
         variables:
           title: '*LUCES: OFF*'
@@ -642,7 +642,7 @@
     - service: script.luces_exterior_off
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_aviso_debug
       data:
         variables:
           title: '*LUCES: OFF*'
@@ -667,7 +667,7 @@
       entity_id: light.room_salon_tv
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_aviso_debug
       data:
         variables:
           title: '*LUCES: ON*'
@@ -688,7 +688,7 @@
     - service: script.luces_off
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_aviso_debug
       data:
         variables:
           title: '*LUCES: OFF*'
@@ -697,9 +697,34 @@
 
             >>> LUCES: Luces de toda la casa Off
 
+- id: L06_luces_off_sunrise
+  alias: 'L06 Luces Off Sunrise'
+  trigger:
+    - platform: time
+      at: "04:00:00"
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: light.room_estudio
+        state: 'on'
+      - condition: state
+        entity_id: light.room_salon_lectura
+        state: 'on'
+      - condition: state
+        entity_id: light.room_salon_tv
+        state: 'on'
+      - condition: state
+        entity_id: light.room_cocina
+        state: 'on'
+  action:
+    # Script Apagado Luces exterior
+    - service: script.luces_exterior_off
+    # Script Luces Apagado Interior Casa
+    - service: script.luces_off
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_aviso_debug
       data:
         variables:
           title: '*LUCES: OFF*'

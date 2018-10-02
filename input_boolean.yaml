@@ -40,7 +40,7 @@
 
   notify_mfc:
     name: Notificaciones Malen
-    initial: off
+    initial: on
     icon: mdi:bell-ring
   notify_aac:
     name: Notificaciones Agustin
@@ -48,11 +48,11 @@
     icon: mdi:bell-ring
   notify_paf:
     name: Notificaciones Paloma
-    initial: off
+    initial: on
     icon: mdi:bell-ring
   notify_aaf:
     name: Notificaciones Agu
-    initial: off
+    initial: on
     icon: mdi:bell-ring
 
 # INTERRUPTORES BOOLEAN => Control alarma y notificaciones
