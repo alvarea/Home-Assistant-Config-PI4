@@ -215,20 +215,21 @@ notify:
       - service: ios_mfc_ios
       - service: ios_paf_ios
       - service: ios_aaf_ios
-  - platform: telegram
-    name: telegram_family
+
+  - name: telegram_family
+    platform: telegram
     chat_id: !secret telegram_chat_fam
-  - platform: telegram
-    name: telegram_aac
+  - name: telegram_aac
+    platform: telegram
     chat_id: !secret telegram_chat_aac
-  - platform: telegram
-    name: telegram_mfc
+  - name: telegram_mfc
+    platform: telegram
     chat_id: !secret telegram_chat_mfc
-  - platform: telegram
-    name: telegram_paf
+  - name: telegram_paf
+    platform: telegram
     chat_id: !secret telegram_chat_paf
-  - platform: telegram
-    name: telegram_aaf
+  - name: telegram_aaf
+    platform: telegram
     chat_id: !secret telegram_chat_aaf
 
 # Notifications via Telegram Bot
@@ -236,11 +237,12 @@ telegram_bot:
   - platform: polling
     api_key: !secret telegram_apikey
     allowed_chat_ids:
+      - !secret telegram_chat_fam
       - !secret telegram_chat_aac
       - !secret telegram_chat_mfc
       - !secret telegram_chat_paf
-      - !secret telegram_chat_aaf
-      - !secret telegram_chat_fam
+      #- !secret telegram_chat_aaf
+
 
 # Enables a map showing the location of tracked devices
 map:

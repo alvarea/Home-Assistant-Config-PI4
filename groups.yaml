@@ -275,6 +275,8 @@ luces_estudio_grp:
 luces_jardin_grp:
   name: Luces Jardín
   entities:
+    - binary_sensor.sonoff_basic_sw2_status
+    - binary_sensor.sonoff_basic_sw4_status
     - switch.wall_switch_right_158d0002236e75
     - switch.sonoff_basic_sw2                   # Lámpara Piscina
     - switch.sonoff_basic_sw4                   # Porche Salón
@@ -433,7 +435,6 @@ system_view:
     - group.pi3cpuram_grp
     - group.pi3storage_grp
     - group.track_nmap_grp
-    - group.sensores_sonoff_grp
 
 hass_status_grp:
   view: no
@@ -461,14 +462,6 @@ pi3storage_grp:
     - sensor.disk_use_
     - sensor.disk_free_
     - sensor.swap_use_percent
-
-sensores_sonoff_grp:
-  name: Status Sensores Sonoff
-  entities:
-    - binary_sensor.sonoff_basic_sw1_status
-    - binary_sensor.sonoff_basic_sw2_status
-    - binary_sensor.sonoff_basic_sw3_status
-    - binary_sensor.sonoff_basic_sw4_status
 
 track_nmap_grp:
   name: NMAP Device Tracking

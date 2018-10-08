@@ -379,9 +379,7 @@ notifica_aviso_debug:
 
   # Llamada a Scripts Notificación Telegram AAC
   - service: script.turn_on
-    entity_id: script.notifica_telegram_aac
-
-
+    entity_id: script.telegram_aac
 
 notifica_evento:
   alias: 'Notifica Evento a Family'
@@ -404,15 +402,15 @@ notifica_evento:
 
   # Llamada a Scripts Notificación Telegram
   - service: script.turn_on
-    entity_id: script.notifica_telegram_aac
+    entity_id: script.telegram_aac
   - service: script.turn_on
-    entity_id: script.notifica_telegram_mfc
+    entity_id: script.telegram_mfc
   - service: script.turn_on
-    entity_id: script.notifica_telegram_paf
-  - service: script.turn_on
-    entity_id: script.notifica_telegram_aaf
+    entity_id: script.telegram_paf
+  #- service: script.turn_on
+  #  entity_id: script.telegram_aaf
 
-notifica_telegram_aac:
+telegram_aac:
   alias: 'Mensaje Telegram AAC'
   sequence:
   - condition: state
@@ -425,7 +423,7 @@ notifica_telegram_aac:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
-notifica_telegram_mfc:
+telegram_mfc:
   alias: 'Mensaje Telegram MFC'
   sequence:
   - condition: state
@@ -438,7 +436,7 @@ notifica_telegram_mfc:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
-notifica_telegram_paf:
+telegram_paf:
   alias: 'Mensaje Telegram PAF'
   sequence:
   - condition: state
@@ -451,7 +449,7 @@ notifica_telegram_paf:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
-notifica_telegram_aaf:
+telegram_aaf:
   alias: 'Mensaje Telegram AAF'
   sequence:
   - condition: state
