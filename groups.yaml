@@ -554,11 +554,6 @@ setup_telegram_grp:
   view: no
   entities:
     - input_select.home_notify
-    - input_boolean.notify_mfc
-    - input_boolean.notify_aac
-    - input_boolean.notify_paf
-    - input_boolean.notify_aaf
-
 
 setup_luces_jardin_grp:
   name: Luces Jardín Setup

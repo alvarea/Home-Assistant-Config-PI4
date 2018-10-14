@@ -195,8 +195,8 @@ xiaomi_aqara:
 # NMAP, OWNTRACKS
 device_tracker:
   - platform: geofency
-  - platform: owntracks
-    mqtt_topic: "owntracks/#"
+  #- platform: owntracks
+  #  mqtt_topic: "owntracks/#"
   - platform: nmap_tracker
     hosts:
       - 192.168.0.10
@@ -216,9 +216,12 @@ notify:
       - service: ios_paf_ios
       - service: ios_aaf_ios
 
-  - name: telegram_family
+  - name: telegram_alarm
     platform: telegram
-    chat_id: !secret telegram_chat_fam
+    chat_id: !secret telegram_grp_alarm
+  - name: telegram_notify
+    platform: telegram
+    chat_id: !secret telegram_grp_notif
   - name: telegram_aac
     platform: telegram
     chat_id: !secret telegram_chat_aac
@@ -234,15 +237,12 @@ notify:
 
 # Notifications via Telegram Bot
 telegram_bot:
-  - platform: polling
+  - platform: broadcast
     api_key: !secret telegram_apikey
     allowed_chat_ids:
-      - !secret telegram_chat_fam
+      - !secret telegram_grp_alarm
+      - !secret telegram_grp_notif
       - !secret telegram_chat_aac
-      - !secret telegram_chat_mfc
-      - !secret telegram_chat_paf
-      #- !secret telegram_chat_aaf
-
 
 # Enables a map showing the location of tracked devices
 map:

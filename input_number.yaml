@@ -44,7 +44,7 @@
   piscina_diario_horas:
     name: Horas
     mode: slider
-    initial: 4
+    initial: 3
     min: 0
     max: 12
     step: 1
@@ -52,9 +52,9 @@
 
   piscina_manual_minutos:
     name: 'Programa Manual (min)'
-    mode: box
-    initial: 60
+    mode: slider
+    initial: 15
     min: 0
     max: 240
-    step: 1
+    step: 15
     icon: mdi:timelapse

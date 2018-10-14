@@ -180,9 +180,6 @@ alarma_boton_sirenas_off:
     - service: switch.turn_off
       entity_id: switch.sonoff_basic_sw1
 
-
-#AAC
-
 magiccube_check_alarm_sequence:
   alias: 'Alarma MagicCube Alarm Sequence'
   sequence:
@@ -331,7 +328,7 @@ notifica_alarma:
       value: "{{ message }}"
 
   # Notificación Telegram
-  - service: notify.telegram_family
+  - service: notify.telegram_alarm
     data_template:
       title: >
         {{ states('input_text.mensaje_tit') }}
@@ -358,6 +355,32 @@ notifica_alarma:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
+notifica_evento:
+  alias: 'Notifica Evento a Family'
+  sequence:
+  # IF HOME_NOTIFY = OFF CANCEL
+  - condition: template
+    value_template: "{% if not is_state('input_select.home_notify', 'Off') %}true{% endif %}"
+
+  # Actualiza el valor de input_text.mensaje_tit con el título recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_tit
+    data_template:
+      value: "{{ title }}"
+
+  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_msg
+    data_template:
+      value: "{{ message }}"
+
+  - service: notify.telegram_notify
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+
 notifica_aviso_debug:
   alias: 'Notifica Aviso Debug'
   sequence:
@@ -378,84 +401,7 @@ notifica_aviso_debug:
       value: "{{ message }}"
 
   # Llamada a Scripts Notificación Telegram AAC
-  - service: script.turn_on
-    entity_id: script.telegram_aac
-
-notifica_evento:
-  alias: 'Notifica Evento a Family'
-  sequence:
-  # IF HOME_NOTIFY = OFF CANCEL
-  - condition: template
-    value_template: "{% if not is_state('input_select.home_notify', 'Off') %}true{% endif %}"
-
-  # Actualiza el valor de input_text.mensaje_tit con el título recibido.
-  - service: input_text.set_value
-    entity_id: input_text.mensaje_tit
-    data_template:
-      value: "{{ title }}"
-
-  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
-  - service: input_text.set_value
-    entity_id: input_text.mensaje_msg
-    data_template:
-      value: "{{ message }}"
-
-  # Llamada a Scripts Notificación Telegram
-  - service: script.turn_on
-    entity_id: script.telegram_aac
-  - service: script.turn_on
-    entity_id: script.telegram_mfc
-  - service: script.turn_on
-    entity_id: script.telegram_paf
-  #- service: script.turn_on
-  #  entity_id: script.telegram_aaf
-
-telegram_aac:
-  alias: 'Mensaje Telegram AAC'
-  sequence:
-  - condition: state
-    entity_id: input_boolean.notify_aac
-    state: 'on'
   - service: notify.telegram_aac
-    data_template:
-      title: >
-        {{ states('input_text.mensaje_tit') }}
-      message: >
-        {{ states('input_text.mensaje_msg') }}
-
-telegram_mfc:
-  alias: 'Mensaje Telegram MFC'
-  sequence:
-  - condition: state
-    entity_id: input_boolean.notify_mfc
-    state: 'on'
-  - service: notify.telegram_mfc
-    data_template:
-      title: >
-        {{ states('input_text.mensaje_tit') }}
-      message: >
-        {{ states('input_text.mensaje_msg') }}
-
-telegram_paf:
-  alias: 'Mensaje Telegram PAF'
-  sequence:
-  - condition: state
-    entity_id: input_boolean.notify_paf
-    state: 'on'
-  - service: notify.telegram_paf
-    data_template:
-      title: >
-        {{ states('input_text.mensaje_tit') }}
-      message: >
-        {{ states('input_text.mensaje_msg') }}
-
-telegram_aaf:
-  alias: 'Mensaje Telegram AAF'
-  sequence:
-  - condition: state
-    entity_id: input_boolean.notify_aaf
-    state: 'on'
-  - service: notify.telegram_aaf
     data_template:
       title: >
         {{ states('input_text.mensaje_tit') }}

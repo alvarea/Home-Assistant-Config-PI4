@@ -38,23 +38,6 @@
     initial: on
     icon: mdi:sleep
 
-  notify_mfc:
-    name: Notificaciones Malen
-    initial: on
-    icon: mdi:bell-ring
-  notify_aac:
-    name: Notificaciones Agustin
-    initial: on
-    icon: mdi:bell-ring
-  notify_paf:
-    name: Notificaciones Paloma
-    initial: on
-    icon: mdi:bell-ring
-  notify_aaf:
-    name: Notificaciones Agu
-    initial: on
-    icon: mdi:bell-ring
-
 # INTERRUPTORES BOOLEAN => Control alarma y notificaciones
 #
   panic_button:
