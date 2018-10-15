@@ -35,10 +35,10 @@
       data:
         entity_id:
           - group.all_automations
-    # Reglas deshabilitadas temporalmente
-    - service: automation.turn_off
-      entity_id: automation.l02_luces_off_exterior_all_family_home
 
+    # Reglas deshabilitadas temporalmente
+    #- service: automation.turn_off
+    #  entity_id: automation.l02_luces_off_exterior_all_family_home
 
 #
 # CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
@@ -588,8 +588,32 @@
 
             >>> LUCES: Alumbrado Exterior ON
 
-- id: L02_luces_off_exterior_all_family_home
-  alias: 'L02 Luces Off Exterior All Family Home'
+- id: L02_luces_off_exterior_sunset2h
+  alias: 'L02 Luces Off Exterior Sunset 2h'
+  trigger:
+    - platform: sun
+      event: sunset
+      offset: "+02:15:00"
+  condition:
+    condition: state
+    entity_id: switch.wall_switch_right_158d0002236e75
+    state: 'on'
+  action:
+    # Apagado Luces exterior
+    - service: script.luces_exterior_off
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.notifica_aviso_debug
+      data:
+        variables:
+          title: '*LUCES: OFF*'
+          message: >
+            >>> EVENTO: 2 horas tras anochecer
+
+            >>> LUCES: Luces Exterior Off
+
+- id: L03_luces_off_exterior_all_family_home
+  alias: 'L03 Luces Off Exterior All Family Home'
   trigger:
     # Los que duermen ya están en casa
     - platform: state
@@ -602,7 +626,7 @@
     condition: and
     conditions:
       - condition: time
-        after: '00:00:00'
+        after: '23:00:00'
       - condition: time
         before: '20:00:00'
       - condition: state
@@ -626,30 +650,6 @@
             >>> EVENTO: Es Medianoche y todos en casa
 
             >>> LUCES: Alumbrado Exterior Off
-
-- id: L03_luces_off_exterior_sunrise
-  alias: 'L03 Luces Off Exterior Amanecer -4h'
-  trigger:
-    - platform: sun
-      event: sunrise
-      offset: "-04:00:00"
-  condition:
-    condition: state
-    entity_id: switch.wall_switch_right_158d0002236e75
-    state: 'on'
-  action:
-    # Apagado Luces exterior
-    - service: script.luces_exterior_off
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_aviso_debug
-      data:
-        variables:
-          title: '*LUCES: OFF*'
-          message: >
-            >>> EVENTO: Amanecer en 4 horas
-
-            >>> LUCES: Luces Exterior Off
 
 - id: L04_luces_on_salon_sunset
   alias: 'L04 Luces On Salon Puesta Sol -1h'
@@ -698,10 +698,10 @@
             >>> LUCES: Luces de toda la casa Off
 
 - id: L06_luces_off_sunrise
-  alias: 'L06 Luces Off Sunrise'
+  alias: 'L06 Luces Off Before Sunrise'
   trigger:
     - platform: time
-      at: "04:00:00"
+      at: "02:00:00"
   condition:
     condition: or
     conditions:
@@ -717,6 +717,9 @@
       - condition: state
         entity_id: light.room_cocina
         state: 'on'
+      - condition: state
+        entity_id: switch.wall_switch_right_158d0002236e75 # Luces exterior
+        state: 'on'
   action:
     # Script Apagado Luces exterior
     - service: script.luces_exterior_off
@@ -729,7 +732,7 @@
         variables:
           title: '*LUCES: OFF*'
           message: >
-            >>> EVENTO: Luces encendidas al amanecer
+            >>> EVENTO: Luces encendidas antes del amanecer
 
             >>> LUCES: Apagado total
 

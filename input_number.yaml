@@ -53,7 +53,7 @@
   piscina_manual_minutos:
     name: 'Programa Manual (min)'
     mode: slider
-    initial: 15
+    initial: 60
     min: 0
     max: 240
     step: 15

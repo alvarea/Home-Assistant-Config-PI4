@@ -536,7 +536,6 @@ config_view:
   icon: mdi:settings
   entities:
       - group.setup_sirenas_grp
-      - group.setup_telegram_grp
       - group.setup_luces_jardin_grp
       - group.setup_reglas_luces_grp
       - group.setup_reglas_alarma_grp
@@ -588,14 +587,13 @@ setup_reglas_luces_grp:
   view: no
   entities:
     - automation.l01_luces_on_exterior_sunset
-    - automation.l02_luces_off_exterior_all_family_home
-    - automation.l03_luces_off_exterior_amanecer_4h
+    - automation.l02_luces_off_exterior_sunset_2h
+    - automation.l03_luces_off_exterior_all_family_home
     - automation.l04_luces_on_salon_puesta_sol_1h
     - automation.l05_luces_off_medianoche
-    - automation.l06_luces_off_amanecer
+    - automation.l06_luces_off_before_sunrise
     - automation.l07_luces_on_entrada_segun_sensor
     - automation.l08_luces_on_exterior_segun_sensor
-
 setup_sirenas_grp:
   name: Sirenas
   view: no

@@ -336,16 +336,16 @@ notifica_alarma:
         {{ states('input_text.mensaje_msg') }}
 
   # Notificación Telegram
-  #- service: notify.telegram_family
-  #  data:
-  #    title: '*ALARMA*'
-  #    message: Cámaras Seguridad
-  #    data:
-  #      photo:
-  #        - url: http://192.168.0.11/snapshot/image0.jpg
-  #          caption: Cámara Cocina
-  #        - url: http://192.168.0.12:8080/snapshot.cgi
-  #          caption: Cámara Estudio
+  - service: notify.telegram_alarm
+    data:
+      title: '*ALARMA*'
+      message: Cámaras Seguridad
+      data:
+        photo:
+          - url: http://192.168.0.11/snapshot/image0.jpg
+            caption: Cámara Cocina
+          - url: http://192.168.0.12:8080/snapshot.cgi
+            caption: Cámara Estudio
 
   # Notificación IOS
   - service: notify.notifica_grupo_ios
@@ -477,7 +477,7 @@ luces_exterior_timer:
       entity_id: switch.wall_switch_right_158d0002236e75
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_aviso_debug
       data:
         variables:
           title: '*LUCES: ON*'
