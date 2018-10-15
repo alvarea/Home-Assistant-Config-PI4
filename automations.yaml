@@ -51,7 +51,7 @@
     below: 21
   action:
     service: script.turn_on
-    entity_id: script.notifica_aviso_debug
+    entity_id: script.notifica_warning
     data:
       variables:
         title: '*CERTIFICADO SSL*'
@@ -579,7 +579,7 @@
     - service: script.luces_exterior_on
     # Notifica Evento
     - service: script.turn_on
-      entity_id: script.notifica_aviso_debug
+      entity_id: script.notifica_warning
       data:
         variables:
           title: '*LUCES: ON*'
@@ -593,7 +593,7 @@
   trigger:
     - platform: sun
       event: sunset
-      offset: "+02:15:00"
+      offset: "+03:15:00"
   condition:
     condition: state
     entity_id: switch.wall_switch_right_158d0002236e75
@@ -603,14 +603,14 @@
     - service: script.luces_exterior_off
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_aviso_debug
+      entity_id: script.notifica_warning
       data:
         variables:
           title: '*LUCES: OFF*'
           message: >
-            >>> EVENTO: 2 horas tras anochecer
+            >>> EVENTO: 3 horas tras puesta de sol
 
-            >>> LUCES: Luces Exterior Off
+            >>> LUCES: Alumbrado Exterior Off
 
 - id: L03_luces_off_exterior_all_family_home
   alias: 'L03 Luces Off Exterior All Family Home'
@@ -642,7 +642,7 @@
     - service: script.luces_exterior_off
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_aviso_debug
+      entity_id: script.notifica_warning
       data:
         variables:
           title: '*LUCES: OFF*'
@@ -667,7 +667,7 @@
       entity_id: light.room_salon_tv
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_aviso_debug
+      entity_id: script.notifica_warning
       data:
         variables:
           title: '*LUCES: ON*'
@@ -688,7 +688,7 @@
     - service: script.luces_off
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_aviso_debug
+      entity_id: script.notifica_warning
       data:
         variables:
           title: '*LUCES: OFF*'
@@ -727,7 +727,7 @@
     - service: script.luces_off
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_aviso_debug
+      entity_id: script.notifica_warning
       data:
         variables:
           title: '*LUCES: OFF*'

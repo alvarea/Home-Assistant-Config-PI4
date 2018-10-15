@@ -381,7 +381,7 @@ notifica_evento:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
-notifica_aviso_debug:
+notifica_warning:
   alias: 'Notifica Aviso Debug'
   sequence:
   # IF HOME_NOTIFY = OFF CANCEL
@@ -477,7 +477,7 @@ luces_exterior_timer:
       entity_id: switch.wall_switch_right_158d0002236e75
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_aviso_debug
+      entity_id: script.notifica_warning
       data:
         variables:
           title: '*LUCES: ON*'
@@ -497,8 +497,8 @@ luces_exterior_off:
   sequence:
     - service: switch.turn_off
       entity_id:
-        - switch.wall_switch_right_158d0002236e75
-        - switch.sonoff_4ch_relay_1 # Luces Balizas Cespec
+        - switch.wall_switch_right_158d0002236e75   # Faroles Alumbrado Exterior
+        - switch.sonoff_4ch_relay_1                 # Luces Balizas Cespec
 
 
 luces_exterior_on:
