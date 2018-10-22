@@ -199,12 +199,12 @@ device_tracker:
   #  mqtt_topic: "owntracks/#"
   - platform: nmap_tracker
     hosts:
-      - 192.168.0.10
-      - 192.168.0.50-99
+      - 192.168.0.50-70
     home_interval: 10
     consider_home: 0:10:00
-    exclude:
-     - 192.168.0.23
+    interval_seconds: 20
+    #exclude:
+    #- 192.168.0.23
 
 # NOTIFICACIONES
 notify:

@@ -15,12 +15,12 @@
 # List the trackers for each individual
 #
 MFC_Trackers = ['device_tracker.mfc_iphone_nmap',
-                'device_tracker.mfc_iphone_owntrack',
+                #'device_tracker.mfc_iphone_owntrack',
                 'device_tracker.mfc_ios',
                 'device_tracker.e3c67d6b51bf445ba241a0045bfe0222']
 
 AAC_Trackers = ['device_tracker.aac_iphone_nmap',
-                'device_tracker.aac_iphone_owntrack',
+                #'device_tracker.aac_iphone_owntrack',
                 'device_tracker.aac_ios',
                 'device_tracker.b8b52a3bf0384e72a268705d9b06e496']
 

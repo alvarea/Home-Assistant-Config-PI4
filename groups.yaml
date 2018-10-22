@@ -176,7 +176,7 @@ track_aac_grp:
     - binary_sensor.family_home_aac
     #- sensor.family_home_aac
     - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-    - device_tracker.aac_iphone_owntrack
+    #- device_tracker.aac_iphone_owntrack
     - device_tracker.aac_ios
     - device_tracker.aac_iphone_nmap
     - sensor.baye_probability_aac
@@ -191,7 +191,7 @@ track_mfc_grp:
     - binary_sensor.family_home_mfc
     # - sensor.family_home_mfc
     - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
-    - device_tracker.mfc_iphone_owntrack
+    #- device_tracker.mfc_iphone_owntrack
     - device_tracker.mfc_ios
     - device_tracker.mfc_iphone_nmap
     - sensor.baye_probability_mfc
@@ -566,22 +566,6 @@ setup_luces_jardin_grp:
     - input_boolean.jardin_programador_4ch_ch3
     - input_boolean.jardin_programador_4ch_ch4
 
-setup_reglas_alarma_grp:
-  name: Reglas Alarma
-  view: no
-  entities:
-    - automation.a0_alarm_disarmed_to_pending
-    - automation.a1_alarm_armed_to_pending
-    - automation.a2_alarm_armed_away
-    - automation.a3_alarm_armed_home
-    - automation.a4_alarm_disarmed
-    - automation.a5_alarm_trigger_armado_away
-    - automation.a6_alarm_trigger_armado_home
-    - automation.a7_alarm_triggered
-    - automation.a8_alarm_home_auto_disarm
-    - automation.a9_alarm_boton_panico_off
-    - automation.a10_alarm_magic_cube
-
 setup_reglas_luces_grp:
   name: Reglas Luces
   view: no
@@ -594,6 +578,7 @@ setup_reglas_luces_grp:
     - automation.l06_luces_off_before_sunrise
     - automation.l07_luces_on_entrada_segun_sensor
     - automation.l08_luces_on_exterior_segun_sensor
+
 setup_sirenas_grp:
   name: Sirenas
   view: no

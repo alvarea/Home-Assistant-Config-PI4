@@ -421,15 +421,15 @@
         - device_tracker.mfc_iphone_nmap      # NMAP
         - device_tracker.paf_iphone_nmap      # NMAP
         - device_tracker.aaf_iphone_nmap      # NMAP
-        - device_tracker.aac_iphone_owntrack  # OWNTRACK
-        - device_tracker.mfc_iphone_owntrack  # OWNTRACK
+        #- device_tracker.aac_iphone_owntrack  # OWNTRACK
+        #- device_tracker.mfc_iphone_owntrack  # OWNTRACK
       to: 'not_home'
       for: '00:07:00'
-    - platform: state
-      entity_id:
-        - device_tracker.aac_iphone_owntrack  # OWNTRACK
-        - device_tracker.mfc_iphone_owntrack  # OWNTRACK
-      to: 'home'
+    #- platform: state
+    #  entity_id:
+    #    - device_tracker.aac_iphone_owntrack  # OWNTRACK
+    #    - device_tracker.mfc_iphone_owntrack  # OWNTRACK
+    #  to: 'home'
     - platform: state
       entity_id:
         - device_tracker.aac_iphone_nmap      # NMAP
@@ -506,13 +506,11 @@
 - id: T03_Armed_home_family_at_home
   alias: 'T03 Armed Home Family at Home'
   trigger:
-    # Los que duermen ya están en casa
+    # Están todos en casa
     - platform: state
       entity_id: binary_sensor.family_all_home
       from: 'off'
       to: 'on'
-    - platform: time
-      at: '01:01:00'
   condition:
     condition: and
     conditions:
@@ -523,13 +521,9 @@
         entity_id: alarm_control_panel.ha
         state: disarmed
       - condition: time
-        after: '01:01:00'
+        after: '01:00:00'
       - condition: sun
         before: sunrise
-      # Están todos en casa
-      - condition: state
-        entity_id: binary_sensor.family_all_home
-        state: 'on'
   action:
     - delay: 0:15
     - service: alarm_control_panel.alarm_arm_home
