@@ -44,7 +44,7 @@
   piscina_diario_horas:
     name: Horas
     mode: slider
-    initial: 3
+    initial: 1
     min: 0
     max: 12
     step: 1

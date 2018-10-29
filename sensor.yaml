@@ -449,7 +449,7 @@
       bateria_magic_cube:
         # binary_sensor.cube_158d00024a4a62_2:
         friendly_name: 'Batería Magic Cube'
-        value_template: "{{ states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level|default(-1)|int if states.binary_sensor.cube_158d00024a4a62 is not none }}"
+        value_template: "{{ states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level|default(-1)|int if states.binary_sensor.cube_158d00024a4a62_2 is not none }}"
         unit_of_measurement: '%'
         icon_template: '{% if states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level == 100 %}
                            mdi:battery

@@ -521,9 +521,11 @@
         entity_id: alarm_control_panel.ha
         state: disarmed
       - condition: time
-        after: '01:00:00'
+        after: '00:01:00'
+        # en el amanecer -2h'
       - condition: sun
         before: sunrise
+        before_offset: "-02:00:00"
   action:
     - delay: 0:15
     - service: alarm_control_panel.alarm_arm_home
@@ -582,12 +584,12 @@
 
             >>> LUCES: Alumbrado Exterior ON
 
-- id: L02_luces_off_exterior_sunset2h
-  alias: 'L02 Luces Off Exterior Sunset 2h'
+- id: L02_luces_off_exterior_sunset4h
+  alias: 'L02 Luces Off Exterior Sunset 4h'
   trigger:
     - platform: sun
       event: sunset
-      offset: "+03:15:00"
+      offset: "+04:00:00"
   condition:
     condition: state
     entity_id: switch.wall_switch_right_158d0002236e75
@@ -602,7 +604,7 @@
         variables:
           title: '*LUCES: OFF*'
           message: >
-            >>> EVENTO: 3 horas tras puesta de sol
+            >>> EVENTO: 4 horas tras puesta de sol
 
             >>> LUCES: Alumbrado Exterior Off
 
@@ -646,11 +648,11 @@
             >>> LUCES: Alumbrado Exterior Off
 
 - id: L04_luces_on_salon_sunset
-  alias: 'L04 Luces On Salon Puesta Sol -1h'
+  alias: 'L04 Luces On Salon Puesta Sol 30m'
   trigger:
     - platform: sun
       event: sunset
-      offset: "-01:00:00"
+      offset: "-00:30:00"
   condition:
     # Hay alguien en casa
     condition: state
@@ -696,6 +698,12 @@
   trigger:
     - platform: time
       at: "02:00:00"
+    - platform: time
+      at: "03:00:00"
+    - platform: time
+      at: "04:00:00"
+    - platform: time
+      at: "05:00:00"
   condition:
     condition: or
     conditions:
