@@ -51,7 +51,7 @@
     below: 21
   action:
     service: script.turn_on
-    entity_id: script.notifica_warning
+    entity_id: script.notifica_evento
     data:
       variables:
         title: '*CERTIFICADO SSL*'
@@ -574,15 +574,15 @@
     # Encendido Luces Exterior y Jardín
     - service: script.luces_exterior_on
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_warning
-      data:
-        variables:
-          title: '*LUCES: ON*'
-          message: >
-            >>> EVENTO: Puesta de sol hace 15min
-
-            >>> LUCES: Alumbrado Exterior ON
+    #- service: script.turn_on
+    #  entity_id: script.notifica_warning
+    #  data:
+    #    variables:
+    #      title: '*LUCES: ON*'
+    #      message: >
+    #        >>> EVENTO: Puesta de sol hace 15min
+    #
+    #        >>> LUCES: Alumbrado Exterior ON
 
 - id: L02_luces_off_exterior_sunset4h
   alias: 'L02 Luces Off Exterior Sunset 4h'
@@ -598,15 +598,15 @@
     # Apagado Luces exterior
     - service: script.luces_exterior_off
     # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_warning
-      data:
-        variables:
-          title: '*LUCES: OFF*'
-          message: >
-            >>> EVENTO: 4 horas tras puesta de sol
-
-            >>> LUCES: Alumbrado Exterior Off
+    #- service: script.turn_on
+    #  entity_id: script.notifica_warning
+    #  data:
+    #    variables:
+    #      title: '*LUCES: OFF*'
+    #      message: >
+    #        >>> EVENTO: 4 horas tras puesta de sol
+    #
+    #        >>> LUCES: Alumbrado Exterior Off
 
 - id: L03_luces_off_exterior_all_family_home
   alias: 'L03 Luces Off Exterior All Family Home'
@@ -638,7 +638,7 @@
     - service: script.luces_exterior_off
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_warning
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*LUCES: OFF*'
@@ -662,36 +662,44 @@
     - service: light.turn_on
       entity_id: light.room_salon_tv
     # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_warning
-      data:
-        variables:
-          title: '*LUCES: ON*'
-          message: >
-            >>> EVENTO: El sol se pone en 1hora
+    #- service: script.turn_on
+    #  entity_id: script.notifica_warning
+    #  data:
+    #    variables:
+    #      title: '*LUCES: ON*'
+    #      message: >
+    #        >>> EVENTO: El sol se pone en 1hora
+    #
+    #        >>> LUCES: Luces Salón On
 
-            >>> LUCES: Luces Salón On
 
-- id: L05_luces_off_midnight
-  alias: 'L05 Luces Off Medianoche'
+- id: L05_luces_on_exterior_segun_sensor
+  alias: 'L05 Luces On Exterior Segun Sensor'
   trigger:
-    - platform: time
-      at: "00:00:00"
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e637f6
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: switch.wall_switch_right_158d0002236e75
+        state: 'off'
+      - condition: or  # 'when dark' condition: either after sunset or before sunrise
+        conditions:
+          - condition: sun
+            after: sunset
+            # en la puesta de sol + 30'
+            after_offset: "00:30:00"
+          - condition: sun
+            before: sunrise
+            # en el amanecer -1h'
+            before_offset: "-02:00:00"
+          - condition: numeric_state
+            entity_id: sensor.illumination_158d0001e637f6
+            below: 0
   action:
-    # Script Apagado Luces exterior
-    - service: script.luces_exterior_off
-    # Script Luces Apagado Interior Casa
-    - service: script.luces_off
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_warning
-      data:
-        variables:
-          title: '*LUCES: OFF*'
-          message: >
-            >>> EVENTO: Medianoche
-
-            >>> LUCES: Luces de toda la casa Off
+    - service: script.luces_exterior_timer
 
 - id: L06_luces_off_sunrise
   alias: 'L06 Luces Off Before Sunrise'
@@ -729,7 +737,7 @@
     - service: script.luces_off
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_warning
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*LUCES: OFF*'
@@ -751,8 +759,8 @@
     conditions:
       - condition: sun
         after: sunset
-        # en la puesta de sol + 30'
-        after_offset: "00:30:00"
+        # en la puesta de sol - 30'
+        after_offset: "-00:30:00"
       - condition: sun
         before: sunrise
         # en el amanecer +2h'
@@ -770,33 +778,6 @@
     - service: automation.turn_on
       entity_id: automation.l07_luces_on_entrada_segun_sensor
 
-- id: L08_luces_on_exterior_segun_sensor
-  alias: 'L08 Luces On Exterior Segun Sensor'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e637f6
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: switch.wall_switch_right_158d0002236e75
-        state: 'off'
-      - condition: or  # 'when dark' condition: either after sunset or before sunrise
-        conditions:
-          - condition: sun
-            after: sunset
-            # en la puesta de sol + 30'
-            after_offset: "00:30:00"
-          - condition: sun
-            before: sunrise
-            # en el amanecer -1h'
-            before_offset: "-02:00:00"
-          - condition: numeric_state
-            entity_id: sensor.illumination_158d0001e637f6
-            below: 0
-  action:
-    - service: script.luces_exterior_timer
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

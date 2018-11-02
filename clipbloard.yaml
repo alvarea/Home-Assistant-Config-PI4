@@ -1,0 +1,22 @@
+# REGLA ELIMINADA TEMPORALMENTE
+
+- id: L05_luces_off_midnight
+  alias: 'L05 Luces Off Medianoche'
+  trigger:
+    - platform: time
+      at: "00:00:00"
+  action:
+    # Script Apagado Luces exterior
+    - service: script.luces_exterior_off
+    # Script Luces Apagado Interior Casa
+    - service: script.luces_off
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.notifica_warning
+      data:
+        variables:
+          title: '*LUCES: OFF*'
+          message: >
+            >>> EVENTO: Medianoche
+
+            >>> LUCES: Luces de toda la casa Off

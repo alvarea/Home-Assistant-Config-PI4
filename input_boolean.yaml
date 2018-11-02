@@ -83,7 +83,7 @@
 
   jardin_programador_4ch_ch1:
     name: Prog. Balizas Cesped
-    initial: on
+    initial: off
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch2:

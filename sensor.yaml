@@ -7,7 +7,7 @@
       family_last_tracking:
         value_template: "{{ states('input_text.family_last_tracking') }}"
         friendly_name: 'Último Tracking'
-        icon_template: mdi:home-map-marker
+        icon_template: "{{ 'mdi:home-map-marker' if states('input_text.family_last_tracking') is not none }}"
 
       # Meta tracker AAC, MFC, PAF, AAF
       meta_track_aac:
@@ -36,40 +36,51 @@
       family_home_aac:
         value_template: "{{ states('input_boolean.family_home_aac') if states('input_boolean.family_home_aac') is not none }}"
         friendly_name: 'Iphone AAC operativo'
-        icon_template: mdi:cellphone-iphone
+        #icon_template: mdi:cellphone-iphone
+        entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('input_boolean.family_home_aac') is not none }}"
+
       family_home_mfc:
         value_template: "{{ states('input_boolean.family_home_mfc') if states('input_boolean.family_home_mfc') is not none }}"
         friendly_name: 'Iphone MFC operativo'
-        icon_template: mdi:cellphone-iphone
+        #icon_template: mdi:cellphone-iphone
+        entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('input_boolean.family_home_mfc') is not none }}"
+
       family_home_paf:
         value_template: "{{ states('input_boolean.family_home_paf') if states('input_boolean.family_home_paf') is not none }}"
         friendly_name: 'Iphone PAF operativo'
-        icon_template: mdi:cellphone-iphone
+        #icon_template: mdi:cellphone-iphone
+        entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('input_boolean.family_home_paf') is not none }}"
+
       family_home_aaf:
         value_template: "{{ states('input_boolean.family_home_aaf') if states('input_boolean.family_home_aaf') is not none }}"
         friendly_name: 'Iphone AAF operativo'
-        icon_template: mdi:cellphone-iphone
+        #icon_template: mdi:cellphone-iphone
+        entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('input_boolean.family_home_aaf') is not none }}"
 
       # Bayesian Binarysensor tracker AAC, MFC, PAF, AAF ==> Probability
       baye_probability_aac:
         value_template: "{{ ((states.binary_sensor.baye_home_aac.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Agustin'
-        icon_template: mdi:account-location
+        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_aac') is not none }}"
         unit_of_measurement: '%'
+
       baye_probability_mfc:
         value_template: "{{ ((states.binary_sensor.baye_home_mfc.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Malen'
         icon_template: mdi:account-location
         unit_of_measurement: '%'
+        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_mfc') is not none }}"
+
       baye_probability_paf:
         value_template: "{{ ((states.binary_sensor.baye_home_paf.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Paloma'
-        icon_template: mdi:account-location
         unit_of_measurement: '%'
+        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_paf') is not none }}"
+
       baye_probability_aaf:
         value_template: "{{ ((states.binary_sensor.baye_home_aaf.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Agu'
-        icon_template: mdi:account-location
+        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_aaf') is not none }}"
         unit_of_measurement: '%'
 
       # Sensor para mostrar Movimientos Xiaomi Magicube:
@@ -479,33 +490,35 @@
       sun_next_setting:
         value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%H:%M") }}'
         friendly_name: 'Próxima Puesta de Sol'
-        icon_template: mdi:weather-sunset-down
+        icon_template: "{{ 'mdi:weather-sunset-down' if states('sun.sun') is not none }}"
+
       # Sol Próximo Amanecer
       sun_next_rising:
         value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%H:%M") }}'
         friendly_name: 'Próxima Salida de Sol'
-        icon_template: mdi:weather-sunset-up
+        icon_template: "{{ 'mdi:weather-sunset-up' if states('sun.sun') is not none }}"
 
       # Piscina Duracion Programa Diario-Semanal
       piscina_duracion_planificada:
         value_template: '{{ states.input_number.piscina_diario_horas.state|int }}:00:00'
         friendly_name: 'Duración Programa Planificado'
-        icon_template: mdi:timer-sand
+        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_diario_horas') is not none }}"
 
       # Piscina Duracion Programa Manual
       piscina_duracion_manual:
         value_template: '00:{{ states.input_number.piscina_manual_minutos.state|int }}:00'
         friendly_name: 'Duración Programa Planificado'
         icon_template: mdi:timer-sand
+        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_manual_minutos') is not none }}"
 
       piscina_duracion_programa:
         value_template: '{{ states.input_text.piscina_duracion_programa.state }}'
         friendly_name: 'Duración Programa Activo'
-        icon_template: mdi:timer-sand
+        icon_template: "{{ 'mdi:timer-sand' if states('input_text.piscina_duracion_programa') is not none }}"
 
       piscina_diario_endtime:
         friendly_name: 'Sensor Hora Finalización'
-        icon_template: mdi:timer-sand
+        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_diario_horas') is not none }}"
         value_template: '{% if states.input_number.piscina_diario_horas.state | int + states.input_datetime.piscina_start_time.attributes.hour | int < 24 %}
                             {{ states.input_number.piscina_diario_horas.state | int + states.input_datetime.piscina_start_time.attributes.hour | int }}:00:00
                          {% else %}
@@ -515,8 +528,7 @@
       piscina_manual_segundos:
         value_template: '{{ states.input_number.piscina_manual_minutos.state |int *60 }}'
         friendly_name: 'Duración Programa Corto (Seg)'
-        icon_template: mdi:timer-sand
-
+        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_manual_minutos') is not none }}"
 
 # AAC. Sensores Rendimiento de PI y CERT_SSL
 #

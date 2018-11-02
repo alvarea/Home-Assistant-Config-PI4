@@ -225,24 +225,24 @@ notify:
   - name: telegram_aac
     platform: telegram
     chat_id: !secret telegram_chat_aac
-  - name: telegram_mfc
-    platform: telegram
-    chat_id: !secret telegram_chat_mfc
-  - name: telegram_paf
-    platform: telegram
-    chat_id: !secret telegram_chat_paf
-  - name: telegram_aaf
-    platform: telegram
-    chat_id: !secret telegram_chat_aaf
+  #- name: telegram_mfc
+  #  platform: telegram
+  #  chat_id: !secret telegram_chat_mfc
+  #- name: telegram_paf
+  #  platform: telegram
+  #  chat_id: !secret telegram_chat_paf
+  #- name: telegram_aaf
+  #  platform: telegram
+  #  chat_id: !secret telegram_chat_aaf
 
 # Notifications via Telegram Bot
 telegram_bot:
-  - platform: broadcast
+  - platform: polling
     api_key: !secret telegram_apikey
     allowed_chat_ids:
       - !secret telegram_grp_alarm
       - !secret telegram_grp_notif
-      - !secret telegram_chat_aac
+      #- !secret telegram_chat_aac
 
 # Enables a map showing the location of tracked devices
 map:
