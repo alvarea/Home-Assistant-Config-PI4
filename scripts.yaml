@@ -477,7 +477,7 @@ luces_exterior_timer:
       entity_id: switch.wall_switch_right_158d0002236e75
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_warning
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*LUCES: ON*'
