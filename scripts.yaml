@@ -661,6 +661,40 @@ piscina_timer_resume:
       entity_id: switch.sonoff_pow_sw1
       #entity_id: switch.sonoff_4ch_relay_2
 
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# SCRIPTS DE INTERRUPTORES SONOFF DEL                                         #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+
+# SONOFF S20 - NESSPRESSO
+#
+nesspreso_on_timer:
+  alias: Nespresso On Timer
+  sequence:
+    - service: automation.turn_off
+      entity_id: automation.S10_Sonoff_S20_Sunrise_Switch_On
+    # Incremento del contador de autoencendido
+    - service: counter.increment
+      entity_id: counter.nespresso_start
+    # Enciende la Nespresso
+    - service: switch.turn_on
+      entity_id: switch.sonoff_s20_nespresso
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*HOMY: BUENOS DIAS*'
+          message: >
+            >>> Nespresso auto-encendida al amanecer.
+            >>> Por favor, apáguela al terminar.
+
+    - delay: '00:30:00'
+    - service: automation.turn_on
+      entity_id: automation.S10_Sonoff_S20_Sunrise_Switch_On
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # SCRIPTS DE ARRANQUE DEL SISTEMA                                             #

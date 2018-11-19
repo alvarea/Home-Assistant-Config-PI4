@@ -950,7 +950,7 @@
     - service: switch.toggle
       entity_id: switch.sonoff_s20_nespresso
 
-- id: S10 Sonoff S20 Sunrise Switch On
+- id: S10_Sonoff_S20_Sunrise_Switch_On
   alias: 'S10 SonoffS20 Sunrise Switch On'
   trigger:
     - platform: state
@@ -981,21 +981,8 @@
         entity_id: switch.sonoff_s20_nespresso
         state: 'off'
   action:
-    # Incremento del contador de autoencendido
-    - service: counter.increment
-      entity_id: counter.nespresso_start
-    # Enciende la Nespresso
-    - service: switch.turn_on
-      entity_id: switch.sonoff_s20_nespresso
-    # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*HOMY: BUENOS DIAS*'
-          message: >
-            >>> Nespresso auto-encendida al amanecer.
-            >>> Por favor, apáguela al terminar.
+    # Enciende la Nespresso y activa un timer de espera de 30'
+    - service: script.nesspreso_on_timer
 
 #
 # SONOFF BASIC SW2 PORCHE PISCINA
