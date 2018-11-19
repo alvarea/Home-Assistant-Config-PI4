@@ -540,7 +540,8 @@
         variables:
           title: '*ALARMA HOMY*'
           message: >
-            >>> ESTADO: Sistema Armado Parcial
+            >>> EVENTO: Todos en casa a las 00:01
+            >>> ESTADO: Sistema Armado Automático Parcial
 
 - id: T04_family_sleep_home
   alias: 'T04 Sleep Family Home'
@@ -555,6 +556,34 @@
   action:
     # Llamada al contador de personas que actualiza sensor.family_home
     - service: python_script.countpeople
+
+- id: T05_family_sleep_home_mfc
+  alias: 'T05 Sleep Family Check MFC'
+  trigger:
+    - platform: time
+      at: '00:01:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.family_home_mfc
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.family_sleep_home_mfc
+        state: 'off'
+  action:
+    # Llamada al contador de personas que actualiza sensor.family_home
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.family_sleep_home_mfc
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*FAMILY@HOME*'
+          message: >
+            >>> Malen está en casa a las 00:00
+            >>> Activado el control de Duerme en Casa.
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -943,7 +972,7 @@
         state: 'on'
       - condition: numeric_state
         entity_id: counter.nespresso_start
-        below: 2
+        below: 3
       # Hay alguien en casa
       - condition: state
         entity_id: binary_sensor.family_any_home

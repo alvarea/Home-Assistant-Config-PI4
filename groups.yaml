@@ -181,7 +181,6 @@ track_aac_grp:
     - device_tracker.aac_iphone_nmap
     - sensor.baye_probability_aac
     - binary_sensor.baye_home_aac
-    - input_boolean.family_home_aac
 
 track_mfc_grp:
   name: Malen Tracking
@@ -196,8 +195,6 @@ track_mfc_grp:
     - device_tracker.mfc_iphone_nmap
     - sensor.baye_probability_mfc
     - binary_sensor.baye_home_mfc
-    - input_boolean.family_home_mfc
-
 
 track_paf_grp:
   name: Paloma Tracking
@@ -211,7 +208,6 @@ track_paf_grp:
     - device_tracker.paf_iphone_nmap
     - sensor.baye_probability_paf
     - binary_sensor.baye_home_paf
-    - input_boolean.family_home_paf
 
 track_aaf_grp:
   name: Agu Tracking
@@ -224,7 +220,6 @@ track_aaf_grp:
     - device_tracker.aaf_iphone_nmap
     - sensor.baye_probability_aaf
     - binary_sensor.baye_home_aaf
-    - input_boolean.family_home_aaf
 
 camaras_view:
   view: yes
@@ -535,6 +530,7 @@ config_view:
   view: yes
   icon: mdi:settings
   entities:
+      - group.setup_family_home
       - group.setup_sirenas_grp
       - group.setup_luces_jardin_grp
       - group.setup_reglas_luces_grp
@@ -544,6 +540,10 @@ setup_family_home:
   name: Tracking Family Home
   view: no
   entities:
+    - input_boolean.family_home_aac
+    - input_boolean.family_home_mfc
+    - input_boolean.family_home_paf
+    - input_boolean.family_home_aaf
     - automation.t01_family_away
     - automation.t02_family_at_home
     - automation.t03_armed_home_family_at_home
