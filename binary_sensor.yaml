@@ -93,7 +93,7 @@
     observations:
       - entity_id: 'device_tracker.93e3d52336a54d4d898b204abdf3ee94' #PAF GEOFENCY
         prob_given_true: 0.99
-        prob_given_false: 0.2
+        prob_given_false: 0.1
         platform: 'state'
         to_state: 'home'
       - entity_id: 'device_tracker.paf_ios'  # IOS APP
@@ -113,8 +113,8 @@
     probability_threshold: 0.95
     observations:
       - entity_id: 'device_tracker.bef743fa74f2464ba458612ad3e1c195' #AAF GEOFENCY
-        prob_given_true: 0.8    # original 0.99
-        prob_given_false: 0.2   # original 0.1
+        prob_given_true: 0.99    # original 0.99
+        prob_given_false: 0.1   # original 0.1
         platform: 'state'
         to_state: 'home'
       - entity_id: 'device_tracker.aaf_iphone_nmap'

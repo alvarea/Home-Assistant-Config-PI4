@@ -324,7 +324,7 @@
         variables:
           title: '*ALARMA HOMY*'
           message: >
-            >>> ESTADO: Desarmado al amanecer.
+            >>> ESTADO: Desarmado automático al amanecer.
 
 #
 # REGLA: APAGADO BOTON PANICO
@@ -511,6 +511,9 @@
       entity_id: binary_sensor.family_all_home
       from: 'off'
       to: 'on'
+    - platform: numeric_state
+      entity_id: sensor.baye_probability_aaf
+      above: 95
   condition:
     condition: and
     conditions:
@@ -526,8 +529,11 @@
       - condition: sun
         before: sunrise
         before_offset: "-02:00:00"
+      - condition: numeric_state
+        entity_id: sensor.baye_probability_aaf
+        above: 95
   action:
-    - delay: 0:15
+    - delay: 0:05
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
     # Aviso sonoro con Xiaomi GW
