@@ -194,17 +194,18 @@ xiaomi_aqara:
 
 # NMAP, OWNTRACKS
 device_tracker:
-  - platform: geofency
-  #- platform: owntracks
-  #  mqtt_topic: "owntracks/#"
   - platform: nmap_tracker
     hosts:
       - 192.168.0.50-70
     home_interval: 10
     consider_home: 0:10:00
     interval_seconds: 20
-    #exclude:
-    #- 192.168.0.23
+  #- platform: geofency
+  #- platform: owntracks
+  #  mqtt_topic: "owntracks/#"
+
+# GEOFENCY: Platform & Device Tracker ==> changed on v.0.83.2
+geofency:
 
 # NOTIFICACIONES
 notify:
@@ -262,6 +263,8 @@ zone:
     latitude: 37.3748
     longitude: -6.0530
     icon: mdi:home-account
+
+shopping_list:
 
 
 #
