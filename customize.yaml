@@ -228,6 +228,17 @@ binary_sensor.sonoff_basic_sw1_status:
 light.sonoff_basic_sw1_led:
   friendly_name: LED Sirena Interior ++(SW1)
 
+# Dormitorio Principal
+#
+switch.sonoff_s20_sw1:
+  friendly_name: Calefacción
+  icon: mdi:radiator
+
+binary_sensor.sonoff_s20_sw1_status:
+  friendly_name: Sensor Calefacción (S20)
+
+light.sonoff_basic_sw1_led:
+  friendly_name: LED Calefacción (S20)
 
 # Jardín Depuradora Piscina
 #

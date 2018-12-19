@@ -45,15 +45,18 @@ main_family_status_grp:
     - sensor.family_sleep_home
 
 main_sensor_status_grp:
-  name: Sensores Principales
+  name: Centro Notificación Central
   entities:
+    - sensor.hoy_condition
+    - sensor.hoy_temperature
+    - sensor.manana_condition
+    - sensor.manana_temperature
     - sensor.temperature_158d00022b65ff
     - sensor.temperature_158d00022c6a47
     - sun.sun
     - sensor.moon
     - sensor.sun_next_setting
     - sensor.sun_next_rising
-    - sensor.ssl_certificate_expiry
 
 alarma_view:
   name: Panel Control Alarma
@@ -337,21 +340,21 @@ cocina_view:
   icon: mdi:food
   name: Cocina
   entities:
-    - group.nespresso_grp
+    #- group.nespresso_grp
     - camera.ipcam11_cocina
     - group.luces_cocina_grp
     - group.alarma_sensor_cocina_grp
     - media_player.firetv_cocina
 
-nespresso_grp:
-  view: no
-  icon: mdi:coffee
-  name: Nespresso
-  entities:
-    - switch.sonoff_s20_nespresso
-    - binary_sensor.sonoff_s20_nespresso_boton
-    #- light.sonoff_s20_nespresso_led
-    - binary_sensor.sonoff_s20_nespresso_status
+#nespresso_grp:
+#  view: no
+#  icon: mdi:coffee
+#  name: Nespresso
+#  entities:
+#    - switch.sonoff_s20_nespresso
+#    - binary_sensor.sonoff_s20_nespresso_boton
+#    #- light.sonoff_s20_nespresso_led
+#    - binary_sensor.sonoff_s20_nespresso_status
 
 salon_view:
   view: yes
@@ -372,6 +375,23 @@ sensor_salon_grp:
     - sensor.humidity_158d00022b65ff
     - sensor.pressure_158d00022b65ff
     #- sensor.illumination_7811dcb788fa
+
+dormitorio_view:
+  view: yes
+  icon: mdi:hotel
+  name: Dormitorios
+  entities:
+    - group.principal_grp
+
+principal_grp:
+  name: Dormitorio Principal
+  view: no
+  entities:
+    - binary_sensor.sonoff_s20_sw1_status
+    - switch.sonoff_s20_sw1
+    - binary_sensor.sonoff_s20_sw1_boton
+    - light.sonoff_s20_sw1_led
+    - binary_sensor.door_window_sensor_158d00020b7c27
 
 estudio_view:
   view: yes

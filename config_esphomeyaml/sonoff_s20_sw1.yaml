@@ -28,9 +28,9 @@ binary_sensor:
       number: GPIO0
       mode: INPUT_PULLUP
       inverted: True
-    name: "Sonoff S20 Botón"
+    name: "Sonoff S20 SW1 Botón"
   - platform: status
-    name: "Sonoff S20 Status"
+    name: "Sonoff S20 SW1 Status"
 
 
 switch:
@@ -41,7 +41,7 @@ switch:
 output:
   # Register the green LED as a dimmable output ....
   - platform: esp8266_pwm
-    id: s20_green_led
+    id: s20_sw1_green_led
     pin:
       number: GPIO13
       inverted: True
@@ -50,4 +50,4 @@ light:
   # ... and then make a light out of it.
   - platform: monochromatic
     name: "Sonoff S20 SW1 LED"
-    output: s20_green_led
+    output: s20_sw1_green_led

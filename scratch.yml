@@ -1,34 +1,49 @@
-- id: S10 Sonoff S20 Sunrise Switch On
+# SONOFF S20 - NESSPRESSO
+#
+- id: S09_Sonoff_S20_Boton_On_off
+  alias: 'S09 Sonoff S20 Boton On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.sonoff_s20_nespresso_boton
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.sonoff_s20_nespresso
+
+- id: S10_Sonoff_S20_Sunrise_Switch_On
   alias: 'S10 SonoffS20 Sunrise Switch On'
   trigger:
     - platform: state
-      entity_id: light.hue_pasillo
+      entity_id:
+        - light.hue_pasillo
+        - light.hue_entrada
       from: 'off'
       to: 'on'
-      # - light.hue_entrada
   condition:
     condition: and
     conditions:
       - condition: sun
         after: sunrise
+        after_offset: '-02:00:00'
+      - condition: time
+        before: '11:00:00'
       - condition: state
         entity_id: light.hue_pasillo
-        state: on
+        state: 'on'
+      - condition: numeric_state
+        entity_id: counter.nespresso_start
+        below: 3
       # Hay alguien en casa
       - condition: state
         entity_id: binary_sensor.family_any_home
         state: 'on'
+      - condition: state
+        entity_id: switch.sonoff_s20_nespresso
+        state: 'off'
   action:
-    - service: switch.turn_on
-      entity_id: switch.sonoff_s20_nespresso
-    # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*HOMY: BUENOS DIAS*'
-          message: >
-            >>> Nespresso encendida al amanecer.
+    # Enciende la Nespresso y activa un timer de espera de 30'
+    - service: script.nesspreso_on_timer
 
 
 
