@@ -242,7 +242,7 @@ light.sonoff_basic_sw1_led:
 
 # Jardín Depuradora Piscina
 #
-binary_sensor.sonoff_pow_sw1:
+binary_sensor.sonoff_pow_sw1_status:
   friendly_name: Cuadro Eléctrico Piscina (POW)
 
 switch.sonoff_pow_sw1:

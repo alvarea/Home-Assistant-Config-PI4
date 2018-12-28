@@ -28,7 +28,7 @@ binary_sensor:
       number: GPIO0
       mode: INPUT_PULLUP
       inverted: True
-    name: "Sonoff S20 SW1 Botón"
+    name: "Sonoff S20 SW1 Boton"
   - platform: status
     name: "Sonoff S20 SW1 Status"
 

@@ -98,7 +98,7 @@ alarma_sensor_jardin_grp:
   view: no
   entities:
     - binary_sensor.sonoff_4ch_status           # Sensor de conectividad sonoff 4CH
-    - binary_sensor.sonoff_pow_sw1              # Sensor de conectividad sonoff POW
+    - binary_sensor.sonoff_pow_sw1_status       # Sensor de conectividad sonoff POW
 
 alarma_sensor_entrada_grp:
   name: Sensores Entrada
@@ -306,7 +306,7 @@ jardin_piscina_grp:
   name: Estado Depuradora Piscina
   entities:
     #- switch.sonoff_pow_sw1                    # Switch POW Depuradora Piscina OCULTO
-    - binary_sensor.sonoff_pow_sw1              # Sensor de conectividad sonoff
+    - binary_sensor.sonoff_pow_sw1_status       # Sensor de conectividad sonoff
     - binary_sensor.piscina_dia_ejecucion       # Sensor Próximo día de ejecución
     - binary_sensor.piscina_status              # Sensor basado en el switch sonoff POW SW1
     - sensor.piscina_duracion_programa          # Sensor duración programa activo/siguiente minutos

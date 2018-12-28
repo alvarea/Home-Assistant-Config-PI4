@@ -937,7 +937,7 @@
   alias: 'S05 Sonoff POW Status'
   trigger:
     - platform: state
-      entity_id: binary_sensor.sonoff_pow_sw1
+      entity_id: binary_sensor.sonoff_pow_sw1_status
       from: 'on'
       to: 'off'
       for: '00:05:00'
@@ -1020,7 +1020,7 @@
   trigger:
     - platform: sun
       event: sunset
-      offset: "-04:00:00"
+      offset: "+04:00:00"
   condition:
     # Hay alguien en casa
     condition: state
@@ -1061,7 +1061,7 @@
         variables:
           title: '*CALEFACCION: ON*'
           message: >
-            >>> EVENTO: El sol se levanta en 1 hora
+            >>> EVENTO: El sol sale en 1 hora
 
             >>> CALEFACCION: Dormitorio Principal OFF
 #
