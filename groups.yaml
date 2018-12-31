@@ -300,6 +300,7 @@ jardin_view:
     - group.jardin_piscina_grp
     - group.jardin_piscina_setup_grp
     - group.jardin_piscina_control
+    - group.jardin_piscina_power_mgt
     - history_graph.duracion_depuradora_piscina
 
 jardin_piscina_grp:
@@ -334,6 +335,13 @@ jardin_piscina_setup_grp:
     - input_datetime.piscina_end_time           # Proximo Parada Planificado
     - sensor.piscina_duracion_planificada       # Duración programa diario
     #- sensor.piscina_diario_endtime
+
+jardin_piscina_power_mgt:
+  name: Control Consumos
+  entities:
+    - sensor.sonoff_pow_sw1_current             # Sonoff Pow SW1 Current
+    - sensor.sonoff_pow_sw1_power               # Sonoff Pow SW1 Power
+    - sensor.sonoff_pow_sw1_voltage             # Sonoff Pow SW1 Voltage
 
 cocina_view:
   view: yes

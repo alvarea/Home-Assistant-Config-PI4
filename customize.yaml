@@ -137,7 +137,7 @@ switch.wall_switch_left_158d0002236e75:
   friendly_name: Luz Techo Entrada
   icon: mdi:ceiling-light
 switch.wall_switch_right_158d0002236e75:
-  friendly_name: Luces Exterior
+  friendly_name: Luz Exterior
   icon: mdi:lightbulb-outline
 # Xiaomi Sensor Presencia Interior
 binary_sensor.motion_sensor_158d0001e55903:
@@ -157,9 +157,9 @@ binary_sensor.smoke_sensor_158d0001fd321c:
   friendly_name: Detector Incendios
   icon: mdi:fire
 
-switch.sonoff_s20_nespresso:
-  friendly_name: Cafetera Nespresso (S20)
-  icon: mdi:coffee
+#switch.sonoff_s20_nespresso:
+#  friendly_name: Cafetera Nespresso (S20)
+#  icon: mdi:coffee
 binary_sensor.sonoff_s20_nespresso_boton:
   friendly_name: Sonoff S20 - Botón
 light.sonoff_s20_nespresso_led:
@@ -171,9 +171,10 @@ binary_sensor.sonoff_s20_nespresso_status:
 # Salón
 #
 light.gateway_light_7811dcb788fa:
-  friendly_name: Gateway Luz
+  friendly_name: Luz Aqara
 sensor.illumination_7811dcb788fa:
-  friendly_name: Gateway Sensor Luz
+  friendly_name: Sensor Luz Aqara
+
 binary_sensor.door_window_sensor_158d000201e2e7:
   friendly_name: Sensor Puerta Salón
   icon: mdi:door
@@ -231,13 +232,13 @@ light.sonoff_basic_sw1_led:
 # Dormitorio Principal
 #
 switch.sonoff_s20_sw1:
-  friendly_name: Calefacción
+  friendly_name: Radiador Malen
   icon: mdi:radiator
 
 binary_sensor.sonoff_s20_sw1_status:
   friendly_name: Sensor Calefacción (S20)
 
-light.sonoff_basic_sw1_led:
+light.sonoff_s20_sw1_led:
   friendly_name: LED Calefacción (S20)
 
 # Jardín Depuradora Piscina
@@ -246,7 +247,7 @@ binary_sensor.sonoff_pow_sw1_status:
   friendly_name: Cuadro Eléctrico Piscina (POW)
 
 switch.sonoff_pow_sw1:
-  friendly_name: Switch Sonoff POW
+  friendly_name: Depuradora Piscina
   icon: mdi:swim  # dip-switch
 
 # Jardín Luces
@@ -255,7 +256,7 @@ binary_sensor.sonoff_4ch_status:
   friendly_name: Cuadro Eléctrico Jardín
 
 switch.sonoff_basic_sw2:
-  friendly_name: Porche Piscina (SW2)
+  friendly_name: Luz Porche Piscina
   icon: mdi:ceiling-light
 
 binary_sensor.sonoff_basic_sw2_status:
@@ -268,12 +269,11 @@ switch.sonoff_basic_sw3:
   friendly_name: Pendiente (SW3)
   icon: mdi:wifi
 
-
 #binary_sensor.sonoff_basic_sw3_status
 #light.sonoff_basic_sw3_led
 
 switch.sonoff_basic_sw4:
-  friendly_name: Porche Salón (SW4)
+  friendly_name: Luz Porche Salón
   icon: mdi:ceiling-light
 
 binary_sensor.sonoff_basic_sw4_status:
@@ -283,19 +283,19 @@ light.sonoff_basic_sw4_led:
   friendly_name: LED Porche Salón (SW4)
 
 switch.sonoff_4ch_relay_1:
-  friendly_name: Balizas Cesped (CH1)
+  friendly_name: Luz Cesped
   icon: mdi:track-light
 
 switch.sonoff_4ch_relay_2:
-  friendly_name: Focos Piscina (CH2) # (Olivo3+Yuca)
+  friendly_name: Foco Piscina # (Olivo3+Yuca)
   icon: mdi:track-light
 
 switch.sonoff_4ch_relay_3:
-  friendly_name: Focos Entrada (CH3) # (Olivo1+Cica)
+  friendly_name: Foco Cica # (Olivo1+Cica)
   icon: mdi:track-light
 
 switch.sonoff_4ch_relay_4:
-  friendly_name: Focos Tendedero (CH4)
+  friendly_name: Focos Tendedero # CH4 Pendiente
   icon: mdi:track-light
   #icon: mdi:car-side
 

@@ -83,8 +83,6 @@ ios:
 #tts:
 #  - platform: google
 
-# Cloud
-#cloud:
 
 # ALARM MANUAL CONTROL PANEL
 #
@@ -266,8 +264,41 @@ zone:
 
 shopping_list:
 
+# switch.sonoff_4ch_relay_1 	off 	          friendly_name: Luz Cesped (CH1)
+# switch.sonoff_4ch_relay_2 	off 	          friendly_name: Foco Piscina (CH2)
+# switch.sonoff_4ch_relay_3 	off 	          friendly_name: Foco Entrada (CH3)
+# switch.sonoff_4ch_relay_4 	off 	          friendly_name: Foco Tendedero (CH4)
+# switch.sonoff_basic_sw1 	    off 	          friendly_name: Alarma Sirena Interior
+# switch.sonoff_basic_sw2 	    off 	          friendly_name: Porche Piscina (SW2)
+# switch.sonoff_basic_sw4 	    off 	          friendly_name: Porche Salón (SW4)
+# switch.sonoff_pow_sw1 	    off 	          friendly_name: Depuradora Piscina
+# switch.sonoff_s20_nespresso   unavailable 	  friendly_name: Cafetera Nespresso (S20)
+# switch.sonoff_s20_sw1 	    off 	          friendly_name: Radiador Malen Dormitorio
+# switch.wall_switch_left_158d0002236e75 	off   friendly_name: Luz Techo Entrada
+# switch.wall_switch_right_158d0002236e75   off   friendly_name: Luz Exterior
 
-#
+# Cloud -  Home Assistant Cloud - NABU CASA
+cloud:
+ alexa:
+    filter:
+      include_domains:
+        - switch
+      exclude_entities:
+        - switch.sonoff_basic_sw1                 # friendly_name: Alarma Sirena Interior
+        - switch.sonoff_s20_nespresso             # friendly_name: Cafetera Nespresso (S20)
+      exclude_domains:
+        - light
+        - alert
+        - automation
+        - group
+        - input_boolean
+        - sensor
+    entity_config:
+      switch.wall_switch_left_158d0002236e75:   # friendly_name: Luz Techo Entrada
+        display_categories: LIGHT
+      switch.wall_switch_right_158d0002236e75:  # friendly_name: Luz Exterior
+        display_categories: LIGHT
+
 # Restaurar valores tras reinicio
 #
 #recorder:

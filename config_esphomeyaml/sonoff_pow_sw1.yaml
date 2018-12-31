@@ -8,7 +8,7 @@ wifi:
   ssid: 'WLAN.alvarea.net'
   password: '3286202581200'
   manual_ip:
-    static_ip: 192.168.0.36
+    static_ip: 192.168.0.38
     gateway: 192.168.0.1
     subnet: 255.255.255.0
 
@@ -18,7 +18,7 @@ mqtt:
   password: '7xnQj7RUc05dHqywDM'
 
 # Enable logging
-logger:
+#logger:
 
 ota:
 
@@ -51,3 +51,19 @@ light:
   - platform: monochromatic
     name: "Sonoff POW SW1 LED"
     output: pow_sw1_green_led
+
+logger:
+  baud_rate: 0
+
+uart:
+  rx_pin: RX
+  baud_rate: 4800
+
+sensor:
+  - platform: cse7766
+    current:
+      name: "Sonoff Pow SW1 Current"
+    voltage:
+      name: "Sonoff Pow SW1 Voltage"
+    power:
+      name: "Sonoff Pow SW1 Power"
