@@ -347,15 +347,15 @@
   alias: 'A10 Alarm Sirena Interior Off'
   trigger:
     platform: state
-    entity_id: binary_sensor.sonoff_basic_sw1_boton
+    entity_id: binary_sensor.sonoff_basic_sw0_boton
     from: 'off'
     to: 'on'
   action:
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
-      entity_id: switch.sonoff_basic_sw1
+      entity_id: switch.sonoff_basic_sw0
     - service: light.toggle
-      entity_id: light.sonoff_basic_sw1_led
+      entity_id: light.sonoff_basic_sw0_led
 
 #
 #
@@ -1071,15 +1071,15 @@
   alias: 'S11 Sonoff SW2 Porche Piscina'
   trigger:
     platform: state
-    entity_id: binary_sensor.sonoff_basic_sw2_boton
+    entity_id: binary_sensor.sonoff_basic_sw1_boton
     from: 'off'
     to: 'on'
   action:
     # SONOFF_SW2 ==> OFF
     - service: switch.toogle
-      entity_id: switch.sonoff_basic_sw2
+      entity_id: switch.sonoff_basic_sw1
     - service: light.toggle
-      entity_id: light.sonoff_basic_sw2_led
+      entity_id: light.sonoff_basic_sw1_led
 
 #
 # SONOFF BASIC SW4 PORCHE SALON

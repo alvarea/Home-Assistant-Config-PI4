@@ -264,18 +264,30 @@ zone:
 
 shopping_list:
 
-# switch.sonoff_4ch_relay_1 	off 	          friendly_name: Luz Cesped (CH1)
-# switch.sonoff_4ch_relay_2 	off 	          friendly_name: Foco Piscina (CH2)
-# switch.sonoff_4ch_relay_3 	off 	          friendly_name: Foco Entrada (CH3)
-# switch.sonoff_4ch_relay_4 	off 	          friendly_name: Foco Tendedero (CH4)
-# switch.sonoff_basic_sw1 	    off 	          friendly_name: Alarma Sirena Interior
-# switch.sonoff_basic_sw2 	    off 	          friendly_name: Porche Piscina (SW2)
-# switch.sonoff_basic_sw4 	    off 	          friendly_name: Porche Salón (SW4)
-# switch.sonoff_pow_sw1 	    off 	          friendly_name: Depuradora Piscina
-# switch.sonoff_s20_nespresso   unavailable 	  friendly_name: Cafetera Nespresso (S20)
-# switch.sonoff_s20_sw1 	    off 	          friendly_name: Radiador Malen Dormitorio
-# switch.wall_switch_left_158d0002236e75 	off   friendly_name: Luz Techo Entrada
-# switch.wall_switch_right_158d0002236e75   off   friendly_name: Luz Exterior
+# ====================================================================================================
+# IP            ENTIDAD HOMY                        ALEXA               DESCRIPCION
+# ====================================================================================================
+# 192.168.0.30  sonoff_BAS_SW0                      Sirena Alarma       Sirena interior pasillo
+# 192.168.0.31  sonoff_BAS_SW1                      Luz Porche 2        Porche 2 Piscina
+# 192.168.0.32  sonoff_BAS_SW2                                          NEW
+# 192.168.0.33  sonoff_BAS_SW3                                          NEW
+# 192.168.0.34  sonoff_BAS_SW4                      Luz Porche 1        Porche 1 Salón
+# 192.168.0.35  sonoff_4CH_Jardin
+#               sonoff_4ch_relay_1                  Luz Jardin          CH1 - Balizas Cesped
+#               sonoff_4ch_relay_2                  Luz Olivo 3         CH2 - Olivo 3 + Palmera Yuca
+#               sonoff_4ch_relay_3                  Luz Olivo 1         CH3 - Olivo 1 + Palmera Cica
+#               sonoff_4ch_relay_4                  Luz Garaje          CH4 - Pendiente
+# 192.168.0.36  Sonoff_POW_SW1                                          NEW
+# 192.168.0.37  Sonoff_POW_SW2                                          NEW
+# 192.168.0.38  Sonoff_S20_SW1                      Radiador Malen      Radiador Dormitorio Principal (192.168.0.33)
+# 192.168.0.39  Sonoff_S20_SW2                                          NEW - Radiador Paloma
+# 192.168.0.40  Sonoff_S20_SW3                                          NEW - Nespresso
+# 192.168.0.18  Xiaomi Aqara
+#               wall_switch_left_158d0002236e75 	Luz Techo Entrada   Interruptor Luz Entrada
+#               wall_switch_right_158d0002236e75    Luz Exterior        Interruptor Luz Exterior
+
+
+
 
 # Cloud -  Home Assistant Cloud - NABU CASA
 cloud:
@@ -283,9 +295,15 @@ cloud:
     filter:
       include_domains:
         - switch
+        - scripts
+      include_entities:
+        - script.luces_off
+        - script.luces_exterior_off
+        - script.luces_exterior_on
       exclude_entities:
-        - switch.sonoff_basic_sw1                 # friendly_name: Alarma Sirena Interior
-        - switch.sonoff_s20_nespresso             # friendly_name: Cafetera Nespresso (S20)
+        - switch.sonoff_basic_sw0
+        - switch.sonoff_basic_sw2
+        - switch.sonoff_s20_nespresso
       exclude_domains:
         - light
         - alert
@@ -294,10 +312,23 @@ cloud:
         - input_boolean
         - sensor
     entity_config:
-      switch.wall_switch_left_158d0002236e75:   # friendly_name: Luz Techo Entrada
+      switch.wall_switch_left_158d0002236e75:
         display_categories: LIGHT
-      switch.wall_switch_right_158d0002236e75:  # friendly_name: Luz Exterior
+      switch.wall_switch_right_158d0002236e75:
         display_categories: LIGHT
+      switch.sonoff_4ch_relay_1:
+        display_categories: LIGHT
+      switch.sonoff_4ch_relay_2:
+        display_categories: LIGHT
+      switch.sonoff_4ch_relay_3:
+        display_categories: LIGHT
+      switch.sonoff_4ch_relay_4:
+        display_categories: LIGHT
+      switch.sonoff_basic_sw1:
+        display_categories: LIGHT
+      switch.sonoff_basic_sw4:
+        display_categories: LIGHT
+
 
 # Restaurar valores tras reinicio
 #

@@ -1,3 +1,42 @@
+        # Scripts
+        - script.alarma_boton_sirenas_off
+        - script.alarma_to_pending
+        - script.luces_exterior_timer
+        - script.luces_jardin_check_4ch_ch1
+        - script.luces_jardin_check_4ch_ch2
+        - script.luces_jardin_check_4ch_ch3
+        - script.luces_jardin_check_4ch_ch4
+        - script.luces_jardin_check_bas_sw2
+        - script.luces_jardin_check_bas_sw4
+        - script.luces_jardin_check_xia_ext
+        - script.luces_off_entrada_sensor
+        - script.luces_on_entrada_sensor
+        - script.luces_on_family_home
+        - script.luz_on_armed_home
+        - script.magiccube_check_alarm_sequence
+        - script.magiccube_check_arm_away
+        - script.magiccube_check_disarm
+        - script.magiccube_update_lastaction
+        - script.nesspreso_on_timer
+        - script.notifica_alarma
+        - script.notifica_evento
+        - script.notifica_warning
+        - script.piscina_timer_cancel
+        - script.piscina_timer_pause
+        - script.piscina_timer_resume
+        - script.piscina_timer_start
+        - script.piscina_timer_start_diario
+        - script.reset_meta_alarm_trigger
+        - script.reset_meta_tracker
+        - script.sirena_xiaomi_play_alarm_armed
+        - script.sirena_xiaomi_play_alarm_disarmed
+        - script.sonoff_initialize
+        - script.updatetracker
+        - script.xiaomi_play_alarm
+
+
+
+
 # SONOFF S20 - NESSPRESSO
 #
 - id: S09_Sonoff_S20_Boton_On_off

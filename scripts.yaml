@@ -135,7 +135,7 @@ xiaomi_play_alarm:
 # Las sirenas se activan en este orden:
 # 1. Sirena interior Xiaomi con el tono configurado para Alarma
 # 2. Retraso de 5 segundos
-# 3. Sirena interior pasillo mediante switch.sonoff_basic_sw1
+# 3. Sirena interior pasillo mediante switch.sonoff_basic_sw0
 
 alarma_boton_panico:
   alias: 'Boton Panico ON'
@@ -152,7 +152,7 @@ alarma_boton_panico:
     - delay: '00:00:05'
     # SONOFF_SW1_SIRENA INTERIOR ==> ON
     - service: switch.turn_on
-      entity_id: switch.sonoff_basic_sw1
+      entity_id: switch.sonoff_basic_sw0
     # Notifica Telegram
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -167,7 +167,7 @@ alarma_boton_panico:
     #- delay: '00:05:00'
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     #- service: switch.turn_off
-    #  entity_id: switch.sonoff_basic_sw1
+    #  entity_id: switch.sonoff_basic_sw0
 
 alarma_boton_sirenas_off:
   alias: 'Sirenas Interior OFF'
@@ -178,7 +178,7 @@ alarma_boton_sirenas_off:
         gw_mac: !secret xiaomi_gateway
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
-      entity_id: switch.sonoff_basic_sw1
+      entity_id: switch.sonoff_basic_sw0
 
 magiccube_check_alarm_sequence:
   alias: 'Alarma MagicCube Alarm Sequence'
@@ -459,7 +459,7 @@ luces_on_family_home:
 
 # Apagado General Interior Casa menos Entrada/Pasillo
 luces_off:
-  alias: 'Luces Central OFF'
+  alias: 'Luces Interior Off'
   sequence:
     - service: light.turn_off
       entity_id:
@@ -467,6 +467,26 @@ luces_off:
         - group.luces_salon_grp
         - group.luces_estudio_grp
         - group.luces_entrada_grp
+
+luces_exterior_off:
+  alias: 'Luces Exterior OFF'
+  sequence:
+    - service: switch.turn_off
+      entity_id:
+        - switch.wall_switch_right_158d0002236e75   # Faroles Alumbrado Exterior
+        - switch.sonoff_4ch_relay_1                 # Luces Balizas Cespec
+
+
+luces_exterior_on:
+  alias: 'Luces Exterior y Jardín On'
+  sequence:
+    # Llamada a scripts de control programador luces diario
+    - service: script.luces_jardin_check_xia_ext
+    - service: script.luces_jardin_check_bas_sw4
+    - service: script.luces_jardin_check_4ch_ch1
+    - service: script.luces_jardin_check_4ch_ch2
+    - service: script.luces_jardin_check_4ch_ch3
+    - service: script.luces_jardin_check_4ch_ch4
 
 luces_exterior_timer:
   alias: 'Luces Exterior Timer'
@@ -491,26 +511,6 @@ luces_exterior_timer:
       entity_id: switch.wall_switch_right_158d0002236e75
     - service: automation.turn_on
       entity_id: automation.l08_luces_on_exterior_segun_sensor
-
-luces_exterior_off:
-  alias: 'Luces Exterior OFF'
-  sequence:
-    - service: switch.turn_off
-      entity_id:
-        - switch.wall_switch_right_158d0002236e75   # Faroles Alumbrado Exterior
-        - switch.sonoff_4ch_relay_1                 # Luces Balizas Cespec
-
-
-luces_exterior_on:
-  alias: 'Luces Exterior y Jardín On'
-  sequence:
-    # Llamada a scripts de control programador luces diario
-    - service: script.luces_jardin_check_xia_ext
-    - service: script.luces_jardin_check_bas_sw4
-    - service: script.luces_jardin_check_4ch_ch1
-    - service: script.luces_jardin_check_4ch_ch2
-    - service: script.luces_jardin_check_4ch_ch3
-    - service: script.luces_jardin_check_4ch_ch4
 
 luces_jardin_check_xia_ext:
   alias: 'Luces On Faroles Exterior'
@@ -705,5 +705,5 @@ sonoff_initialize:
   sequence:
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
-      entity_id: switch.sonoff_basic_sw1
+      entity_id: switch.sonoff_basic_sw0
 

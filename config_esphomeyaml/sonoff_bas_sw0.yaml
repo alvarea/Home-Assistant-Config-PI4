@@ -1,8 +1,8 @@
 #
-# SONOFF BASIC #2
+# SONOFF BASIC SW0
 #
 esphomeyaml:
-  name: sonoff_bas_sw2
+  name: sonoff_bas_sw0
   platform: ESP8266
   board: esp01_1m
   board_flash_mode: dout
@@ -11,7 +11,7 @@ wifi:
   ssid: 'WLAN.alvarea.net'
   password: '3286202581200'
   manual_ip:
-    static_ip: 192.168.0.31
+    static_ip: 192.168.0.30
     gateway: 192.168.0.1
     subnet: 255.255.255.0
 
@@ -19,8 +19,8 @@ mqtt:
   broker: '192.168.0.23'
   username: 'switch_sonoff'
   password: '7xnQj7RUc05dHqywDM'
-# Enable logging
 
+# Enable logging
 logger:
 
 ota:
@@ -31,23 +31,23 @@ binary_sensor:
       number: GPIO0
       mode: INPUT_PULLUP
       inverted: True
-    name: "Sonoff Basic SW2 Boton"
+    name: "Sonoff Basic SW0 Boton"
   - platform: status
-    name: "Sonoff Basic SW2 Status"
+    name: "Sonoff Basic SW0 Status"
 
 switch:
   - platform: gpio
-    name: "Sonoff Basic SW2"
+    name: "Sonoff Basic SW0"
     pin: GPIO12
 
 output:
   - platform: esp8266_pwm
-    id: basic_sw2_green_led
+    id: basic_sw0_green_led
     pin:
       number: GPIO13
       inverted: True
 
 light:
   - platform: monochromatic
-    name: "Sonoff Basic SW2 LED"
-    output: basic_sw2_green_led
+    name: "Sonoff Basic SW0 LED"
+    output: basic_sw0_green_led

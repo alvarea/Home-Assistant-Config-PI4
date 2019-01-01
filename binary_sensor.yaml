@@ -178,9 +178,9 @@
           - sensor.family_home
 
       # Alarma SONOFF_SW1 SIRENA INTERIOR
-      sonoff_basic_sw1:
+      sonoff_basic_sw0:
         value_template: >-
-          {% if is_state('switch.sonoff_basic_sw1','on') %}
+          {% if is_state('switch.sonoff_basic_sw0','on') %}
             true
           {% else %}
             false

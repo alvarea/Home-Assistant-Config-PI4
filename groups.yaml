@@ -86,12 +86,12 @@ alarma_sirena_grp:
   name: Botón Pánico / Sirena
   view: no
   entities:
-    - binary_sensor.sonoff_basic_sw1_status
-    - binary_sensor.sonoff_basic_sw1
+    - binary_sensor.sonoff_basic_sw0_status
+    - binary_sensor.sonoff_basic_sw0
     - input_boolean.panic_button
     - script.alarma_boton_panico
     - script.alarma_boton_sirenas_off
-    #- binary_sensor.sonoff_basic_sw1_boton
+    #- binary_sensor.sonoff_basic_sw0_boton
 
 alarma_sensor_jardin_grp:
   name: Sensores Jardín
@@ -242,7 +242,6 @@ luces_view:
     - group.luces_estudio_grp
     - group.luces_salon_grp
     - group.luces_jardin_grp
-    - group.luces_led_sonoff_grp
 
 luces_entrada_grp:
   name: Luces Entrada
@@ -273,24 +272,17 @@ luces_estudio_grp:
 luces_jardin_grp:
   name: Luces Jardín
   entities:
-    - binary_sensor.sonoff_basic_sw2_status
+    - binary_sensor.sonoff_basic_sw1_status
     - binary_sensor.sonoff_basic_sw4_status
     - switch.wall_switch_right_158d0002236e75
-    - switch.sonoff_basic_sw2                   # Lámpara Piscina
-    - switch.sonoff_basic_sw4                   # Porche Salón
+    - switch.sonoff_basic_sw4                   # Porche 1 Salón
+    - switch.sonoff_basic_sw1                   # Porche 2 Piscina
     - switch.sonoff_4ch_relay_1                 # Balizas Cesped Jardín (CH1)
     - switch.sonoff_4ch_relay_2                 # Focos Piscina (Olivo3+Yuca)(CH2)
     - switch.sonoff_4ch_relay_3                 # Focos Entrada (Olivo1+Cica)(CH3)
     - switch.sonoff_4ch_relay_4                 # Pendiente Disponible
     # - light.sonoff_4ch_blue_led
 
-luces_led_sonoff_grp:
-  name: Luces LED Sonoff
-  entities:
-    - light.sonoff_basic_sw1_led
-    - light.sonoff_basic_sw2_led
-    - light.sonoff_basic_sw3_led
-    - light.sonoff_basic_sw4_led
 
 jardin_view:
   view: yes
@@ -618,7 +610,7 @@ setup_sirenas_grp:
     - input_select.xiaomi_sound_alarm
     - input_number.xiaomi_volume_alarm
     - input_boolean.alarm_test_sirenas
-    #- switch.sonoff_basic_sw1
+    #- switch.sonoff_basic_sw0
 
 msg_control_grp:
   name: Notificaciones

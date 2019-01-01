@@ -1,5 +1,5 @@
 #
-# SONOFF BASIC #1 => SIRENA ALARMA PASILLO
+# SONOFF BASIC SW1
 #
 esphomeyaml:
   name: sonoff_bas_sw1
@@ -11,7 +11,7 @@ wifi:
   ssid: 'WLAN.alvarea.net'
   password: '3286202581200'
   manual_ip:
-    static_ip: 192.168.0.30
+    static_ip: 192.168.0.31
     gateway: 192.168.0.1
     subnet: 255.255.255.0
 
@@ -19,8 +19,8 @@ mqtt:
   broker: '192.168.0.23'
   username: 'switch_sonoff'
   password: '7xnQj7RUc05dHqywDM'
-
 # Enable logging
+
 logger:
 
 ota:
@@ -42,7 +42,7 @@ switch:
 
 output:
   - platform: esp8266_pwm
-    id: basic_green_led
+    id: basic_sw1_green_led
     pin:
       number: GPIO13
       inverted: True
@@ -50,4 +50,4 @@ output:
 light:
   - platform: monochromatic
     name: "Sonoff Basic SW1 LED"
-    output: basic_green_led
+    output: basic_sw1_green_led

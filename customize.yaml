@@ -104,14 +104,15 @@ sensor.last_boot:
   friendly_name: Último Reinicio del Sistema
 
 #
-# XIAOMI AQARA GATEWAY + SENSORS
+# ********* COMPONENTES XIAOMI AQARA GATEWAY + SENSORES ************
 #
+
 # Estudio
 #
 binary_sensor.motion_sensor_158d0001e464a6:
   friendly_name: Sensor Presencia Estudio
 sensor.illumination_158d0001e464a6:
-  friendly_name: Luz Estudio
+  friendly_name: Sensor Luz Estudio
 sensor.pressure_158d00022c6a47:
   friendly_name: Presión Atm. Estudio
   icon: mdi:gauge
@@ -124,7 +125,13 @@ sensor.humidity_158d00022c6a47:
 
 # Entrada
 #
+light.gateway_light_7811dcb788fa:
+  friendly_name: Luz Aqara
+sensor.illumination_7811dcb788fa:
+  friendly_name: Sensor Luz Aqara
+
 # Xiaomi Magic Cube
+#
 binary_sensor.cube_158d00024a4a62_2:
   friendly_name: Magic Cube
   icon: mdi:cube-outline
@@ -133,19 +140,23 @@ binary_sensor.door_window_sensor_158d00022b393c:
   friendly_name: Sensor Puerta Entrada
   icon: mdi:door
 # Xiaomi Switch
+#
 switch.wall_switch_left_158d0002236e75:
   friendly_name: Luz Techo Entrada
   icon: mdi:ceiling-light
 switch.wall_switch_right_158d0002236e75:
   friendly_name: Luz Exterior
-  icon: mdi:lightbulb-outline
+  icon: mdi:track-light
+
 # Xiaomi Sensor Presencia Interior
+#
 binary_sensor.motion_sensor_158d0001e55903:
   friendly_name: Sensor Presencia Entrada
 sensor.illumination_158d0001e55903:
   friendly_name: Sensor Luz Entrada
 
 # Xiaomi Sensor Presencia Exterior
+#
 binary_sensor.motion_sensor_158d0001e637f6:
   friendly_name: Sensor Presencia Exterior
 sensor.illumination_158d0001e637f6:
@@ -157,24 +168,8 @@ binary_sensor.smoke_sensor_158d0001fd321c:
   friendly_name: Detector Incendios
   icon: mdi:fire
 
-#switch.sonoff_s20_nespresso:
-#  friendly_name: Cafetera Nespresso (S20)
-#  icon: mdi:coffee
-binary_sensor.sonoff_s20_nespresso_boton:
-  friendly_name: Sonoff S20 - Botón
-light.sonoff_s20_nespresso_led:
-  friendly_name: Sonoff S20 - Led
-  icon: mdi:flash-circle
-binary_sensor.sonoff_s20_nespresso_status:
-  friendly_name: Sonoff S20 - Status
-
 # Salón
 #
-light.gateway_light_7811dcb788fa:
-  friendly_name: Luz Aqara
-sensor.illumination_7811dcb788fa:
-  friendly_name: Sensor Luz Aqara
-
 binary_sensor.door_window_sensor_158d000201e2e7:
   friendly_name: Sensor Puerta Salón
   icon: mdi:door
@@ -216,89 +211,6 @@ binary_sensor.door_window_sensor_158d00020b7c27:
   friendly_name: Sensor Ventana MFC-AAC
   icon: mdi:window-closed
 
-
-# Alarma
-#
-switch.sonoff_basic_sw1:
-  friendly_name: Alarma Sirena Interior
-  icon: mdi:alarm-snooze
-
-binary_sensor.sonoff_basic_sw1_status:
-  friendly_name: Sensor Sirena (SW1)
-
-light.sonoff_basic_sw1_led:
-  friendly_name: LED Sirena Interior ++(SW1)
-
-# Dormitorio Principal
-#
-switch.sonoff_s20_sw1:
-  friendly_name: Radiador Malen
-  icon: mdi:radiator
-
-binary_sensor.sonoff_s20_sw1_status:
-  friendly_name: Sensor Calefacción (S20)
-
-light.sonoff_s20_sw1_led:
-  friendly_name: LED Calefacción (S20)
-
-# Jardín Depuradora Piscina
-#
-binary_sensor.sonoff_pow_sw1_status:
-  friendly_name: Cuadro Eléctrico Piscina (POW)
-
-switch.sonoff_pow_sw1:
-  friendly_name: Depuradora Piscina
-  icon: mdi:swim  # dip-switch
-
-# Jardín Luces
-#
-binary_sensor.sonoff_4ch_status:
-  friendly_name: Cuadro Eléctrico Jardín
-
-switch.sonoff_basic_sw2:
-  friendly_name: Luz Porche Piscina
-  icon: mdi:ceiling-light
-
-binary_sensor.sonoff_basic_sw2_status:
-  friendly_name: Porche Piscina (SW2)
-
-light.sonoff_basic_sw2_led:
-  friendly_name: LED Porche Piscina (SW2)
-
-switch.sonoff_basic_sw3:
-  friendly_name: Pendiente (SW3)
-  icon: mdi:wifi
-
-#binary_sensor.sonoff_basic_sw3_status
-#light.sonoff_basic_sw3_led
-
-switch.sonoff_basic_sw4:
-  friendly_name: Luz Porche Salón
-  icon: mdi:ceiling-light
-
-binary_sensor.sonoff_basic_sw4_status:
-  friendly_name: Porche Salón (SW4)
-
-light.sonoff_basic_sw4_led:
-  friendly_name: LED Porche Salón (SW4)
-
-switch.sonoff_4ch_relay_1:
-  friendly_name: Luz Cesped
-  icon: mdi:track-light
-
-switch.sonoff_4ch_relay_2:
-  friendly_name: Foco Piscina # (Olivo3+Yuca)
-  icon: mdi:track-light
-
-switch.sonoff_4ch_relay_3:
-  friendly_name: Foco Cica # (Olivo1+Cica)
-  icon: mdi:track-light
-
-switch.sonoff_4ch_relay_4:
-  friendly_name: Focos Tendedero # CH4 Pendiente
-  icon: mdi:track-light
-  #icon: mdi:car-side
-
 # Scripts Timer Piscina
 #
 script.piscina_timer_start:
@@ -321,3 +233,79 @@ script.piscina_timer_cancel:
   friendly_name: Timer Piscina - STOP
   icon: mdi:power-off
 
+#
+# ==========================================
+# COMPONENTES SONOFF - FIRMWARE ESPHOMEYAML
+# ==========================================
+#
+# SERIE SONOFF BASIC
+#
+switch.sonoff_basic_sw0:
+  friendly_name: Sirena Alarma
+  icon: mdi:alarm-snooze
+binary_sensor.sonoff_basic_sw0_status:
+  friendly_name: Sensor Sirena
+light.sonoff_basic_sw0_led:
+  friendly_name: LED Sirena
+
+switch.sonoff_basic_sw1:
+  friendly_name: Luz Porche 2
+  icon: mdi:ceiling-light
+binary_sensor.sonoff_basic_sw1_status:
+  friendly_name: Sensor Porche 2
+light.sonoff_basic_sw1_led:
+  friendly_name: LED Porche 2
+
+switch.sonoff_basic_sw4:
+  friendly_name: Luz Porche 1
+  icon: mdi:ceiling-light
+binary_sensor.sonoff_basic_sw4_status:
+  friendly_name: Sensor Porche 1
+light.sonoff_basic_sw4_led:
+  friendly_name: LED Porche 1
+
+#
+# SERIE SONOFF 4CH R2
+#
+binary_sensor.sonoff_4ch_status:
+  friendly_name: Cuadro Eléctrico Jardín
+
+switch.sonoff_4ch_relay_1:
+  friendly_name: Luz Jardin
+  icon: mdi:track-light
+
+switch.sonoff_4ch_relay_2:
+  friendly_name: Luz Olivo 3
+  icon: mdi:track-light
+
+switch.sonoff_4ch_relay_3:
+  friendly_name: Luz Olivo 1
+  icon: mdi:track-light
+
+switch.sonoff_4ch_relay_4:
+  friendly_name: Luz Garaje
+  icon: mdi:track-light
+  #icon: mdi:car-side
+
+#
+# SERIE SONOFF S20
+#
+switch.sonoff_s20_sw1:
+  friendly_name: Radiador Malen
+  icon: mdi:radiator
+
+binary_sensor.sonoff_s20_sw1_status:
+  friendly_name: Sensor Radiadon Malen
+
+light.sonoff_s20_sw1_led:
+  friendly_name: Led Radiador Malen
+
+#
+# SERIE SONOFF POW
+#
+binary_sensor.sonoff_pow_sw1_status:
+  friendly_name: Cuadro Eléctrico Piscina
+
+switch.sonoff_pow_sw1:
+  friendly_name: Bomba Piscina
+  icon: mdi:swim  # dip-switch

@@ -1,5 +1,6 @@
 #
-# SONOFF BASIC #3 => LUCES PORCHE JARDIN
+# SONOFF BASIC SW4
+#
 esphomeyaml:
   name: sonoff_bas_sw4
   platform: ESP8266
