@@ -6,8 +6,9 @@
     - platform: time
       at: "00:00:00"
   action:
-    # Script Apagado Luces exterior
-    - service: script.luces_exterior_off
+    # Apagado Luces exterior
+    - service: switch.turn_off
+      entity_id: group.luces_jardin_grp
     # Script Luces Apagado Interior Casa
     - service: script.luces_off
     # Notifica a Familia

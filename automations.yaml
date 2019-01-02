@@ -690,17 +690,8 @@
     state: 'on'
   action:
     # Apagado Luces exterior
-    - service: script.luces_exterior_off
-    # Notifica a Familia
-    #- service: script.turn_on
-    #  entity_id: script.notifica_warning
-    #  data:
-    #    variables:
-    #      title: '*LUCES: OFF*'
-    #      message: >
-    #        >>> EVENTO: 4 horas tras puesta de sol
-    #
-    #        >>> LUCES: Alumbrado Exterior Off
+    - service: switch.turn_off
+      entity_id: group.luces_jardin_grp
 
 - id: L03_luces_off_exterior_all_family_home
   alias: 'L03 Luces Off Exterior All Family Home'
@@ -728,8 +719,9 @@
         state: 'on'
   action:
     - delay: 0:05
-    # Apagado Luces Exterior y Jardín
-    - service: script.luces_exterior_off
+    # Apagado Luces exterior
+    - service: switch.turn_off
+      entity_id: group.luces_jardin_grp
     # Notifica a Familia
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -825,8 +817,6 @@
         entity_id: switch.wall_switch_right_158d0002236e75 # Luces exterior
         state: 'on'
   action:
-    # Script Apagado Luces exterior
-    - service: script.luces_exterior_off
     # Script Luces Apagado Interior Casa
     - service: script.luces_off
     # Notifica a Familia

@@ -75,11 +75,11 @@
         prob_given_false: 0.1
         platform: 'state'
         to_state: 'home'
-      #- entity_id: 'device_tracker.aac_iphone_owntrack' # OWNTRACK
-      #  prob_given_true: 0.99
-      #  prob_given_false: 0.4
-      #  platform: 'state'
-      #  to_state: 'home'
+      - entity_id: 'device_tracker.aac_iphone_owntrack' # OWNTRACK
+        prob_given_true: 0.99
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'home'
       - entity_id: 'device_tracker.b8b52a3bf0384e72a268705d9b06e496' # GEOFENCY
         prob_given_true: 0.9
         prob_given_false: 0.1

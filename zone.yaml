@@ -1,0 +1,14 @@
+- name: Heineken
+  latitude: 37.3876837
+  longitude: -5.9645631
+  icon: mdi:beer
+  radius: 50
+- name: Faeca
+  latitude: 37.393004
+  longitude: -5.957486
+  icon: mdi:tree
+  radius: 50
+- name: Casa Abuela
+  latitude: 37.3748
+  longitude: -6.0530
+  icon: mdi:home-account

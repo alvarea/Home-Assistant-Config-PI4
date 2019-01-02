@@ -1,0 +1,64 @@
+
+# ====================================================================================================
+# IP            ENTIDAD HOMY                        ALEXA               DESCRIPCION
+# ====================================================================================================
+# 192.168.0.30  sonoff_BAS_SW0                      Sirena Alarma       Sirena interior pasillo
+# 192.168.0.31  sonoff_BAS_SW1                      Luz Porche 2        Porche 2 Piscina
+# 192.168.0.32  sonoff_BAS_SW2                                          NEW
+# 192.168.0.33  sonoff_BAS_SW3                                          NEW
+# 192.168.0.34  sonoff_BAS_SW4                      Luz Porche 1        Porche 1 Salón
+# 192.168.0.35  sonoff_4CH_Jardin
+#               sonoff_4ch_relay_1                  Luz Jardin          CH1 - Balizas Cesped
+#               sonoff_4ch_relay_2                  Luz Olivo 3         CH2 - Focos Olivo 3 + Palmera Yuca
+#               sonoff_4ch_relay_3                  Luz Olivo 1         CH3 - Focos Olivo 1 + Palmera Cica
+#               sonoff_4ch_relay_4                  Luz Garaje          CH4 - Pendiente
+# 192.168.0.36  Sonoff_POW_SW1                                          NEW
+# 192.168.0.37  Sonoff_POW_SW2                                          NEW
+# 192.168.0.38  Sonoff_S20_SW1                      Radiador Malen      Radiador Dormitorio Principal (192.168.0.33)
+# 192.168.0.39  Sonoff_S20_SW2                                          NEW - Radiador Paloma
+# 192.168.0.40  Sonoff_S20_SW3                                          NEW - Nespresso
+# 192.168.0.18  Xiaomi Aqara
+#               wall_switch_left_158d0002236e75 	Luz Techo Entrada   Interruptor Luz Entrada
+#               wall_switch_right_158d0002236e75    Luz Exterior        Interruptor Luz Exterior
+
+
+# =======================================================================================================================
+# DOMAIN        ENTIDAD HOMY                        FABRICANTE          ALEXA               DESCRIPCION
+# =======================================================================================================================
+# SWITCH        sonoff_BAS_SW0                      SONOFF              Sirena Alarma       Sirena interior pasillo
+# SWITCH        sonoff_BAS_SW1                      SONOFF              Luz Porche 2        Porche 2 Piscina
+# SWITCH        sonoff_BAS_SW2                      SONOFF              N/A                 NEW
+# SWITCH        sonoff_BAS_SW3                      SONOFF              N/A                 NEW
+# SWITCH        sonoff_BAS_SW4                      SONOFF              Luz Porche 1        Porche 1 Salón
+# SWITCH        sonoff_4ch_relay_1                  SONOFF              Luz Jardin          CH1 - Balizas Cesped
+# SWITCH        sonoff_4ch_relay_2                  SONOFF              Luz Olivo 3         CH2 - Olivo 3 + Palmera Yuca
+# SWITCH        sonoff_4ch_relay_3                  SONOFF              Luz Olivo 1         CH3 - Olivo 1 + Palmera Cica
+# SWITCH        sonoff_4ch_relay_4                  SONOFF              Luz Garaje          CH4 - Pendiente
+# SWITCH        Sonoff_POW_SW1                      SONOFF              N/A                 NEW
+# SWITCH        Sonoff_POW_SW2                      SONOFF              N/A                 NEW
+# SWITCH        Sonoff_S20_SW1                      SONOFF              Radiador Malen      Radiador Dormitorio Principal (SWITCH33)
+# SWITCH        Sonoff_S20_SW2                      SONOFF              Radiador Paloma     NEW
+# SWITCH        Sonoff_S20_SW3                      SONOFF              Nespresso           NEW
+# SWITCH        wall_switch_left_158d0002236e75 	XIAOMI AQARA        Luz Techo Entrada   Interruptor Luz Entrada
+# SWITCH        wall_switch_right_158d0002236e75    XIAOMI AQARA        Luz Exterior        Interruptor Luz Exterior
+# LIGHT         hue_cocina                          PHILIPS             Luz Cocina
+# LIGHT         hue_entrada                         PHILIPS             Luz Entrada         Integrado en Alexa por Hue
+# LIGHT         hue_pasillo	                        PHILIPS             Luz Pasillo         Integrado en Alexa por Hue
+# LIGHT         hue_cilindro	                    PHILIPS             Luz Cilindro        Integrado en Alexa por Hue
+# LIGHT         hue_lectura	                        PHILIPS             Luz Lectura         Integrado en Alexa por Hue
+# LIGHT         hue_seises	                        PHILIPS             Luz Cuadro          Integrado en Alexa por Hue
+# LIGHT         hue_estudio                         PHILIPS             Luz Estudio         Integrado en Alexa por Hue
+# LIGHT         room_cocina	                        PHILIPS             Cocina
+# LIGHT         room_entrada	                    PHILIPS             Entrada
+# LIGHT         room_estudio	                    PHILIPS             Estudio
+# LIGHT         room_pasillo	                    PHILIPS             Pasillo
+# LIGHT         room_salon	                        PHILIPS             Salon
+# LIGHT         sonoff_4ch_blue_led	                SONOFF              N/A
+# LIGHT         sonoff_basic_sw1_led	            SONOFF              N/A
+# LIGHT         sonoff_basic_sw2_led	            SONOFF              N/A
+# LIGHT         sonoff_basic_sw4_led	            SONOFF              N/A
+# LIGHT         sonoff_pow_sw1_led		            SONOFF              N/A
+# LIGHT         sonoff_s20_nespresso_led		    SONOFF              N/A
+# LIGHT         sonoff_s20_sw1_led	                SONOFF              N/A
+# GROUP         luces_jardin_grp                    N/A                 Luces Jardín        Luces de exterior y jardín
+

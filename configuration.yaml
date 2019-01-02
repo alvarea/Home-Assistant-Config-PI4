@@ -16,7 +16,6 @@ homeassistant:
 group: !include groups.yaml
 script: !include scripts.yaml
 automation: !include automations.yaml
-
 sensor: !include sensor.yaml
 binary_sensor: !include binary_sensor.yaml
 input_boolean: !include input_boolean.yaml
@@ -24,6 +23,7 @@ input_select: !include input_select.yaml
 input_text: !include input_text.yaml
 input_number: !include input_number.yaml
 input_datetime: !include input_datetime.yaml
+zone: !include zone.yaml
 
 # Show links to resources in log and frontend
 #introduction:
@@ -42,8 +42,7 @@ http:
   ssl_certificate: /home/homeassistant/dehydrated/certs/alvarea.duckdns.org/fullchain.pem
   ssl_key: /home/homeassistant/dehydrated/certs/alvarea.duckdns.org/privkey.pem
   base_url: !secret http_base_url
-  trusted_networks:
-    - 192.168.0.1
+  trusted_networks: !secret trusted_networks
   ip_ban_enabled: True
   login_attempts_threshold: 10
 
@@ -78,11 +77,6 @@ hue:
 
 # Dispositivos Apple IOS
 ios:
-
-# Text to speech
-#tts:
-#  - platform: google
-
 
 # ALARM MANUAL CONTROL PANEL
 #
@@ -190,7 +184,7 @@ xiaomi_aqara:
     - mac: !secret xiaomi_gateway
       key: AD58F3C5D30D405C
 
-# NMAP, OWNTRACKS
+# NMAP
 device_tracker:
   - platform: nmap_tracker
     hosts:
@@ -198,12 +192,16 @@ device_tracker:
     home_interval: 10
     consider_home: 0:10:00
     interval_seconds: 20
-  #- platform: geofency
-  #- platform: owntracks
-  #  mqtt_topic: "owntracks/#"
 
 # GEOFENCY: Platform & Device Tracker ==> changed on v.0.83.2
 geofency:
+
+# OWNTRACKS: Device tracker integration using Nabu Cloud
+#owntracks:
+  #max_gps_accuracy: 300
+  #waypoints: false
+  #mqtt_topic: "owntracks/#"
+  #events_only: true
 
 # NOTIFICACIONES
 notify:
@@ -246,48 +244,29 @@ telegram_bot:
 # Enables a map showing the location of tracked devices
 map:
 
-zone:
-  - name: Heineken
-    latitude: 37.3876837
-    longitude: -5.9645631
-    icon: mdi:beer
-    radius: 50
-  - name: Faeca
-    latitude: 37.393004
-    longitude: -5.957486
-    icon: mdi:tree
-    radius: 50
-  - name: Casa Abuela
-    latitude: 37.3748
-    longitude: -6.0530
-    icon: mdi:home-account
+
 
 shopping_list:
 
-# ====================================================================================================
-# IP            ENTIDAD HOMY                        ALEXA               DESCRIPCION
-# ====================================================================================================
-# 192.168.0.30  sonoff_BAS_SW0                      Sirena Alarma       Sirena interior pasillo
-# 192.168.0.31  sonoff_BAS_SW1                      Luz Porche 2        Porche 2 Piscina
-# 192.168.0.32  sonoff_BAS_SW2                                          NEW
-# 192.168.0.33  sonoff_BAS_SW3                                          NEW
-# 192.168.0.34  sonoff_BAS_SW4                      Luz Porche 1        Porche 1 Salón
-# 192.168.0.35  sonoff_4CH_Jardin
-#               sonoff_4ch_relay_1                  Luz Jardin          CH1 - Balizas Cesped
-#               sonoff_4ch_relay_2                  Luz Olivo 3         CH2 - Olivo 3 + Palmera Yuca
-#               sonoff_4ch_relay_3                  Luz Olivo 1         CH3 - Olivo 1 + Palmera Cica
-#               sonoff_4ch_relay_4                  Luz Garaje          CH4 - Pendiente
-# 192.168.0.36  Sonoff_POW_SW1                                          NEW
-# 192.168.0.37  Sonoff_POW_SW2                                          NEW
-# 192.168.0.38  Sonoff_S20_SW1                      Radiador Malen      Radiador Dormitorio Principal (192.168.0.33)
-# 192.168.0.39  Sonoff_S20_SW2                                          NEW - Radiador Paloma
-# 192.168.0.40  Sonoff_S20_SW3                                          NEW - Nespresso
-# 192.168.0.18  Xiaomi Aqara
-#               wall_switch_left_158d0002236e75 	Luz Techo Entrada   Interruptor Luz Entrada
-#               wall_switch_right_158d0002236e75    Luz Exterior        Interruptor Luz Exterior
-
-
-
+light:
+  - platform: group
+    name: Luces Interior
+    entities:
+      - light.luces_planta_baja
+      - light.luces_planta_alta
+  - platform: group
+    name: Luces Planta Baja
+    entities:
+      - light.hue_cilindro
+      - light.hue_cocina
+      - light.hue_entrada
+      - light.hue_lectura
+      - light.hue_pasillo
+      - light.hue_seises
+  - platform: group
+    name: Luces Planta Alta
+    entities:
+      - light.hue_estudio
 
 # Cloud -  Home Assistant Cloud - NABU CASA
 cloud:
@@ -295,23 +274,60 @@ cloud:
     filter:
       include_domains:
         - switch
-        - scripts
+      exclude_domains:
+        - alert
+        - automation
+        - input_boolean
+        - sensor
+        - switch
+        - light
+        - group
+        - script
       include_entities:
-        - script.luces_off
-        - script.luces_exterior_off
-        - script.luces_exterior_on
+        - light.luces_planta_baja
+        - light.luces_planta_alta
+        - light.luces_interior
+        - group.luces_exterior_grp
+        - group.luces_casa_grp
+        - script.homy_armado_parcial
+        - script.homy_armado_total
+        - script.homy_desarmado_code
       exclude_entities:
         - switch.sonoff_basic_sw0
         - switch.sonoff_basic_sw2
         - switch.sonoff_s20_nespresso
-      exclude_domains:
-        - light
-        - alert
-        - automation
-        - group
-        - input_boolean
-        - sensor
+        - light.hue_cilindro
+        - light.hue_cocina
+        - light.hue_entrada
+        - light.hue_estudio
+        - light.hue_lectura
+        - light.hue_pasillo
+        - light.hue_seises
+        - light.entrada
+        - light.cocina
+        - light.estudio
+        - light.pasillo
+        - light.salon
+        - light.sonoff_4ch_blue_led
+        - light.sonoff_basic_sw1_led
+        - light.sonoff_basic_sw2_led
+        - light.sonoff_basic_sw4_led
+        - light.sonoff_pow_sw1
+        - light.sonoff_pow_sw1_led
+        - light.sonoff_s20_nespresso_led
+        - light.sonoff_s20_sw1_led
     entity_config:
+      script.homy_armado_parcial:
+        name: Armado Parcial
+      script.homy_armado_total:
+        name: Armado Total
+      script.homy_desarmado_code:
+        name: !secret desarmado_code
+      group.luces_toda_la_casa_grp:
+        name: Luces Toda La Casa
+        description: Luces Interior y Exterior
+      group.luces_exterior_grp:
+        name: Luces Exterior y Jardín
       switch.wall_switch_left_158d0002236e75:
         display_categories: LIGHT
       switch.wall_switch_right_158d0002236e75:

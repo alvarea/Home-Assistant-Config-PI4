@@ -15,21 +15,16 @@ default_view:
     - group.system_view
     - group.batery_view
     - group.config_view
-    - group.main_alarm_status_grp
     - group.main_homy_status_grp
     - group.main_family_status_grp
-    - group.main_sensor_status_grp
-
-main_alarm_status_grp:
-  name: Estado Alarma
-  entities:
-    - alarm_control_panel.ha
+    - group.main_sensor_tiempo_grp
+    - group.main_hass_status_grp
 
 main_homy_status_grp:
-  name: Estado General Homy
+  name: Centro de Control HOMY
   entities:
-    - sensor.time
-    - sensor.uptime
+    - alarm_control_panel.ha
+    - sensor.family_last_tracking
     - binary_sensor.family_any_home
     - binary_sensor.family_all_home
 
@@ -37,26 +32,35 @@ main_family_status_grp:
   name: Family Home?
   entities:
     - sensor.family_home
-    - sensor.family_last_tracking
     - binary_sensor.family_home_aac
     - binary_sensor.family_home_mfc
     - binary_sensor.family_home_paf
     - binary_sensor.family_home_aaf
     - sensor.family_sleep_home
 
-main_sensor_status_grp:
-  name: Centro Notificación Central
+main_sensor_tiempo_grp:
+  name: Resumen del Tiempo
   entities:
     - sensor.hoy_condition
     - sensor.hoy_temperature
     - sensor.manana_condition
     - sensor.manana_temperature
+    - sensor.manana_temperature_min
+    - sensor.manana_temperature_max
     - sensor.temperature_158d00022b65ff
     - sensor.temperature_158d00022c6a47
+
+main_hass_status_grp:
+  name: Estado del Sistema
+  entities:
+    - sensor.date
+    - sensor.time
     - sun.sun
-    - sensor.moon
     - sensor.sun_next_setting
     - sensor.sun_next_rising
+    - sensor.moon
+    - sensor.processor_use
+    - sensor.ssl_certificate_expiry
 
 alarma_view:
   name: Panel Control Alarma
@@ -77,10 +81,8 @@ alarma_status_grp:
   entities:
     - alarm_control_panel.ha
     - sensor.alarm_zone
-    - sensor.magiccube_lastaction
-    #- binary_sensor.cube_158d00024a4a62_2
-    - input_text.magiccube_last_action1
-    - input_datetime.magiccube_last_action1
+    - script.homy_armado_parcial
+    - script.homy_armado_total
 
 alarma_sirena_grp:
   name: Botón Pánico / Sirena
@@ -99,6 +101,9 @@ alarma_sensor_jardin_grp:
   entities:
     - binary_sensor.sonoff_4ch_status           # Sensor de conectividad sonoff 4CH
     - binary_sensor.sonoff_pow_sw1_status       # Sensor de conectividad sonoff POW
+    - binary_sensor.sonoff_basic_sw4_status
+    - binary_sensor.sonoff_basic_sw1_status
+
 
 alarma_sensor_entrada_grp:
   name: Sensores Entrada
@@ -179,7 +184,7 @@ track_aac_grp:
     - binary_sensor.family_home_aac
     #- sensor.family_home_aac
     - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-    #- device_tracker.aac_iphone_owntrack
+    - device_tracker.aac_iphone_owntrack
     - device_tracker.aac_ios
     - device_tracker.aac_iphone_nmap
     - sensor.baye_probability_aac
@@ -193,7 +198,7 @@ track_mfc_grp:
     - binary_sensor.family_home_mfc
     # - sensor.family_home_mfc
     - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
-    #- device_tracker.mfc_iphone_owntrack
+    - device_tracker.mfc_iphone_owntrack
     - device_tracker.mfc_ios
     - device_tracker.mfc_iphone_nmap
     - sensor.baye_probability_mfc
@@ -237,18 +242,35 @@ luces_view:
   view: yes
   name: Luces
   entities:
-    - group.luces_cocina_grp
-    - group.luces_entrada_grp
-    - group.luces_estudio_grp
+    - group.luces_casa_grp
     - group.luces_salon_grp
-    - group.luces_jardin_grp
+    - group.luces_entrada_grp
+    - group.luces_cocina_grp
+    - group.luces_estudio_grp
+    - group.luces_exterior_grp
+
+luces_casa_grp:
+  name: Luces De Toda La Casa
+  entities:
+    - group.luces_exterior_grp
+    - light.luces_interior
+    - light.luces_planta_baja
+    - light.luces_planta_alta
+
+luces_salon_grp:
+  name: Luces Salon
+  entities:
+    - light.room_salon
+    - light.hue_cilindro
+    - light.hue_seises
+    - light.hue_lectura
 
 luces_entrada_grp:
   name: Luces Entrada
   entities:
-    - switch.wall_switch_left_158d0002236e75
     - light.hue_entrada
     - light.hue_pasillo
+    - switch.wall_switch_left_158d0002236e75
     - light.gateway_light_7811dcb788fa
 
 luces_cocina_grp:
@@ -256,33 +278,21 @@ luces_cocina_grp:
   entities:
     - light.hue_cocina
 
-luces_salon_grp:
-  name: Luces Salon
-  entities:
-    - light.room_salon_tv
-    - light.hue_cilindro
-    - light.hue_seises
-    - light.hue_lectura
-
 luces_estudio_grp:
   name: Luces Estudio
   entities:
     - light.hue_estudio
 
-luces_jardin_grp:
-  name: Luces Jardín
+luces_exterior_grp:
+  name: Luces Exterior
   entities:
-    - binary_sensor.sonoff_basic_sw1_status
-    - binary_sensor.sonoff_basic_sw4_status
-    - switch.wall_switch_right_158d0002236e75
     - switch.sonoff_basic_sw4                   # Porche 1 Salón
     - switch.sonoff_basic_sw1                   # Porche 2 Piscina
+    - switch.wall_switch_right_158d0002236e75   # Luces Exterior Xiaomi Switch Right
     - switch.sonoff_4ch_relay_1                 # Balizas Cesped Jardín (CH1)
-    - switch.sonoff_4ch_relay_2                 # Focos Piscina (Olivo3+Yuca)(CH2)
     - switch.sonoff_4ch_relay_3                 # Focos Entrada (Olivo1+Cica)(CH3)
+    - switch.sonoff_4ch_relay_2                 # Focos Piscina (Olivo3+Yuca)(CH2)
     - switch.sonoff_4ch_relay_4                 # Pendiente Disponible
-    # - light.sonoff_4ch_blue_led
-
 
 jardin_view:
   view: yes
@@ -298,7 +308,7 @@ jardin_view:
 jardin_piscina_grp:
   name: Estado Depuradora Piscina
   entities:
-    #- switch.sonoff_pow_sw1                    # Switch POW Depuradora Piscina OCULTO
+    - switch.sonoff_pow_sw1                     # Switch POW Depuradora Piscina OCULTO
     - binary_sensor.sonoff_pow_sw1_status       # Sensor de conectividad sonoff
     - binary_sensor.piscina_dia_ejecucion       # Sensor Próximo día de ejecución
     - binary_sensor.piscina_status              # Sensor basado en el switch sonoff POW SW1
@@ -402,6 +412,7 @@ estudio_view:
     - group.sensor_estudio_grp
     - group.luces_estudio_grp
     - camera.ipcam12_estudio
+    - group.cube_estudio_grp
 
 sensor_estudio_grp:
   name: Temperatura Estudio
@@ -411,6 +422,16 @@ sensor_estudio_grp:
     - sensor.humidity_158d00022c6a47
     - sensor.pressure_158d00022c6a47
     - sensor.illumination_158d0001e464a6
+
+cube_estudio_grp:
+  name: Magic Cube
+  view: no
+  entities:
+    - sensor.magiccube_lastaction
+    - binary_sensor.cube_158d00024a4a62_2
+    - input_text.magiccube_last_action1
+    - input_datetime.magiccube_last_action1
+
 
 tiempo_view:
   view: yes

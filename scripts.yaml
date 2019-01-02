@@ -180,6 +180,30 @@ alarma_boton_sirenas_off:
     - service: switch.turn_off
       entity_id: switch.sonoff_basic_sw0
 
+homy_armado_parcial:
+  alias: 'Homy Armado Parcial'
+  sequence:
+    - service: alarm_control_panel.alarm_arm_home
+      entity_id: alarm_control_panel.ha
+    # La notificación se hace mediente la activación de la regla:
+    # alias: 'A2 Alarm Armed Away'
+
+homy_armado_total:
+  alias: 'Homy Armado Total'
+  sequence:
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.ha
+    # La notificación se hace mediente la activación de la regla:
+    # alias: 'A2 Alarm Armed Away'
+
+homy_desarmado_code:
+  alias: 'Homy Desarmado'
+  sequence:
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: alarm_control_panel.ha
+    # La notificación se hace mediente la activación de la regla:
+    # alias: 'A2 Alarm Armed Away'
+
 magiccube_check_alarm_sequence:
   alias: 'Alarma MagicCube Alarm Sequence'
   sequence:
@@ -467,14 +491,6 @@ luces_off:
         - group.luces_salon_grp
         - group.luces_estudio_grp
         - group.luces_entrada_grp
-
-luces_exterior_off:
-  alias: 'Luces Exterior OFF'
-  sequence:
-    - service: switch.turn_off
-      entity_id:
-        - switch.wall_switch_right_158d0002236e75   # Faroles Alumbrado Exterior
-        - switch.sonoff_4ch_relay_1                 # Luces Balizas Cespec
 
 
 luces_exterior_on:

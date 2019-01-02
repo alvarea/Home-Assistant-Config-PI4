@@ -11,6 +11,11 @@ script.alarma_boton_panico:
 script.alarma_boton_sirenas_off:
   icon: mdi:volume-off
 
+#CERTIFICADO SSL
+
+sensor.ssl_certificate_expiry:
+  friendly_name: Certificado SSL
+
 # PANEL CONTROL ALARMA
 sensor.family_sleep_home:
   friendly_name: ¿Duermen en Casa?s
@@ -127,6 +132,7 @@ sensor.humidity_158d00022c6a47:
 #
 light.gateway_light_7811dcb788fa:
   friendly_name: Luz Aqara
+  icon: mdi:flash-circle
 sensor.illumination_7811dcb788fa:
   friendly_name: Sensor Luz Aqara
 
@@ -233,6 +239,7 @@ script.piscina_timer_cancel:
   friendly_name: Timer Piscina - STOP
   icon: mdi:power-off
 
+
 #
 # ==========================================
 # COMPONENTES SONOFF - FIRMWARE ESPHOMEYAML
@@ -271,7 +278,7 @@ binary_sensor.sonoff_4ch_status:
   friendly_name: Cuadro Eléctrico Jardín
 
 switch.sonoff_4ch_relay_1:
-  friendly_name: Luz Jardin
+  friendly_name: Luz Cesped
   icon: mdi:track-light
 
 switch.sonoff_4ch_relay_2:
@@ -291,14 +298,14 @@ switch.sonoff_4ch_relay_4:
 # SERIE SONOFF S20
 #
 switch.sonoff_s20_sw1:
-  friendly_name: Radiador Malen
+  friendly_name: Calefacción Dormitorio
   icon: mdi:radiator
 
 binary_sensor.sonoff_s20_sw1_status:
-  friendly_name: Sensor Radiadon Malen
+  friendly_name: Sensor Calefacción
 
 light.sonoff_s20_sw1_led:
-  friendly_name: Led Radiador Malen
+  friendly_name: Led Calefacción
 
 #
 # SERIE SONOFF POW
@@ -307,5 +314,5 @@ binary_sensor.sonoff_pow_sw1_status:
   friendly_name: Cuadro Eléctrico Piscina
 
 switch.sonoff_pow_sw1:
-  friendly_name: Bomba Piscina
+  friendly_name: Depuradora Piscina
   icon: mdi:swim  # dip-switch
