@@ -470,8 +470,7 @@
     to: 'off'
   action:
     # Script Luces Apagado Total
-    - service: script.turn_on
-      entity_id: script.luces_off
+    - service: script.luces_off
     # Notifica a Familia NADIE en Casa
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -689,9 +688,8 @@
     entity_id: switch.wall_switch_right_158d0002236e75
     state: 'on'
   action:
-    # Apagado Luces exterior
-    - service: switch.turn_off
-      entity_id: group.luces_jardin_grp
+    # Script Luces Exterior Off
+    - service: script.luces_exterior_off
 
 - id: L03_luces_off_exterior_all_family_home
   alias: 'L03 Luces Off Exterior All Family Home'
@@ -719,9 +717,8 @@
         state: 'on'
   action:
     - delay: 0:05
-    # Apagado Luces exterior
-    - service: switch.turn_off
-      entity_id: group.luces_jardin_grp
+    # Script Luces Exterior Off
+    - service: script.luces_exterior_off
     # Notifica a Familia
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -746,7 +743,7 @@
     state: 'on'
   action:
     - service: light.turn_on
-      entity_id: light.room_salon_tv
+      entity_id: light.room_salon
     # Notifica a Familia
     #- service: script.turn_on
     #  entity_id: script.notifica_warning
@@ -793,7 +790,7 @@
     - platform: time
       at: "02:00:00"
     - platform: time
-      at: "03:00:00"
+      at: "03:30:00"
     - platform: time
       at: "04:00:00"
     - platform: time
@@ -801,23 +798,25 @@
   condition:
     condition: or
     conditions:
+      # LIGHT         room_cocina	                    PHILIPS             Cocina
+      # LIGHT         room_entrada	                    PHILIPS             Entrada
+      # LIGHT         room_estudio	                    PHILIPS             Estudio
+      # LIGHT         room_pasillo	                    PHILIPS             Pasillo
+      # LIGHT         room_salon	                    PHILIPS             Salon
       - condition: state
-        entity_id: light.room_estudio
+        entity_id: light.estudio            # Room Estudio
         state: 'on'
       - condition: state
-        entity_id: light.room_salon_lectura
+        entity_id: light.salon              # Room Salon
         state: 'on'
       - condition: state
-        entity_id: light.room_salon_tv
+        entity_id: light.cocina             # Room Cocina
         state: 'on'
       - condition: state
-        entity_id: light.room_cocina
-        state: 'on'
-      - condition: state
-        entity_id: switch.wall_switch_right_158d0002236e75 # Luces exterior
+        entity_id: group.luces_exterior_grp # Luces exterior
         state: 'on'
   action:
-    # Script Luces Apagado Interior Casa
+    # Apagado Luces Casa
     - service: script.luces_off
     # Notifica a Familia
     - service: script.turn_on

@@ -23,6 +23,7 @@ default_view:
 main_homy_status_grp:
   name: Centro de Control HOMY
   entities:
+    - sensor.time
     - alarm_control_panel.ha
     - sensor.family_last_tracking
     - binary_sensor.family_any_home
@@ -44,7 +45,6 @@ main_sensor_tiempo_grp:
     - sensor.hoy_condition
     - sensor.hoy_temperature
     - sensor.manana_condition
-    - sensor.manana_temperature
     - sensor.manana_temperature_min
     - sensor.manana_temperature_max
     - sensor.temperature_158d00022b65ff
@@ -53,13 +53,12 @@ main_sensor_tiempo_grp:
 main_hass_status_grp:
   name: Estado del Sistema
   entities:
+    - sensor.processor_use
     - sensor.date
-    - sensor.time
     - sun.sun
     - sensor.sun_next_setting
     - sensor.sun_next_rising
     - sensor.moon
-    - sensor.processor_use
     - sensor.ssl_certificate_expiry
 
 alarma_view:

@@ -103,8 +103,6 @@ sensor.disk_free_:
   friendly_name: 'Disk free'
 sensor.swap_use_percent:
   friendly_name: '%Swapping'
-sensor.ssl_certificate_expiry:
-  friendly_name: SSL Cert
 sensor.last_boot:
   friendly_name: Último Reinicio del Sistema
 

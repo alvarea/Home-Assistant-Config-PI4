@@ -481,17 +481,24 @@ luces_on_family_home:
     - service: light.turn_on
       entity_id: light.hue_entrada
 
-# Apagado General Interior Casa menos Entrada/Pasillo
+# Apagado Luces Toda La Casa
 luces_off:
-  alias: 'Luces Interior Off'
+  alias: 'Luces Off'
   sequence:
+    # Apagado Luces Interior Casa
     - service: light.turn_off
-      entity_id:
-        - group.luces_cocina_grp
-        - group.luces_salon_grp
-        - group.luces_estudio_grp
-        - group.luces_entrada_grp
+      entity_id: light.luces_interior
+    # Apagado Luces Exterior
+    - service: switch.turn_off
+      entity_id: group.luces_exterior_grp
 
+# Apagado Luces Exterior Casa
+luces_exterior_off:
+  alias: 'Luces Exterior Off'
+  sequence:
+    # Apagado Luces Exterior
+    - service: switch.turn_off
+      entity_id: group.luces_exterior_grp
 
 luces_exterior_on:
   alias: 'Luces Exterior y Jardín On'
