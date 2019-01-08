@@ -25,6 +25,8 @@ main_homy_status_grp:
   entities:
     - sensor.time
     - alarm_control_panel.ha
+    - alert.alerta_alarma_ha
+    - alert.alerta_test
     - sensor.family_last_tracking
     - binary_sensor.family_any_home
     - binary_sensor.family_all_home

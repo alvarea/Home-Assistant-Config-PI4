@@ -159,7 +159,7 @@ apple_tv:
 #  - platform: firetv
 #    name: FireTV Cocina
 
-# MQTT - BROKER: CLOUDMQTT
+# MQTT - BROKER: Local Mosquitto Broker
 mqtt:
   broker: alvarea.duckdns.org
   port: 1883
@@ -212,7 +212,6 @@ notify:
       - service: ios_mfc_ios
       - service: ios_paf_ios
       - service: ios_aaf_ios
-
   - name: telegram_alarm
     platform: telegram
     chat_id: !secret telegram_grp_alarm
@@ -222,6 +221,10 @@ notify:
   - name: telegram_aac
     platform: telegram
     chat_id: !secret telegram_chat_aac
+  - name: pushover_aac
+    platform: pushover
+    api_key: uovpmpj3cv6ijvyo6dcma2eaeaa8ts
+    user_key: aac_ios
   #- name: telegram_mfc
   #  platform: telegram
   #  chat_id: !secret telegram_chat_mfc
@@ -241,10 +244,32 @@ telegram_bot:
       - !secret telegram_grp_alarm
       #- !secret telegram_chat_aac
 
+alert:
+  alerta_alarma_ha:
+    name: ALERTA - ALARMA HOMY ACTIVADA
+    done_message: Alarma OK
+    entity_id: alarm_control_panel.ha
+    state: 'triggered'
+    repeat: 1
+    can_acknowledge: true
+    skip_first: true
+    notifiers:
+      - telegram_alarm
+
+  alerta_test:
+    name: ALERTA - Test Sistema Alerta HA
+    done_message: Test Alerta OFF
+    entity_id: binary_sensor.motion_sensor_158d0001e464a6
+    state: 'on'
+    repeat: 1
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - telegram_alarm
+      - pushover_aac
+
 # Enables a map showing the location of tracked devices
 map:
-
-
 
 shopping_list:
 

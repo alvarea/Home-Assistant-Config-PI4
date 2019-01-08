@@ -777,7 +777,7 @@
           - condition: sun
             before: sunrise
             # en el amanecer -1h'
-            before_offset: "-02:00:00"
+            before_offset: "02:00:00"
           - condition: numeric_state
             entity_id: sensor.illumination_158d0001e637f6
             below: 0
@@ -1009,7 +1009,7 @@
   trigger:
     - platform: sun
       event: sunset
-      offset: "+04:00:00"
+      offset: "+03:00:00"
   condition:
     # Hay alguien en casa
     condition: state
