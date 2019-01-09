@@ -125,6 +125,12 @@
 
   - platform: template
     sensors:
+
+      # Test Alert Component
+      test_alert_sensor:
+        value_template: '{{ states.light.hue_estudio }}
+        friendly_name: 'Estado Hue Estudio'
+
       # Sensores finales de control de presencia basados en el bayesian(on/off) AND input_boolean(on/off) de cada Uno.
       #
       family_home_aac:
@@ -154,7 +160,8 @@
       # Todos en Casa:  IF sensor.family_home >= sensor.family_sleep_home THEN TRUE
       family_all_home:
         value_template: >-
-          {% if states('sensor.family_home')|int >= states('sensor.family_sleep_home')|int %}
+          {% if states('sensor.family_sleep_home') > 0
+              and states('sensor.family_home')|int >= states('sensor.family_sleep_home')|int %}
             true
           {% else %}
             false

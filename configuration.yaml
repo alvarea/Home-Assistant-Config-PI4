@@ -247,7 +247,7 @@ telegram_bot:
 alert:
   alerta_alarma_ha:
     name: ALERTA - ALARMA HOMY ACTIVADA
-    done_message: Alarma OK
+    done_message: Alarma Desactivada OK
     entity_id: alarm_control_panel.ha
     state: 'triggered'
     repeat: 1
@@ -255,17 +255,18 @@ alert:
     skip_first: true
     notifiers:
       - telegram_alarm
+      - pushover_aac
 
   alerta_test:
-    name: ALERTA - Test Sistema Alerta HA
-    done_message: Test Alerta OFF
-    entity_id: binary_sensor.motion_sensor_158d0001e464a6
+    name: ALERTA - LUCES ENCENDIDAS DE DIA
+    done_message: Test Alerta De Día Solucionado
+    entity_id: binary_sensor.test_alert_sensor
     state: 'on'
     repeat: 1
     can_acknowledge: true
     skip_first: false
     notifiers:
-      - telegram_alarm
+      - telegram_aac
       - pushover_aac
 
 # Enables a map showing the location of tracked devices
