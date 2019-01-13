@@ -160,15 +160,15 @@ apple_tv:
 #    name: FireTV Cocina
 
 # MQTT - BROKER: Local Mosquitto Broker
-mqtt:
-  broker: alvarea.duckdns.org
-  port: 1883
-  client_id: hassbian_alvarea
-  keepalive: 60
-  username: hassbian_mqtt
-  password: !secret hassbian_mqtt
-  discovery: true
-  discovery_prefix: homeassistant
+#mqtt:
+#  broker: alvarea.duckdns.org
+#  port: 1883
+#  client_id: hassbian_alvarea
+#  keepalive: 60
+#  username: hassbian_mqtt
+#  password: !secret hassbian_mqtt
+#  discovery: true
+#  discovery_prefix: homeassistant
 
 #  broker: m23.cloudmqtt.com
 #  port: 11024
@@ -319,9 +319,9 @@ cloud:
         - script.homy_armado_total
         - script.homy_desarmado_code
       exclude_entities:
-        - switch.sonoff_basic_sw0
-        - switch.sonoff_basic_sw2
-        - switch.sonoff_s20_nespresso
+        - switch.esphome_bas_sw0
+        - switch.esphome_bas_sw2
+        - switch.esphome_s20_nespresso
         - light.hue_cilindro
         - light.hue_cocina
         - light.hue_entrada
@@ -334,14 +334,14 @@ cloud:
         - light.estudio
         - light.pasillo
         - light.salon
-        - light.sonoff_4ch_blue_led
-        - light.sonoff_basic_sw1_led
-        - light.sonoff_basic_sw2_led
-        - light.sonoff_basic_sw4_led
-        - light.sonoff_pow_sw1
-        - light.sonoff_pow_sw1_led
-        - light.sonoff_s20_nespresso_led
-        - light.sonoff_s20_sw1_led
+        - light.esphome_4ch_blue_led
+        - light.esphome_bas_sw1_led
+        - light.esphome_bas_sw2_led
+        - light.esphome_bas_sw4_led
+        - light.esphome_pow_sw1
+        - light.esphome_pow_sw1_led
+        - light.esphome_s20_nespresso_led
+        - light.esphome_s20_sw1_led
     entity_config:
       script.homy_armado_parcial:
         name: Armado Parcial
@@ -358,17 +358,17 @@ cloud:
         display_categories: LIGHT
       switch.wall_switch_right_158d0002236e75:
         display_categories: LIGHT
-      switch.sonoff_4ch_relay_1:
+      switch.esphome_4ch_relay_1:
         display_categories: LIGHT
-      switch.sonoff_4ch_relay_2:
+      switch.esphome_4ch_relay_2:
         display_categories: LIGHT
-      switch.sonoff_4ch_relay_3:
+      switch.esphome_4ch_relay_3:
         display_categories: LIGHT
-      switch.sonoff_4ch_relay_4:
+      switch.esphome_4ch_relay_4:
         display_categories: LIGHT
-      switch.sonoff_basic_sw1:
+      switch.esphome_bas_sw1:
         display_categories: LIGHT
-      switch.sonoff_basic_sw4:
+      switch.esphome_bas_sw4:
         display_categories: LIGHT
 
 

@@ -1,4 +1,4 @@
-# REGLA ELIMINADA TEMPORALMENTE
+# REGLAS ELIMINADAS TEMPORALMENTE
 
 - id: L05_luces_off_midnight
   alias: 'L05 Luces Off Medianoche'
@@ -22,3 +22,29 @@
             >>> EVENTO: Medianoche
 
             >>> LUCES: Luces de toda la casa Off
+
+- id: S11_esphome_S20_Switch_Off_Sunrise
+  alias: 'S11 SonoffS20 Switch Off Sunrise'
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: "-01:00:00"
+  condition:
+    # Hay alguien en casa
+    condition: state
+    entity_id: binary_sensor.family_any_home
+    state: 'on'
+  action:
+    - service: switch.turn_off
+        - switch.esphome_s20_sw1
+        - switch.esphome_s20_sw3
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.notifica_warning
+      data:
+        variables:
+          title: '*CALEFACCION: ON*'
+          message: >
+            >>> EVENTO: El sol sale en 1 hora
+
+            >>> CALEFACCION: Dormitorio Principal OFF

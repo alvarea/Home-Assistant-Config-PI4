@@ -39,18 +39,18 @@
 
 # SONOFF S20 - NESSPRESSO
 #
-- id: S09_Sonoff_S20_Boton_On_off
+- id: S09_esphome_s20_Boton_On_off
   alias: 'S09 Sonoff S20 Boton On'
   trigger:
     - platform: state
-      entity_id: binary_sensor.sonoff_s20_nespresso_boton
+      entity_id: binary_sensor.esphome_s20_nespresso_boton
       from: 'off'
       to: 'on'
   action:
     - service: switch.toggle
-      entity_id: switch.sonoff_s20_nespresso
+      entity_id: switch.esphome_s20_nespresso
 
-- id: S10_Sonoff_S20_Sunrise_Switch_On
+- id: S10_esphome_s20_Sunrise_Switch_On
   alias: 'S10 SonoffS20 Sunrise Switch On'
   trigger:
     - platform: state
@@ -78,7 +78,7 @@
         entity_id: binary_sensor.family_any_home
         state: 'on'
       - condition: state
-        entity_id: switch.sonoff_s20_nespresso
+        entity_id: switch.esphome_s20_nespresso
         state: 'off'
   action:
     # Enciende la Nespresso y activa un timer de espera de 30'

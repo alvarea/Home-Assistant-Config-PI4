@@ -128,7 +128,7 @@
 
       # Test Alert Component
       test_alert_sensor:
-        value_template: '{{ states.light.hue_estudio }}
+        value_template: '{{ states.light.hue_estudio }}'
         friendly_name: 'Estado Hue Estudio'
 
       # Sensores finales de control de presencia basados en el bayesian(on/off) AND input_boolean(on/off) de cada Uno.
@@ -160,7 +160,7 @@
       # Todos en Casa:  IF sensor.family_home >= sensor.family_sleep_home THEN TRUE
       family_all_home:
         value_template: >-
-          {% if states('sensor.family_sleep_home') > 0
+          {% if states('sensor.family_sleep_home')|int > 0
               and states('sensor.family_home')|int >= states('sensor.family_sleep_home')|int %}
             true
           {% else %}
@@ -185,9 +185,9 @@
           - sensor.family_home
 
       # Alarma SONOFF_SW1 SIRENA INTERIOR
-      sonoff_basic_sw0:
+      esphome_bas_sw0:
         value_template: >-
-          {% if is_state('switch.sonoff_basic_sw0','on') %}
+          {% if is_state('switch.esphome_bas_sw0','on') %}
             true
           {% else %}
             false
@@ -198,7 +198,7 @@
       # JARDIN - DEPURADORA PISCINA
       piscina_status:
         value_template: >-
-          {% if is_state('switch.sonoff_pow_sw1','on') %}
+          {% if is_state('switch.esphome_pow_sw1','on') %}
             true
           {% else %}
             false

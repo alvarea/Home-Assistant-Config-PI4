@@ -239,55 +239,63 @@ script.piscina_timer_cancel:
 
 
 #
-# ==========================================
-# COMPONENTES SONOFF - FIRMWARE ESPHOMEYAML
-# ==========================================
+# ==================================================
+# COMPONENTES ESPHOME SONOFF - FIRMWARE ESPHOMEYAML
+# ==================================================
 #
 # SERIE SONOFF BASIC
 #
-switch.sonoff_basic_sw0:
+switch.esphome_bas_sw0:
   friendly_name: Sirena Alarma
   icon: mdi:alarm-snooze
-binary_sensor.sonoff_basic_sw0_status:
+binary_sensor.esphome_bas_sw0_status:
   friendly_name: Sensor Sirena
-light.sonoff_basic_sw0_led:
+light.esphome_bas_sw0_led:
   friendly_name: LED Sirena
 
-switch.sonoff_basic_sw1:
+switch.esphome_bas_sw1:
   friendly_name: Luz Porche 2
   icon: mdi:ceiling-light
-binary_sensor.sonoff_basic_sw1_status:
+binary_sensor.esphome_bas_sw1_status:
   friendly_name: Sensor Porche 2
-light.sonoff_basic_sw1_led:
+light.esphome_bas_sw1_led:
   friendly_name: LED Porche 2
 
-switch.sonoff_basic_sw4:
+switch.esphome_bas_sw2:
+  friendly_name: Luz Basic2
+  icon: mdi:ceiling-light
+binary_sensor.esphome_bas_sw2_status:
+  friendly_name: Sensor Basic2
+light.esphome_bas_sw2_led:
+  friendly_name: LED Basic2
+
+switch.esphome_bas_sw4:
   friendly_name: Luz Porche 1
   icon: mdi:ceiling-light
-binary_sensor.sonoff_basic_sw4_status:
+binary_sensor.esphome_bas_sw4_status:
   friendly_name: Sensor Porche 1
-light.sonoff_basic_sw4_led:
+light.esphome_bas_sw4_led:
   friendly_name: LED Porche 1
 
 #
 # SERIE SONOFF 4CH R2
 #
-binary_sensor.sonoff_4ch_status:
+binary_sensor.esphome_4ch_status:
   friendly_name: Cuadro Eléctrico Jardín
 
-switch.sonoff_4ch_relay_1:
+switch.esphome_4ch_relay_1:
   friendly_name: Luz Cesped
   icon: mdi:track-light
 
-switch.sonoff_4ch_relay_2:
+switch.esphome_4ch_relay_2:
   friendly_name: Luz Olivo 3
   icon: mdi:track-light
 
-switch.sonoff_4ch_relay_3:
+switch.esphome_4ch_relay_3:
   friendly_name: Luz Olivo 1
   icon: mdi:track-light
 
-switch.sonoff_4ch_relay_4:
+switch.esphome_4ch_relay_4:
   friendly_name: Luz Garaje
   icon: mdi:track-light
   #icon: mdi:car-side
@@ -295,22 +303,32 @@ switch.sonoff_4ch_relay_4:
 #
 # SERIE SONOFF S20
 #
-switch.sonoff_s20_sw1:
-  friendly_name: Calefacción Dormitorio
+switch.esphome_s20_sw1:
+  friendly_name: Calefacción Dormitorio MFC
   icon: mdi:radiator
 
-binary_sensor.sonoff_s20_sw1_status:
-  friendly_name: Sensor Calefacción
+binary_sensor.esphome_s20_sw1_status:
+  friendly_name: Sensor Calefacción MFC
 
-light.sonoff_s20_sw1_led:
-  friendly_name: Led Calefacción
+light.esphome_s20_sw1_led:
+  friendly_name: Led Calefacción MFC
+
+switch.esphome_s20_sw3:
+  friendly_name: Calefacción Dormitorio PAF
+  icon: mdi:radiator
+
+binary_sensor.esphome_s20_sw3_status:
+  friendly_name: Sensor Calefacción PAF
+
+light.esphome_s20_sw3_led:
+  friendly_name: Led Calefacción PAF
 
 #
 # SERIE SONOFF POW
 #
-binary_sensor.sonoff_pow_sw1_status:
+binary_sensor.esphome_pow_sw1_status:
   friendly_name: Cuadro Eléctrico Piscina
 
-switch.sonoff_pow_sw1:
+switch.esphome_pow_sw1:
   friendly_name: Depuradora Piscina
   icon: mdi:swim  # dip-switch

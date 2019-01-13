@@ -135,7 +135,7 @@ xiaomi_play_alarm:
 # Las sirenas se activan en este orden:
 # 1. Sirena interior Xiaomi con el tono configurado para Alarma
 # 2. Retraso de 5 segundos
-# 3. Sirena interior pasillo mediante switch.sonoff_basic_sw0
+# 3. Sirena interior pasillo mediante switch.esphome_bas_sw0
 
 alarma_boton_panico:
   alias: 'Boton Panico ON'
@@ -152,7 +152,7 @@ alarma_boton_panico:
     - delay: '00:00:05'
     # SONOFF_SW1_SIRENA INTERIOR ==> ON
     - service: switch.turn_on
-      entity_id: switch.sonoff_basic_sw0
+      entity_id: switch.esphome_bas_sw0
     # Notifica Telegram
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -167,7 +167,7 @@ alarma_boton_panico:
     #- delay: '00:05:00'
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     #- service: switch.turn_off
-    #  entity_id: switch.sonoff_basic_sw0
+    #  entity_id: switch.esphome_bas_sw0
 
 alarma_boton_sirenas_off:
   alias: 'Sirenas Interior OFF'
@@ -178,7 +178,7 @@ alarma_boton_sirenas_off:
         gw_mac: !secret xiaomi_gateway
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
-      entity_id: switch.sonoff_basic_sw0
+      entity_id: switch.esphome_bas_sw0
 
 homy_armado_parcial:
   alias: 'Homy Armado Parcial'
@@ -569,7 +569,7 @@ luces_jardin_check_4ch_ch1:
     entity_id: input_boolean.jardin_programador_4ch_ch1
     state: 'on'
   - service: switch.turn_on
-    entity_id: switch.sonoff_4ch_relay_1
+    entity_id: switch.esphome_4ch_relay_1
 
 luces_jardin_check_4ch_ch2:
   alias: 'Luces On Sonoff4ch CH2'
@@ -578,7 +578,7 @@ luces_jardin_check_4ch_ch2:
     entity_id: input_boolean.jardin_programador_4ch_ch2
     state: 'on'
   - service: switch.turn_on
-    entity_id: switch.sonoff_4ch_relay_2
+    entity_id: switch.esphome_4ch_relay_2
 
 luces_jardin_check_4ch_ch3:
   alias: 'Luces On Sonoff4ch CH3'
@@ -587,7 +587,7 @@ luces_jardin_check_4ch_ch3:
     entity_id: input_boolean.jardin_programador_4ch_ch3
     state: 'on'
   - service: switch.turn_on
-    entity_id: switch.sonoff_4ch_relay_3
+    entity_id: switch.esphome_4ch_relay_3
 
 luces_jardin_check_4ch_ch4:
   alias: 'Luces On Sonoff4ch CH4'
@@ -596,7 +596,7 @@ luces_jardin_check_4ch_ch4:
     entity_id: input_boolean.jardin_programador_4ch_ch4
     state: 'on'
   - service: switch.turn_on
-    entity_id: switch.sonoff_4ch_relay_4
+    entity_id: switch.esphome_4ch_relay_4
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -612,8 +612,8 @@ piscina_timer_start:
         entity_id: timer.piscina
         duration: '{{ states.sensor.piscina_manual_segundos.state}}'
     - service: switch.turn_on
-      entity_id: switch.sonoff_pow_sw1
-      #entity_id: switch.sonoff_4ch_relay_2
+      entity_id: switch.esphome_pow_sw1
+      #entity_id: switch.esphome_4ch_relay_2
     # Actualiza Valor Hora Arranque Real
     - service: input_datetime.set_datetime
       entity_id: input_datetime.piscina_real_start_time
@@ -633,8 +633,8 @@ piscina_timer_start_diario:
         entity_id: timer.piscina
         duration: '{{ states.sensor.piscina_duracion_planificada.state}}'
     - service: switch.turn_on
-      entity_id: switch.sonoff_pow_sw1
-      #entity_id: switch.sonoff_4ch_relay_2
+      entity_id: switch.esphome_pow_sw1
+      #entity_id: switch.esphome_4ch_relay_2
     # Actualiza Valor Hora Arranque Real
     - service: input_datetime.set_datetime
       entity_id: input_datetime.piscina_real_start_time
@@ -653,8 +653,8 @@ piscina_timer_cancel:
     - service: timer.cancel
       entity_id: timer.piscina
     - service: switch.turn_off
-      entity_id: switch.sonoff_pow_sw1
-      #entity_id: switch.sonoff_4ch_relay_2
+      entity_id: switch.esphome_pow_sw1
+      #entity_id: switch.esphome_4ch_relay_2
     # Actualiza Valor Hora Arranque Real
     - service: input_datetime.set_datetime
       entity_id: input_datetime.piscina_real_end_time
@@ -672,8 +672,8 @@ piscina_timer_pause:
     - service: timer.pause
       entity_id: timer.piscina
     - service: switch.turn_off
-      entity_id: switch.sonoff_pow_sw1
-      #entity_id: switch.sonoff_4ch_relay_2
+      entity_id: switch.esphome_pow_sw1
+      #entity_id: switch.esphome_4ch_relay_2
 
 piscina_timer_resume:
   alias: Timer Piscina Resume
@@ -681,8 +681,8 @@ piscina_timer_resume:
     - service: timer.start
       entity_id: timer.piscina
     - service: switch.turn_on
-      entity_id: switch.sonoff_pow_sw1
-      #entity_id: switch.sonoff_4ch_relay_2
+      entity_id: switch.esphome_pow_sw1
+      #entity_id: switch.esphome_4ch_relay_2
 
 
 #-----------------------------------------------------------------------------#
@@ -697,13 +697,13 @@ nesspreso_on_timer:
   alias: Nespresso On Timer
   sequence:
     - service: automation.turn_off
-      entity_id: automation.S10_Sonoff_S20_Sunrise_Switch_On
+      entity_id: automation.S10_esphome_s20_Sunrise_Switch_On
     # Incremento del contador de autoencendido
     - service: counter.increment
       entity_id: counter.nespresso_start
     # Enciende la Nespresso
     - service: switch.turn_on
-      entity_id: switch.sonoff_s20_nespresso
+      entity_id: switch.esphome_s20_nespresso
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -716,7 +716,7 @@ nesspreso_on_timer:
 
     - delay: '00:30:00'
     - service: automation.turn_on
-      entity_id: automation.S10_Sonoff_S20_Sunrise_Switch_On
+      entity_id: automation.S10_esphome_s20_Sunrise_Switch_On
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -728,5 +728,5 @@ sonoff_initialize:
   sequence:
     # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
-      entity_id: switch.sonoff_basic_sw0
+      entity_id: switch.esphome_bas_sw0
 

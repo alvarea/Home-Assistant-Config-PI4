@@ -341,21 +341,21 @@
     - service: script.alarma_boton_sirenas_off
 
 #
-# REGLA: BOTON APAGADO SONOFF-SW1 ==> SIRENA OFF
+# REGLA: BOTON APAGADO ESPHOME-SW1 ==> SIRENA OFF
 #
 - id: A10_alarm_sirena_off
   alias: 'A10 Alarm Sirena Interior Off'
   trigger:
     platform: state
-    entity_id: binary_sensor.sonoff_basic_sw0_boton
+    entity_id: binary_sensor.esphome_bas_sw0_boton
     from: 'off'
     to: 'on'
   action:
-    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
+    # ESPHOME_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
-      entity_id: switch.sonoff_basic_sw0
+      entity_id: switch.esphome_bas_sw0
     - service: light.toggle
-      entity_id: light.sonoff_basic_sw0_led
+      entity_id: light.esphome_bas_sw0_led
 
 #
 #
@@ -864,51 +864,51 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# REGLAS DE CONTROL DE SMART SWITCH SONOFF                                    #
+# REGLAS DE CONTROL DE SMART SWITCH ESPHOME                                   #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
 #
-# SONOFF 4CH - JARDIN
+# ESPHOME 4CH - JARDIN
 #
-- id: S01_Sonoff_4CH_Boton1_On_off
+- id: S01_esphome_4ch_Boton1_On_off
   alias: 'S01 Sonoff 4CH Boton1 On'
   trigger:
     - platform: state
-      entity_id: binary_sensor.sonoff_4ch_button_1
+      entity_id: binary_sensor.esphome_4ch_button_1
       from: 'off'
       to: 'on'
   action:
     - service: switch.toggle
-      entity_id: switch.sonoff_4ch_relay_1
+      entity_id: switch.esphome_4ch_relay_1
 
-- id: S02_Sonoff_4CH_Boton2_On_off
+- id: S02_esphome_4ch_Boton2_On_off
   alias: 'S01 Sonoff 4CH Boton2 On'
   trigger:
     - platform: state
-      entity_id: binary_sensor.sonoff_4ch_button_2
+      entity_id: binary_sensor.esphome_4ch_button_2
       from: 'off'
       to: 'on'
   action:
     - service: switch.toggle
-      entity_id: switch.sonoff_4ch_relay_2
+      entity_id: switch.esphome_4ch_relay_2
 
-- id: S03_Sonoff_4CH_Boton3_On_off
+- id: S03_esphome_4ch_Boton3_On_off
   alias: 'S03 Sonoff 4CH Boton3 On'
   trigger:
     - platform: state
-      entity_id: binary_sensor.sonoff_4ch_button_3
+      entity_id: binary_sensor.esphome_4ch_button_3
       from: 'off'
       to: 'on'
   action:
     - service: switch.toggle
-      entity_id: switch.sonoff_4ch_relay_3
+      entity_id: switch.esphome_4ch_relay_3
 
-- id: S04_Sonoff_4CH_Status
+- id: S04_esphome_4ch_Status
   alias: 'S04 Sonoff 4CH Status'
   trigger:
     - platform: state
-      entity_id: binary_sensor.sonoff_4ch_status
+      entity_id: binary_sensor.esphome_4ch_status
       from: 'on'
       to: 'off'
       for: '00:05:00'
@@ -926,7 +926,7 @@
   alias: 'S05 Sonoff POW Status'
   trigger:
     - platform: state
-      entity_id: binary_sensor.sonoff_pow_sw1_status
+      entity_id: binary_sensor.esphome_pow_sw1_status
       from: 'on'
       to: 'off'
       for: '00:05:00'
@@ -940,7 +940,7 @@
           message: >
             >>> URGENTE: CUADRO ELECTRICO DEPURADORA PISCINA SIN CORRIENTE
 
-# SONOFF POW - DEPURADORA PISCINA
+# ESPHOME POW - DEPURADORA PISCINA
 #
 - id: S06_timer_piscina_start
   alias: 'S06 Timer Piscina Start'
@@ -991,21 +991,33 @@
       data_template:
         time: '{{ states.sensor.piscina_diario_endtime.state }}'
 
-# SONOFF S20 - SW1 Radiador Dormitorio Principal
+# ESPHOME S20 - SW1 Radiador Dormitorio Principal
 #
-- id: S09_Sonoff_S20_SW1_Boton_On_off
-  alias: 'S09 Sonoff S20 SW1 Boton On'
+- id: S09_esphome_S20_SW1_Toogle
+  alias: 'S09 Sonoff S20 SW1 Toogle'
   trigger:
     - platform: state
-      entity_id: binary_sensor.sonoff_s20_sw1_boton
+      entity_id: binary_sensor.esphome_s20_sw1_boton
       from: 'off'
       to: 'on'
   action:
     - service: switch.toggle
-      entity_id: switch.sonoff_s20_sw1
+      entity_id: switch.esphome_s20_sw1
 
-- id: S10_Sonoff_S20_Sunset_Switch_On
-  alias: 'S10 SonoffS20 Sunset Switch On'
+- id: S09b_esphome_S20_SW3_Toogle
+  alias: 'S09b Sonoff S20 SW3 Toogle'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_s20_sw3_boton
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_s20_sw3
+
+
+- id: S10_esphome_S2_Switch_On_Sunset
+  alias: 'S10 Calefacción On Sunset'
   trigger:
     - platform: sun
       event: sunset
@@ -1017,7 +1029,9 @@
     state: 'on'
   action:
     - service: switch.turn_on
-      entity_id: switch.sonoff_s20_sw1
+      entity_id: switch.esphome_s20_sw1
+    - service: switch.turn_on
+      entity_id: switch.esphome_s20_sw3
     # Notifica a Familia
     - service: script.turn_on
       entity_id: script.notifica_warning
@@ -1027,22 +1041,19 @@
           message: >
             >>> EVENTO: El sol se ha puesto hace 4 horas
 
-            >>> CALEFACCION: Dormitorio Principal ON
+            >>> CALEFACCION ON: Dormitorio MF + Dormitorio PAF
 
-- id: S11_Sonoff_S20_Sunrise_Switch_Off
-  alias: 'S11 SonoffS20 Sunrise Switch Off'
+- id: S11_esphome_S20_Switch_Off_Hora02_00
+  alias: 'S11 SonoffS20 Switch Off Hora0200'
   trigger:
-    - platform: sun
-      event: sunrise
-      offset: "-01:00:00"
+    - platform: time
+      at: '02:00:00'
   condition:
-    # Hay alguien en casa
-    condition: state
-    entity_id: binary_sensor.family_any_home
-    state: 'on'
   action:
     - service: switch.turn_off
-      entity_id: switch.sonoff_s20_sw1
+      entity_id: switch.esphome_s20_sw1
+    - service: switch.turn_off
+      entity_id: switch.esphome_s20_sw3
     # Notifica a Familia
     - service: script.turn_on
       entity_id: script.notifica_warning
@@ -1050,39 +1061,40 @@
         variables:
           title: '*CALEFACCION: ON*'
           message: >
-            >>> EVENTO: El sol sale en 1 hora
+            >>> EVENTO: Son las 02:00 Madrugada
 
-            >>> CALEFACCION: Dormitorio Principal OFF
+            >>> CALEFACCION OFF: Dormitorio MF + Dormitorio PAF
+
 #
-# SONOFF BASIC SW2 PORCHE PISCINA
+# ESPHOME BASIC SW2 PORCHE PISCINA
 #
-- id: S11_Sonoff_BAS_SW2_Porche_Piscina
+- id: S11_esphome_bas_SW2_Porche_Piscina
   alias: 'S11 Sonoff SW2 Porche Piscina'
   trigger:
     platform: state
-    entity_id: binary_sensor.sonoff_basic_sw1_boton
+    entity_id: binary_sensor.esphome_bas_sw1_boton
     from: 'off'
     to: 'on'
   action:
-    # SONOFF_SW2 ==> OFF
+    # ESPHOME_SW2 ==> OFF
     - service: switch.toogle
-      entity_id: switch.sonoff_basic_sw1
+      entity_id: switch.esphome_bas_sw1
     - service: light.toggle
-      entity_id: light.sonoff_basic_sw1_led
+      entity_id: light.esphome_bas_sw1_led
 
 #
-# SONOFF BASIC SW4 PORCHE SALON
+# ESPHOME BASIC SW4 PORCHE SALON
 #
-- id: S12_Sonoff_BAS_SW4_Porche_Piscina
+- id: S12_esphome_bas_SW4_Porche_Piscina
   alias: 'S12 Sonoff SW4 Porche Piscina'
   trigger:
     platform: state
-    entity_id: binary_sensor.sonoff_basic_sw4_boton
+    entity_id: binary_sensor.esphome_bas_sw4_boton
     from: 'off'
     to: 'on'
   action:
-    # SONOFF_SW4 ==> OFF
+    # ESPHOME_SW4 ==> OFF
     - service: switch.toogle
-      entity_id: switch.sonoff_basic_sw4
+      entity_id: switch.esphome_bas_sw4
     - service: light.toggle
-      entity_id: light.sonoff_basic_sw4_led
+      entity_id: light.esphome_bas_sw4_led

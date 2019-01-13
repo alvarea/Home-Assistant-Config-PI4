@@ -89,21 +89,21 @@ alarma_sirena_grp:
   name: Botón Pánico / Sirena
   view: no
   entities:
-    - binary_sensor.sonoff_basic_sw0_status
-    - binary_sensor.sonoff_basic_sw0
+    - binary_sensor.esphome_bas_sw0_status
+    - binary_sensor.esphome_bas_sw0
     - input_boolean.panic_button
     - script.alarma_boton_panico
     - script.alarma_boton_sirenas_off
-    #- binary_sensor.sonoff_basic_sw0_boton
+    #- binary_sensor.esphome_bas_sw0_boton
 
 alarma_sensor_jardin_grp:
   name: Sensores Jardín
   view: no
   entities:
-    - binary_sensor.sonoff_4ch_status           # Sensor de conectividad sonoff 4CH
-    - binary_sensor.sonoff_pow_sw1_status       # Sensor de conectividad sonoff POW
-    - binary_sensor.sonoff_basic_sw4_status
-    - binary_sensor.sonoff_basic_sw1_status
+    - binary_sensor.esphome_4ch_status           # Sensor de conectividad sonoff 4CH
+    - binary_sensor.esphome_pow_sw1_status       # Sensor de conectividad sonoff POW
+    - binary_sensor.esphome_bas_sw4_status
+    - binary_sensor.esphome_bas_sw1_status
 
 
 alarma_sensor_entrada_grp:
@@ -287,13 +287,13 @@ luces_estudio_grp:
 luces_exterior_grp:
   name: Luces Exterior
   entities:
-    - switch.sonoff_basic_sw4                   # Porche 1 Salón
-    - switch.sonoff_basic_sw1                   # Porche 2 Piscina
+    - switch.esphome_bas_sw4                   # Porche 1 Salón
+    - switch.esphome_bas_sw1                   # Porche 2 Piscina
     - switch.wall_switch_right_158d0002236e75   # Luces Exterior Xiaomi Switch Right
-    - switch.sonoff_4ch_relay_1                 # Balizas Cesped Jardín (CH1)
-    - switch.sonoff_4ch_relay_3                 # Focos Entrada (Olivo1+Cica)(CH3)
-    - switch.sonoff_4ch_relay_2                 # Focos Piscina (Olivo3+Yuca)(CH2)
-    - switch.sonoff_4ch_relay_4                 # Pendiente Disponible
+    - switch.esphome_4ch_relay_1                 # Balizas Cesped Jardín (CH1)
+    - switch.esphome_4ch_relay_3                 # Focos Entrada (Olivo1+Cica)(CH3)
+    - switch.esphome_4ch_relay_2                 # Focos Piscina (Olivo3+Yuca)(CH2)
+    - switch.esphome_4ch_relay_4                 # Pendiente Disponible
 
 jardin_view:
   view: yes
@@ -309,8 +309,8 @@ jardin_view:
 jardin_piscina_grp:
   name: Estado Depuradora Piscina
   entities:
-    - switch.sonoff_pow_sw1                     # Switch POW Depuradora Piscina OCULTO
-    - binary_sensor.sonoff_pow_sw1_status       # Sensor de conectividad sonoff
+    - switch.esphome_pow_sw1                     # Switch POW Depuradora Piscina OCULTO
+    - binary_sensor.esphome_pow_sw1_status       # Sensor de conectividad sonoff
     - binary_sensor.piscina_dia_ejecucion       # Sensor Próximo día de ejecución
     - binary_sensor.piscina_status              # Sensor basado en el switch sonoff POW SW1
     - sensor.piscina_duracion_programa          # Sensor duración programa activo/siguiente minutos
@@ -342,9 +342,9 @@ jardin_piscina_setup_grp:
 jardin_piscina_power_mgt:
   name: Control Consumos
   entities:
-    - sensor.sonoff_pow_sw1_current             # Sonoff Pow SW1 Current
-    - sensor.sonoff_pow_sw1_power               # Sonoff Pow SW1 Power
-    - sensor.sonoff_pow_sw1_voltage             # Sonoff Pow SW1 Voltage
+    - sensor.esphome_pow_sw1_current             # Sonoff Pow SW1 Current
+    - sensor.esphome_pow_sw1_power               # Sonoff Pow SW1 Power
+    - sensor.esphome_pow_sw1_voltage             # Sonoff Pow SW1 Voltage
 
 cocina_view:
   view: yes
@@ -362,10 +362,10 @@ cocina_view:
 #  icon: mdi:coffee
 #  name: Nespresso
 #  entities:
-#    - switch.sonoff_s20_nespresso
-#    - binary_sensor.sonoff_s20_nespresso_boton
-#    #- light.sonoff_s20_nespresso_led
-#    - binary_sensor.sonoff_s20_nespresso_status
+#    - switch.esphome_s20_nespresso
+#    - binary_sensor.esphome_s20_nespresso_boton
+#    #- light.esphome_s20_nespresso_led
+#    - binary_sensor.esphome_s20_nespresso_status
 
 salon_view:
   view: yes
@@ -398,10 +398,10 @@ principal_grp:
   name: Dormitorio Principal
   view: no
   entities:
-    - binary_sensor.sonoff_s20_sw1_status
-    - switch.sonoff_s20_sw1
-    - binary_sensor.sonoff_s20_sw1_boton
-    - light.sonoff_s20_sw1_led
+    - binary_sensor.esphome_s20_sw1_status
+    - switch.esphome_s20_sw1
+    - binary_sensor.esphome_s20_sw1_boton
+    - light.esphome_s20_sw1_led
     - binary_sensor.door_window_sensor_158d00020b7c27
 
 estudio_view:
@@ -599,7 +599,7 @@ setup_telegram_grp:
 setup_luces_jardin_grp:
   name: Luces Jardín Setup
   entities:
-    - binary_sensor.sonoff_4ch_status
+    - binary_sensor.esphome_4ch_status
     - input_boolean.jardin_programador_xia_ext
     - input_boolean.jardin_programador_bas_sw2
     - input_boolean.jardin_programador_bas_sw4
@@ -632,7 +632,7 @@ setup_sirenas_grp:
     - input_select.xiaomi_sound_alarm
     - input_number.xiaomi_volume_alarm
     - input_boolean.alarm_test_sirenas
-    #- switch.sonoff_basic_sw0
+    #- switch.esphome_bas_sw0
 
 msg_control_grp:
   name: Notificaciones
