@@ -556,26 +556,45 @@
       - type: swap_use_percent
       - type: last_boot
 #
-# AAC. Sensor Previsiones de Tiempo
+# AAC. YAHOO - Sensor Previsiones de Tiempo ==> Deprecated 2019/01
 #
-  - platform: yweather
-    woeid: 90231690
-    name: Hoy
+#  - platform: yweather
+#    woeid: 90231690
+#    name: Hoy
+#    monitored_conditions:
+#      - weather
+#      - temperature
+#      - temp_min
+#      - temp_max
+#      - wind_speed
+#      - humidity
+#  - platform: yweather
+#    woeid: 90231690
+#    forecast: 1
+#    name: Mañana
+#    monitored_conditions:
+#      - weather
+#      - temperature
+#      - temp_min
+#      - temp_max
+#      - wind_speed
+#      - humidity
+
+  - platform: openweathermap
+    api_key: df8c2d75032e3df22e01b42b6f9814c3
+    name: Tiempo Hoy
+    #mode: daily
+    forecast: True
+    languaje: es
     monitored_conditions:
       - weather
       - temperature
-      - temp_min
-      - temp_max
       - wind_speed
+      - wind_bearing
       - humidity
-  - platform: yweather
-    woeid: 90231690
-    forecast: 1
-    name: Mañana
-    monitored_conditions:
-      - weather
-      - temperature
-      - temp_min
-      - temp_max
-      - wind_speed
-      - humidity
+      - pressure
+      - clouds
+      - rain
+      - snow
+      - weather_code
+

@@ -160,15 +160,15 @@ apple_tv:
 #    name: FireTV Cocina
 
 # MQTT - BROKER: Local Mosquitto Broker
-#mqtt:
-#  broker: alvarea.duckdns.org
-#  port: 1883
-#  client_id: hassbian_alvarea
-#  keepalive: 60
-#  username: hassbian_mqtt
-#  password: !secret hassbian_mqtt
-#  discovery: true
-#  discovery_prefix: homeassistant
+mqtt:
+  broker: alvarea.duckdns.org
+  port: 1883
+  client_id: hassbian_alvarea
+  keepalive: 60
+  username: hassbian_mqtt
+  password: !secret hassbian_mqtt
+  discovery: true
+  discovery_prefix: homeassistant
 
 #  broker: m23.cloudmqtt.com
 #  port: 11024
@@ -321,7 +321,6 @@ cloud:
       exclude_entities:
         - switch.esphome_bas_sw0
         - switch.esphome_bas_sw2
-        - switch.esphome_s20_nespresso
         - light.hue_cilindro
         - light.hue_cocina
         - light.hue_entrada
@@ -342,6 +341,8 @@ cloud:
         - light.esphome_pow_sw1_led
         - light.esphome_s20_nespresso_led
         - light.esphome_s20_sw1_led
+        - light.esphome_s20_sw2_led
+        - light.esphome_s20_sw3_led
     entity_config:
       script.homy_armado_parcial:
         name: Armado Parcial
@@ -370,7 +371,6 @@ cloud:
         display_categories: LIGHT
       switch.esphome_bas_sw4:
         display_categories: LIGHT
-
 
 # Restaurar valores tras reinicio
 #

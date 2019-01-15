@@ -54,11 +54,11 @@
         prob_given_false: 0.4
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.e3c67d6b51bf445ba241a0045bfe0222' # GEOFENCY
-        prob_given_true: 0.99
-        prob_given_false: 0.1
-        platform: 'state'
-        to_state: 'home'
+      #- entity_id: 'device_tracker.e3c67d6b51bf445ba241a0045bfe0222' # GEOFENCY
+      #  prob_given_true: 0.99
+      #  prob_given_false: 0.1
+      #  platform: 'state'
+      #  to_state: 'home'
 
   - platform: 'bayesian'
     prior: 0.60
@@ -80,22 +80,22 @@
         prob_given_false: 0.4
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.b8b52a3bf0384e72a268705d9b06e496' # GEOFENCY
-        prob_given_true: 0.9
-        prob_given_false: 0.1
-        platform: 'state'
-        to_state: 'home'
+      #- entity_id: 'device_tracker.b8b52a3bf0384e72a268705d9b06e496' # GEOFENCY
+      #  prob_given_true: 0.9
+      #  prob_given_false: 0.1
+      #  platform: 'state'
+      #  to_state: 'home'
 
   - platform: 'bayesian'
     prior: 0.66
     name: 'baye_home_paf'
     probability_threshold: 0.95  # temporalmente estuvo a 0.98
     observations:
-      - entity_id: 'device_tracker.93e3d52336a54d4d898b204abdf3ee94' #PAF GEOFENCY
-        prob_given_true: 0.99
-        prob_given_false: 0.1
-        platform: 'state'
-        to_state: 'home'
+      #- entity_id: 'device_tracker.93e3d52336a54d4d898b204abdf3ee94' #PAF GEOFENCY
+      #  prob_given_true: 0.99
+      #  prob_given_false: 0.1
+      #  platform: 'state'
+      #  to_state: 'home'
       - entity_id: 'device_tracker.paf_ios'  # IOS APP
         prob_given_true: 0.8
         prob_given_false: 0.2

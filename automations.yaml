@@ -1041,7 +1041,7 @@
           message: >
             >>> EVENTO: El sol se ha puesto hace 4 horas
 
-            >>> CALEFACCION ON: Dormitorio MF + Dormitorio PAF
+            >>> CALEFACCION ON: Dormitorio MFC + Dormitorio PAF
 
 - id: S11_esphome_S20_Switch_Off_Hora02_00
   alias: 'S11 SonoffS20 Switch Off Hora0200'

@@ -44,11 +44,10 @@ main_family_status_grp:
 main_sensor_tiempo_grp:
   name: Resumen del Tiempo
   entities:
-    - sensor.hoy_condition
-    - sensor.hoy_temperature
-    - sensor.manana_condition
-    - sensor.manana_temperature_min
-    - sensor.manana_temperature_max
+    - sensor.tiempo_hoy_condition
+    - sensor.tiempo_hoy_rain
+    - sensor.tiempo_hoy_temperature
+    - sensor.tiempo_hoy_forecast
     - sensor.temperature_158d00022b65ff
     - sensor.temperature_158d00022c6a47
 
@@ -393,6 +392,7 @@ dormitorio_view:
   name: Dormitorios
   entities:
     - group.principal_grp
+    - group.dormitorio_paf_grp
 
 principal_grp:
   name: Dormitorio Principal
@@ -403,6 +403,16 @@ principal_grp:
     - binary_sensor.esphome_s20_sw1_boton
     - light.esphome_s20_sw1_led
     - binary_sensor.door_window_sensor_158d00020b7c27
+
+dormitorio_paf_grp:
+  name: Dormitorio PAF
+  view: no
+  entities:
+    - binary_sensor.esphome_s20_sw3_status
+    - switch.esphome_s20_sw3
+    - binary_sensor.esphome_s20_sw3_boton
+    - light.esphome_s20_sw3_led
+    - binary_sensor.door_window_sensor_158d000201dddb
 
 estudio_view:
   view: yes
@@ -439,29 +449,21 @@ tiempo_view:
   icon: mdi:weather-partlycloudy
   name: El Tiempo
   entities:
-    - camera.weather_satelite
     - group.tiempo_hoy_grp
-    - group.tiempo_man_grp
+    - camera.weather_satelite
 
 tiempo_hoy_grp:
   name: Hoy
   entities:
-    - sensor.hoy_condition
-    - sensor.hoy_temperature
-    - sensor.hoy_temperature_max
-    - sensor.hoy_temperature_min
-    - sensor.hoy_wind_speed
-    - sensor.hoy_humidity
-
-tiempo_man_grp:
-  name: Previsión Mañana
-  entities:
-    - sensor.manana_condition
-    - sensor.manana_temperature
-    - sensor.manana_temperature_max
-    - sensor.manana_temperature_min
-    - sensor.manana_wind_speed
-    - sensor.manana_humidity
+    - sensor.tiempo_hoy_condition
+    - sensor.tiempo_hoy_temperature
+    - sensor.tiempo_hoy_forecast
+    - sensor.tiempo_hoy_wind_speed
+    - sensor.tiempo_hoy_wind_bearing
+    - sensor.tiempo_hoy_humidity
+    - sensor.tiempo_hoy_pressure
+    - sensor.tiempo_hoy_cloud_coverage
+    - sensor.tiempo_hoy_rain
 
 system_view:
   view: yes
