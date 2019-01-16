@@ -160,15 +160,15 @@ apple_tv:
 #    name: FireTV Cocina
 
 # MQTT - BROKER: Local Mosquitto Broker
-mqtt:
-  broker: alvarea.duckdns.org
-  port: 1883
-  client_id: hassbian_alvarea
-  keepalive: 60
-  username: hassbian_mqtt
-  password: !secret hassbian_mqtt
-  discovery: true
-  discovery_prefix: homeassistant
+#mqtt:
+#  broker: alvarea.duckdns.org
+#  port: 1883
+#  client_id: hassbian_alvarea
+#  keepalive: 60
+#  username: hassbian_mqtt
+#  password: !secret hassbian_mqtt
+#  discovery: true
+#  discovery_prefix: homeassistant
 
 #  broker: m23.cloudmqtt.com
 #  port: 11024
@@ -188,7 +188,7 @@ xiaomi_aqara:
 device_tracker:
   - platform: nmap_tracker
     hosts:
-      - 192.168.0.50-70
+      - 192.168.0.50-99
     home_interval: 10
     consider_home: 0:10:00
     interval_seconds: 20
@@ -293,6 +293,8 @@ light:
     name: Luces Planta Alta
     entities:
       - light.hue_estudio
+      - light.esphome_lb1_l01
+
 
 # Cloud -  Home Assistant Cloud - NABU CASA
 cloud:
@@ -313,6 +315,7 @@ cloud:
         - light.luces_planta_baja
         - light.luces_planta_alta
         - light.luces_interior
+        - light.esphome_lb1_l01
         - group.luces_exterior_grp
         - group.luces_casa_grp
         - script.homy_armado_parcial
@@ -370,6 +373,8 @@ cloud:
       switch.esphome_bas_sw1:
         display_categories: LIGHT
       switch.esphome_bas_sw4:
+        display_categories: LIGHT
+      light.esphome_lb1_l01:
         display_categories: LIGHT
 
 # Restaurar valores tras reinicio

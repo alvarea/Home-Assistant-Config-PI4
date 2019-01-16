@@ -351,3 +351,10 @@ binary_sensor.esphome_pow_sw1_status:
 switch.esphome_pow_sw1:
   friendly_name: Depuradora Piscina
   icon: mdi:swim  # dip-switch
+
+
+# SERIE SONOFF B1
+#
+light.esphome_lb1_l01:
+  friendly_name: Luz Estudio Sofá
+

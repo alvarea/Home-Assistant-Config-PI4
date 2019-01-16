@@ -530,7 +530,7 @@
         # en el amanecer -2h'
       - condition: sun
         before: sunrise
-        before_offset: "-02:00:00"
+        before_offset: "02:00:00"
       - condition: numeric_state
         entity_id: sensor.baye_probability_aaf
         above: 95
@@ -548,7 +548,8 @@
         variables:
           title: '*ALARMA HOMY*'
           message: >
-            >>> EVENTO: Todos en casa a las 00:01
+            >>> EVENTO: Todos en casa después de media noche
+
             >>> ESTADO: Sistema Armado Automático Parcial
 
 - id: T04_family_sleep_home
@@ -591,6 +592,7 @@
           title: '*FAMILY@HOME*'
           message: >
             >>> Malen está en casa a las 23:00
+
             >>> Activado el control de Duerme en Casa.
 
 - id: T06_family_sleep_home_aaf
@@ -619,6 +621,7 @@
           title: '*FAMILY@HOME*'
           message: >
             >>> Agu está en casa a las 23:00
+
             >>> Activado el control de Duerme en Casa.
 
 - id: T07_family_sleep_home_aaf
@@ -647,6 +650,7 @@
           title: '*FAMILY@HOME*'
           message: >
             >>> Paloma está en casa a las 23:00
+
             >>> Activado el control de Duerme en Casa.
 
 #-----------------------------------------------------------------------------#
@@ -777,7 +781,7 @@
           - condition: sun
             before: sunrise
             # en el amanecer -1h'
-            before_offset: "02:00:00"
+            before_offset: "01:00:00"
           - condition: numeric_state
             entity_id: sensor.illumination_158d0001e637f6
             below: 0
@@ -1017,7 +1021,7 @@
 
 
 - id: S10_esphome_S2_Switch_On_Sunset
-  alias: 'S10 Calefacción On Sunset'
+  alias: 'S10 Calefaccion On Sunset'
   trigger:
     - platform: sun
       event: sunset

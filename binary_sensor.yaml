@@ -6,27 +6,22 @@
   #   - device_tracker.mfc_iphone_nmap
   #   - device_tracker.paf_iphone_nmap
   #   - device_tracker.aaf_iphone_nmap
-  #   - 'device_tracker.pi_rashmiphone'
-  #   - 'device_tracker.pi_alokphone'
 
   # IOS APP ==> prob_given_true: 0.99 - prob_given_false: 0.10
   #   - device_tracker.aac_ios
   #   - device_tracker.mfc_ios
   #   - device_tracker.paf_ios
-  #   - device_tracker.rashmiappiphone
-  #   - device_tracker.alokiosiphone
 
   # OWNTRACK ==> prob_given_true: 0.99 - prob_given_false: 0.4
   #   - device_tracker.aac_iphone_owntrack
   #   - device_tracker.mfc_iphone_owntrack
-  #   - device_tracker.rashmisiphone
-  #   - device_tracker.myiphone
+  #   - device_tracker.paf_iphone_owntrack
 
   # GEOFENCY ==> prob_given_true: 0.99 - prob_given_false: 0.1
-  #   - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-  #   - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
-  #   - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
-  #   - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
+  #   - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496 #AAC
+  #   - device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222 #MFC
+  #   - device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94 #PAF
+  #   - device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195 #AAF
 
   # BAYESIAN SENSORS
   #   - binary_sensor.family_home_mfc
@@ -54,11 +49,11 @@
         prob_given_false: 0.4
         platform: 'state'
         to_state: 'home'
-      #- entity_id: 'device_tracker.e3c67d6b51bf445ba241a0045bfe0222' # GEOFENCY
-      #  prob_given_true: 0.99
-      #  prob_given_false: 0.1
-      #  platform: 'state'
-      #  to_state: 'home'
+      - entity_id: 'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496' #AAC
+        prob_given_true: 0.99
+        prob_given_false: 0.1
+        platform: 'state'
+        to_state: 'home'
 
   - platform: 'bayesian'
     prior: 0.60
@@ -80,22 +75,27 @@
         prob_given_false: 0.4
         platform: 'state'
         to_state: 'home'
-      #- entity_id: 'device_tracker.b8b52a3bf0384e72a268705d9b06e496' # GEOFENCY
-      #  prob_given_true: 0.9
-      #  prob_given_false: 0.1
-      #  platform: 'state'
-      #  to_state: 'home'
+      - entity_id: 'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222' #MFC
+        prob_given_true: 0.9
+        prob_given_false: 0.1
+        platform: 'state'
+        to_state: 'home'
 
   - platform: 'bayesian'
     prior: 0.66
     name: 'baye_home_paf'
     probability_threshold: 0.95  # temporalmente estuvo a 0.98
     observations:
-      #- entity_id: 'device_tracker.93e3d52336a54d4d898b204abdf3ee94' #PAF GEOFENCY
+      #- entity_id: 'device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94' #PAF
       #  prob_given_true: 0.99
       #  prob_given_false: 0.1
       #  platform: 'state'
       #  to_state: 'home'
+      - entity_id: 'device_tracker.paf_iphone_owntrack' # OWNTRACK
+        prob_given_true: 0.99
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'home'
       - entity_id: 'device_tracker.paf_ios'  # IOS APP
         prob_given_true: 0.8
         prob_given_false: 0.2
@@ -112,7 +112,7 @@
     name: 'baye_home_aaf'
     probability_threshold: 0.95
     observations:
-      - entity_id: 'device_tracker.bef743fa74f2464ba458612ad3e1c195' #AAF GEOFENCY
+      - entity_id: 'device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195' #AAF
         prob_given_true: 0.99    # original 0.99
         prob_given_false: 0.1   # original 0.1
         platform: 'state'
