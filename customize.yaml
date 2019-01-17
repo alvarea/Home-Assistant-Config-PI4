@@ -11,14 +11,17 @@ script.alarma_boton_panico:
 script.alarma_boton_sirenas_off:
   icon: mdi:volume-off
 
-#CERTIFICADO SSL
+# Centro Control Homy
+sensor.version_ha:
+  icon: mdi:home-assistant
 
+#CERTIFICADO SSL
 sensor.ssl_certificate_expiry:
   friendly_name: Certificado SSL
 
 # PANEL CONTROL ALARMA
 sensor.family_sleep_home:
-  friendly_name: ¿Duermen en Casa?s
+  friendly_name: ¿Duermen en Casa?
   icon: mdi:sleep
 
 # SENSORES BAYESIAN TRACKING FAMILY HOME

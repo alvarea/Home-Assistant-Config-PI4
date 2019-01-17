@@ -18,7 +18,6 @@ default_view:
     - group.main_homy_status_grp
     - group.main_family_status_grp
     - group.main_sensor_tiempo_grp
-    - group.main_hass_status_grp
 
 main_homy_status_grp:
   name: Centro de Control HOMY
@@ -27,40 +26,39 @@ main_homy_status_grp:
     - alarm_control_panel.ha
     - alert.alerta_alarma_ha
     - alert.alerta_test
-    - sensor.family_last_tracking
-    - binary_sensor.family_any_home
-    - binary_sensor.family_all_home
+    - sensor.date_long
+    - sensor.uptime
+    - sensor.temperatura_cpu
+    - sensor.processor_use
+    - sensor.version_ha
+    - sensor.ssl_certificate_expiry
 
 main_family_status_grp:
   name: Family Home?
   entities:
+    - binary_sensor.family_any_home
+    - binary_sensor.family_all_home
     - sensor.family_home
     - binary_sensor.family_home_aac
     - binary_sensor.family_home_mfc
     - binary_sensor.family_home_paf
     - binary_sensor.family_home_aaf
     - sensor.family_sleep_home
+    - sensor.family_last_tracking
 
 main_sensor_tiempo_grp:
   name: Resumen del Tiempo
   entities:
+    - sun.sun
+    - sensor.sun_next_setting
+    - sensor.sun_next_rising
+    #- sensor.moon
     - sensor.tiempo_hoy_condition
     - sensor.tiempo_hoy_rain
     - sensor.tiempo_hoy_temperature
     - sensor.tiempo_hoy_forecast
     - sensor.temperature_158d00022b65ff
     - sensor.temperature_158d00022c6a47
-
-main_hass_status_grp:
-  name: Estado del Sistema
-  entities:
-    - sensor.processor_use
-    - sensor.date
-    - sun.sun
-    - sensor.sun_next_setting
-    - sensor.sun_next_rising
-    - sensor.moon
-    - sensor.ssl_certificate_expiry
 
 alarma_view:
   name: Panel Control Alarma
@@ -211,8 +209,9 @@ track_paf_grp:
     - input_boolean.family_sleep_home_paf
     - binary_sensor.family_home_paf
     #- sensor.family_home_paf
-    - device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94 #PAF
+    #- device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94 #PAF
     - device_tracker.paf_iphone_owntrack
+    - device_tracker.paf_ios
     - device_tracker.paf_iphone_nmap
     - sensor.baye_probability_paf
     - binary_sensor.baye_home_paf
@@ -225,6 +224,7 @@ track_aaf_grp:
     - binary_sensor.family_home_aaf
     # - sensor.family_home_aaf
     - device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195 #AAF
+    - device_tracker.aaf_ios
     - device_tracker.aaf_iphone_nmap
     - sensor.baye_probability_aaf
     - binary_sensor.baye_home_aaf
@@ -461,7 +461,6 @@ tiempo_hoy_grp:
     - sensor.tiempo_hoy_temperature
     - sensor.tiempo_hoy_forecast
     - sensor.tiempo_hoy_wind_speed
-    - sensor.tiempo_hoy_wind_bearing
     - sensor.tiempo_hoy_humidity
     - sensor.tiempo_hoy_pressure
     - sensor.tiempo_hoy_cloud_coverage
@@ -473,9 +472,8 @@ system_view:
   name: System Status
   entities:
     - group.hass_status_grp
-    - group.pi3cpuram_grp
-    - group.pi3storage_grp
-    - group.track_nmap_grp
+    - group.pi_cpuram_grp
+    - group.pi_storage_grp
 
 hass_status_grp:
   view: no
@@ -487,7 +485,7 @@ hass_status_grp:
     - sensor.last_boot
     - sensor.ssl_certificate_expiry
 
-pi3cpuram_grp:
+pi_cpuram_grp:
   name: PI3 CPU & RAM
   entities:
     - sensor.load_15m
@@ -496,23 +494,13 @@ pi3cpuram_grp:
     - sensor.memory_use
     - sensor.memory_free
 
-pi3storage_grp:
+pi_storage_grp:
   name: PI3 Almacenamiento
   entities:
-    - sensor.disk_use_percent_
-    - sensor.disk_use_
-    - sensor.disk_free_
+    - sensor.disk_use_percent
+    - sensor.disk_use
+    - sensor.disk_free
     - sensor.swap_use_percent
-
-track_nmap_grp:
-  name: NMAP Device Tracking
-  view: no
-  entities:
-    - device_tracker.macbook
-    - device_tracker.apple_timecapsule
-    - device_tracker.ipad_nmap
-    - device_tracker.ipad_mini_nmap
-    #- device_tracker.xiaomi_gateway
 
 batery_view:
   view: yes

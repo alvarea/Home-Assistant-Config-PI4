@@ -1019,13 +1019,15 @@
     - service: switch.toggle
       entity_id: switch.esphome_s20_sw3
 
-
 - id: S10_esphome_S2_Switch_On_Sunset
   alias: 'S10 Calefaccion On Sunset'
   trigger:
     - platform: sun
       event: sunset
       offset: "+03:00:00"
+    - platform: sun
+      event: sunrise
+      offset: "-02:00:00"
   condition:
     # Hay alguien en casa
     condition: state
@@ -1041,18 +1043,17 @@
       entity_id: script.notifica_warning
       data:
         variables:
-          title: '*CALEFACCION: ON*'
+          title: '*CALEFACCION ON*'
           message: >
-            >>> EVENTO: El sol se ha puesto hace 4 horas
+            >>> EVENTO: Se enciende calefacción dormitorios
 
-            >>> CALEFACCION ON: Dormitorio MFC + Dormitorio PAF
+            >>> LUGAR: Dormitorio MFC + Dormitorio PAF
 
 - id: S11_esphome_S20_Switch_Off_Hora02_00
   alias: 'S11 SonoffS20 Switch Off Hora0200'
   trigger:
     - platform: time
       at: '02:00:00'
-  condition:
   action:
     - service: switch.turn_off
       entity_id: switch.esphome_s20_sw1
@@ -1063,17 +1064,39 @@
       entity_id: script.notifica_warning
       data:
         variables:
-          title: '*CALEFACCION: ON*'
+          title: '*CALEFACCION*'
           message: >
-            >>> EVENTO: Son las 02:00 Madrugada
+            >>> EVENTO: Se apaga calefacción dormitorios de madrugada
 
-            >>> CALEFACCION OFF: Dormitorio MF + Dormitorio PAF
+            >>> LUGAR: Dormitorio MF + Dormitorio PAF
+
+- id: S12_esphome_S20_Switch_Off_Sunrise_30
+  alias: 'S12 SonoffS20 Switch Off Sunrise_30'
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: "00:00:00"
+  action:
+    - service: switch.turn_off
+      entity_id: switch.esphome_s20_sw1
+    - service: switch.turn_off
+      entity_id: switch.esphome_s20_sw3
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.notifica_warning
+      data:
+        variables:
+          title: '*CALEFACCION*'
+          message: >
+            >>> EVENTO: Se apaga calefacción al Amanecer
+
+            >>> LUGAR: Dormitorio MF + Dormitorio PAF
 
 #
 # ESPHOME BASIC SW2 PORCHE PISCINA
 #
-- id: S11_esphome_bas_SW2_Porche_Piscina
-  alias: 'S11 Sonoff SW2 Porche Piscina'
+- id: S13_esphome_bas_SW2_Porche_Piscina
+  alias: 'S13 Sonoff SW2 Porche Piscina'
   trigger:
     platform: state
     entity_id: binary_sensor.esphome_bas_sw1_boton
@@ -1089,8 +1112,8 @@
 #
 # ESPHOME BASIC SW4 PORCHE SALON
 #
-- id: S12_esphome_bas_SW4_Porche_Piscina
-  alias: 'S12 Sonoff SW4 Porche Piscina'
+- id: S14_esphome_bas_SW4_Porche_Piscina
+  alias: 'S14 Sonoff SW4 Porche Piscina'
   trigger:
     platform: state
     entity_id: binary_sensor.esphome_bas_sw4_boton

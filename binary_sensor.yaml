@@ -117,6 +117,11 @@
         prob_given_false: 0.1   # original 0.1
         platform: 'state'
         to_state: 'home'
+      - entity_id: 'device_tracker.aaf_ios'  # IOS APP
+        prob_given_true: 0.8
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'home'
       - entity_id: 'device_tracker.aaf_iphone_nmap'
         prob_given_true: 0.8
         prob_given_false: 0.2

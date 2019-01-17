@@ -27,10 +27,11 @@ AAC_Trackers = ['device_tracker.aac_iphone_nmap',
 
 PAF_Trackers = ['device_tracker.paf_iphone_nmap',
                 'device_tracker.paf_iphone_owntrack',
-                'device_tracker.paf_ios',
-                'device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94']
+                'device_tracker.paf_ios']
+                #'device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94']
 
 AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
+                'device_tracker.aaf_ios',
                 'device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195']
 
 # Get the entity that triggered the automation

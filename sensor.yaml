@@ -1,6 +1,26 @@
 #
 # SENSOR
 #
+  - platform: command_line
+    name: Temperatura CPU
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    # If errors occur, remove degree symbol below
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+  - platform: command_line
+    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
+    name: Versión HA
+
+  - platform: template
+    sensors:
+      date_long:
+        friendly_name: 'Fecha'
+        icon_template: mdi:calendar-text
+        value_template: >
+          {% set days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado", "Domingo"]  %}
+          {{ days[now().weekday()] + ', ' + as_timestamp(now()) | timestamp_custom("%d/%m/%y", True) }}
+
   - platform: template
     sensors:
       # Último Tracking
@@ -590,7 +610,603 @@
       - weather
       - temperature
       - wind_speed
-      - wind_bearing
+      - humidity
+      - pressure
+      - clouds
+      - rain
+      - snow
+      - weather_code
+
+
+  - platform: template
+    sensors:
+      # Último Tracking
+      family_last_tracking:
+        value_template: "{{ states('input_text.family_last_tracking') }}"
+        friendly_name: 'Último Tracking'
+        icon_template: "{{ 'mdi:home-map-marker' if states('input_text.family_last_tracking') is not none }}"
+
+      # Meta tracker AAC, MFC, PAF, AAF
+      meta_track_aac:
+        value_template: "{{ states('device_tracker.meta_aac') if states('device_tracker.meta_aac') is not none }}"
+        friendly_name: 'AAC Meta-tracker'
+        entity_picture_template: "{{ states.device_tracker.meta_aac.attributes.entity_picture if states('device_tracker.meta_aac') is not none }}"
+
+      meta_track_mfc:
+        value_template: "{{ states('device_tracker.meta_mfc') if states('device_tracker.meta_mfc') is not none }}"
+        friendly_name: 'MFC Meta-tracker'
+        entity_picture_template: "{{ states.device_tracker.meta_mfc.attributes.entity_picture if states('device_tracker.meta_mfc') is not none }}"
+
+      meta_track_paf:
+        value_template: "{{ states('device_tracker.meta_paf') if states('device_tracker.meta_paf') is not none }}"
+        friendly_name: 'PAF Meta-tracker'
+        entity_picture_template: "{{ states.device_tracker.meta_paf.attributes.entity_picture if states('device_tracker.meta_paf') is not none }}"
+
+      meta_track_aaf:
+        friendly_name: 'AAF Meta-tracker'
+        entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('device_tracker.meta_aaf') is not none }}"
+        value_template: "{{ states('device_tracker.meta_aaf') if is_state('sensor.family_home_aaf','on') and states('device_tracker.meta_aaf') is not none }}"
+
+      # Sensores read-only de configuración on/off Tracking Family Home AAC, MFC, PAF, AAF
+      # input_boolean.family_home_mfc,input_boolean.family_home_aac,input_boolean.family_home_paf,input_boolean.family_home_aaf
+      #
+      family_home_aac:
+        value_template: "{{ states('input_boolean.family_home_aac') if states('input_boolean.family_home_aac') is not none }}"
+        friendly_name: 'Iphone AAC operativo'
+        #icon_template: mdi:cellphone-iphone
+        entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('input_boolean.family_home_aac') is not none }}"
+
+      family_home_mfc:
+        value_template: "{{ states('input_boolean.family_home_mfc') if states('input_boolean.family_home_mfc') is not none }}"
+        friendly_name: 'Iphone MFC operativo'
+        #icon_template: mdi:cellphone-iphone
+        entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('input_boolean.family_home_mfc') is not none }}"
+
+      family_home_paf:
+        value_template: "{{ states('input_boolean.family_home_paf') if states('input_boolean.family_home_paf') is not none }}"
+        friendly_name: 'Iphone PAF operativo'
+        #icon_template: mdi:cellphone-iphone
+        entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('input_boolean.family_home_paf') is not none }}"
+
+      family_home_aaf:
+        value_template: "{{ states('input_boolean.family_home_aaf') if states('input_boolean.family_home_aaf') is not none }}"
+        friendly_name: 'Iphone AAF operativo'
+        #icon_template: mdi:cellphone-iphone
+        entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('input_boolean.family_home_aaf') is not none }}"
+
+      # Bayesian Binarysensor tracker AAC, MFC, PAF, AAF ==> Probability
+      baye_probability_aac:
+        value_template: "{{ ((states.binary_sensor.baye_home_aac.attributes.probability)|float *100)|round(2) }}"
+        friendly_name: 'Probabilidad Agustin'
+        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_aac') is not none }}"
+        unit_of_measurement: '%'
+
+      baye_probability_mfc:
+        value_template: "{{ ((states.binary_sensor.baye_home_mfc.attributes.probability)|float *100)|round(2) }}"
+        friendly_name: 'Probabilidad Malen'
+        unit_of_measurement: '%'
+        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_mfc') is not none }}"
+
+      baye_probability_paf:
+        value_template: "{{ ((states.binary_sensor.baye_home_paf.attributes.probability)|float *100)|round(2) }}"
+        friendly_name: 'Probabilidad Paloma'
+        unit_of_measurement: '%'
+        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_paf') is not none }}"
+
+      baye_probability_aaf:
+        value_template: "{{ ((states.binary_sensor.baye_home_aaf.attributes.probability)|float *100)|round(2) }}"
+        friendly_name: 'Probabilidad Agu'
+        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_aaf') is not none }}"
+        unit_of_measurement: '%'
+
+      # Sensor para mostrar Movimientos Xiaomi Magicube:
+      # Available events are flip90, flip180, move, tap_twice, shake_air, swing, alert, free_fall and rotate.
+      # The component stores the last action as the attribute last_action.
+      magiccube_lastaction:
+        # binary_sensor.cube_158d00024a4a62_2
+        value_template: "{{ states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action | string }}"
+        friendly_name: 'Magic Cube'
+        icon_template: mdi:cube-outline
+
+      # Batería Sensor Xiaomi Entrada Interior. binary_sensor.motion_sensor_158d0001e55903
+      bateria_presencia_entrada:
+        value_template: "{{ states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level|default(-1)|int if states.binary_sensor.motion_sensor_158d0001e55903 is not none }}"
+        friendly_name: 'Batería Sensor Entrada Interior'
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      # Batería Sensor Xiaomi Entrada EXTERIOR. binary_sensor.motion_sensor_158d0001e637f6
+      bateria_presencia_entrada_ext:
+        value_template: "{{ states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level|default(-1)|int if states.binary_sensor.motion_sensor_158d0001e637f6 is not none }}"
+        friendly_name: 'Batería Sensor Entrada Exterior'
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_puerta_entrada:
+        # binary_sensor.door_window_sensor_158d00022b393c
+        friendly_name: 'Batería Sensor Puerta Entrada'
+        value_template: "{{ states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level|default(-1)|int if states.binary_sensor.door_window_sensor_158d00022b393c is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_detector_incendios:
+        #  binary_sensor.smoke_sensor_158d0001fd321c
+        friendly_name: 'Batería Sensor Incendios'
+        value_template: "{{ states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level|default(-1)|int if states.binary_sensor.smoke_sensor_158d0001fd321c is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_puerta_salon:
+        #  binary_sensor.door_window_sensor_158d000201e2e7
+        friendly_name: 'Batería Puerta Salón'
+        value_template: "{{ states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level|default(-1)|int if states.binary_sensor.door_window_sensor_158d000201e2e7 is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_temperatura_salon:
+        #  sensor.temperature_158d00022b65ff
+        friendly_name: 'Batería Temperatura Salón'
+        value_template: "{{ states.sensor.temperature_158d00022b65ff.attributes.battery_level|default(-1)|int if states.sensor.temperature_158d00022b65ff is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.sensor.temperature_158d00022b65ff.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.sensor.temperature_158d00022b65ff.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.sensor.temperature_158d00022b65ff.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.sensor.temperature_158d00022b65ff.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.sensor.temperature_158d00022b65ff.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.sensor.temperature_158d00022b65ff.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.sensor.temperature_158d00022b65ff.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.sensor.temperature_158d00022b65ff.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.sensor.temperature_158d00022b65ff.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.sensor.temperature_158d00022b65ff.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_temperatura_estudio:
+        #  sensor.temperature_158d00022c6a47
+        friendly_name: 'Batería Temperatura Estudio'
+        value_template: "{{ states.sensor.temperature_158d00022c6a47.attributes.battery_level|default(-1)|int if states.sensor.temperature_158d00022c6a47 is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.sensor.temperature_158d00022c6a47.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.sensor.temperature_158d00022c6a47.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.sensor.temperature_158d00022c6a47.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.sensor.temperature_158d00022c6a47.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.sensor.temperature_158d00022c6a47.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.sensor.temperature_158d00022c6a47.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.sensor.temperature_158d00022c6a47.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.sensor.temperature_158d00022c6a47.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.sensor.temperature_158d00022c6a47.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.sensor.temperature_158d00022c6a47.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_ventana_paf:
+        #  binary_sensor.door_window_sensor_158d000201dddb
+        friendly_name: 'Batería Ventana PAF'
+        value_template: "{{ states.binary_sensor.door_window_sensor_158d000201dddb.attributes.battery_level|default(-1)|int if states.binary_sensor.door_window_sensor_158d000201dddb is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.door_window_sensor_158d000201dddb.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.door_window_sensor_158d000201dddb.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.door_window_sensor_158d000201dddb.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.door_window_sensor_158d000201dddb.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.door_window_sensor_158d000201dddb.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.door_window_sensor_158d000201dddb.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.door_window_sensor_158d000201dddb.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.door_window_sensor_158d000201dddb.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.door_window_sensor_158d000201dddb.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.door_window_sensor_158d000201dddb.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_ventana_mfc:
+        #  binary_sensor.door_window_sensor_158d00020b7c27
+        friendly_name: 'Batería Ventana MFC-AAC'
+        value_template: "{{ states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level|default(-1)|int if states.binary_sensor.door_window_sensor_158d00020b7c27 is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_ventana_aaf:
+        #  binary_sensor.door_window_sensor_158d00020910b1
+        friendly_name: 'Batería Ventana AAF'
+        value_template: "{{ states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level|default(-1)|int if states.binary_sensor.door_window_sensor_158d00020910b1 is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_ventana_salita:
+        #  binary_sensor.door_window_sensor_158d00020457e0
+        friendly_name: 'Batería Ventana Sala Plancha'
+        value_template: "{{ states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level|default(-1)|int if states.door_window_sensor_158d00020457e0 is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+
+      bateria_presencia_salon:
+        # binary_sensor.motion_sensor_158d0001e05661
+        friendly_name: 'Batería Presencia Salón'
+        value_template: "{{ states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level|default(-1)|int if states.binary_sensor.motion_sensor_158d0001e05661 is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_presencia_estudio:
+        # binary_sensor.motion_sensor_158d0001e464a6:
+        friendly_name: 'Batería Presencia Estudio'
+        value_template: "{{ states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level|default(-1)|int if states.binary_sensor.motion_sensor_158d0001e464a6 is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+      bateria_magic_cube:
+        # binary_sensor.cube_158d00024a4a62_2:
+        friendly_name: 'Batería Magic Cube'
+        value_template: "{{ states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level|default(-1)|int if states.binary_sensor.cube_158d00024a4a62_2 is not none }}"
+        unit_of_measurement: '%'
+        icon_template: '{% if states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level == 100 %}
+                           mdi:battery
+                        {% elif states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level >= 90 %}
+                           mdi:battery-90
+                        {% elif states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level >= 80 %}
+                           mdi:battery-80
+                        {% elif states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level >= 70 %}
+                           mdi:battery-70
+                        {% elif states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level >= 60 %}
+                           mdi:battery-60
+                        {% elif states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level >= 50 %}
+                           mdi:battery-50
+                        {% elif states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level >= 40 %}
+                           mdi:battery-40
+                        {% elif states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level >= 30 %}
+                           mdi:battery-30
+                        {% elif states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level >= 20 %}
+                           mdi:battery-20
+                        {% elif states.binary_sensor.cube_158d00024a4a62_2.attributes.battery_level >= 10 %}
+                           mdi:battery-10
+                        {% else %}
+                           battery-outline
+                        {% endif %}'
+
+      # Sol Próximo Aterdecer
+      sun_next_setting:
+        value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%H:%M") }}'
+        friendly_name: 'Próxima Puesta de Sol'
+        icon_template: "{{ 'mdi:weather-sunset-down' if states('sun.sun') is not none }}"
+
+      # Sol Próximo Amanecer
+      sun_next_rising:
+        value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%H:%M") }}'
+        friendly_name: 'Próxima Salida de Sol'
+        icon_template: "{{ 'mdi:weather-sunset-up' if states('sun.sun') is not none }}"
+
+      # Piscina Duracion Programa Diario-Semanal
+      piscina_duracion_planificada:
+        value_template: '{{ states.input_number.piscina_diario_horas.state|int }}:00:00'
+        friendly_name: 'Duración Programa Planificado'
+        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_diario_horas') is not none }}"
+
+      # Piscina Duracion Programa Manual
+      piscina_duracion_manual:
+        value_template: '00:{{ states.input_number.piscina_manual_minutos.state|int }}:00'
+        friendly_name: 'Duración Programa Planificado'
+        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_manual_minutos') is not none }}"
+
+      piscina_duracion_programa:
+        value_template: '{{ states.input_text.piscina_duracion_programa.state }}'
+        friendly_name: 'Duración Programa Activo'
+        icon_template: "{{ 'mdi:timer-sand' if states('input_text.piscina_duracion_programa') is not none }}"
+
+      piscina_diario_endtime:
+        friendly_name: 'Sensor Hora Finalización'
+        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_diario_horas') is not none }}"
+        value_template: '{% if states.input_number.piscina_diario_horas.state | int + states.input_datetime.piscina_start_time.attributes.hour | int < 24 %}
+                            {{ states.input_number.piscina_diario_horas.state | int + states.input_datetime.piscina_start_time.attributes.hour | int }}:00:00
+                         {% else %}
+                            {{ states.input_number.piscina_diario_horas.state | int + states.input_datetime.piscina_start_time.attributes.hour | int - 24 }}:00:00
+                         {% endif %}'
+
+      piscina_manual_segundos:
+        value_template: '{{ states.input_number.piscina_manual_minutos.state |int *60 }}'
+        friendly_name: 'Duración Programa Corto (Seg)'
+        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_manual_minutos') is not none }}"
+
+# AAC. Sensores Rendimiento de PI y CERT_SSL
+#
+  - platform: time_date
+    display_options:
+      - 'date'
+      - 'time'
+  - platform: uptime
+    unit_of_measurement: hours
+  - platform: moon
+  - platform: cert_expiry
+    host: alvarea.duckdns.org
+    port: 443
+  - platform: systemmonitor
+    resources:
+      - type: load_15m
+      - type: processor_use
+      - type: memory_use_percent
+      - type: memory_use
+      - type: memory_free
+      - type: disk_use_percent
+        arg: /
+      - type: disk_use
+        arg: /
+      - type: disk_free
+        arg: /
+      - type: swap_use_percent
+      - type: last_boot
+#
+# AAC. YAHOO - Sensor Previsiones de Tiempo ==> Deprecated 2019/01
+#
+#  - platform: yweather
+#    woeid: 90231690
+#    name: Hoy
+#    monitored_conditions:
+#      - weather
+#      - temperature
+#      - temp_min
+#      - temp_max
+#      - wind_speed
+#      - humidity
+#  - platform: yweather
+#    woeid: 90231690
+#    forecast: 1
+#    name: Mañana
+#    monitored_conditions:
+#      - weather
+#      - temperature
+#      - temp_min
+#      - temp_max
+#      - wind_speed
+#      - humidity
+
+  - platform: openweathermap
+    api_key: df8c2d75032e3df22e01b42b6f9814c3
+    name: Tiempo Hoy
+    #mode: daily
+    forecast: True
+    languaje: es
+    monitored_conditions:
+      - weather
+      - temperature
+      - wind_speed
       - humidity
       - pressure
       - clouds
