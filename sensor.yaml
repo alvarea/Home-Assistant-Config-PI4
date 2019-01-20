@@ -1,6 +1,29 @@
 #
-# SENSOR
+# SENSORES FECHA Y HORA
 #
+  - platform: time_date
+    display_options:
+      - 'date'
+      - 'date_time'
+      - 'time'
+
+  - platform: uptime
+    unit_of_measurement: hours
+
+  - platform: template
+    sensors:
+      date_long:
+        friendly_name: 'Fecha'
+        icon_template: mdi:calendar-text
+        value_template: "{{ strptime(states('sensor.date_time'),'%d/%m/%y') }}"
+        #  {% set days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado", "Domingo"]  %}
+
+# Sensores Rendimiento de PI y CERT_SSL
+#
+  - platform: cert_expiry
+    host: alvarea.duckdns.org
+    port: 443
+
   - platform: command_line
     name: Temperatura CPU
     command: "cat /sys/class/thermal/thermal_zone0/temp"
@@ -12,15 +35,22 @@
     command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
     name: Versión HA
 
-  - platform: template
-    sensors:
-      date_long:
-        friendly_name: 'Fecha'
-        icon_template: mdi:calendar-text
-        value_template: >
-          {% set days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado", "Domingo"]  %}
-          {{ days[now().weekday()] + ', ' + as_timestamp(now()) | timestamp_custom("%d/%m/%y", True) }}
-
+  - platform: systemmonitor
+    resources:
+      - type: load_15m
+      - type: processor_use
+      - type: memory_use_percent
+      - type: memory_use
+      - type: memory_free
+      - type: disk_use_percent
+        arg: /
+      - type: disk_use
+        arg: /
+      - type: disk_free
+        arg: /
+      - type: swap_use_percent
+      - type: last_boot
+#
   - platform: template
     sensors:
       # Último Tracking
@@ -548,35 +578,8 @@
         friendly_name: 'Duración Programa Corto (Seg)'
         icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_manual_minutos') is not none }}"
 
-# AAC. Sensores Rendimiento de PI y CERT_SSL
-#
-  - platform: time_date
-    display_options:
-      - 'date'
-      - 'time'
-  - platform: uptime
-    unit_of_measurement: hours
-  - platform: moon
-  - platform: cert_expiry
-    host: alvarea.duckdns.org
-    port: 443
-  - platform: systemmonitor
-    resources:
-      - type: load_15m
-      - type: processor_use
-      - type: memory_use_percent
-      - type: memory_use
-      - type: memory_free
-      - type: disk_use_percent
-        arg: /
-      - type: disk_use
-        arg: /
-      - type: disk_free
-        arg: /
-      - type: swap_use_percent
-      - type: last_boot
-#
-# AAC. YAHOO - Sensor Previsiones de Tiempo ==> Deprecated 2019/01
+
+# YAHOO - Sensor Previsiones de Tiempo ==> Deprecated 2019/01
 #
 #  - platform: yweather
 #    woeid: 90231690
@@ -1145,35 +1148,8 @@
         friendly_name: 'Duración Programa Corto (Seg)'
         icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_manual_minutos') is not none }}"
 
-# AAC. Sensores Rendimiento de PI y CERT_SSL
 #
-  - platform: time_date
-    display_options:
-      - 'date'
-      - 'time'
-  - platform: uptime
-    unit_of_measurement: hours
-  - platform: moon
-  - platform: cert_expiry
-    host: alvarea.duckdns.org
-    port: 443
-  - platform: systemmonitor
-    resources:
-      - type: load_15m
-      - type: processor_use
-      - type: memory_use_percent
-      - type: memory_use
-      - type: memory_free
-      - type: disk_use_percent
-        arg: /
-      - type: disk_use
-        arg: /
-      - type: disk_free
-        arg: /
-      - type: swap_use_percent
-      - type: last_boot
-#
-# AAC. YAHOO - Sensor Previsiones de Tiempo ==> Deprecated 2019/01
+#  YAHOO - Sensor Previsiones de Tiempo ==> Deprecated 2019/01
 #
 #  - platform: yweather
 #    woeid: 90231690
@@ -1196,6 +1172,9 @@
 #      - temp_max
 #      - wind_speed
 #      - humidity
+
+
+  - platform: moon
 
   - platform: openweathermap
     api_key: df8c2d75032e3df22e01b42b6f9814c3

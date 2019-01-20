@@ -130,7 +130,6 @@
 
   - platform: template
     sensors:
-
       # Test Alert Component
       test_alert_sensor:
         value_template: '{{ states.light.hue_estudio }}'
@@ -199,6 +198,17 @@
           {% endif %}
         friendly_name: 'Alarma Sirena Interior'
         icon_template: mdi:alarm-light
+
+      # Alarma SONOFF POW Rack
+      esphome_pow_sw2_switch:
+        value_template: >-
+          {% if is_state('switch.esphome_pow_sw2','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: 'Corriente Rack'
+        icon_template: mdi:toggle-switch
 
       # JARDIN - DEPURADORA PISCINA
       piscina_status:

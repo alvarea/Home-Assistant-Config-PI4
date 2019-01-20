@@ -13,7 +13,7 @@
 #               esphome_4ch_relay_3                 Luz Olivo 1         CH3 - Focos Olivo 1 + Palmera Cica
 #               esphome_4ch_relay_4                 Luz Garaje          CH4 - Pendiente
 # 192.168.0.36  esphome_pow_sw1                     Depuradora          Piscina
-# 192.168.0.37  Sonoff_POW_SW2                                          NEW
+# 192.168.0.37  esphome_pow_sw2                     NEW
 # 192.168.0.38  esphome_s20_SW1                     Radiador Malen      Radiador Dormitorio Principal (192.168.0.33)
 # 192.168.0.39  esphome_s20_SW2                     Nespresso
 # 192.168.0.40  esphome_s20_SW3                     Radiador Paloma     Radiador Dormitorio
@@ -25,20 +25,20 @@
 # =======================================================================================================================
 # DOMAIN        ENTIDAD HOMY                        FABRICANTE          ALEXA               DESCRIPCION
 # =======================================================================================================================
-# SWITCH        esphome_bas_SW0                      SONOFF              Sirena Alarma       Sirena interior pasillo
-# SWITCH        esphome_bas_SW1                      SONOFF              Luz Porche 2        Porche 2 Piscina
-# SWITCH        esphome_bas_SW2                      SONOFF              N/A                 NEW
-# SWITCH        esphome_bas_SW3                      SONOFF              N/A                 NEW
-# SWITCH        esphome_bas_SW4                      SONOFF              Luz Porche 1        Porche 1 Salón
-# SWITCH        esphome_4ch_relay_1                  SONOFF              Luz Jardin          CH1 - Balizas Cesped
-# SWITCH        esphome_4ch_relay_2                  SONOFF              Luz Olivo 3         CH2 - Olivo 3 + Palmera Yuca
-# SWITCH        esphome_4ch_relay_3                  SONOFF              Luz Olivo 1         CH3 - Olivo 1 + Palmera Cica
-# SWITCH        esphome_4ch_relay_4                  SONOFF              Luz Garaje          CH4 - Pendiente
-# SWITCH        esphome_pow_sw1                      SONOFF              Depuradora          Piscina
-# SWITCH        Sonoff_POW_SW2                      SONOFF              N/A                 NEW
-# SWITCH        esphome_s20_SW1                      SONOFF              Radiador Malen      Radiador Dormitorio Principal (SWITCH33)
-# SWITCH        esphome_s20_SW2                      SONOFF              Radiador Paloma     NEW
-# SWITCH        esphome_s20_SW3                      SONOFF              Nespresso           NEW
+# SWITCH        esphome_bas_SW0                     SONOFF              Sirena Alarma       Sirena interior pasillo
+# SWITCH        esphome_bas_SW1                     SONOFF              Luz Porche 2        Porche 2 Piscina
+# SWITCH        esphome_bas_SW2                     SONOFF              N/A                 NEW
+# SWITCH        esphome_bas_SW3                     SONOFF              N/A                 NEW
+# SWITCH        esphome_bas_SW4                     SONOFF              Luz Porche 1        Porche 1 Salón
+# SWITCH        esphome_4ch_relay_1                 SONOFF              Luz Jardin          CH1 - Balizas Cesped
+# SWITCH        esphome_4ch_relay_2                 SONOFF              Luz Olivo 3         CH2 - Olivo 3 + Palmera Yuca
+# SWITCH        esphome_4ch_relay_3                 SONOFF              Luz Olivo 1         CH3 - Olivo 1 + Palmera Cica
+# SWITCH        esphome_4ch_relay_4                 SONOFF              Luz Garaje          CH4 - Pendiente
+# SWITCH        esphome_pow_sw1                     SONOFF              Depuradora          Piscina
+# SWITCH        esphome_pow_sw2                     SONOFF              N/A                 NEW
+# SWITCH        esphome_s20_SW1                     SONOFF              Radiador Malen      Radiador Dormitorio Principal (SWITCH33)
+# SWITCH        esphome_s20_SW2                     SONOFF              Radiador Paloma     NEW
+# SWITCH        esphome_s20_SW3                     SONOFF              Nespresso           NEW
 # SWITCH        wall_switch_left_158d0002236e75 	XIAOMI AQARA        Luz Techo Entrada   Interruptor Luz Entrada
 # SWITCH        wall_switch_right_158d0002236e75    XIAOMI AQARA        Luz Exterior        Interruptor Luz Exterior
 # LIGHT         hue_cocina                          PHILIPS             Luz Cocina
@@ -53,10 +53,10 @@
 # LIGHT         room_estudio	                    PHILIPS             Estudio
 # LIGHT         room_pasillo	                    PHILIPS             Pasillo
 # LIGHT         room_salon	                        PHILIPS             Salon
-# LIGHT         esphome_4ch_blue_led	                SONOFF              N/A
-# LIGHT         esphome_bas_sw1_led	            SONOFF              N/A
-# LIGHT         esphome_bas_sw2_led	            SONOFF              N/A
-# LIGHT         esphome_bas_sw4_led	            SONOFF              N/A
+# LIGHT         esphome_4ch_blue_led	            SONOFF              N/A
+# LIGHT         esphome_bas_sw1_led	                SONOFF              N/A
+# LIGHT         esphome_bas_sw2_led	                SONOFF              N/A
+# LIGHT         esphome_bas_sw4_led	                SONOFF              N/A
 # LIGHT         esphome_pow_sw1_led		            SONOFF              N/A
 # LIGHT         esphome_s20_nespresso_led		    SONOFF              N/A
 # LIGHT         esphome_s20_sw1_led	                SONOFF              N/A

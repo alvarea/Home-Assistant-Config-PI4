@@ -356,7 +356,7 @@ cocina_view:
     - camera.ipcam11_cocina
     - group.luces_cocina_grp
     - group.alarma_sensor_cocina_grp
-    - media_player.firetv_cocina
+    #- media_player.firetv_cocina
 
 #nespresso_grp:
 #  view: no
@@ -471,9 +471,21 @@ system_view:
   icon: mdi:server
   name: System Status
   entities:
+    - group.rack_comm_grp
     - group.hass_status_grp
     - group.pi_cpuram_grp
     - group.pi_storage_grp
+
+rack_comm_grp:
+  view: no
+  name: Rack Comunicaciones
+  entities:
+    - binary_sensor.esphome_pow_sw2_status
+    - switch.esphome_pow_sw2
+    - binary_sensor.esphome_pow_sw2_switch
+    - sensor.esphome_pow_sw2_current
+    - sensor.esphome_pow_sw2_power
+    - sensor.esphome_pow_sw2_voltage
 
 hass_status_grp:
   view: no
@@ -488,6 +500,7 @@ hass_status_grp:
 pi_cpuram_grp:
   name: PI3 CPU & RAM
   entities:
+    - sensor.temperatura_cpu
     - sensor.load_15m
     - sensor.processor_use
     - sensor.memory_use_percent

@@ -355,9 +355,34 @@ switch.esphome_pow_sw1:
   friendly_name: Depuradora Piscina
   icon: mdi:swim  # dip-switch
 
+# ESPhome POW R2
+
+# binary_sensor.esphome_pow_sw2_switch ==> definido en binay_sensor en base al switch
+
+binary_sensor.esphome_pow_sw2_status:
+  friendly_name: Sensor Rack Comunicaciones
+
+switch.esphome_pow_sw2:
+  friendly_name: Rack Comunicaciones
+  icon: mdi:server-security
+
+sensor.esphome_pow_sw2_current:
+  #unit_of_measurement: A
+  friendly_name: Consumo (A)
+  icon: mdi:flash
+
+sensor.esphome_pow_sw2_power:
+  #	unit_of_measurement: W
+  friendly_name: Potencia (W)
+  icon: mdi:trending-up
+
+sensor.esphome_pow_sw2_voltage:
+  #	unit_of_measurement: V
+  friendly_name: Voltage (V)
+  icon: mdi:power-plug
+
 
 # SERIE SONOFF B1
 #
 light.esphome_lb1_l01:
   friendly_name: Luz Estudio Sofá
-
