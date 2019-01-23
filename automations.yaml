@@ -383,32 +383,25 @@
 # FAMILY META TRACKER HOME/AWAY                                               #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-
-# NMAP ==> prob_given_true: 0.8 - prob_given_false: 0.2
-#   - entity_id: device_tracker.aac_iphone_nmap
-#   - entity_id: device_tracker.mfc_iphone_nmap
-#   - entity_id: 'device_tracker.pi_rashmiphone'
-#   - entity_id: 'device_tracker.pi_alokphone'
-
-# IOS APP ==> prob_given_true: 0.99 - prob_given_false: 0.10
-#   - device_tracker.aac_ios
-#   - device_tracker.mfc_ios
-#   - entity_id: 'device_tracker.rashmiappiphone'
-#   - entity_id: 'device_tracker.alokiosiphone'
-
-# OWNTRACK ==> prob_given_true: 0.99 - prob_given_false: 0.4
-#   - device_tracker.aac_iphone_owntrack
-#   - device_tracker.mfc_iphone_owntrack
-#   - entity_id: 'device_tracker.rashmisiphone'
-#   - entity_id: 'device_tracker.myiphone'
-
-# GEOFENCY ==> prob_given_true: 0.99 - prob_given_false: 0.1
-#   - device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
-#   - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
-#   - device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
-#   - device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
-#   - entity_id: 'device_tracker.6b00226793104872afb9248f8a45f957'
-#   - entity_id: 'device_tracker.3a196aa7e85e4ab5bee4e3d3af667a09'
+#
+#MFC_Trackers = ['device_tracker.mfc_iphone_nmap',
+#                'device_tracker.mfc_iphone_owntrack',
+#                'device_tracker.mfc_ios',
+#                'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222']
+#
+#AAC_Trackers = ['device_tracker.aac_iphone_nmap',
+#                'device_tracker.aac_iphone_owntrack',
+#                'device_tracker.aac_ios',
+#                'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496']
+#
+#PAF_Trackers = ['device_tracker.paf_iphone_nmap',
+#                'device_tracker.paf_iphone_owntrack',
+#                'device_tracker.paf_ios']
+#                'device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94']
+#
+#AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
+#                'device_tracker.aaf_ios',
+#                'device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195']
 
 - id: update_meta_tracker
   alias: "Update Device Meta Tracker"
@@ -421,15 +414,15 @@
         - device_tracker.mfc_iphone_nmap      # NMAP
         - device_tracker.paf_iphone_nmap      # NMAP
         - device_tracker.aaf_iphone_nmap      # NMAP
-        #- device_tracker.aac_iphone_owntrack  # OWNTRACK
-        #- device_tracker.mfc_iphone_owntrack  # OWNTRACK
+        - device_tracker.aac_iphone_owntrack  # OWNTRACK
+        - device_tracker.mfc_iphone_owntrack  # OWNTRACK
       to: 'not_home'
       for: '00:07:00'
-    #- platform: state
-    #  entity_id:
-    #    - device_tracker.aac_iphone_owntrack  # OWNTRACK
-    #    - device_tracker.mfc_iphone_owntrack  # OWNTRACK
-    #  to: 'home'
+    - platform: state
+      entity_id:
+        - device_tracker.aac_iphone_owntrack  # OWNTRACK
+        - device_tracker.mfc_iphone_owntrack  # OWNTRACK
+      to: 'home'
     - platform: state
       entity_id:
         - device_tracker.aac_iphone_nmap      # NMAP
@@ -440,13 +433,14 @@
       for: '00:00:30'
     - platform: state
       entity_id:
-        - device_tracker.aac_ios                          # IOSAPP
-        - device_tracker.mfc_ios                          # IOSAPP
-        - device_tracker.paf_ios                          # IOSAPP
-        - device_tracker.b8b52a3bf0384e72a268705d9b06e496 # AAC
-        - device_tracker.e3c67d6b51bf445ba241a0045bfe0222 # MFC
-        - device_tracker.93e3d52336a54d4d898b204abdf3ee94 # PAF
-        - device_tracker.bef743fa74f2464ba458612ad3e1c195 # AAF
+        - device_tracker.aac_ios                                # IOSAPP
+        - device_tracker.mfc_ios                                # IOSAPP
+        - device_tracker.paf_ios                                # IOSAPP
+        - device_tracker.aaf_ios                                # IOSAPP
+        - device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222   # MFC
+        - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496   # AAC
+        - device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94   # PAF
+        - device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195   # AAF
   action:
     - service: script.updatetracker
       data_template:
@@ -505,6 +499,8 @@
 - id: T03_Armed_home_family_at_home
   alias: 'T03 Armed Home Family at Home'
   trigger:
+    - platform: time
+      at: '00:01:00'
     # Están todos en casa
     - platform: state
       entity_id: binary_sensor.family_all_home
@@ -1068,7 +1064,7 @@
           message: >
             >>> EVENTO: Se apaga calefacción dormitorios de madrugada
 
-            >>> LUGAR: Dormitorio MF + Dormitorio PAF
+            >>> LUGAR: Dormitorio MFC + Dormitorio PAF
 
 - id: S12_esphome_S20_Switch_Off_Sunrise_30
   alias: 'S12 SonoffS20 Switch Off Sunrise_30'
