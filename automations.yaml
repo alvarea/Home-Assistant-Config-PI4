@@ -474,6 +474,8 @@
           message: >
             >>> EVENTO: Nadie en casa
 
+            >>> ACCION: Luces toda la casa OFF
+
       #     >>> EVENTO: Último en Salir {{ states('sensor.family_last_tracking') }}
 
 - id: T02_family_at_home
@@ -500,7 +502,7 @@
   alias: 'T03 Armed Home Family at Home'
   trigger:
     - platform: time
-      at: '00:01:00'
+      at: '01:00:00'
     # Están todos en casa
     - platform: state
       entity_id: binary_sensor.family_all_home
@@ -645,7 +647,7 @@
         variables:
           title: '*FAMILY@HOME*'
           message: >
-            >>> Paloma está en casa a las 23:00
+            >>> Agu está en casa a las 23:00
 
             >>> Activado el control de Duerme en Casa.
 
@@ -776,8 +778,8 @@
             after_offset: "00:30:00"
           - condition: sun
             before: sunrise
-            # en el amanecer -1h'
-            before_offset: "01:00:00"
+            # en el amanecer -30m'
+            before_offset: "00:30:00"
           - condition: numeric_state
             entity_id: sensor.illumination_158d0001e637f6
             below: 0
@@ -1071,7 +1073,7 @@
   trigger:
     - platform: sun
       event: sunrise
-      offset: "00:00:00"
+      offset: "-00:15:00"
   action:
     - service: switch.turn_off
       entity_id: switch.esphome_s20_sw1

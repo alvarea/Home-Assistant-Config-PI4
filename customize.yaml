@@ -104,8 +104,8 @@ sensor.tiempo_hoy_forecast:
 
 # PI3 system status
 #
-sensor.disk_use_percent_:
-  friendly_name: '%Disk'
+#sensor.disk_use_percent_:
+#  friendly_name: '%Disk'
 sensor.load_15m:
   friendly_name: System Load (15')
   icon: mdi:server
@@ -117,12 +117,12 @@ sensor.memory_free:
   unit_of_measurement: MB
 sensor.memory_use:
   unit_of_measurement: MB
-sensor.disk_use_:
-  unit_of_measurement: GB
-  friendly_name: 'Disk used'
-sensor.disk_free_:
-  unit_of_measurement: GB
-  friendly_name: 'Disk free'
+#sensor.disk_use_:
+#  unit_of_measurement: GB
+#  friendly_name: 'Disk used'
+#sensor.disk_free_:
+#  unit_of_measurement: GB
+#  friendly_name: 'Disk free'
 sensor.swap_use_percent:
   friendly_name: '%Swapping'
 sensor.last_boot:
