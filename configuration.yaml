@@ -38,7 +38,7 @@ config:
 python_script:
 
 http:
-  api_password: !secret http_api_password
+  #api_password: !secret http_api_password
   ssl_certificate: /home/homeassistant/dehydrated/certs/alvarea.duckdns.org/fullchain.pem
   ssl_key: /home/homeassistant/dehydrated/certs/alvarea.duckdns.org/privkey.pem
   base_url: !secret http_base_url
@@ -157,8 +157,10 @@ apple_tv:
 # Mediaplayer FireTV
 media_player:
   - platform: firetv
-    name: FireTV Cocina
+    name: Fire TV
     host: 192.168.0.20
+    adbkey: "/home/homeassistant/.homeassistant/config/android/adbkey"
+    #adbkey: "config/android/adbkey" ==> Error Invalid config for [media_player.firetv]: not a file for dictionary
 
 # MQTT - BROKER: Local Mosquitto Broker
 #mqtt:

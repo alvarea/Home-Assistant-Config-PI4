@@ -313,16 +313,16 @@ reset_meta_tracker:
   sequence:
     - service: python_script.meta_device_tracker
       data_template:
-        entity_id: device_tracker.b8b52a3bf0384e72a268705d9b06e496 #AAC
+        entity_id: device_tracker.aac_ios #AAC
     - service: python_script.meta_device_tracker
       data_template:
-        entity_id: device_tracker.e3c67d6b51bf445ba241a0045bfe0222 #MFC
+        entity_id: device_tracker.mfc_ios #MFC
     - service: python_script.meta_device_tracker
       data_template:
-        entity_id: device_tracker.93e3d52336a54d4d898b204abdf3ee94 #PAF
+        entity_id: device_tracker.paf_ios #PAF
     - service: python_script.meta_device_tracker
       data_template:
-        entity_id: device_tracker.bef743fa74f2464ba458612ad3e1c195 #AAF
+        entity_id: device_tracker.aaf_ios #AAF
 
 reset_meta_alarm_trigger:
   alias: 'Reset Meta-Alarm-Trigger'

@@ -65,6 +65,12 @@
 
 POW R2
 
+echo 'export PATH=$PATH:/Users/agustin/Library/Android/sdk/platform-tools/' >> ~/.bash_profile
+
+/Users/agustin/Library/Android/sdk/platform-tools
+
+
+
 logger:
   baud_rate: 0
 
