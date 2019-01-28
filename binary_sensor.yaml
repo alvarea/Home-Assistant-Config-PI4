@@ -49,7 +49,7 @@
         prob_given_false: 0.4
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496' #AAC
+      - entity_id: 'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222' #MFC
         prob_given_true: 0.99
         prob_given_false: 0.1
         platform: 'state'
@@ -75,8 +75,8 @@
         prob_given_false: 0.4
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222' #MFC
-        prob_given_true: 0.9
+      - entity_id: 'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496' #AAC
+        prob_given_true: 0.99
         prob_given_false: 0.1
         platform: 'state'
         to_state: 'home'
@@ -86,22 +86,17 @@
     name: 'baye_home_paf'
     probability_threshold: 0.95  # temporalmente estuvo a 0.98
     observations:
-      #- entity_id: 'device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94' #PAF
-      #  prob_given_true: 0.99
-      #  prob_given_false: 0.1
-      #  platform: 'state'
-      #  to_state: 'home'
       - entity_id: 'device_tracker.paf_iphone_owntrack' # OWNTRACK
         prob_given_true: 0.99
-        prob_given_false: 0.4
+        prob_given_false: 0.1
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.paf_ios'  # IOS APP
+      - entity_id: 'device_tracker.paf_iphone_nmap'
         prob_given_true: 0.8
         prob_given_false: 0.2
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.paf_iphone_nmap'
+      - entity_id: 'device_tracker.paf_ios'  # IOS APP
         prob_given_true: 0.8
         prob_given_false: 0.2
         platform: 'state'

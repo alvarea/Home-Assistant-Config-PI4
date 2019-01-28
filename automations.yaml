@@ -800,19 +800,8 @@
   condition:
     condition: or
     conditions:
-      # LIGHT         room_cocina	                    PHILIPS             Cocina
-      # LIGHT         room_entrada	                    PHILIPS             Entrada
-      # LIGHT         room_estudio	                    PHILIPS             Estudio
-      # LIGHT         room_pasillo	                    PHILIPS             Pasillo
-      # LIGHT         room_salon	                    PHILIPS             Salon
       - condition: state
-        entity_id: light.estudio            # Room Estudio
-        state: 'on'
-      - condition: state
-        entity_id: light.salon              # Room Salon
-        state: 'on'
-      - condition: state
-        entity_id: light.cocina             # Room Cocina
+        entity_id: light.luces_interior
         state: 'on'
       - condition: state
         entity_id: group.luces_exterior_grp # Luces exterior
