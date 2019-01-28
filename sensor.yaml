@@ -603,23 +603,23 @@
 #      - temp_max
 #      - wind_speed
 #      - humidity
-
-  - platform: openweathermap
-    api_key: df8c2d75032e3df22e01b42b6f9814c3
-    name: Tiempo Hoy
-    #mode: daily
-    forecast: True
-    languaje: es
-    monitored_conditions:
-      - weather
-      - temperature
-      - wind_speed
-      - humidity
-      - pressure
-      - clouds
-      - rain
-      - snow
-      - weather_code
+#
+#  - platform: openweathermap
+#    api_key: df8c2d75032e3df22e01b42b6f9814c3
+#    name: Tiempo Hoy
+#    #mode: daily
+#    forecast: True
+#    languaje: es
+#    monitored_conditions:
+#      - weather
+#      - temperature
+#      - wind_speed
+#      - humidity
+#      - pressure
+#      - clouds
+#      - rain
+#      - snow
+#      - weather_code#
 
 
   - platform: template
@@ -1109,13 +1109,13 @@
       # Sol Próximo Aterdecer
       sun_next_setting:
         value_template: '{{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom("%H:%M") }}'
-        friendly_name: 'Próxima Puesta de Sol'
+        friendly_name: 'Puesta de Sol'
         icon_template: "{{ 'mdi:weather-sunset-down' if states('sun.sun') is not none }}"
 
       # Sol Próximo Amanecer
       sun_next_rising:
         value_template: '{{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom("%H:%M") }}'
-        friendly_name: 'Próxima Salida de Sol'
+        friendly_name: 'Salida de Sol'
         icon_template: "{{ 'mdi:weather-sunset-up' if states('sun.sun') is not none }}"
 
       # Piscina Duracion Programa Diario-Semanal
@@ -1149,6 +1149,8 @@
         friendly_name: 'Duración Programa Corto (Seg)'
         icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_manual_minutos') is not none }}"
 
+  - platform: moon
+
 #
 #  YAHOO - Sensor Previsiones de Tiempo ==> Deprecated 2019/01
 #
@@ -1173,24 +1175,22 @@
 #      - temp_max
 #      - wind_speed
 #      - humidity
-
-
-  - platform: moon
-
-  - platform: openweathermap
-    api_key: df8c2d75032e3df22e01b42b6f9814c3
-    name: Tiempo Hoy
-    #mode: daily
-    forecast: True
-    languaje: es
-    monitored_conditions:
-      - weather
-      - temperature
-      - wind_speed
-      - humidity
-      - pressure
-      - clouds
-      - rain
-      - snow
-      - weather_code
+#
+#  - platform: openweathermap
+#    api_key: df8c2d75032e3df22e01b42b6f9814c3
+#    name: Tiempo Hoy
+#    #mode: daily
+#    forecast: True
+#    languaje: es
+#    monitored_conditions:
+#      - weather
+#      - temperature
+#      - wind_speed
+#      - humidity
+#      - pressure
+#      - clouds
+#      - rain
+#      - snow
+#      - weather_code
+#
 

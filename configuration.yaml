@@ -401,3 +401,8 @@ cloud:
 #   - platform: braviatv
 #     host: 192.168.0.15
 #     name: TV Sony Estudio
+
+weather:
+  - platform: darksky
+    api_key: 952e76a66895644e49eb05bdf7f4f11c
+    mode: daily

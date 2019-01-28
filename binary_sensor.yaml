@@ -165,7 +165,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Todos en Casa'
+        friendly_name: '¿Todos?' #'Todos en Casa'
         icon_template: mdi:home-map-marker
         entity_id:
           - sensor.family_home
@@ -178,7 +178,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Alguien en Casa'
+        friendly_name: '¿Alguien?' #'Alguien en Casa'
         icon_template: mdi:account-location
         entity_id:
           - sensor.family_home

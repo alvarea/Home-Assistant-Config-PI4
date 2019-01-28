@@ -21,7 +21,7 @@ sensor.ssl_certificate_expiry:
 
 # PANEL CONTROL ALARMA
 sensor.family_sleep_home:
-  friendly_name: ¿Duermen en Casa?
+  friendly_name: ¿Duermen? # en Casa?
   icon: mdi:sleep
 
 # SENSORES BAYESIAN TRACKING FAMILY HOME
@@ -83,24 +83,24 @@ sensor.time_utc:
 #sensor.manana_wind_speed:
 #  friendly_name: Velocidad Viento
 
-sensor.tiempo_hoy_weather:
-  friendly_name: Mínima Hoy
-sensor.tiempo_hoy_temperature:
-  friendly_name: Temperatura Hoy
-sensor.tiempo_hoy_wind_speed:
-  friendly_name: Vel.Viento Hoy
-sensor.tiempo_hoy_wind_bearing:
-  friendly_name: Viento Hoy
-sensor.tiempo_hoy_humidity:
-  friendly_name: Humedad Hoy
-sensor.tiempo_hoy_pressure:
-  friendly_name: Presión Atm Hoy
-sensor.tiempo_hoy_cloud_coverage:
-  friendly_name: Nubes Hoy
-sensor.tiempo_hoy_rain:
-  friendly_name: Llueve Hoy
-sensor.tiempo_hoy_forecast:
-  friendly_name: Previsión Mañana
+#sensor.tiempo_hoy_weather:
+#  friendly_name: Mínima Hoy
+#sensor.tiempo_hoy_temperature:
+#  friendly_name: Temperatura Hoy
+#sensor.tiempo_hoy_wind_speed:
+#  friendly_name: Vel.Viento Hoy
+#sensor.tiempo_hoy_wind_bearing:
+#  friendly_name: Viento Hoy
+#sensor.tiempo_hoy_humidity:
+#  friendly_name: Humedad Hoy
+#sensor.tiempo_hoy_pressure:
+#  friendly_name: Presión Atm Hoy
+#sensor.tiempo_hoy_cloud_coverage:
+#  friendly_name: Nubes Hoy
+#sensor.tiempo_hoy_rain:
+#  friendly_name: Llueve Hoy
+#sensor.tiempo_hoy_forecast:
+#  friendly_name: Previsión Mañana
 
 # PI3 system status
 #

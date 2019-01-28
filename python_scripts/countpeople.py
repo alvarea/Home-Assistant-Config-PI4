@@ -6,7 +6,7 @@ for entity_id in hass.states.entity_ids('binary_sensor'):
 
 hass.states.set('sensor.family_home', home, {
     'unit_of_measurement': 'personas',
-    'friendly_name': '¿Gente en Casa?',
+    'friendly_name': '¿Cuántos?', # en Casa?'
     'icon': 'mdi:home'
 })
 
@@ -19,6 +19,6 @@ for entity_id in hass.states.entity_ids('input_boolean'):
 
 hass.states.set('sensor.family_sleep_home', sleep, {
     'unit_of_measurement': 'personas',
-    'friendly_name': '¿Duermen en Casa?',
+    'friendly_name': '¿Duermen?', # Duermen en Casa?'
     'icon': 'mdi:sleep'
 })
