@@ -1,0 +1,647 @@
+default_view:
+  view: yes
+  icon: mdi:home-assistant
+  name: Home View
+  entities:
+    - group.alarma_view
+    - group.tracking_view
+    - group.camaras_view
+    - group.jardin_view
+    - group.luces_view
+    - group.cocina_view
+    - group.salon_view
+    - group.estudio_view
+    - group.tiempo_view
+    - group.system_view
+    - group.batery_view
+    - group.config_view
+    - group.main_homy_status_grp
+    - group.main_family_status_grp
+    - group.main_sensor_tiempo_grp
+
+main_homy_status_grp:
+  name: Centro de Control HOMY
+  entities:
+    - sensor.time
+    - alarm_control_panel.ha
+    - alert.alerta_alarma_ha
+    - alert.alerta_test
+    - sensor.date_long
+    - sensor.uptime
+    - sensor.temperatura_cpu
+    - sensor.processor_use
+    - sensor.version_ha
+    - sensor.ssl_certificate_expiry
+
+main_family_status_grp:
+  name: Family Home?
+  entities:
+    - binary_sensor.family_any_home
+    - binary_sensor.family_all_home
+    - sensor.family_home
+    - binary_sensor.family_home_aac
+    - binary_sensor.family_home_mfc
+    - binary_sensor.family_home_paf
+    - binary_sensor.family_home_aaf
+    - sensor.family_sleep_home
+    - sensor.family_last_tracking
+
+main_sensor_tiempo_grp:
+  name: Resumen del Tiempo
+  entities:
+    - sun.sun
+    - sensor.sun_next_setting
+    - sensor.sun_next_rising
+    #- sensor.moon
+    - sensor.tiempo_hoy_condition
+    - sensor.tiempo_hoy_rain
+    - sensor.tiempo_hoy_temperature
+    - sensor.tiempo_hoy_forecast
+    - sensor.temperature_158d00022b65ff
+    - sensor.temperature_158d00022c6a47
+
+alarma_view:
+  name: Panel Control Alarma
+  icon: mdi:security-home
+  view: yes
+  entities:
+    - group.alarma_status_grp
+    - group.alarma_sirena_grp
+    - group.alarma_sensor_jardin_grp
+    - group.alarma_sensor_entrada_grp
+    - group.alarma_sensor_estudio_grp
+    - group.alarma_sensor_salon_grp
+    - group.alarma_sensor_cocina_grp
+    - group.alarma_sensor_dormitorios_grp
+
+alarma_status_grp:
+  name: Estado Alarma
+  entities:
+    - alarm_control_panel.ha
+    - sensor.alarm_zone
+    - script.homy_armado_parcial
+    - script.homy_armado_total
+
+alarma_sirena_grp:
+  name: Botón Pánico / Sirena
+  view: no
+  entities:
+    - binary_sensor.esphome_bas_sw0_status
+    - binary_sensor.esphome_bas_sw0
+    - input_boolean.panic_button
+    - script.alarma_boton_panico
+    - script.alarma_boton_sirenas_off
+    #- binary_sensor.esphome_bas_sw0_boton
+
+alarma_sensor_jardin_grp:
+  name: Sensores Jardín
+  view: no
+  entities:
+    - binary_sensor.esphome_4ch_status           # Sensor de conectividad sonoff 4CH
+    - binary_sensor.esphome_pow_sw1_status       # Sensor de conectividad sonoff POW
+    - binary_sensor.esphome_bas_sw4_status
+    - binary_sensor.esphome_bas_sw1_status
+
+
+alarma_sensor_entrada_grp:
+  name: Sensores Entrada
+  view: no
+  entities:
+    - binary_sensor.door_window_sensor_158d00022b393c
+    - binary_sensor.motion_sensor_158d0001e55903
+    - sensor.illumination_158d0001e55903
+    - binary_sensor.motion_sensor_158d0001e637f6
+    - sensor.illumination_158d0001e637f6
+
+alarma_sensor_estudio_grp:
+  name: Sensores Estudio
+  view: no
+  entities:
+    - binary_sensor.motion_sensor_158d0001e464a6
+    - sensor.illumination_158d0001e464a6
+
+alarma_sensor_cocina_grp:
+  name: Sensores Cocina
+  view: no
+  entities:
+    - binary_sensor.smoke_sensor_158d0001fd321c
+
+alarma_sensor_salon_grp:
+  name: Sensores Salón
+  view: no
+  entities:
+    - binary_sensor.door_window_sensor_158d000201e2e7
+    - binary_sensor.motion_sensor_158d0001e05661
+    - sensor.illumination_158d0001e05661
+
+alarma_sensor_dormitorios_grp:
+  name: Sensores Dormitorios
+  view: no
+  entities:
+    - binary_sensor.door_window_sensor_158d000201dddb
+    - binary_sensor.door_window_sensor_158d00020b7c27
+    - binary_sensor.door_window_sensor_158d00020457e0
+    - binary_sensor.door_window_sensor_158d00020910b1
+
+sensores_home:
+  name: Grupo Sensores Home
+  view: no
+  entities:
+    - binary_sensor.door_window_sensor_158d00022b393c
+    - binary_sensor.door_window_sensor_158d000201dddb
+    - binary_sensor.door_window_sensor_158d00020b7c27
+    - binary_sensor.door_window_sensor_158d00020457e0
+    - binary_sensor.door_window_sensor_158d00020910b1
+    - binary_sensor.door_window_sensor_158d000201e2e7
+
+sensores_away:
+  name: Grupo Sensores Away
+  view: no
+  entities:
+    - binary_sensor.motion_sensor_158d0001e55903 # Presencia Entrada Interior
+    - binary_sensor.motion_sensor_158d0001e464a6 # Presencia Estudio
+    - binary_sensor.motion_sensor_158d0001e05661 # Presencia Salón
+    - group.alarma_sensor_home
+
+tracking_view:
+  view: yes
+  icon: mdi:map-marker
+  name: Tracking
+  entities:
+    - group.track_aac_grp
+    - group.track_mfc_grp
+    - group.track_paf_grp
+    - group.track_aaf_grp
+    - group.track_batery_grp
+
+track_aac_grp:
+  name: Agustín Tracking
+  entities:
+    - sensor.meta_track_aac
+    - input_boolean.family_sleep_home_aac
+    - binary_sensor.family_home_aac
+    #- sensor.family_home_aac
+    - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496 #AAC
+    - device_tracker.aac_iphone_owntrack
+    - device_tracker.aac_ios
+    - device_tracker.aac_iphone_nmap
+    - sensor.baye_probability_aac
+    - binary_sensor.baye_home_aac
+
+track_mfc_grp:
+  name: Malen Tracking
+  entities:
+    - sensor.meta_track_mfc
+    - input_boolean.family_sleep_home_mfc
+    - binary_sensor.family_home_mfc
+    # - sensor.family_home_mfc
+    - device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222 #MFC
+    - device_tracker.mfc_iphone_owntrack
+    - device_tracker.mfc_ios
+    - device_tracker.mfc_iphone_nmap
+    - sensor.baye_probability_mfc
+    - binary_sensor.baye_home_mfc
+
+track_paf_grp:
+  name: Paloma Tracking
+  entities:
+    - sensor.meta_track_paf
+    - input_boolean.family_sleep_home_paf
+    - binary_sensor.family_home_paf
+    #- sensor.family_home_paf
+    #- device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94 #PAF
+    - device_tracker.paf_iphone_owntrack
+    - device_tracker.paf_ios
+    - device_tracker.paf_iphone_nmap
+    - sensor.baye_probability_paf
+    - binary_sensor.baye_home_paf
+
+track_aaf_grp:
+  name: Agu Tracking
+  entities:
+    - sensor.meta_track_aaf
+    - input_boolean.family_sleep_home_aaf
+    - binary_sensor.family_home_aaf
+    # - sensor.family_home_aaf
+    - device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195 #AAF
+    - device_tracker.aaf_ios
+    - device_tracker.aaf_iphone_nmap
+    - sensor.baye_probability_aaf
+    - binary_sensor.baye_home_aaf
+
+camaras_view:
+  view: yes
+  icon: mdi:cctv
+  name: Cámaras
+  entities:
+    - camera.ipcam11_cocina
+    - camera.ipcam12_estudio
+
+luces_view:
+  icon: mdi:lightbulb-on
+  view: yes
+  name: Luces
+  entities:
+    - group.luces_casa_grp
+    - group.luces_salon_grp
+    - group.luces_entrada_grp
+    - group.luces_cocina_grp
+    - group.luces_estudio_grp
+    - group.luces_exterior_grp
+
+luces_casa_grp:
+  name: Luces De Toda La Casa
+  entities:
+    - group.luces_exterior_grp
+    - light.luces_interior
+    - light.luces_planta_baja
+    - light.luces_planta_alta
+
+luces_salon_grp:
+  name: Luces Salon
+  entities:
+    - light.room_salon
+    - light.hue_cilindro
+    - light.hue_seises
+    - light.hue_lectura
+
+luces_entrada_grp:
+  name: Luces Entrada
+  entities:
+    - light.hue_entrada
+    - light.hue_pasillo
+    - switch.wall_switch_left_158d0002236e75
+    - light.gateway_light_7811dcb788fa
+
+luces_cocina_grp:
+  name: Luces Cocina
+  entities:
+    - light.hue_cocina
+
+luces_estudio_grp:
+  name: Luces Estudio
+  entities:
+    - light.hue_estudio
+    - light.esphome_lb1_l01
+
+
+luces_exterior_grp:
+  name: Luces Exterior
+  entities:
+    - switch.esphome_bas_sw4                   # Porche 1 Salón
+    - switch.esphome_bas_sw1                   # Porche 2 Piscina
+    - switch.wall_switch_right_158d0002236e75   # Luces Exterior Xiaomi Switch Right
+    - switch.esphome_4ch_relay_1                 # Balizas Cesped Jardín (CH1)
+    - switch.esphome_4ch_relay_3                 # Focos Entrada (Olivo1+Cica)(CH3)
+    - switch.esphome_4ch_relay_2                 # Focos Piscina (Olivo3+Yuca)(CH2)
+    - switch.esphome_4ch_relay_4                 # Pendiente Disponible
+
+jardin_view:
+  view: yes
+  icon: mdi:swim
+  name: Piscina
+  entities:
+    - group.jardin_piscina_grp
+    - group.jardin_piscina_setup_grp
+    - group.jardin_piscina_control
+    - group.jardin_piscina_power_mgt
+    - history_graph.duracion_depuradora_piscina
+
+jardin_piscina_grp:
+  name: Estado Depuradora Piscina
+  entities:
+    - switch.esphome_pow_sw1                     # Switch POW Depuradora Piscina OCULTO
+    - binary_sensor.esphome_pow_sw1_status       # Sensor de conectividad sonoff
+    - binary_sensor.piscina_dia_ejecucion       # Sensor Próximo día de ejecución
+    - binary_sensor.piscina_status              # Sensor basado en el switch sonoff POW SW1
+    - sensor.piscina_duracion_programa          # Sensor duración programa activo/siguiente minutos
+    #- input_text.piscina_duracion_programa     # Sensor duración programa activo/siguiente
+    - timer.piscina                             # Timer tiempo pendiente de ejecución
+    - input_datetime.piscina_real_start_time    # Próximo Arranque Real
+    - input_datetime.piscina_real_end_time      # Próximo Parada Real
+
+jardin_piscina_control:
+  name: Control Manual
+  entities:
+    - input_number.piscina_manual_minutos
+    - script.piscina_timer_start
+    - script.piscina_timer_pause
+    - script.piscina_timer_resume
+    - script.piscina_timer_cancel
+
+jardin_piscina_setup_grp:
+  name: Programa Automático
+  entities:
+    - input_boolean.piscina_programador
+    - input_select.piscina_programador_dias
+    - input_number.piscina_diario_horas
+    - input_datetime.piscina_start_time         # Proximo Arranque Planificado
+    - input_datetime.piscina_end_time           # Proximo Parada Planificado
+    - sensor.piscina_duracion_planificada       # Duración programa diario
+    #- sensor.piscina_diario_endtime
+
+jardin_piscina_power_mgt:
+  name: Control Consumos
+  entities:
+    - sensor.esphome_pow_sw1_current             # Sonoff Pow SW1 Current
+    - sensor.esphome_pow_sw1_power               # Sonoff Pow SW1 Power
+    - sensor.esphome_pow_sw1_voltage             # Sonoff Pow SW1 Voltage
+
+cocina_view:
+  view: yes
+  icon: mdi:food
+  name: Cocina
+  entities:
+    #- group.nespresso_grp
+    - camera.ipcam11_cocina
+    - group.luces_cocina_grp
+    - group.alarma_sensor_cocina_grp
+    #- media_player.firetv_cocina
+
+#nespresso_grp:
+#  view: no
+#  icon: mdi:coffee
+#  name: Nespresso
+#  entities:
+#    - switch.esphome_s20_nespresso
+#    - binary_sensor.esphome_s20_nespresso_boton
+#    #- light.esphome_s20_nespresso_led
+#    - binary_sensor.esphome_s20_nespresso_status
+
+salon_view:
+  view: yes
+  icon: mdi:sofa
+  name: Salón
+  entities:
+    - group.alarma_sensor_salon_grp
+    - group.sensor_salon_grp
+    - group.luces_salon_grp
+    - remote.apple_tv
+    - media_player.apple_tv
+
+sensor_salon_grp:
+  name: Temperatura Salón
+  view: no
+  entities:
+    - sensor.temperature_158d00022b65ff
+    - sensor.humidity_158d00022b65ff
+    - sensor.pressure_158d00022b65ff
+    #- sensor.illumination_7811dcb788fa
+
+dormitorio_view:
+  view: yes
+  icon: mdi:hotel
+  name: Dormitorios
+  entities:
+    - group.principal_grp
+    - group.dormitorio_paf_grp
+
+principal_grp:
+  name: Dormitorio Principal
+  view: no
+  entities:
+    - binary_sensor.esphome_s20_sw1_status
+    - switch.esphome_s20_sw1
+    - binary_sensor.esphome_s20_sw1_boton
+    - light.esphome_s20_sw1_led
+    - binary_sensor.door_window_sensor_158d00020b7c27
+
+dormitorio_paf_grp:
+  name: Dormitorio PAF
+  view: no
+  entities:
+    - binary_sensor.esphome_s20_sw3_status
+    - switch.esphome_s20_sw3
+    - binary_sensor.esphome_s20_sw3_boton
+    - light.esphome_s20_sw3_led
+    - binary_sensor.door_window_sensor_158d000201dddb
+
+estudio_view:
+  view: yes
+  icon: mdi:laptop-mac
+  name: Estudio
+  entities:
+    - group.alarma_sensor_estudio_grp
+    - group.sensor_estudio_grp
+    - group.luces_estudio_grp
+    - camera.ipcam12_estudio
+    - group.cube_estudio_grp
+
+sensor_estudio_grp:
+  name: Temperatura Estudio
+  view: no
+  entities:
+    - sensor.temperature_158d00022c6a47
+    - sensor.humidity_158d00022c6a47
+    - sensor.pressure_158d00022c6a47
+    - sensor.illumination_158d0001e464a6
+
+cube_estudio_grp:
+  name: Magic Cube
+  view: no
+  entities:
+    - sensor.magiccube_lastaction
+    - binary_sensor.cube_158d00024a4a62_2
+    - input_text.magiccube_last_action1
+    - input_datetime.magiccube_last_action1
+
+
+tiempo_view:
+  view: yes
+  icon: mdi:weather-partlycloudy
+  name: El Tiempo
+  entities:
+    - group.tiempo_hoy_grp
+    - camera.weather_satelite
+
+tiempo_hoy_grp:
+  name: Hoy
+  entities:
+    - sensor.tiempo_hoy_condition
+    - sensor.tiempo_hoy_temperature
+    - sensor.tiempo_hoy_forecast
+    - sensor.tiempo_hoy_wind_speed
+    - sensor.tiempo_hoy_humidity
+    - sensor.tiempo_hoy_pressure
+    - sensor.tiempo_hoy_cloud_coverage
+    - sensor.tiempo_hoy_rain
+
+system_view:
+  view: yes
+  icon: mdi:server
+  name: System Status
+  entities:
+    - group.rack_comm_grp
+    - group.hass_status_grp
+    - group.pi_cpuram_grp
+    - group.pi_storage_grp
+
+rack_comm_grp:
+  view: no
+  name: Rack Comunicaciones
+  entities:
+    - binary_sensor.esphome_pow_sw2_status
+    - switch.esphome_pow_sw2
+    - binary_sensor.esphome_pow_sw2_switch
+    - sensor.esphome_pow_sw2_current
+    - sensor.esphome_pow_sw2_power
+    - sensor.esphome_pow_sw2_voltage
+
+hass_status_grp:
+  view: no
+  icon: mdi:server
+  name: System Status
+  entities:
+    - sensor.date
+    - sensor.uptime
+    - sensor.last_boot
+    - sensor.ssl_certificate_expiry
+
+pi_cpuram_grp:
+  name: PI3 CPU & RAM
+  entities:
+    - sensor.temperatura_cpu
+    - sensor.load_15m
+    - sensor.processor_use
+    - sensor.memory_use_percent
+    - sensor.memory_use
+    - sensor.memory_free
+
+pi_storage_grp:
+  name: PI3 Almacenamiento
+  entities:
+    - sensor.disk_use_percent
+    - sensor.disk_use
+    - sensor.disk_free
+    - sensor.swap_use_percent
+
+batery_view:
+  view: yes
+  icon: mdi:battery-50
+  name: Batery Status
+  entities:
+    - group.iphone_battery_grp
+    - group.sensor_bat_entrada_grp
+    - group.sensor_bat_salon_grp
+    - group.sensor_bat_estudio_grp
+    - group.sensor_bat_dormitorios_grp
+
+iphone_battery_grp:
+  name: Iphone Battery Tracking
+  entities:
+    - sensor.iphoneaac_battery_level_3
+    - sensor.iphoneaac_battery_state_2
+    - sensor.iphonemalen_battery_level_2
+    - sensor.iphonemalen_battery_state
+    - sensor.iphone_paf_battery_level_2
+    - sensor.iphone_paf_battery_state_2
+    - sensor.a2f_battery_level_2
+    - sensor.a2f_battery_state_2
+
+sensor_bat_entrada_grp:
+  name: Baterías Entrada/Cocina
+  view: no
+  entities:
+    - sensor.bateria_detector_incendios
+    - sensor.bateria_presencia_entrada
+    - sensor.bateria_presencia_entrada_ext
+    - sensor.bateria_puerta_entrada
+    - sensor.bateria_magic_cube
+
+sensor_bat_salon_grp:
+  name: Baterías Salón
+  view: no
+  entities:
+    - sensor.bateria_presencia_salon
+    - sensor.bateria_puerta_salon
+    - sensor.bateria_temperatura_salon
+
+sensor_bat_estudio_grp:
+  name: Baterías Estudio
+  view: no
+  entities:
+    - sensor.bateria_presencia_estudio
+    - sensor.bateria_temperatura_estudio
+
+sensor_bat_dormitorios_grp:
+  name: Baterías Dormitorios
+  view: no
+  entities:
+     - sensor.bateria_ventana_paf
+     - sensor.bateria_ventana_mfc
+     - sensor.bateria_ventana_aaf
+     - sensor.bateria_ventana_salita
+
+config_view:
+  name: Configuración
+  view: yes
+  icon: mdi:settings
+  entities:
+      - group.setup_family_home
+      - group.setup_sirenas_grp
+      - group.setup_luces_jardin_grp
+      - group.setup_reglas_luces_grp
+      - group.setup_reglas_alarma_grp
+
+setup_family_home:
+  name: Tracking Family Home
+  view: no
+  entities:
+    - input_boolean.family_home_aac
+    - input_boolean.family_home_mfc
+    - input_boolean.family_home_paf
+    - input_boolean.family_home_aaf
+    - automation.t01_family_away
+    - automation.t02_family_at_home
+    - automation.t03_armed_home_family_at_home
+
+setup_telegram_grp:
+  name: Notificaciones Telegram
+  view: no
+  entities:
+    - input_select.home_notify
+
+setup_luces_jardin_grp:
+  name: Luces Jardín Setup
+  entities:
+    - binary_sensor.esphome_4ch_status
+    - input_boolean.jardin_programador_xia_ext
+    - input_boolean.jardin_programador_bas_sw2
+    - input_boolean.jardin_programador_bas_sw4
+    - input_boolean.jardin_programador_4ch_ch1
+    - input_boolean.jardin_programador_4ch_ch2
+    - input_boolean.jardin_programador_4ch_ch3
+    - input_boolean.jardin_programador_4ch_ch4
+
+setup_reglas_luces_grp:
+  name: Reglas Luces
+  view: no
+  entities:
+    - automation.l01_luces_on_exterior_sunset
+    - automation.l02_luces_off_exterior_sunset_4h
+    - automation.l03_luces_off_exterior_all_family_home
+    - automation.l04_luces_on_salon_puesta_sol_30m
+    - automation.l05_luces_on_exterior_segun_sensor
+    - automation.l06_luces_off_before_sunrise
+    - automation.l07_luces_on_entrada_segun_sensor
+
+setup_sirenas_grp:
+  name: Sirenas
+  view: no
+  entities:
+    - input_boolean.mute_xiaomi_sounds
+    - input_select.xiaomi_sound_alarm_armed
+    - input_number.xiaomi_volume_alarm_armed
+    - input_select.xiaomi_sound_alarm_disarmed
+    - input_number.xiaomi_volume_alarm_disarmed
+    - input_select.xiaomi_sound_alarm
+    - input_number.xiaomi_volume_alarm
+    - input_boolean.alarm_test_sirenas
+    #- switch.esphome_bas_sw0
+
+msg_control_grp:
+  name: Notificaciones
+  view: no
+  entities:
+    - input_text.mensaje_tit
+    - input_text.mensaje_msg

@@ -524,7 +524,7 @@
         entity_id: alarm_control_panel.ha
         state: disarmed
       - condition: time
-        after: '00:01:00'
+        after: '01:00:00'
         # en el amanecer -2h'
       - condition: sun
         before: sunrise
@@ -548,7 +548,7 @@
           message: >
             >>> EVENTO: Todos en casa después de media noche
 
-            >>> ESTADO: Sistema Armado Automático Parcial
+            >>> ESTADO: Sistema Armado Parcial
 
 - id: T04_family_sleep_home
   alias: 'T04 Sleep Family Home'
