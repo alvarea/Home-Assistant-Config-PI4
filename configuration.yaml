@@ -38,7 +38,6 @@ config:
 python_script:
 
 http:
-  #api_password: !secret http_api_password
   ssl_certificate: /home/homeassistant/dehydrated/certs/alvarea.duckdns.org/fullchain.pem
   ssl_key: /home/homeassistant/dehydrated/certs/alvarea.duckdns.org/privkey.pem
   base_url: !secret http_base_url
@@ -104,8 +103,8 @@ alarm_control_panel:
     # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
     # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
     pending_time: 15
-    delay_time: 15
-    trigger_time: 120
+    delay_time: 45
+    trigger_time: 300
     disarmed:
       trigger_time: 0 # the disarmed state never triggers the alarm;
     armed_home:
