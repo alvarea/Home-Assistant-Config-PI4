@@ -27,13 +27,13 @@ sensor.family_sleep_home:
 # SENSORES BAYESIAN TRACKING FAMILY HOME
 #
 binary_sensor.family_home_mfc:
-  friendly_name: Malen en Casa
+  friendly_name: Malen
 binary_sensor.family_home_aac:
-  friendly_name: Agustín en Casa
+  friendly_name: Agustín
 binary_sensor.family_home_paf:
-  friendly_name: Paloma en Casa
+  friendly_name: Paloma
 binary_sensor.family_home_aaf:
-  friendly_name: Agu en Casa
+  friendly_name: Agu
 
 binary_sensor.baye_home_mfc:
   friendly_name: Bayesian Malen
@@ -385,4 +385,4 @@ sensor.esphome_pow_sw2_voltage:
 # SERIE SONOFF B1
 #
 light.esphome_lb1_l01:
-  friendly_name: Luz Estudio Sofá
+  friendly_name: Luz Rack CPD

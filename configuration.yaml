@@ -162,6 +162,7 @@ media_player:
     #adbkey: "config/android/adbkey" ==> Error Invalid config for [media_player.firetv]: not a file for dictionary
 
 # MQTT - BROKER: Local Mosquitto Broker
+#
 #mqtt:
 #  broker: alvarea.duckdns.org
 #  port: 1883
@@ -170,7 +171,7 @@ media_player:
 #  username: hassbian_mqtt
 #  password: !secret hassbian_mqtt
 #  discovery: true
-#  discovery_prefix: homeassistant
+#  discovery_prefix: homeassistant#
 
 #  broker: m23.cloudmqtt.com
 #  port: 11024
