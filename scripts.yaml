@@ -448,6 +448,26 @@ luces_on_entrada_sensor:
     # Si Alarm.Armed_Home => Piloto ON
     - service: script.luz_on_armed_home
 
+luces_off_entrada_sensor:
+  alias: 'Luces Off Entrada si Sensor'
+  sequence:
+    - service: light.turn_off
+      entity_id:
+        - light.hue_entrada
+        - light.gateway_light_7811dcb788fa
+
+luces_on_escalera_sensor:
+  alias: 'Luces On Escalera si Sensor'
+  sequence:
+    - service: light.turn_on
+      entity_id:  light.esphome_lb1_l01
+
+luces_off_escalera_sensor:
+  alias: 'Luces Off Escalera si Sensor'
+  sequence:
+    - service: light.turn_off
+      entity_id: light.esphome_lb1_l01
+
 luz_on_armed_home:
   alias: 'Luces On Entrada si Sensor'
   sequence:
@@ -462,14 +482,6 @@ luz_on_armed_home:
       data:
         brightness: 50
         rgb_color: [0, 0, 254]
-
-luces_off_entrada_sensor:
-  alias: 'Luces Off Entrada si Sensor'
-  sequence:
-    - service: light.turn_off
-      entity_id:
-        - light.hue_entrada
-        - light.gateway_light_7811dcb788fa
 
 luces_on_family_home:
   alias: 'Family at Home Piloto ON'

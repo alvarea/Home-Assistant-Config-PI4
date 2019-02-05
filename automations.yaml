@@ -846,12 +846,42 @@
     - service: script.luces_on_entrada_sensor
     # Espera de 5'
     - delay: '00:05:00'
-    # Llamada al Script de Luces Entrada ON
+    # Llamada al Script de Luces Entrada OFF
     - service: script.luces_off_entrada_sensor
     #
     - service: automation.turn_on
       entity_id: automation.l07_luces_on_entrada_segun_sensor
 
+- id: L08_luces_on_escalera_on_sensor
+  alias: 'L08 Luces On Escalera Según Sensor'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e464a6
+      to: 'on'
+  condition:
+    condition: or  # 'when dark' condition: either after sunset or before sunrise
+    conditions:
+      - condition: sun
+        after: sunset
+        # en la puesta de sol - 30'
+        after_offset: "-00:30:00"
+      - condition: sun
+        before: sunrise
+        # en el amanecer +2h'
+        before_offset: "+03:00:00"
+      #- sensor.illumination_158d0001e464a6  # Sensor luz estudio
+  action:
+    - service: automation.turn_off
+      entity_id: automation.l08_luces_on_escalera_segun_sensor
+    # Llamada al Script de Luces Entrada ON
+    - service: script.luces_on_escalera_sensor
+    # Espera de 5'
+    - delay: '00:05:00'
+    # Llamada al Script de Luces Entrada OFF
+    - service: script.luces_off_escalera_sensor
+    #
+    - service: automation.turn_on
+      entity_id: automation.l08_luces_on_escalera_segun_sensor
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

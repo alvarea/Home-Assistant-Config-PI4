@@ -385,4 +385,4 @@ sensor.esphome_pow_sw2_voltage:
 # SERIE SONOFF B1
 #
 light.esphome_lb1_l01:
-  friendly_name: Luz Rack CPD
+  friendly_name: Luz Escalera
