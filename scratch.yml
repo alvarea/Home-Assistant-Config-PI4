@@ -1,3 +1,6 @@
+
+
+
 - type: picture-entity
   entity: light.bed_light
   state_image:
@@ -121,9 +124,126 @@ states.input_datetime.magiccube_last_action1.attributes.timestamp < 5
         rgb_color: [255, 187, 106]
 
 
+#
+#
+# REGLA: MAGIC CUBE ALARMA ARMADO / DESARMADO
+#
+# Available events are flip90, flip180, move, tap_twice, shake_air, swing, alert, free_fall and rotate.
+# The component stores the last action as the attribute last_action.
+- id: A10_alarma_magic_cube_update
+  alias: 'A10 Alarm Magic Cube Update'
+  trigger:
+    platform: event
+    event_type: cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00024a4a62_2
+      #action_type: flip90, flip180, move, tap_twice, shake_air
+  action:
+    - service: script.magiccube_check_alarm_sequence
+    # Siempre se actualiza la última acción y la hora.
+    - service: script.magiccube_update_lastaction
+
+#INPUT TEXT
+  magiccube_last_action1:
+    name: Magic Cube Lastaction1
+    initial: ''
+    icon: mdi:cube-outline
+  magiccube_last_action2:
+    name: Magic Cube Lastaction2
+    initial: ''
+    icon: mdi:cube-outline
+# INPUT DATE TIME
+
+  magiccube_last_action1:
+    name: Cube Timestamp
+    has_date: true
+    has_time: true
+
+
+# SERVICES
+magiccube_check_alarm_sequence:
+  alias: 'Alarma MagicCube Alarm Sequence'
+  sequence:
+    - condition: and
+      conditions:
+        - condition: template
+          value_template: '{% if not states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action | string == "alert" %}true{% endif %}'
+        - condition: template
+          value_template: >-
+            {{ as_timestamp(now()) -
+               states.input_datetime.magiccube_last_action1.attributes.timestamp < 10
+            }}
+    - service: script.magiccube_check_arm_away
+    - service: script.magiccube_check_disarm
+
+magiccube_check_arm_away:
+  alias: 'Alarma MagicCube Arm Away'
+  sequence:
+    - condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action == "shake_air" }}'
+        - condition: template
+          value_template: '{{ states.input_text.magiccube_last_action1.state == "rotate" }}'
+        - condition: template
+          value_template: '{{ not states.alarm_control_panel.ha.state == "armed_away" }}'
+    # Llamada al service estándar de armado.  Pasa a Pending y luego Armed_Away
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.ha
+    # Notifica Evento
+    # La notificación se hace mediente la activación de la regla:
+    # alias: 'A2 Alarm Armed Away'
+
+magiccube_check_disarm:
+  alias: 'Alarma MagicCube Disarm'
+  sequence:
+    - condition: and
+      conditions:
+        - condition: template
+          value_template: '{{ states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action == "shake_air" }}'
+        - condition: template
+          value_template: '{{ states.input_text.magiccube_last_action1.state == "flip90" }}'
+        - condition: template
+          value_template: '{{ not states.alarm_control_panel.ha.state == "disarmed" }}'
+    # Desactiva Alarma
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: alarm_control_panel.ha
+    # Aviso sonoro con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.sirena_xiaomi_play_alarm_disarmed
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> ESTADO: Desarmado
+
+magiccube_update_lastaction:
+  alias: 'Alarma MagicCube Update Last Action'
+  sequence:
+    # Si Last_action = "alert" => CANCEL
+    #- condition: template
+    #  value_template: '{% if not states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action | string == "alert" %}true{% endif %}'
+    # Actualiza Última Acciónn
+    - service: input_text.set_value
+      entity_id: input_text.magiccube_last_action1
+      data_template:
+        value: '{{ states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action }}'
+    # Actualiza Hora Último Evento
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.magiccube_last_action1
+      data_template:
+        date: '{{ as_timestamp(now()) | timestamp_custom("%Y-%m-%d") }}'
+        time: '{{ as_timestamp(now()) | timestamp_custom("%H:%M:%S") }}'
+
+
+
+
 # Buen Timer ejemplo
 
-ust looking at your code without the means of testing it I can see anything wrong.
+just looking at your code without the means of testing it I can see anything wrong.
 Have you tried adapting the example code from the cookbook to see if the results are the same?
 Quick cut and paste with your variables inserted should probably work.
 

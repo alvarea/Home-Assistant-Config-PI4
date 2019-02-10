@@ -10,14 +10,6 @@
   - platform: uptime
     unit_of_measurement: hours
 
-  - platform: template
-    sensors:
-      date_long:
-        friendly_name: 'Fecha'
-        icon_template: mdi:calendar-text
-        value_template: "{{ strptime(states('sensor.date_time'),'%d/%m/%y') }}"
-        #  {% set days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado", "Domingo"]  %}
-
 # Sensores Rendimiento de PI y CERT_SSL
 #
   - platform: cert_expiry
@@ -44,14 +36,13 @@
       - type: memory_free
       - type: swap_use_percent
       - type: last_boot
-#
-#      - type: disk_use_percent
-#        arg: /
-#      - type: disk_use
-#        arg: /
-#      - type: disk_free
-#        arg: /
-#
+      - type: disk_use_percent
+        arg: /
+      - type: disk_use
+        arg: /
+      - type: disk_free
+        arg: /
+
   - platform: template
     sensors:
       # Último Tracking
@@ -112,25 +103,25 @@
       baye_probability_aac:
         value_template: "{{ ((states.binary_sensor.baye_home_aac.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Agustin'
-        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_aac') is not none }}"
+        icon_template: "{{ 'mdi:transit-transfer' if states('binary_sensor.baye_home_aac') is not none }}"
         unit_of_measurement: '%'
 
       baye_probability_mfc:
         value_template: "{{ ((states.binary_sensor.baye_home_mfc.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Malen'
         unit_of_measurement: '%'
-        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_mfc') is not none }}"
+        icon_template: "{{ 'mdi:transit-transfer' if states('binary_sensor.baye_home_mfc') is not none }}"
 
       baye_probability_paf:
         value_template: "{{ ((states.binary_sensor.baye_home_paf.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Paloma'
         unit_of_measurement: '%'
-        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_paf') is not none }}"
+        icon_template: "{{ 'mdi:transit-transfer' if states('binary_sensor.baye_home_paf') is not none }}"
 
       baye_probability_aaf:
         value_template: "{{ ((states.binary_sensor.baye_home_aaf.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Agu'
-        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_aaf') is not none }}"
+        icon_template: "{{ 'mdi:transit-transfer' if states('binary_sensor.baye_home_aaf') is not none }}"
         unit_of_measurement: '%'
 
       # Sensor para mostrar Movimientos Xiaomi Magicube:
@@ -682,25 +673,25 @@
       baye_probability_aac:
         value_template: "{{ ((states.binary_sensor.baye_home_aac.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Agustin'
-        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_aac') is not none }}"
+        icon_template: "{{ 'mdi:transit-transfer' if states('binary_sensor.baye_home_aac') is not none }}"
         unit_of_measurement: '%'
 
       baye_probability_mfc:
         value_template: "{{ ((states.binary_sensor.baye_home_mfc.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Malen'
         unit_of_measurement: '%'
-        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_mfc') is not none }}"
+        icon_template: "{{ 'mdi:transit-transfer' if states('binary_sensor.baye_home_mfc') is not none }}"
 
       baye_probability_paf:
         value_template: "{{ ((states.binary_sensor.baye_home_paf.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Paloma'
         unit_of_measurement: '%'
-        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_paf') is not none }}"
+        icon_template: "{{ 'mdi:transit-transfer' if states('binary_sensor.baye_home_paf') is not none }}"
 
       baye_probability_aaf:
         value_template: "{{ ((states.binary_sensor.baye_home_aaf.attributes.probability)|float *100)|round(2) }}"
         friendly_name: 'Probabilidad Agu'
-        icon_template: "{{ 'mdi:account-location' if states('binary_sensor.baye_home_aaf') is not none }}"
+        icon_template: "{{ 'mdi:transit-transfer' if states('binary_sensor.baye_home_aaf') is not none }}"
         unit_of_measurement: '%'
 
       # Sensor para mostrar Movimientos Xiaomi Magicube:

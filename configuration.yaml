@@ -77,6 +77,9 @@ hue:
 # Dispositivos Apple IOS
 ios:
 
+# Enable System Health View
+system_health:
+
 # ALARM MANUAL CONTROL PANEL
 #
 #   TRANSICION: Disarmed => Armed (Home/Night/Away) => Triggered => Disarmed
