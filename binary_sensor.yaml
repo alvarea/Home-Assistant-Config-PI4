@@ -179,7 +179,7 @@
             false
           {% endif %}
         friendly_name: '¿Alguien?' #'Alguien en Casa'
-        icon_template: mdi:account-location
+        icon_template: mdi:home
         entity_id:
           - sensor.family_home
 

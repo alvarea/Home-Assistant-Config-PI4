@@ -7,8 +7,19 @@ for entity_id in hass.states.entity_ids('binary_sensor'):
 hass.states.set('sensor.family_home', home, {
     'unit_of_measurement': 'personas',
     'friendly_name': '¿Cuántos?', # en Casa?'
-    'icon': 'mdi:home'
+    'icon': 'mdi:account-switch'
 })
+
+
+#if home == 1
+#    hass.states.set('sensor.family_home', home, {'icon': 'mdi:account'})
+#else if home == 2
+#    hass.states.set('sensor.family_home', home, {'icon': 'mdi:account-multiple'})
+#else if home == 3
+#    hass.states.set('sensor.family_home', home, {'icon': 'mdi:account-group'})
+#else if home == 4
+#    hass.states.set('sensor.family_home', home, {'icon': 'mdi:account-multiple-check'})
+
 
 sleep = 0
 for entity_id in hass.states.entity_ids('input_boolean'):

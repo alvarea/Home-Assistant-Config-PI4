@@ -831,37 +831,6 @@
     - service: automation.turn_on
       entity_id: automation.l07_luces_on_entrada_segun_sensor
 
-- id: L08_luces_on_escalera_on_sensor
-  alias: 'L08 Luces On Escalera Según Sensor'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e464a6
-      to: 'on'
-  condition:
-    condition: or  # 'when dark' condition: either after sunset or before sunrise
-    conditions:
-      - condition: sun
-        after: sunset
-        # en la puesta de sol - 30'
-        after_offset: "-00:30:00"
-      - condition: sun
-        before: sunrise
-        # en el amanecer +2h'
-        before_offset: "+03:00:00"
-      #- sensor.illumination_158d0001e464a6  # Sensor luz estudio
-  action:
-    - service: automation.turn_off
-      entity_id: automation.l08_luces_on_escalera_segun_sensor
-    # Llamada al Script de Luces Entrada ON
-    - service: script.luces_on_escalera_sensor
-    # Espera de 5'
-    - delay: '00:05:00'
-    # Llamada al Script de Luces Entrada OFF
-    - service: script.luces_off_escalera_sensor
-    #
-    - service: automation.turn_on
-      entity_id: automation.l08_luces_on_escalera_segun_sensor
-
 #
 #
 # REGLAS: MAGIC CUBE
@@ -869,7 +838,7 @@
 # Available events are flip90, flip180, move, tap_twice, shake_air, swing, alert, free_fall and rotate.
 # The component stores the last action as the attribute last_action.
 - id: L10_cube_tap_twice
-  alias: 'A10 Cube Tap Twice'
+  alias: 'L10 Cube Tap Twice'
   trigger:
     platform: event
     event_type: cube_action
@@ -878,11 +847,10 @@
       action_type: tap_twice
   action:
     - service: light.toggle
-      data:
-        entity_id: light.hue_estudio
+      entity_id: light.hue_estudio
 
 - id: L11_cube_shake_air
-  alias: 'A11 Cube Shake Air'
+  alias: 'L11 Cube Shake Air'
   trigger:
     platform: event
     event_type: cube_action
@@ -891,8 +859,8 @@
       action_type: shake_air
   action:
     - service: light.turn_off
+      entity_id: light.hue_estudio
       data:
-        entity_id: light.hue_estudio
         transition: 10
 
 
@@ -949,7 +917,7 @@
   action:
     # Script Notificación Alarma
     - service: script.turn_on
-      entity_id: script.notifica_alarma
+      entity_id: script.notifica_alerta
       data:
         variables:
           title: '*AVISO FALLO ELECTRICO*'
@@ -967,7 +935,7 @@
   action:
     # Script Notificación Alarma
     - service: script.turn_on
-      entity_id: script.notifica_alarma
+      entity_id: script.notifica_alerta
       data:
         variables:
           title: '*AVISO FALLO ELECTRICO*'
@@ -1155,3 +1123,25 @@
       entity_id: switch.esphome_bas_sw4
     - service: light.toggle
       entity_id: light.esphome_bas_sw4_led
+
+#
+# ESPHOME BPOW R2 RACK COMUNICACIONES
+#
+- id: S15_Sonoff_POW_SW2_Status
+  alias: 'S15 Sonoff POW SW2 Status'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_pow_sw2_status
+      from: 'on'
+      to: 'off'
+      for: '00:00:10'
+  action:
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alerta
+      data:
+        variables:
+          title: '*AVISO FALLO ELECTRICO*'
+          message: >
+            >>> URGENTE: CUADRO ELECTRICO RACK COMUNICACIONES SIN CORRIENTE
+

@@ -302,6 +302,37 @@ notifica_alarma:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
+notifica_alerta:
+  alias: 'Mensaje Alarma'
+  sequence:
+  # Actualiza el valor de input_text.mensaje_tit con el título recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_tit
+    data_template:
+      value: "{{ title }}"
+
+  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_msg
+    data_template:
+      value: "{{ message }}"
+
+  # Notificación Telegram
+  - service: notify.telegram_alarm
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+
+  # Notificación IOS
+  - service: notify.notifica_grupo_ios
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+
 notifica_evento:
   alias: 'Notifica Evento a Family'
   sequence:
@@ -379,17 +410,6 @@ luces_off_entrada_sensor:
         - light.hue_entrada
         - light.gateway_light_7811dcb788fa
 
-luces_on_escalera_sensor:
-  alias: 'Luces On Escalera si Sensor'
-  sequence:
-    - service: light.turn_on
-      entity_id:  light.esphome_lb1_l01
-
-luces_off_escalera_sensor:
-  alias: 'Luces Off Escalera si Sensor'
-  sequence:
-    - service: light.turn_off
-      entity_id: light.esphome_lb1_l01
 
 luz_on_armed_home:
   alias: 'Luces On Entrada si Sensor'
