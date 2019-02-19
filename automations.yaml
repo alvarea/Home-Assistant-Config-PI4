@@ -758,7 +758,7 @@
           - condition: sun
             before: sunrise
             # en el amanecer -30m'
-            before_offset: "00:30:00"
+            #before_offset: "00:30:00"
           - condition: numeric_state
             entity_id: sensor.illumination_158d0001e637f6
             below: 0
@@ -837,31 +837,57 @@
 #
 # Available events are flip90, flip180, move, tap_twice, shake_air, swing, alert, free_fall and rotate.
 # The component stores the last action as the attribute last_action.
-- id: L10_cube_tap_twice
-  alias: 'L10 Cube Tap Twice'
+- id: L10_cube_tap_twice_light_toogle
+  alias: 'L10 Cube Tap Twice Light Toogle'
   trigger:
     platform: event
-    event_type: cube_action
+    event_type: xiaomi_aqara.cube_action
     event_data:
       entity_id: binary_sensor.cube_158d00024a4a62_2
       action_type: tap_twice
   action:
     - service: light.toggle
-      entity_id: light.hue_estudio
+      entity_id:
+        - light.hue_estudio
+        - light.esphome_lb1_l01
 
-- id: L11_cube_shake_air
-  alias: 'L11 Cube Shake Air'
+- id: L11_cube_flip90_light_on
+  alias: 'L11 Cube Flip90 Light on'
   trigger:
     platform: event
-    event_type: cube_action
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00024a4a62_2
+      action_type: flip_90
+  action:
+    - service: light.turn_on
+      entity_id: light.hue_estudio
+      data:
+        brightness: 175
+        rgb_color: 255,200,145
+        effect: none
+    - service: light.turn_on
+      entity_id: light.esphome_lb1_l01
+      data:
+        white_value: 200
+        rgb_color: 255,126,0
+        brightness: 255
+
+- id: L12_cube_shake_light_off
+  alias: 'L12 Cube Shake Light off'
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.cube_action
     event_data:
       entity_id: binary_sensor.cube_158d00024a4a62_2
       action_type: shake_air
   action:
     - service: light.turn_off
-      entity_id: light.hue_estudio
+      entity_id:
+        - light.hue_estudio
+        - light.esphome_lb1_l01
       data:
-        transition: 10
+        transition: 15
 
 
 #-----------------------------------------------------------------------------#

@@ -227,10 +227,10 @@ notify:
   - name: telegram_aac
     platform: telegram
     chat_id: !secret telegram_chat_aac
-  - name: pushover_aac
-    platform: pushover
-    api_key: uovpmpj3cv6ijvyo6dcma2eaeaa8ts
-    user_key: aac_ios
+  #- name: pushover_aac
+  #  platform: pushover
+  #  api_key: uovpmpj3cv6ijvyo6dcma2eaeaa8ts
+  #  user_key: aac_ios
   #- name: telegram_mfc
   #  platform: telegram
   #  chat_id: !secret telegram_chat_mfc
@@ -261,7 +261,6 @@ alert:
     skip_first: true
     notifiers:
       - telegram_alarm
-      - pushover_aac
 
   alerta_test:
     name: ALERTA - LUCES ENCENDIDAS DE DIA
@@ -273,7 +272,7 @@ alert:
     skip_first: false
     notifiers:
       - telegram_aac
-      - pushover_aac
+
 
 # Enables a map showing the location of tracked devices
 map:
@@ -329,7 +328,12 @@ cloud:
         - script.homy_desarmado_code
       exclude_entities:
         - switch.esphome_bas_sw0
+        - switch.esphome_bas_sw1
         - switch.esphome_bas_sw2
+        - switch.esphome_bas_sw3
+        - switch.esphome_bas_sw4
+        - switch.esphome_pow_sw
+        - switch.esphome_pow_sw2
         - light.hue_cilindro
         - light.hue_cocina
         - light.hue_entrada
@@ -409,3 +413,7 @@ weather:
   - platform: darksky
     api_key: 952e76a66895644e49eb05bdf7f4f11c
     mode: daily
+
+apcupsd:
+  host: 127.0.0.1
+  port: 3551-

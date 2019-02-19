@@ -10,6 +10,19 @@
   - platform: uptime
     unit_of_measurement: hours
 
+# UPS APC
+  - platform: apcupsd
+    resources:
+      - bcharge
+      - loadpct
+      - status
+      - timeleft
+      - model
+      - nominv
+      - nompower
+      - nombattv
+      - starttime
+
 # Sensores Rendimiento de PI y CERT_SSL
 #
   - platform: cert_expiry
@@ -1142,7 +1155,7 @@
 
   - platform: moon
 
-#
+
 #  YAHOO - Sensor Previsiones de Tiempo ==> Deprecated 2019/01
 #
 #  - platform: yweather
