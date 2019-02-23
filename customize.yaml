@@ -386,3 +386,7 @@ sensor.esphome_pow_sw2_voltage:
 #
 light.esphome_lb1_l01:
   friendly_name: Luz Escalera
+
+# UPS APC
+sensor.status:
+  icon: mdi:car-battery

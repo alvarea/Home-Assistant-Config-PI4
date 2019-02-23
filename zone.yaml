@@ -12,3 +12,7 @@
   latitude: 37.3748
   longitude: -6.0530
   icon: mdi:home-account
+- name: Facultad Económicas
+  latitude: 37.3783
+  longitude: -5.97637194096571
+  icon: mdi:school

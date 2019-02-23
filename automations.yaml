@@ -858,19 +858,18 @@
     event_type: xiaomi_aqara.cube_action
     event_data:
       entity_id: binary_sensor.cube_158d00024a4a62_2
-      action_type: flip_90
+      action_type: flip90
   action:
     - service: light.turn_on
       entity_id: light.hue_estudio
       data:
         brightness: 175
-        rgb_color: 255,200,145
-        effect: none
+        rgb_color: [254, 200, 145]
     - service: light.turn_on
       entity_id: light.esphome_lb1_l01
       data:
         white_value: 200
-        rgb_color: 255,126,0
+        rgb_color: [254, 126, 0]
         brightness: 255
 
 - id: L12_cube_shake_light_off
@@ -1151,13 +1150,13 @@
       entity_id: light.esphome_bas_sw4_led
 
 #
-# ESPHOME BPOW R2 RACK COMUNICACIONES
+# SAI RACK COMUNICACIONES
 #
-- id: S15_Sonoff_POW_SW2_Status
-  alias: 'S15 Sonoff POW SW2 Status'
+- id: S15_ups_apc700_status
+  alias: 'S15 ups apc700 status'
   trigger:
     - platform: state
-      entity_id: binary_sensor.esphome_pow_sw2_status
+      entity_id: binary_sensor.ups_status
       from: 'on'
       to: 'off'
       for: '00:00:10'
@@ -1169,5 +1168,5 @@
         variables:
           title: '*AVISO FALLO ELECTRICO*'
           message: >
-            >>> URGENTE: CUADRO ELECTRICO RACK COMUNICACIONES SIN CORRIENTE
+            >>> URGENTE: SAI RACK COMUNICACIONES SIN CORRIENTE
 

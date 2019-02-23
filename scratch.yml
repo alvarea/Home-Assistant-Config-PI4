@@ -1,6 +1,7 @@
 
 
 
+
 - type: picture-entity
   entity: light.bed_light
   state_image:
