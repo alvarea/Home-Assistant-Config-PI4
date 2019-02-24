@@ -67,11 +67,35 @@
   alias: hass_daily_scripts
   trigger:
     - platform: time
-      at: '00:01:00'
+      at: '23:55:00'
   action:
     # Para todas las reglas durante el arranque del sistema
     - service: counter.reset
       entity_id: counter.nespresso_start
+    # HASS Alarm Nigth Volume
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.xiaomi_volume_alarm_armed
+        value: '2'
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.xiaomi_volume_alarm_disarmed
+        value: '2'
+
+- id: hass_alarm_night_volume
+  alias: 'HASS Alarm Day Volume'
+  trigger:
+    - platform: time
+      at: '10:00:00'
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.xiaomi_volume_alarm_armed
+        value: '10'
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.xiaomi_volume_alarm_disarmed
+        value: '10'
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -507,12 +531,12 @@
         # en el amanecer -2h'
       - condition: sun
         before: sunrise
-        before_offset: "02:00:00"
+        before_offset: "01:00:00"
       - condition: numeric_state
         entity_id: sensor.baye_probability_aaf
-        above: 95
+        above: 98
   action:
-    - delay: 0:05
+    - delay: 0:30
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
     # Aviso sonoro con Xiaomi GW

@@ -23,7 +23,7 @@
   xiaomi_volume_alarm_armed:
     name: Volumen
     mode: slider
-    initial: 8
+    initial: 4
     min: 0
     max: 100
     step: 2

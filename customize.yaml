@@ -143,7 +143,7 @@ sensor.pressure_158d00022c6a47:
   icon: mdi:gauge
 sensor.temperature_158d00022c6a47:
   friendly_name: Temperatura Estudio
-  icon: mdi:oil-temperature
+  icon: mdi:temperature-celsius
 sensor.humidity_158d00022c6a47:
   friendly_name: Humedad Estudio
   icon: mdi:water-percent
@@ -204,7 +204,7 @@ sensor.pressure_158d00022b65ff:
   icon: mdi:gauge
 sensor.temperature_158d00022b65ff:
   friendly_name: Temperatura Salón
-  icon: mdi:oil-temperature
+  icon: mdi:temperature-celsius
 sensor.humidity_158d00022b65ff:
   friendly_name: Humedad Salón
   icon: mdi:water-percent
@@ -388,5 +388,5 @@ light.esphome_lb1_l01:
   friendly_name: Luz Escalera
 
 # UPS APC
-sensor.status:
+sensor.ups_status:
   icon: mdi:car-battery
