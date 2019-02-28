@@ -1,12 +1,144 @@
+  - type: entities
+    title: Dormitorio PAF
+    show_header_toggle: false
+    entities:
+      - binary_sensor.esphome_s20_sw1_status
+      - switch.esphome_s20_sw1
+      - binary_sensor.esphome_s20_sw1_boton
+      - light.esphome_s20_sw1_led
+      - binary_sensor.door_window_sensor_158d00020b7c27
+
+
+type: custom:mini-graph-card
+entities:
+    - entity: sensor.piscina_duracion_programa
+  name: Duración Depuradora
+  show:
+    graph: bar
+
+type: vertical-stack
+cards:
+  - type: 'custom:mini-graph-card'
+    entities:
+      - sensor.temperature_158d0002e97092
+    show:
+      labels: true
+      icon: true
+      state: true
+    points_per_hour: 1
+    line_width: 8
+    font_size: 120
+    color_thresholds:
+      - value: 0
+        color: gray
+      - value: 5
+        color: violet
+      - value: 5
+        color: blue
+      - value: 10
+        color: teal
+      - value: 15
+        color: cyan
+      - value: 20
+        color: green
+      - value: 20
+        color: chartreuse
+      - value: 25
+        color: orange
+      - value: 35
+        color: yellow
+      - value: 40
+        color: red
+      - value: 45
+        color: purple
+  - type: 'custom:mini-graph-card'
+    entities:
+      - sensor.illumination_158d0002e97092
+    show:
+      labels: true
+      icon: true
+      state: true
+    points_per_hour: 0.5
+    line_width: 8
+    font_size: 120
+    color_thresholds:
+      - value: 0
+        color: gray
+      - value: 5
+        color: violet
+      - value: 5
+        color: blue
+      - value: 10
+        color: teal
+      - value: 15
+        color: cyan
+      - value: 20
+        color: green
+      - value: 20
+        color: chartreuse
+      - value: 25
+        color: orange
+      - value: 35
+        color: yellow
+      - value: 40
+        color: red
+      - value: 45
+        color: purple
+  - type: horizontal-stack
+    cards:
+      - type: 'custom:mini-graph-card'
+        entities:
+          - sensor.humidity_158d0002e97092
+        line_color: blue
+        line_width: 6
+        font_size: 50
+      - type: 'custom:mini-graph-card'
+        entities:
+          - sensor.pressure_158d0002e97092
+        line_color: green
+        line_width: 6
+        font_size: 50
 
 
 
 
-- type: picture-entity
-  entity: light.bed_light
-  state_image:
-    "on": /local/bed_light_on.png
-    "off": /local/bed_light_off.png
+
+cards:
+  - show_state: false
+    state_image:
+      'off': /local/AAC_2017_bw.jpeg
+      'on': /local/AAC_2017_co.jpeg
+    type: picture-entity
+    aspect_ratio: 243
+    entity: binary_sensor.family_home_aac
+    show_name: false
+  - show_state: false
+    state_image:
+      'off': /local/MFC_2014_bw.jpeg
+      'on': /local/MFC_2014_co.jpeg
+    type: picture-entity
+    aspect_ratio: 243
+    entity: binary_sensor.family_home_mfc
+    show_name: false
+  - show_state: false
+    state_image:
+      'off': /local/AAF_2017_bw.png
+      'on': /local/AAF_2017_co.png
+    type: picture-entity
+    aspect_ratio: 243
+    entity: binary_sensor.family_home_aaf
+    show_name: false
+  - show_state: false
+    state_image:
+      'off': /local/PAF_2017_bw.png
+      'on': /local/PAF_2017_co.png
+    type: picture-entity
+    aspect_ratio: 243
+    entity: binary_sensor.family_home_paf
+    show_name: false
+type: horizontal-stack
+
+
 
 
 - id: L08_luces_on_escalera_on_sensor

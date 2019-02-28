@@ -64,7 +64,7 @@
     initial: on
     icon: mdi:dip-switch
 
-# INTERRUPTORES BOLLEAN => Programador Diario Luces Jardín
+# INTERRUPTORES BOOLEAN => Programador Diario Luces Jardín
 
   jardin_programador_xia_ext:
     name: Prog. Faroles Exterior
@@ -83,7 +83,7 @@
 
   jardin_programador_4ch_ch1:
     name: Prog. Balizas Cesped
-    initial: off
+    initial: on
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch2:
@@ -102,4 +102,15 @@
     icon: mdi:power-settings
 
 
+# INTERRUPTORES BOOLEAN => Programador Calefacción
+
+  calefac_programador_mfc:
+    name: Prog. Calefacción MFC
+    initial: on
+    icon: mdi:power-settings
+
+  calefac_programador_paf:
+    name: Prog. Calefacción PAC
+    initial: on
+    icon: mdi:power-settings
 

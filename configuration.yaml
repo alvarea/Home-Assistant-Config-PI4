@@ -194,10 +194,11 @@ xiaomi_aqara:
 device_tracker:
   - platform: nmap_tracker
     hosts:
+      - 192.168.0.27
       - 192.168.0.50-99
     home_interval: 10
     consider_home: 0:10:00
-    interval_seconds: 20
+    interval_seconds: 30
 
 # GEOFENCY: Platform & Device Tracker ==> changed on v.0.83.2
 geofency:
@@ -299,7 +300,12 @@ light:
     entities:
       - light.hue_estudio
       - light.esphome_lb1_l01
-
+  - platform: group
+    name: Luces Salon
+    entities:
+      - light.hue_lectura
+      - light.hue_pasillo
+      - light.hue_seises
 
 # Cloud -  Home Assistant Cloud - NABU CASA
 cloud:
@@ -320,6 +326,7 @@ cloud:
         - light.luces_planta_baja
         - light.luces_planta_alta
         - light.luces_interior
+        - light.luces_salon
         - light.esphome_lb1_l01
         - group.luces_exterior_grp
         - group.luces_casa_grp
@@ -419,3 +426,10 @@ apcupsd:
   port: 3551
 
 person:
+
+#TO DO
+#
+# https://github.com/custom-components/custom_updater/wiki/Installation
+# custom_updater:
+#  card_urls:
+#    - https://raw.githubusercontent.com/kalkih/mini-graph-card/master/tracker.json

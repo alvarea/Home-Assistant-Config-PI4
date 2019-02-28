@@ -132,40 +132,18 @@ sensor.last_boot:
 # ********* COMPONENTES XIAOMI AQARA GATEWAY + SENSORES ************
 #
 
-# Estudio
-#
-binary_sensor.motion_sensor_158d0001e464a6:
-  friendly_name: Sensor Presencia Estudio
-sensor.illumination_158d0001e464a6:
-  friendly_name: Sensor Luz Estudio
-sensor.pressure_158d00022c6a47:
-  friendly_name: Presión Atm. Estudio
-  icon: mdi:gauge
-sensor.temperature_158d00022c6a47:
-  friendly_name: Temperatura Estudio
-  icon: mdi:temperature-celsius
-sensor.humidity_158d00022c6a47:
-  friendly_name: Humedad Estudio
-  icon: mdi:water-percent
-
 # Entrada
 #
 light.gateway_light_7811dcb788fa:
   friendly_name: Luz Aqara
   icon: mdi:flash-circle
 sensor.illumination_7811dcb788fa:
-  friendly_name: Sensor Luz Aqara
-
-# Xiaomi Magic Cube
-#
-binary_sensor.cube_158d00024a4a62_2:
-  friendly_name: Magic Cube
-  icon: mdi:cube-outline
-
+  friendly_name: Luz Aqara
 binary_sensor.door_window_sensor_158d00022b393c:
-  friendly_name: Sensor Puerta Entrada
+  friendly_name: Puerta Entrada
   icon: mdi:door
-# Xiaomi Switch
+
+# Switch
 #
 switch.wall_switch_left_158d0002236e75:
   friendly_name: Luz Techo Entrada
@@ -174,19 +152,28 @@ switch.wall_switch_right_158d0002236e75:
   friendly_name: Luz Exterior
   icon: mdi:track-light
 
-# Xiaomi Sensor Presencia Interior
+# Presencia Interior
 #
 binary_sensor.motion_sensor_158d0001e55903:
-  friendly_name: Sensor Presencia Entrada
+  friendly_name: Presencia Entrada
 sensor.illumination_158d0001e55903:
-  friendly_name: Sensor Luz Entrada
+  friendly_name: Luz Entrada
 
-# Xiaomi Sensor Presencia Exterior
+# Exterior
 #
 binary_sensor.motion_sensor_158d0001e637f6:
-  friendly_name: Sensor Presencia Exterior
+  friendly_name: Presencia Exterior
 sensor.illumination_158d0001e637f6:
-  friendly_name: Sensor Luz Exterior
+  friendly_name: Luz Exterior
+sensor.temperature_158d00025d9289:
+  friendly_name: Temperatura Exterior
+  icon: mdi:thermometer
+sensor.pressure_158d0002e97092:
+  icon: mdi:gauge
+  friendly_name: P.Atm. Exterior
+sensor.humidity_158d00025d9289:
+  friendly_name: Humedad Exterior
+  icon: mdi:water-percent
 
 # Cocina
 #
@@ -197,45 +184,100 @@ binary_sensor.smoke_sensor_158d0001fd321c:
 # Salón
 #
 binary_sensor.door_window_sensor_158d000201e2e7:
-  friendly_name: Sensor Puerta Salón
+  friendly_name: Puerta Salón
   icon: mdi:door
-sensor.pressure_158d00022b65ff:
-  friendly_name: Presión Atm. Salón
-  icon: mdi:gauge
 sensor.temperature_158d00022b65ff:
-  friendly_name: Temperatura Salón
-  icon: mdi:temperature-celsius
+  friendly_name: Salón
+  icon: mdi:thermometer
+sensor.pressure_158d00022b65ff:
+  friendly_name: Salón
+  icon: mdi:gauge
 sensor.humidity_158d00022b65ff:
-  friendly_name: Humedad Salón
+  friendly_name: Salón
   icon: mdi:water-percent
 binary_sensor.motion_sensor_158d0001e05661:
   friendly_name: Presencia Salón
 sensor.illumination_158d0001e05661:
-  friendly_name: Sensor Luz Salón
+  friendly_name: Luz Salón
+binary_sensor.vibration_158d0002a4eacc: # Vibración Puerta Salón
+  friendly_name: Vibración Puerta Salón
+sensor.bed_activity_158d0002a4eacc:
+  friendly_name: Activity Puerta Salón
+sensor.coordination_158d0002a4eacc:
+  friendly_name: Coordinación Puerta Salón
+sensor.tilt_angle_158d0002a4eacc:
+  friendly_name: Inclinación Puerta Salón
+
+# Estudio
+#
+binary_sensor.motion_sensor_158d0001e464a6:
+  friendly_name: Presencia Estudio
+sensor.illumination_158d0001e464a6:
+  friendly_name: Estudio
+sensor.pressure_158d00022c6a47:
+  friendly_name: Estudio
+  icon: mdi:gauge
+sensor.temperature_158d00022c6a47:
+  friendly_name: Estudio
+  icon: mdi:thermometer
+sensor.humidity_158d00022c6a47:
+  friendly_name: Estudio
+  icon: mdi:water-percent
+
+# Xiaomi Magic Cube
+#
+binary_sensor.cube_158d00024a4a62_2:
+  friendly_name: Magic Cube
+  icon: mdi:cube-outline
 
 # Salita Plancha
 #
 binary_sensor.door_window_sensor_158d00020457e0:
-  friendly_name: Sensor Ventana Plancha
+  friendly_name: Ventana Plancha
   icon: mdi:window-closed
 
 # Dormitorio PAF
 #
 binary_sensor.door_window_sensor_158d000201dddb:
-  friendly_name: Sensor Ventana PAF
+  friendly_name: Ventana PAF
   icon: mdi:window-closed
+
+sensor.temperature_158d0002e97092:
+  friendly_name: Dorm.PAF
+  icon: mdi:thermometer
+
+sensor.pressure_158d00025d9289:
+  icon: mdi:gauge
+  friendly_name: Dorm.PAF
+
+sensor.humidity_158d0002e97092:
+  friendly_name: Dorm.PAF
+  icon: mdi:water-percent
+
 
 # Dormitorio AAF
 #
 binary_sensor.door_window_sensor_158d00020910b1:
-  friendly_name: Sensor Ventana AAF
+  friendly_name: Ventana AAF
   icon: mdi:window-closed
 
 # Dormitorio MFC-AAF
 #
 binary_sensor.door_window_sensor_158d00020b7c27:
-  friendly_name: Sensor Ventana MFC-AAC
+  friendly_name: Ventana MFC-AAC
   icon: mdi:window-closed
+
+sensor.temperature_158d00025efda4:
+  friendly_name: Dorm.MFC
+  icon: mdi:thermometer
+
+sensor.pressure_158d00025efda4:
+  icon: mdi:gauge
+  friendly_name: Dorm.MFC
+
+sensor.humidity_158d00025efda4:
+  friendly_name: Dorm.MFC
+  icon: mdi:water-percent
 
 # Scripts Timer Piscina
 #
@@ -390,3 +432,4 @@ light.esphome_lb1_l01:
 # UPS APC
 sensor.ups_status:
   icon: mdi:car-battery
+

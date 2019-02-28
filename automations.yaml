@@ -256,9 +256,14 @@
   trigger:
     - platform: state
       entity_id:
-        - group.sensores_home
-        - group.sensores_away
+        - group.sensores_alarm_home
+        - group.sensores_alarm_away
       to: 'on'
+    - platform: event
+      event_type: xiaomi_aqara.movement
+      event_data:
+        entity_id: binary_sensor.vibration_158d0002a4eacc
+        action_type: vibrate
   condition:
     condition: and
     conditions:
@@ -279,9 +284,14 @@
   alias: 'A6 Alarm Trigger Armed Home'
   trigger:
     - platform: state
-      entity_id: group.sensores_home
+      entity_id: group.sensores_alarm_home
       from: 'off'
       to: 'on'
+    - platform: event
+      event_type: xiaomi_aqara.movement
+      event_data:
+        entity_id: binary_sensor.vibration_158d0002a4eacc
+        action_type: vibrate
   condition:
     - condition: state
       entity_id: alarm_control_panel.ha
@@ -399,8 +409,8 @@
 #
 #PAF_Trackers = ['device_tracker.paf_iphone_nmap',
 #                'device_tracker.paf_iphone_owntrack',
-#                'device_tracker.paf_ios']
-#                'device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94']
+#                'device_tracker.paf_ios',
+#                'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8' #PAF
 #
 #AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
 #                'device_tracker.aaf_ios',
@@ -442,7 +452,7 @@
         - device_tracker.aaf_ios                                # IOSAPP
         - device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222   # MFC
         - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496   # AAC
-        - device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94   # PAF
+        - device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8   # PAF
         - device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195   # AAF
   action:
     - service: script.updatetracker
@@ -521,7 +531,7 @@
         entity_id: binary_sensor.family_all_home
         state: 'on'
       - condition: state
-        entity_id: group.sensores_home
+        entity_id: group.sensores_alarm_home
         state: 'off'
       - condition: state
         entity_id: alarm_control_panel.ha
@@ -1066,9 +1076,12 @@
     - service: switch.toggle
       entity_id: switch.esphome_s20_sw3
 
-- id: S10_esphome_S2_Switch_On_Sunset
-  alias: 'S10 Calefaccion On Sunset'
+- id: S10_esphome_S2_Switch_On
+  alias: 'S10 Calefaccion On'
   trigger:
+    # Test mode
+    #- platform: time
+    #  at: '23:58:00'
     - platform: sun
       event: sunset
       offset: "+03:00:00"
@@ -1081,63 +1094,20 @@
     entity_id: binary_sensor.family_any_home
     state: 'on'
   action:
-    - service: switch.turn_on
-      entity_id: switch.esphome_s20_sw1
-    - service: switch.turn_on
-      entity_id: switch.esphome_s20_sw3
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_warning
-      data:
-        variables:
-          title: '*CALEFACCION ON*'
-          message: >
-            >>> EVENTO: Se enciende calefacción dormitorios
+    - service: script.calefaccion_mfc_on
+    - service: script.calefaccion_paf_on
 
-            >>> LUGAR: Dormitorio MFC + Dormitorio PAF
-
-- id: S11_esphome_S20_Switch_Off_Hora02_00
-  alias: 'S11 SonoffS20 Switch Off Hora0200'
+- id: S11_esphome_S20_Switch_Off
+  alias: 'S11 SonoffS20 Switch Off'
   trigger:
     - platform: time
       at: '02:00:00'
-  action:
-    - service: switch.turn_off
-      entity_id: switch.esphome_s20_sw1
-    - service: switch.turn_off
-      entity_id: switch.esphome_s20_sw3
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_warning
-      data:
-        variables:
-          title: '*CALEFACCION*'
-          message: >
-            >>> EVENTO: Se apaga calefacción dormitorios de madrugada
-
-            >>> LUGAR: Dormitorio MFC + Dormitorio PAF
-
-- id: S12_esphome_S20_Switch_Off_Sunrise_30
-  alias: 'S12 SonoffS20 Switch Off Sunrise_30'
-  trigger:
     - platform: sun
       event: sunrise
       offset: "-00:15:00"
   action:
-    - service: switch.turn_off
-      entity_id: switch.esphome_s20_sw1
-    - service: switch.turn_off
-      entity_id: switch.esphome_s20_sw3
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_warning
-      data:
-        variables:
-          title: '*CALEFACCION*'
-          message: >
-            >>> EVENTO: Se apaga calefacción al Amanecer
-
-            >>> LUGAR: Dormitorio MF + Dormitorio PAF
+    - service: script.calefaccion_mfc_off
+    - service: script.calefaccion_paf_off
 
 #
 # ESPHOME BASIC SW2 PORCHE PISCINA

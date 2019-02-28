@@ -17,7 +17,7 @@
      - 'Sábado'
      - 'Domingo'
      - 'Weekend'
-    initial: Diario
+    initial: Domingo
     icon: mdi:calendar
 
 # ALARM WARNING BEFORE ARMED : PENDING TIME

@@ -143,7 +143,7 @@ alarma_sensor_dormitorios_grp:
     - binary_sensor.door_window_sensor_158d00020457e0
     - binary_sensor.door_window_sensor_158d00020910b1
 
-sensores_home:
+sensores_alarm_home:
   name: Grupo Sensores Home
   view: no
   entities:
@@ -154,7 +154,7 @@ sensores_home:
     - binary_sensor.door_window_sensor_158d00020910b1
     - binary_sensor.door_window_sensor_158d000201e2e7
 
-sensores_away:
+sensores_alarm_away:
   name: Grupo Sensores Away
   view: no
   entities:

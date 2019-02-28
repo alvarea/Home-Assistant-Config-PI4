@@ -27,8 +27,8 @@ AAC_Trackers = ['device_tracker.aac_iphone_nmap',
 
 PAF_Trackers = ['device_tracker.paf_iphone_nmap',
                 'device_tracker.paf_iphone_owntrack',
-                'device_tracker.paf_ios']
-                #'device_tracker.93e3d523_36a5_4d4d_898b_204abdf3ee94']
+                'device_tracker.paf_ios',
+                'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8']
 
 AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
                 'device_tracker.aaf_ios',
