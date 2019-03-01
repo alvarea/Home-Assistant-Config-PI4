@@ -1,12 +1,20 @@
-  - type: entities
-    title: Dormitorio PAF
-    show_header_toggle: false
+type: vertical-stack
+cards:
+  - type: glance
+    title: Estado Homy
+    show_name: false
     entities:
-      - binary_sensor.esphome_s20_sw1_status
-      - switch.esphome_s20_sw1
-      - binary_sensor.esphome_s20_sw1_boton
-      - light.esphome_s20_sw1_led
-      - binary_sensor.door_window_sensor_158d00020b7c27
+      - entity: sensor.sun_next_rising
+      - entity: sensor.sun_next_setting
+      - entity: sensor.temperatura_cpu
+      - entity: sensor.processor_use
+      - entity: sensor.ups_status
+  - type: weather-forecast
+    name: El Tiempo
+    entity: weather.dark_sky
+
+
+
 
 
 type: custom:mini-graph-card
