@@ -12,11 +12,11 @@
   latitude: 37.3748
   longitude: -6.0530
   icon: mdi:home-account
-- name: Facultad Económicas
+- name: Fac.Económicas
   latitude: 37.3783
   longitude: -5.9763
   icon: mdi:school
-- name: Facultad ETSI
+- name: Fac.ETSI
   latitude: 37.411661
   longitude: -5.999952
   icon: mdi:school

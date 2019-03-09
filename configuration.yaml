@@ -25,9 +25,6 @@ input_number: !include input_number.yaml
 input_datetime: !include input_datetime.yaml
 zone: !include zone.yaml
 
-# Show links to resources in log and frontend
-#introduction:
-
 # Enables the frontend
 frontend:
 
@@ -56,9 +53,6 @@ updater:
 
 # Discover some devices automatically
 discovery:
-
-# Allows you to issue voice commands from the frontend in enabled browsers
-#conversation:
 
 # Enables support for tracking state changes over time
 history:
@@ -133,7 +127,6 @@ history_graph:
     hours_to_show: 168
     refresh: 1800
 
-
 # GENERIC IP CAMERA
 camera:
   - platform: generic
@@ -184,7 +177,6 @@ media_player:
 #  password: !secret cloudmqtt
 
 # XIAOMI AQARA GATEWAY
-#
 xiaomi_aqara:
   gateways:
     - mac: !secret xiaomi_gateway
@@ -274,7 +266,6 @@ alert:
     skip_first: false
     notifiers:
       - telegram_aac
-
 
 # Enables a map showing the location of tracked devices
 map:
