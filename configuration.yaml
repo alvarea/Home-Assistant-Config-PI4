@@ -81,15 +81,10 @@ system_health:
 #   STATUS      DURACION TRANSICION               DESCRIPCION
 #   ========    =============================     ==================================================
 #   DISARMED    Permanante                        Estado inicial de alarma desarmada
-#
 #   PENDING     <PENDING_TIME>                    Estado transición a ARMED durante <pending_time> Segundos
-#
 #   ARMED_AWAY  Permanante                        Estado de alarma ARMED HOME / ARMED AWAY
-#
 #   PENDING     <PENDING_TIME> + <DELAY_TIME>     Estado transición a TRIGGERED durante <pending_time> + <delay_time> Segundos
-#
 #   TRIGGERED   <TRIGGER_TIME>                    Estado de alarma TRIGGERED durante <trigger_time> segundos
-#
 #   ARMED_AWAY  Permanante                        Estado anterior de alarma armada
 #
 alarm_control_panel:
