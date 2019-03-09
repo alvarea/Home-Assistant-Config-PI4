@@ -40,19 +40,19 @@ triggeredEntity = data.get('entity_id')
 # Set friendly name and the metatracker name based on the entity that triggered
 if triggeredEntity in AAC_Trackers:
     newFriendlyName = 'Agustín Tracker'
-    newEntityPicture = '/local/AAC_2017_0.jpg'
+    newEntityPicture = '/local/AAC_2017_co.jpg'
     metatrackerName = 'device_tracker.meta_aac'
 elif triggeredEntity in MFC_Trackers:
     newFriendlyName = 'Malen Tracker'
-    newEntityPicture = '/local/MFC_2017_0.jpeg'
+    newEntityPicture = '/local/MFC_2017_co.jpeg'
     metatrackerName = 'device_tracker.meta_mfc'
 elif triggeredEntity in PAF_Trackers:
     newFriendlyName = 'Paloma Tracker'
-    newEntityPicture = '/local/PAF_2017_0.png'
+    newEntityPicture = '/local/PAF_2017_co.png'
     metatrackerName = 'device_tracker.meta_paf'
 elif triggeredEntity in AAF_Trackers:
     newFriendlyName = 'Agu Tracker'
-    newEntityPicture = '/local/AAF_2017_0.png'
+    newEntityPicture = '/local/AAF_2017_co.png'
     metatrackerName = 'device_tracker.meta_aaf'
 else:
     newFriendlyName = None
