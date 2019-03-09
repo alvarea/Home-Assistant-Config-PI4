@@ -1,0 +1,4 @@
+config_esphomeyaml/
+secret.yaml
+known_devices.yaml
+testignore.txt

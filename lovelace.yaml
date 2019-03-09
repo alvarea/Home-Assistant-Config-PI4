@@ -16,8 +16,8 @@ views:
               - entity: sensor.temperatura_cpu
               - entity: sensor.processor_use
               - entity: sensor.ups_status
-            type: glance
             title: Estado Homy
+            type: glance
           - name: El Tiempo
             entity: weather.dark_sky
             type: weather-forecast
@@ -75,12 +75,12 @@ views:
               - entity: sensor.family_sleep_home
         type: vertical-stack
       - cards:
-          - type: picture-glance
+          - title: Salón
             entity: group.luces_salon_grp
             state_image:
               'off': /local/Home_Room_Salon_BW.jpg
               'on': /local/Home_Room_Salon_RGB.jpg
-            title: Salón
+            type: picture-glance
             entities:
               - light.hue_lectura
               - light.hue_seises
@@ -90,12 +90,12 @@ views:
               - sensor.illumination_158d0001e05661
               - binary_sensor.motion_sensor_158d0001e05661
               - binary_sensor.door_window_sensor_158d000201e2e7
-          - title: Estudio
+          - type: picture-glance
             entity: group.luces_estudio_grp
             state_image:
               'off': /local/Home_Room_Estudio_BW.jpg
               'on': /local/Home_Room_Estudio_RGB.jpg
-            type: picture-glance
+            title: Estudio
             entities:
               - light.hue_estudio
               - light.esphome_lb1_l01
@@ -104,12 +104,12 @@ views:
               - sensor.illumination_158d0001e464a6
               - binary_sensor.motion_sensor_158d0001e464a6
               - sensor.ups_status
-          - title: Cocina-Entrada
+          - type: picture-glance
             entity: group.luces_cocina_grp
             state_image:
               'off': /local/Home_Room_Kitchen_BW.jpg
               'on': /local/Home_Room_Kitchen_RGB.jpg
-            type: picture-glance
+            title: Cocina-Entrada
             entities:
               - light.hue_entrada
               - light.hue_cocina
@@ -121,28 +121,30 @@ views:
         type: vertical-stack
       - cards:
           - color_thresholds:
-              - color: gray
+              - color: black
                 value: 0
               - color: violet
                 value: 5
               - color: blue
-                value: 5
-              - color: teal
                 value: 10
-              - color: cyan
+              - color: teal
                 value: 15
               - color: green
                 value: 20
               - color: chartreuse
-                value: 20
-              - color: orange
                 value: 25
-              - color: yellow
+              - color: orange
+                value: 30
+              - color: amber
                 value: 35
+              - color: yellow
+                value: 38
               - color: red
                 value: 40
+              - color: magenta
+                value: 42
               - color: purple
-                value: 45
+                value: 44
             line_width: 10
             show:
               labels: true
@@ -157,21 +159,27 @@ views:
               - color: black
                 value: 0
               - color: violet
-                value: 10
+                value: 5
               - color: blue
-                value: 20
+                value: 10
               - color: teal
-                value: 30
-              - color: cyan
-                value: 40
+                value: 20
               - color: green
-                value: 50
+                value: 30
               - color: chartreuse
-                value: 60
+                value: 40
               - color: orange
-                value: 70
+                value: 50
+              - color: amber
+                value: 60
               - color: yellow
+                value: 70
+              - color: red
                 value: 80
+              - color: magenta
+                value: 90
+              - color: purple
+                value: 100
             line_width: 6
             show:
               labels: true
@@ -480,20 +488,20 @@ views:
       - name: Duración Depuradora
         entities:
           - entity: sensor.piscina_duracion_programa
-        type: 'custom:mini-graph-card'
         show:
           graph: bar
+        type: 'custom:mini-graph-card'
     icon: 'mdi:swim'
     title: Piscina
     path: jardin_view
   - badges: []
     cards:
-      - title: Cocina-Entrada
+      - type: picture-glance
         entity: group.luces_cocina_grp
         state_image:
           'off': /local/Home_Room_Kitchen_BW.jpg
           'on': /local/Home_Room_Kitchen_RGB.jpg
-        type: picture-glance
+        title: Cocina-Entrada
         entities:
           - light.hue_entrada
           - light.hue_cocina
@@ -502,6 +510,10 @@ views:
           - sensor.illumination_158d0001e55903
           - binary_sensor.motion_sensor_158d0001e55903
           - binary_sensor.door_window_sensor_158d00022b393c
+      - entity: camera.ipcam11_cocina
+        type: picture-entity
+      - entity: media_player.fire_tv
+        type: media-control
       - cards:
           - tap_action:
               action: call-service
@@ -515,21 +527,17 @@ views:
             entities:
               - binary_sensor.smoke_sensor_158d0001fd321c
         type: horizontal-stack
-      - entity: camera.ipcam11_cocina
-        type: picture-entity
-      - entity: media_player.fire_tv
-        type: media-control
     icon: 'mdi:fridge'
     title: Cocina
     path: cocina_view
   - badges: []
     cards:
-      - title: Salón
+      - type: picture-glance
         entity: group.luces_salon_grp
         state_image:
           'off': /local/Home_Room_Salon_BW.jpg
           'on': /local/Home_Room_Salon_RGB.jpg
-        type: picture-glance
+        title: Salón
         entities:
           - light.hue_lectura
           - light.hue_seises
@@ -540,28 +548,30 @@ views:
         type: media-control
       - cards:
           - color_thresholds:
-              - color: gray
+              - color: black
                 value: 0
               - color: violet
                 value: 5
               - color: blue
-                value: 5
-              - color: teal
                 value: 10
-              - color: cyan
+              - color: teal
                 value: 15
               - color: green
                 value: 20
               - color: chartreuse
-                value: 20
-              - color: orange
                 value: 25
-              - color: yellow
+              - color: orange
+                value: 30
+              - color: amber
                 value: 35
+              - color: yellow
+                value: 38
               - color: red
                 value: 40
+              - color: magenta
+                value: 42
               - color: purple
-                value: 45
+                value: 44
             line_width: 6
             show:
               labels: true
@@ -576,21 +586,27 @@ views:
               - color: black
                 value: 0
               - color: violet
-                value: 10
+                value: 5
               - color: blue
-                value: 20
+                value: 10
               - color: teal
-                value: 30
-              - color: cyan
-                value: 40
+                value: 20
               - color: green
-                value: 50
+                value: 30
               - color: chartreuse
-                value: 60
+                value: 40
               - color: orange
-                value: 70
+                value: 50
+              - color: amber
+                value: 60
               - color: yellow
+                value: 70
+              - color: red
                 value: 80
+              - color: magenta
+                value: 90
+              - color: purple
+                value: 100
             line_width: 6
             show:
               labels: true
@@ -631,12 +647,12 @@ views:
     path: salon_view
   - badges: []
     cards:
-      - title: Estudio
+      - type: picture-glance
         entity: group.luces_estudio_grp
         state_image:
           'off': /local/Home_Room_Estudio_BW.jpg
           'on': /local/Home_Room_Estudio_RGB.jpg
-        type: picture-glance
+        title: Estudio
         entities:
           - light.hue_estudio
           - light.esphome_lb1_l01
@@ -649,28 +665,30 @@ views:
         type: picture-entity
       - cards:
           - color_thresholds:
-              - color: gray
+              - color: black
                 value: 0
               - color: violet
                 value: 5
               - color: blue
-                value: 5
-              - color: teal
                 value: 10
-              - color: cyan
+              - color: teal
                 value: 15
               - color: green
                 value: 20
               - color: chartreuse
-                value: 20
-              - color: orange
                 value: 25
-              - color: yellow
+              - color: orange
+                value: 30
+              - color: amber
                 value: 35
+              - color: yellow
+                value: 38
               - color: red
                 value: 40
+              - color: magenta
+                value: 42
               - color: purple
-                value: 45
+                value: 44
             line_width: 6
             show:
               labels: true
@@ -682,28 +700,30 @@ views:
             entities:
               - sensor.temperature_158d00022c6a47
           - color_thresholds:
-              - color: gray
+              - color: black
                 value: 0
               - color: violet
                 value: 5
               - color: blue
-                value: 5
-              - color: teal
                 value: 10
-              - color: cyan
-                value: 15
+              - color: teal
+                value: 20
               - color: green
-                value: 20
+                value: 30
               - color: chartreuse
-                value: 20
-              - color: orange
-                value: 25
-              - color: yellow
-                value: 35
-              - color: red
                 value: 40
+              - color: orange
+                value: 50
+              - color: amber
+                value: 60
+              - color: yellow
+                value: 70
+              - color: red
+                value: 80
+              - color: magenta
+                value: 90
               - color: purple
-                value: 45
+                value: 100
             line_width: 6
             show:
               labels: true
@@ -747,28 +767,30 @@ views:
     cards:
       - cards:
           - color_thresholds:
-              - color: gray
+              - color: black
                 value: 0
               - color: violet
                 value: 5
               - color: blue
-                value: 5
-              - color: teal
                 value: 10
-              - color: cyan
+              - color: teal
                 value: 15
               - color: green
                 value: 20
               - color: chartreuse
-                value: 20
-              - color: orange
                 value: 25
-              - color: yellow
+              - color: orange
+                value: 30
+              - color: amber
                 value: 35
+              - color: yellow
+                value: 38
               - color: red
                 value: 40
+              - color: magenta
+                value: 42
               - color: purple
-                value: 45
+                value: 44
             line_width: 8
             show:
               labels: true
@@ -780,28 +802,30 @@ views:
             entities:
               - sensor.temperature_158d00025efda4
           - color_thresholds:
-              - color: gray
+              - color: black
                 value: 0
               - color: violet
                 value: 5
               - color: blue
-                value: 5
-              - color: teal
                 value: 10
-              - color: cyan
+              - color: teal
                 value: 15
               - color: green
                 value: 20
               - color: chartreuse
-                value: 20
-              - color: orange
                 value: 25
-              - color: yellow
+              - color: orange
+                value: 30
+              - color: amber
                 value: 35
+              - color: yellow
+                value: 38
               - color: red
                 value: 40
+              - color: magenta
+                value: 42
               - color: purple
-                value: 45
+                value: 44
             line_width: 8
             show:
               labels: true
@@ -840,28 +864,30 @@ views:
         type: vertical-stack
       - cards:
           - color_thresholds:
-              - color: gray
+              - color: black
                 value: 0
               - color: violet
                 value: 5
               - color: blue
-                value: 5
-              - color: teal
                 value: 10
-              - color: cyan
+              - color: teal
                 value: 15
               - color: green
                 value: 20
               - color: chartreuse
-                value: 20
-              - color: orange
                 value: 25
-              - color: yellow
+              - color: orange
+                value: 30
+              - color: amber
                 value: 35
+              - color: yellow
+                value: 38
               - color: red
                 value: 40
+              - color: magenta
+                value: 42
               - color: purple
-                value: 45
+                value: 44
             line_width: 8
             show:
               labels: true
@@ -873,28 +899,30 @@ views:
             entities:
               - sensor.temperature_158d0002e97092
           - color_thresholds:
-              - color: gray
+              - color: black
                 value: 0
               - color: violet
                 value: 5
               - color: blue
-                value: 5
-              - color: teal
                 value: 10
-              - color: cyan
-                value: 15
+              - color: teal
+                value: 20
               - color: green
-                value: 20
+                value: 30
               - color: chartreuse
-                value: 20
-              - color: orange
-                value: 25
-              - color: yellow
-                value: 35
-              - color: red
                 value: 40
+              - color: orange
+                value: 50
+              - color: amber
+                value: 60
+              - color: yellow
+                value: 70
+              - color: red
+                value: 80
+              - color: magenta
+                value: 90
               - color: purple
-                value: 45
+                value: 100
             line_width: 8
             show:
               labels: true
@@ -921,11 +949,11 @@ views:
             type: horizontal-stack
           - entities:
               - input_boolean.calefac_programador_paf
-              - binary_sensor.esphome_s20_sw1_status
-              - switch.esphome_s20_sw1
-              - binary_sensor.esphome_s20_sw1_boton
-              - light.esphome_s20_sw1_led
-              - binary_sensor.door_window_sensor_158d00020b7c27
+              - binary_sensor.esphome_s20_sw3_status
+              - switch.esphome_s20_sw3
+              - binary_sensor.esphome_s20_sw3_boton
+              - light.esphome_s20_sw3_led
+              - binary_sensor.door_window_sensor_158d000201dddb
             title: Dormitorio PAF
             type: entities
             show_header_toggle: false

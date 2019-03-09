@@ -1,3 +1,57 @@
+  - color_thresholds:
+      - color: black
+        value: 0
+      - color: violet
+        value: 5
+      - color: blue
+        value: 10
+      - color: teal
+        value: 15
+      - color: green
+        value: 20
+      - color: chartreuse
+        value: 25
+      - color: orange
+        value: 30
+      - color: amber
+        value: 35
+      - color: yellow
+        value: 38
+      - color: red
+        value: 40
+      - color: magenta
+        value: 42
+      - color: purple
+        value: 44
+
+
+  - color_thresholds:
+      - color: black
+        value: 0
+      - color: violet
+        value: 5
+      - color: blue
+        value: 10
+      - color: teal
+        value: 20
+      - color: green
+        value: 30
+      - color: chartreuse
+        value: 40
+      - color: orange
+        value: 50
+      - color: amber
+        value: 60
+      - color: yellow
+        value: 70
+      - color: red
+        value: 80
+      - color: magenta
+        value: 90
+      - color: purple
+        value: 100
+
+
 type: vertical-stack
 cards:
   - type: glance

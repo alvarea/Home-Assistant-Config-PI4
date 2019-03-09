@@ -38,8 +38,8 @@ config:
 python_script:
 
 http:
-  ssl_certificate: /home/homeassistant/dehydrated/certs/alvarea.duckdns.org/fullchain.pem
-  ssl_key: /home/homeassistant/dehydrated/certs/alvarea.duckdns.org/privkey.pem
+  ssl_certificate: !secret http_ssl_certificate
+  ssl_key: !secret http_ssl_key
   base_url: !secret http_base_url
   trusted_networks: !secret trusted_networks
   ip_ban_enabled: True
@@ -72,7 +72,7 @@ sun:
 # Philips Hue Bridge
 hue:
   bridges:
-    - host: 192.168.0.17
+    - host: !secret hue_bridge_host
 
 # Dispositivos Apple IOS
 ios:
@@ -140,27 +140,27 @@ camera:
     still_image_url: https://api.sat24.com/mostrecent/SP/visual5hdcomplete%20width=500%20height=304
     name: Weather Satelite
   - platform: generic
-    still_image_url: http://192.168.0.12:8080/snapshot.cgi
+    still_image_url: !secret still_image_url_IPcam12
     name: IPcam12 Estudio
     username: admin
     password: !secret IPcam12
   - platform: generic
-    still_image_url: http://192.168.0.11/snapshot/image0.jpg
+    still_image_url: !secret still_image_url_IPcam11
     name: IPcam11 Cocina
     username: admin
     password: !secret IPcam11
 
 apple_tv:
-  - host: 192.168.0.19
-    login_id: 00000000-5540-7268-ea1c-2a4e4d154343
+  - host: !secret apple_tv_host
+    login_id: !secret apple_tv_loginid
     name: Apple TV
-    credentials: 906CB00CF5F3A299:84CB3B3A11823C334BD48BAB463C0B625392E4BEF4F2817F19361BE285C0BEB1
+    credentials: !secret apple_tv_credentials
 
 # Mediaplayer FireTV
 media_player:
   - platform: firetv
     name: Fire TV
-    host: 192.168.0.20
+    host: !secret firetv_host
     adbkey: "/home/homeassistant/.homeassistant/config/android/adbkey"
     #adbkey: "config/android/adbkey" ==> Error Invalid config for [media_player.firetv]: not a file for dictionary
 
@@ -188,17 +188,20 @@ media_player:
 xiaomi_aqara:
   gateways:
     - mac: !secret xiaomi_gateway
-      key: AD58F3C5D30D405C
+      key: !secret xiaomi_mac
 
 # NMAP
 device_tracker:
   - platform: nmap_tracker
     hosts:
-      - 192.168.0.27
-      - 192.168.0.50-99
+      - !secret device_tracker_range1
+      - !secret device_tracker_range2
     home_interval: 10
     consider_home: 0:10:00
     interval_seconds: 30
+    exclude:
+      - !secret device_tracker_host1
+      - !secret device_tracker_host2
 
 # GEOFENCY: Platform & Device Tracker ==> changed on v.0.83.2
 geofency:
@@ -225,9 +228,7 @@ notify:
   - name: telegram_notify
     platform: telegram
     chat_id: !secret telegram_grp_notif
-  - name: telegram_aac
-    platform: telegram
-    chat_id: !secret telegram_chat_aac
+
   #- name: pushover_aac
   #  platform: pushover
   #  api_key: uovpmpj3cv6ijvyo6dcma2eaeaa8ts
@@ -418,7 +419,7 @@ cloud:
 
 weather:
   - platform: darksky
-    api_key: 952e76a66895644e49eb05bdf7f4f11c
+    api_key: !secret weather_apikey
     mode: daily
 
 apcupsd:

@@ -248,7 +248,206 @@
             false
           {% endif %}
         friendly_name: 'SAI APC·700 Rack'
-        icon_template: mdi:toggle-switch
+        icon_template: mdi:car-battery
 
+      # Sensores On-off Device Tracker NMAP
+      nmap_27_sony_ps4_wifi:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_27_sony_ps4_wifi','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '27 AlvareA.net Sony PS4 Wifi'
+        icon_template: mdi:gamepad-variant
+        entity_id: device_tracker.nmap_27_sony_ps4_wifi
 
+      nmap_17_philips_hue:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_17_philips_hue','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '17 Alvarea.net Philips Hue'
+        icon_template: mdi:lightbulb
+        entity_id: device_tracker.nmap_17_philips_hue
+
+      nmap_11_p2pcam_cocina:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_11_p2pcam_cocina','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '11 Alvarea.net P2Pcam Cocina'
+        icon_template: mdi:cctv
+        entity_id: device_tracker.nmap_11_p2pcam_cocina
+
+      nmap_12_p2pcam_estudio:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_12_p2pcam_estudio','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '12 Alvarea.net P2Pcam Estudio'
+        icon_template: mdi:cctv
+        entity_id: device_tracker.nmap_12_p2pcam_estudio
+
+      nmap_13_apple_tv:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_13_apple_tv','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '13 Alvarea.net Apple TV'
+        icon_template: mdi:youtube-tv
+        entity_id: device_tracker.nmap_13_apple_tv
+
+      nmap_14_tv_sony_salon:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_14_TV_sony_salon','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '14 Alvarea.net TV Sony Salon'
+        icon_template: mdi:television
+        entity_id: device_tracker.nmap_14_TV_sony_salon
+
+      nmap_18_xiaomi_gateway:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_18_xiaomi_gateway','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '18 Alvarea.net Xiaomi Gateway'
+        icon_template: mdi:alarm-plus
+        entity_id: device_tracker.nmap_18_xiaomi_gateway
+
+      nmap_20_fire_tvstick:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_20_fire_tvstick','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '20 Alvarea.net Fire TV Stick'
+        icon_template: mdi:youtube-tv
+        entity_id: device_tracker.nmap_20_fire_tvstick
+
+      nmap_56_ipad_air2:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_56_ipad_air2','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '56 Alvarea.net Ipad Air2'
+        icon_template: mdi:tablet-ipad
+        entity_id: device_tracker.nmap_56_ipad_air2
+
+      nmap_58_ipad_mini4:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_58_ipad_mini4','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '58 Alvarea.net Ipad Mini4'
+        icon_template: mdi:tablet-ipad
+        entity_id: device_tracker.nmap_58_ipad_mini4
+
+      nmap_59_apple_watch:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_59_apple_watch','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '59 Alvarea.net Apple Watch'
+        icon_template: mdi:watch
+        entity_id: device_tracker.nmap_59_apple_watch
+
+      nmap_60_macbook_pro_lan:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_60_macbook_pro_lan','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '60 Alvarea.net Macbook Pro LAN'
+        icon_template: mdi:laptop-mac
+        entity_id: device_tracker.nmap_60_macbook_pro_lan
+
+      nmap_61_macbook_pro_wifi:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_61_macbook_pro_wifi','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '61 Alvarea.net Macbook Pro Wifi'
+        icon_template: mdi:laptop-mac
+        entity_id: device_tracker.nmap_61_macbook_pro_wifi
+
+      nmap_63_macbook_air_paf:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_63_macbook_air_paf','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '63 Alvarea.net Macbook Air PAF'
+        icon_template: mdi:laptop-mac
+        entity_id: device_tracker.nmap_63_macbook_air_paf
+
+      nmap_65_hk_esn203981:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_65_hp_esn203981','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '65 Alvarea.net HP Portatil Heineken'
+        icon_template: mdi:laptop
+        entity_id: device_tracker.nmap_65_hp_esn203981
+
+      nmap_66_acer_notebook:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_66_acer_notebook','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '66 Alvarea.net Netbook Acer Aspire'
+        icon_template: mdi:laptop
+        entity_id: device_tracker.nmap_66_acer_notebook
+
+      nmap_80_phone_conchi:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_80_phone_conchi','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '80 Alvarea.net Phone Conchi'
+        icon_template: mdi:cellphone-iphone
+        entity_id: device_tracker.nmap_80_phone_conchi
+
+      nmap_81_phone_ale:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_81_phone_ale','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '81 Alvarea.net Phone Ale'
+        icon_template: mdi:cellphone-iphone
+        entity_id: device_tracker.nmap_81_phone_ale
+        #device_class: router
+        #attribute_template: "{{ state_attr('device_tracker.nmap_81_phone_ale','ip') }}"
 
