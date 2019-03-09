@@ -1,9 +1,0 @@
-
-iphoneaac:
-  hide_if_away: false
-  icon:
-  mac:
-  name: iphoneaac
-  picture:
-  track: true
-  vendor:
