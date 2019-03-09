@@ -10,9 +10,9 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Madrid
-  # Customization file
-  customize: !include customize.yaml
 
+# External configuration files
+customize: !include customize.yaml
 group: !include groups.yaml
 script: !include scripts.yaml
 automation: !include automations.yaml
