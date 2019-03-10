@@ -181,9 +181,7 @@ xiaomi_aqara:
 # NMAP
 device_tracker:
   - platform: nmap_tracker
-    hosts:
-      - !secret device_tracker_range1
-      - !secret device_tracker_range2
+    hosts: !secret device_tracker_range0
     home_interval: 10
     consider_home: 0:10:00
     interval_seconds: 30

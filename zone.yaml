@@ -1,3 +1,8 @@
+- name: home
+  latitude: !secret latitude_home
+  longitude: !secret longitude_home
+  icon: mdi:home-assistant
+  radius: 25
 - name: Heineken
   latitude: 37.3876837
   longitude: -5.9645631

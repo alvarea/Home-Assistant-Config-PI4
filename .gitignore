@@ -1,3 +1,4 @@
 secret.yaml
 known_devices.yaml
 /config_esphomeyaml/
+/entity_catalogue.yaml

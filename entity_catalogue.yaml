@@ -62,28 +62,3 @@
 # LIGHT         esphome_s20_sw1_led	                SONOFF              N/A
 # GROUP         luces_jardin_grp                    N/A                 Luces Jardín        Luces de exterior y jardín
 
-
-POW R2
-
-echo 'export PATH=$PATH:/Users/agustin/Library/Android/sdk/platform-tools/' >> ~/.bash_profile
-
-/Users/agustin/Library/Android/sdk/platform-tools
-
-
-
-logger:
-  baud_rate: 0
-
-uart:
-  rx_pin: RX
-  baud_rate: 4800
-
-sensor:
-  - platform: cse7766
-    current:
-      name: "esphome pow sw2 current"
-    voltage:
-      name: "esphome pow sw2 voltage"
-    power:
-      name: "esphome pow sw2 power"
-

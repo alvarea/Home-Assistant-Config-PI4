@@ -106,7 +106,7 @@
 
   calefac_programador_mfc:
     name: Prog. Calefacción MFC
-    initial: on
+    initial: off
     icon: mdi:power-settings
 
   calefac_programador_paf:
