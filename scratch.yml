@@ -1,3 +1,127 @@
+cards:
+  - color_thresholds:
+      - value: 0
+        color: black
+      - value: 5
+        color: violet
+      - value: 10
+        color: blue
+      - value: 15
+        color: teal
+      - value: 20
+        color: green
+      - value: 25
+        color: chartreuse
+      - value: 30
+        color: yellow
+      - value: 35
+        color: amber
+      - value: 38
+        color: orange
+      - value: 40
+        color: vermillion
+      - value: 42
+        color: red
+      - value: 44
+        color: magenta
+      - value: 46
+        color: purple
+    line_width: 10
+    entities:
+      - sensor.temperature_158d00025d9289
+    type: 'custom:mini-graph-card'
+    points_per_hour: 1
+    show:
+      state: true
+      icon: true
+      labels: true
+    font_size: 120
+  - color_thresholds:
+      - value: 0
+        color: black
+      - value: 50
+        color: violet
+      - value: 100
+        color: blue
+      - value: 200
+        color: teal
+      - value: 300
+        color: green
+      - value: 400
+        color: chartreuse
+      - value: 500
+        color: yellow
+      - value: 550
+        color: amber
+      - value: 600
+        color: orange
+      - value: 650
+        color: vermillion
+      - value: 700
+        color: red
+      - value: 750
+        color: magenta
+      - value: 800
+        color: purple
+    line_width: 6
+    entities:
+      - sensor.illumination_158d0001e637f6
+    type: 'custom:mini-graph-card'
+    points_per_hour: 1
+    show:
+      state: true
+      icon: true
+      labels: true
+    font_size: 120
+  - cards:
+      - line_color: blue
+        line_width: 6
+        type: 'custom:mini-graph-card'
+        font_size: 50
+        entities:
+          - sensor.humidity_158d00025d9289
+      - line_color: green
+        line_width: 6
+        type: 'custom:mini-graph-card'
+        font_size: 50
+        entities:
+          - sensor.pressure_158d0002e97092
+    type: horizontal-stack
+  - cards:
+      - line_color: brown
+        line_width: 8
+        type: 'custom:mini-graph-card'
+        font_size: 75
+        entities:
+          - sensor.temperature_158d00022b65ff
+      - line_color: orange
+        line_width: 8
+        type: 'custom:mini-graph-card'
+        font_size: 75
+        entities:
+          - sensor.temperature_158d00022c6a47
+    type: horizontal-stack
+  - cards:
+      - line_color: purple
+        line_width: 8
+        type: 'custom:mini-graph-card'
+        font_size: 75
+        entities:
+          - sensor.temperature_158d00025efda4
+      - line_color: gray
+        line_width: 8
+        type: 'custom:mini-graph-card'
+        font_size: 75
+        entities:
+          - sensor.temperature_158d0002e97092
+    type: horizontal-stack
+type: vertical-stack
+
+
+
+
+
+
   - color_thresholds:
       - color: black
         value: 0

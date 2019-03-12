@@ -39,7 +39,7 @@ http:
   ssl_certificate: !secret http_ssl_certificate
   ssl_key: !secret http_ssl_key
   base_url: !secret http_base_url
-  trusted_networks: !secret trusted_networks
+  #trusted_networks: !secret trusted_networks
   ip_ban_enabled: True
   login_attempts_threshold: 10
 
@@ -139,11 +139,11 @@ camera:
     username: admin
     password: !secret IPcam11
 
-apple_tv:
-  - host: !secret apple_tv_host
-    login_id: !secret apple_tv_loginid
-    name: Apple TV
-    credentials: !secret apple_tv_credentials
+#apple_tv:
+#  - host: !secret apple_tv_host
+#    login_id: !secret apple_tv_loginid
+#    name: Apple TV
+#    credentials: !secret apple_tv_credentials
 
 # Mediaplayer FireTV
 media_player:

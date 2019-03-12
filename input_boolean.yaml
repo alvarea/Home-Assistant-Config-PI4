@@ -111,6 +111,6 @@
 
   calefac_programador_paf:
     name: Prog. Calefacción PAC
-    initial: on
+    initial: off
     icon: mdi:power-settings
 
