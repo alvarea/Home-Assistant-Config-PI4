@@ -12,6 +12,10 @@ homeassistant:
   time_zone: Europe/Madrid
   # Customization file
   customize: !include customize.yaml
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks: !secret trusted_networks
+
 
 # External configuration files
 group: !include groups.yaml
