@@ -193,9 +193,15 @@ device_tracker:
     home_interval: 10
     consider_home: 0:10:00
     interval_seconds: 30
+    track_new_devices: yes
+    scan_options: -Pn --host-timeout 5s
     exclude:
       - !secret device_tracker_host1
       - !secret device_tracker_host2
+  - platform: ping
+    hosts:
+      ping_22_amazon_alexa: 192.168.0.22
+      ping_57_amazon_kindle: 192.168.0.57
 
 # GEOFENCY: Platform & Device Tracker ==> changed on v.0.83.2
 geofency:

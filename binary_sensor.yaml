@@ -406,6 +406,17 @@
         icon_template: mdi:youtube-tv
         entity_id: device_tracker.nmap_21_apple_tv
 
+      ping_22_amazon_alexa:
+        value_template: >-
+          {% if is_state('device_tracker.ping_22_amazon_alexa','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '22 Amazon Alexa'
+        icon_template: mdi:amazon-alexa
+        entity_id: device_tracker.ping_22_amazon_alexa
+
       nmap_23_deco_tv_salon:
         value_template: >-
           {% if is_state('device_tracker.nmap_23_deco_tv_salon','home') %}

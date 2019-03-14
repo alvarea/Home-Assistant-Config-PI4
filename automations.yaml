@@ -410,12 +410,14 @@
   action:
     # Script Notificación Evento
     - service: script.turn_on
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_alarma
       data:
         variables:
           title: '*ALARMA HOMY*'
           message: >
-            >>> SENSOR VIBRACION: PUERTA ARMARIO HOMY ESTUDIO
+            >>> SENSOR VIBRACION: PUERTA RACK COMUNICACIONES HOMY
+            >>> SALA: ESTUDIO
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # FAMILY META TRACKER HOME/AWAY                                               #

@@ -36,9 +36,19 @@
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
 
-  - platform: command_line
-    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
-    name: Versión HA
+  #- platform: command_line
+  #  command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
+  #  name: Versión HA (web)
+
+  - platform: version
+    source: local
+    name: Versión Local
+    # icon: mdi: home-assistant
+
+  - platform: version
+    name: Versión Disponible
+    source: hassio
+    # icon cloud-download
 
   - platform: systemmonitor
     resources:
@@ -145,6 +155,16 @@
         value_template: "{{ states.binary_sensor.cube_158d00024a4a62_2.attributes.last_action | string }}"
         friendly_name: 'Magic Cube'
         icon_template: mdi:cube-outline
+
+      vibration_estudio:
+        value_template: "{{ states.binary_sensor.vibration_158d0002b15e3b.attributes.last_action | string }}"
+        friendly_name: 'Sensor Vibración Rack'
+        icon_template: mdi:vibrate
+
+      vibration_salon:
+        value_template: "{{ states.binary_sensor.vibration_158d0002a4eacc.attributes.last_action | string }}"
+        friendly_name: 'Sensor Vibración Puerta Salón'
+        icon_template: mdi:vibrate
 
       # Batería Sensor Xiaomi Entrada Interior. binary_sensor.motion_sensor_158d0001e55903
       bateria_presencia_entrada:
