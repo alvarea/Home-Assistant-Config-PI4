@@ -57,50 +57,6 @@ sensor.time:
 sensor.time_utc:
   friendly_name: Hora (UTC)
 
-#
-# YAHOO WEATHER
-#
-#sensor.hoy_temperature_min:
-#  friendly_name: Mínima Hoy
-#sensor.hoy_temperature:
-#  friendly_name: Hoy
-#sensor.manana_temperature_max:
-#  friendly_name: Máxima Mañana
-#sensor.manana_temperature_min:
-#  friendly_name: Mínima Mañana
-#sensor.hoy_temperature_max:
-#  friendly_name: Máxima Hoy
-#sensor.hoy_humidity:
-#  friendly_name: '%Humedad'
-#sensor.hoy_wind_speed:
-#  friendly_name: Velocidad Viento
-#sensor.manana_condition:
-#  friendly_name: Previsión Mañana
-#sensor.manana_humidity:
-#  friendly_name: '%Humedad'
-#sensor.manana_temperature:
-#  friendly_name: Mañana Temperatura
-#sensor.manana_wind_speed:
-#  friendly_name: Velocidad Viento
-
-#sensor.tiempo_hoy_weather:
-#  friendly_name: Mínima Hoy
-#sensor.tiempo_hoy_temperature:
-#  friendly_name: Temperatura Hoy
-#sensor.tiempo_hoy_wind_speed:
-#  friendly_name: Vel.Viento Hoy
-#sensor.tiempo_hoy_wind_bearing:
-#  friendly_name: Viento Hoy
-#sensor.tiempo_hoy_humidity:
-#  friendly_name: Humedad Hoy
-#sensor.tiempo_hoy_pressure:
-#  friendly_name: Presión Atm Hoy
-#sensor.tiempo_hoy_cloud_coverage:
-#  friendly_name: Nubes Hoy
-#sensor.tiempo_hoy_rain:
-#  friendly_name: Llueve Hoy
-#sensor.tiempo_hoy_forecast:
-#  friendly_name: Previsión Mañana
 
 # PI3 system status
 #

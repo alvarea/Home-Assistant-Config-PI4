@@ -285,13 +285,12 @@
   trigger:
     - platform: state
       entity_id: group.sensores_alarm_home
-      from: 'off'
       to: 'on'
     - platform: event
       event_type: xiaomi_aqara.movement
       event_data:
-        entity_id: binary_sensor.vibration_158d0002a4eacc
-        action_type: vibrate
+        entity_id: binary_sensor.vibration_158d0002b15e3b
+        movement_type: vibrate
   condition:
     - condition: state
       entity_id: alarm_control_panel.ha
@@ -310,15 +309,12 @@
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
-      to: 'triggered'  # triggered
+      to: 'triggered'
   action:
     # Aviso ALARMA con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.xiaomi_play_alarm
+    - service: script.sirenas_play_alarma
     # Script Notificación Alarma
-    - service: script.turn_on
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-      entity_id: script.notifica_alarma
+    - service: script.notifica_alarma
       data:
         variables:
           title: '*ALARMA HOMY*'

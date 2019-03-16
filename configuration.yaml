@@ -137,12 +137,12 @@ camera:
     still_image_url: https://api.sat24.com/mostrecent/SP/visual5hdcomplete%20width=500%20height=304
     name: Weather Satelite
   - platform: generic
-    still_image_url: !secret still_image_url_IPcam12
+    still_image_url: !secret still_image_url_cam12
     name: IPcam12 Estudio
     username: admin
     password: !secret IPcam12
   - platform: generic
-    still_image_url: !secret still_image_url_IPcam11
+    still_image_url: !secret still_image_url_cam11
     name: IPcam11 Cocina
     username: admin
     password: !secret IPcam11
@@ -192,7 +192,7 @@ device_tracker:
     hosts: !secret device_tracker_range0
     home_interval: 10
     consider_home: 0:10:00
-    interval_seconds: 30
+    interval_seconds: 60
     track_new_devices: yes
     scan_options: -Pn --host-timeout 5s
     exclude:

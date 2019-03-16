@@ -65,7 +65,7 @@ sirena_xiaomi_play_alarm_armed:
   sequence:
     # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
     - condition: template
-      value_template: "{% if is_state('input_boolean.mute_xiaomi_sounds', 'off') %}true{% endif %}"
+      value_template: "{% if is_state('input_boolean.mute_sonido_sirenas', 'off') %}true{% endif %}"
 
     # Aviso Xiaomi GW
     - service: xiaomi_aqara.stop_ringtone
@@ -89,7 +89,7 @@ sirena_xiaomi_play_alarm_disarmed:
   sequence:
     # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
     - condition: template
-      value_template: "{% if is_state('input_boolean.mute_xiaomi_sounds', 'off') %}true{% endif %}"
+      value_template: "{% if is_state('input_boolean.mute_sonido_sirenas', 'off') %}true{% endif %}"
 
     # Aviso Xiaomi GW
     - service: xiaomi_aqara.stop_ringtone
@@ -108,12 +108,12 @@ sirena_xiaomi_play_alarm_disarmed:
 # {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
 # {{ states('input_number.xiaomi_volume_alarm') | int }}
 #
-xiaomi_play_alarm:
+sirenas_play_alarma:
   alias: "Xiaomi GW Sonido Alarma"
   sequence:
     # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
     - condition: template
-      value_template: "{% if is_state('input_boolean.mute_xiaomi_sounds', 'off') %}true{% endif %}"
+      value_template: "{% if is_state('input_boolean.mute_sonido_sirenas', 'off') %}true{% endif %}"
     - service: xiaomi_aqara.stop_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
@@ -124,6 +124,12 @@ xiaomi_play_alarm:
             {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
         ringtone_vol: >-
             {{ states('input_number.xiaomi_volume_alarm') | int}}
+    # Retraso 5"
+    - delay: '00:00:05'
+    # SONOFF_SW1_SIRENA INTERIOR ==> ON
+    #
+    - service: switch.turn_on
+      entity_id: switch.esphome_bas_sw0
 
 # SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS PULSAR EL DOBLE BOTON PANICO
 #
@@ -142,17 +148,8 @@ alarma_boton_panico:
   sequence:
     - condition: template
       value_template: "{% if is_state('input_boolean.panic_button', 'on') %}true{% endif %}"
-    # Aviso ALARMA con Xiaomi GW
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-    - service: script.turn_on
-      entity_id: script.xiaomi_play_alarm
-    # Retraso 5"
-    - delay: '00:00:05'
-    # SONOFF_SW1_SIRENA INTERIOR ==> ON
-    - service: switch.turn_on
-      entity_id: switch.esphome_bas_sw0
+    # Llamada Scripts SIRENAS ALARMA
+    - service: script.sirenas_play_alarma
     # Notifica Telegram
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
@@ -162,12 +159,6 @@ alarma_boton_panico:
           title: '*ALARMA HOMY*'
           message: >
             >>> URGENTE: BOTON PANICO ACTIVADO
-
-    # Retraso 5'
-    #- delay: '00:05:00'
-    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
-    #- service: switch.turn_off
-    #  entity_id: switch.esphome_bas_sw0
 
 alarma_boton_sirenas_off:
   alias: 'Sirenas Interior OFF'
@@ -289,7 +280,7 @@ notifica_alarma:
       message: Cámaras Seguridad
       data:
         photo:
-          - url: http://192.168.0.11/snapshot/image0.jpg
+          - url: http://192.168.0.13/snapshot/image0.jpg
             caption: Cámara Cocina
           - url: http://192.168.0.12:8080/snapshot.cgi
             caption: Cámara Estudio

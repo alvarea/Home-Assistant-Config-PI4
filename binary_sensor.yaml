@@ -487,6 +487,17 @@
         icon_template: mdi:tablet-ipad
         entity_id: device_tracker.nmap_56_ipad_air2
 
+      ping_57_amazon_kindle:
+        value_template: >-
+          {% if is_state('device_tracker.ping_57_amazon_kindle','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '57 Amazon Kindle'
+        icon_template: mdi:tablet-android
+        entity_id: device_tracker.ping_57_amazon_kindle
+
       nmap_58_ipad_mini4:
         value_template: >-
           {% if is_state('device_tracker.nmap_58_ipad_mini4','home') %}
@@ -570,25 +581,26 @@
         icon_template: mdi:laptop-mac
         entity_id: device_tracker.nmap_63_macbook_air_paf
 
-      nmap_65_hk_esn203981:
+      nmap_65_elitebook_hk:
         value_template: >-
-          {% if is_state('device_tracker.nmap_65_hp_esn203981','home') %}
+          {% if is_state('device_tracker.nmap_65_elitebook_hk_wifi','home')
+             or is_state('device_tracker.nmap_66_elitebook_hk_lan','home') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: '65 Alvarea.net HP Portatil Heineken'
+        friendly_name: '65 Alvarea.net Elitebook Heineken'
         icon_template: mdi:laptop
-        entity_id: device_tracker.nmap_65_hp_esn203981
+        entity_id: device_tracker.nmap_65_elitebook_hk_wifi
 
-      nmap_66_acer_notebook:
+      nmap_67_acer_notebook:
         value_template: >-
-          {% if is_state('device_tracker.nmap_66_acer_notebook','home') %}
+          {% if is_state('device_tracker.nmap_67_acer_notebook','home') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: '66 Alvarea.net Netbook Acer Aspire'
+        friendly_name: '67 Alvarea.net Netbook Acer Aspire'
         icon_template: mdi:laptop
-        entity_id: device_tracker.nmap_66_acer_notebook
+        entity_id: device_tracker.nmap_67_acer_notebook
 

@@ -53,8 +53,8 @@
     name: Test Sirena Alarma
     initial: off
     icon: mdi:alarm-light
-  mute_xiaomi_sounds:
-    name: Mute Sonidos Gateway
+  mute_sonido_sirenas:
+    name: Mute Sonidos Sirena
     icon: mdi:volume-off
 
 # INTERRUPTORES BOOLEAN => Depuradora Piscina

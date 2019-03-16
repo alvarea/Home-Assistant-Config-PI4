@@ -629,7 +629,7 @@ setup_sirenas_grp:
   name: Sirenas
   view: no
   entities:
-    - input_boolean.mute_xiaomi_sounds
+    - input_boolean.mute_sonido_sirenas
     - input_select.xiaomi_sound_alarm_armed
     - input_number.xiaomi_volume_alarm_armed
     - input_select.xiaomi_sound_alarm_disarmed
