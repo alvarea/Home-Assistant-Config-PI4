@@ -572,7 +572,7 @@ magiccube_check_disarm:
       entity_id: alarm_control_panel.ha
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.sirena_xiaomi_play_alarm_disarmed
+      entity_id: script.sirena_stop_alarm
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento

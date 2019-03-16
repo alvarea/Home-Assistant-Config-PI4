@@ -37,6 +37,7 @@
 #     tostate: '{{trigger.to_state.state}}'
 #     ringtone_msg: <nnnnn>
 #
+
 alarma_to_pending:
   alias: "Alarma Disarmed to Pending"
   sequence:
@@ -53,7 +54,6 @@ alarma_to_pending:
         ringtone_id: '{{ringtone_msg}}'
         ringtone_vol: >
           {{ states('input_number.xiaomi_volume_alarm_armed') | int }}
-
 
 # SCRIPT PARA NOTIFICACION MENSAJES SONORO SISTEMA ARMADO
 #
@@ -81,16 +81,15 @@ sirena_xiaomi_play_alarm_armed:
 
 # SCRIPT PARA NOTIFICACION MENSAJES SONORO SISTEMA ARMADO
 #
-# {{ states.input_select.xiaomi_sound_alarm_disarmed.state.split('-')[0] }}
-# {{ states('input_number.xiaomi_volume_alarm_disarmed') | int }}
-#
-sirena_xiaomi_play_alarm_disarmed:
+sirena_stop_alarm:
   alias: "Alarma Sonido Warning Desarmado"
   sequence:
     # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
     - condition: template
       value_template: "{% if is_state('input_boolean.mute_sonido_sirenas', 'off') %}true{% endif %}"
-
+    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
+    - service: switch.turn_off
+      entity_id: switch.esphome_bas_sw0
     # Aviso Xiaomi GW
     - service: xiaomi_aqara.stop_ringtone
       data:
@@ -108,7 +107,7 @@ sirena_xiaomi_play_alarm_disarmed:
 # {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
 # {{ states('input_number.xiaomi_volume_alarm') | int }}
 #
-sirenas_play_alarma:
+sirena_play_alarma:
   alias: "Xiaomi GW Sonido Alarma"
   sequence:
     # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
@@ -136,7 +135,7 @@ sirenas_play_alarma:
 # La secuencia requerida es:
 # 1. Activar la "llave del botón pánico" con el interruptor: input_boolean.panic_button
 # 2. Pulsar el botón de ESTE script publicado en el frontend: script.alarma_boton_panico
-# 3. Pulsar el botón del script de apagado para cancelar sirenas: script.alarma_boton_sirenas_off
+# 3. Pulsar el botón del script de apagado para cancelar sirenas: script.boton_panico
 #
 # Las sirenas se activan en este orden:
 # 1. Sirena interior Xiaomi con el tono configurado para Alarma
@@ -149,28 +148,19 @@ alarma_boton_panico:
     - condition: template
       value_template: "{% if is_state('input_boolean.panic_button', 'on') %}true{% endif %}"
     # Llamada Scripts SIRENAS ALARMA
-    - service: script.sirenas_play_alarma
+    - service: script.sirena_play_alarma
     # Notifica Telegram
-    - service: script.turn_on
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
         variables:
           title: '*ALARMA HOMY*'
           message: >
             >>> URGENTE: BOTON PANICO ACTIVADO
 
-alarma_boton_sirenas_off:
-  alias: 'Sirenas Interior OFF'
-  sequence:
-    # Sierna ALARMA Xiaomi ==> OFF
-    - service: xiaomi_aqara.stop_ringtone
-      data:
-        gw_mac: !secret xiaomi_gateway
-    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
-    - service: switch.turn_off
-      entity_id: switch.esphome_bas_sw0
 
+#
+# SCRIPTS PARA GESTION ALARMA DESDE ALEXA
+#
 homy_armado_parcial:
   alias: 'Homy Armado Parcial'
   sequence:
@@ -194,8 +184,6 @@ homy_desarmado_code:
       entity_id: alarm_control_panel.ha
     # La notificación se hace mediente la activación de la regla:
     # alias: 'A2 Alarm Armed Away'
-
-
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

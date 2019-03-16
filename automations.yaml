@@ -223,7 +223,7 @@
             >>> ESTADO: Sistema Armado Parcial
 
 #
-# REGLA: AVISO Y NOTIFICACION DESARMADO OK
+# REGLA: DESARMADO OK => SIRENA OFF, AVISO Y NOTIFICACION
 #
 - id: A4_alarma_activa_desarmada
   alias: 'A4 Alarm Disarmed'
@@ -232,9 +232,9 @@
       entity_id: alarm_control_panel.ha
       to: 'disarmed'
   action:
-    # Aviso sonoro con Xiaomi GW
+    # Apagado Sirenas y Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.sirena_xiaomi_play_alarm_disarmed
+      entity_id: script.sirena_stop_alarm
     # Apaga Luz Piloto Gateway
     - service: light.turn_off
       entity_id: light.gateway_light_7811dcb788fa
@@ -302,7 +302,7 @@
     - service: alarm_control_panel.alarm_trigger
       entity_id: alarm_control_panel.ha
 
-# REGLA: ALARMA ACTIVA SIRENA + NOTIFICACION COMPLETA
+# REGLA: ALARMA ACTIVADA ==> SIRENA + NOTIFICACION COMPLETA
 #
 - id: A7_alarma_disparada
   alias: 'A7 Alarm Triggered'
@@ -312,7 +312,7 @@
       to: 'triggered'
   action:
     # Aviso ALARMA con Xiaomi GW
-    - service: script.sirenas_play_alarma
+    - service: script.sirena_play_alarma
     # Script Notificación Alarma
     - service: script.notifica_alarma
       data:
@@ -346,7 +346,7 @@
       entity_id: alarm_control_panel.ha
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
-      entity_id: script.sirena_xiaomi_play_alarm_disarmed
+      entity_id: script.sirena_stop_alarm
     # Notifica Evento
     - service: script.turn_on
       entity_id: script.notifica_evento
@@ -368,7 +368,7 @@
     to: 'off'
   action:
     # Llamada a script desactivado botón pánico.
-    - service: script.alarma_boton_sirenas_off
+    - service: script.boton_panico_off
 
 #
 # REGLA: BOTON APAGADO ESPHOME-SW1 ==> SIRENA OFF

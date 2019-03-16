@@ -68,7 +68,7 @@
         rgb_color: [255, 187, 106]
 
 
-- id: A8_alarma_boton_panico_on
+- id: A8_alarma_sirenas_off_on
   alias: 'A8 Alarma Boton Panico On'
   trigger:
     platform: state
@@ -79,7 +79,7 @@
   action:
     # Aviso ALARMA con Xiaomi Sirena
     - service: script.turn_on
-      entity_id: script.sirenas_play_alarma
+      entity_id: script.sirena_play_alarma
     # Notifica Telegram
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
