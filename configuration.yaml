@@ -104,7 +104,7 @@ alarm_control_panel:
     # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
     # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
     pending_time: 15
-    delay_time: 45
+    delay_time: 30
     trigger_time: 300
     disarmed:
       trigger_time: 0 # the disarmed state never triggers the alarm;

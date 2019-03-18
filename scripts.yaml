@@ -61,12 +61,11 @@ alarma_to_pending:
 # {{ states('input_number.xiaomi_volume_alarm_armed') | int }}
 #
 sirena_xiaomi_play_alarm_armed:
-  alias: "Alarma Sonido Warning Armado"
+  alias: "Alarma Sonido Armado"
   sequence:
     # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
     - condition: template
       value_template: "{% if is_state('input_boolean.mute_sonido_sirenas', 'off') %}true{% endif %}"
-
     # Aviso Xiaomi GW
     - service: xiaomi_aqara.stop_ringtone
       data:
@@ -79,10 +78,8 @@ sirena_xiaomi_play_alarm_armed:
         ringtone_vol: >-
             {{ states('input_number.xiaomi_volume_alarm_armed') | int }}
 
-# SCRIPT PARA NOTIFICACION MENSAJES SONORO SISTEMA ARMADO
-#
-sirena_stop_alarm:
-  alias: "Alarma Sonido Warning Desarmado"
+sirena_xiaomi_play_alarm_disarmed:
+  alias: "Alarma Sonido Desarmado"
   sequence:
     # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
     - condition: template
@@ -101,6 +98,7 @@ sirena_stop_alarm:
             {{ states.input_select.xiaomi_sound_alarm_disarmed.state.split('-')[0] }}
         ringtone_vol: >-
             {{ states('input_number.xiaomi_volume_alarm_disarmed') | int }}
+
 
 # SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS DISPARO DE ALARMA
 #
@@ -129,6 +127,20 @@ sirena_play_alarma:
     #
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw0
+
+# SCRIPT PARA NOTIFICACION MENSAJES SONORO SISTEMA ARMADO
+#
+sirena_stop_alarma:
+  alias: "Botón Stop Sirenas"
+  sequence:
+    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
+    - service: switch.turn_off
+      entity_id: switch.esphome_bas_sw0
+    # Aviso Xiaomi GW
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+
 
 # SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS PULSAR EL DOBLE BOTON PANICO
 #
@@ -281,37 +293,6 @@ notifica_alarma:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
-notifica_alerta:
-  alias: 'Mensaje Alarma'
-  sequence:
-  # Actualiza el valor de input_text.mensaje_tit con el título recibido.
-  - service: input_text.set_value
-    entity_id: input_text.mensaje_tit
-    data_template:
-      value: "{{ title }}"
-
-  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
-  - service: input_text.set_value
-    entity_id: input_text.mensaje_msg
-    data_template:
-      value: "{{ message }}"
-
-  # Notificación Telegram
-  - service: notify.telegram_alarm
-    data_template:
-      title: >
-        {{ states('input_text.mensaje_tit') }}
-      message: >
-        {{ states('input_text.mensaje_msg') }}
-
-  # Notificación IOS
-  - service: notify.notifica_grupo_ios
-    data_template:
-      title: >
-        {{ states('input_text.mensaje_tit') }}
-      message: >
-        {{ states('input_text.mensaje_msg') }}
-
 notifica_evento:
   alias: 'Notifica Evento a Family'
   sequence:
@@ -332,33 +313,6 @@ notifica_evento:
       value: "{{ message }}"
 
   - service: notify.telegram_notify
-    data_template:
-      title: >
-        {{ states('input_text.mensaje_tit') }}
-      message: >
-        {{ states('input_text.mensaje_msg') }}
-
-notifica_warning:
-  alias: 'Notifica Aviso Debug'
-  sequence:
-  # IF HOME_NOTIFY = OFF CANCEL
-  - condition: template
-    value_template: "{% if not is_state('input_select.home_notify', 'Off') %}true{% endif %}"
-
-  # Actualiza el valor de input_text.mensaje_tit con el título recibido.
-  - service: input_text.set_value
-    entity_id: input_text.mensaje_tit
-    data_template:
-      value: "{{ title }}"
-
-  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
-  - service: input_text.set_value
-    entity_id: input_text.mensaje_msg
-    data_template:
-      value: "{{ message }}"
-
-  # Llamada a Scripts Notificación Telegram AAC
-  - service: notify.telegram_aac
     data_template:
       title: >
         {{ states('input_text.mensaje_tit') }}
@@ -666,7 +620,7 @@ calefaccion_mfc_on:
       entity_id: switch.esphome_s20_sw1
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_warning
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*CALEFACCION ON*'
@@ -685,7 +639,7 @@ calefaccion_paf_on:
       entity_id: switch.esphome_s20_sw3
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_warning
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*CALEFACCION ON*'
@@ -704,7 +658,7 @@ calefaccion_mfc_off:
       entity_id: switch.esphome_s20_sw1
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_warning
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*CALEFACCION*'
@@ -723,7 +677,7 @@ calefaccion_paf_off:
       entity_id: switch.esphome_s20_sw3
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_warning
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*CALEFACCION*'

@@ -114,11 +114,9 @@
       from: 'off'
       to: 'on'
   action:
-    - service: script.turn_on
-      entity_id: script.alarma_siren_on
+    - service: script.sirena_play_alarma
     # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
+    - service: script.notifica_alarma
       data:
         variables:
           title: '*ALARMA FUEGO*'
@@ -137,9 +135,7 @@
   action:
     #ringtone_vol:
     # Aviso sonoro con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.sirena_xiaomi_play_alarm_armed
-
+    - service: script.sirena_xiaomi_play_alarm_armed
 
 #
 # REGLA: ALARMA DISARMED A <PENDING>
@@ -193,8 +189,7 @@
     - service: script.turn_on
       entity_id: script.sirena_xiaomi_play_alarm_armed
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
         variables:
           title: '*ALARMA HOMY*'
@@ -214,8 +209,7 @@
     - service: script.turn_on
       entity_id: script.sirena_xiaomi_play_alarm_armed
   # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
         variables:
           title: '*ALARMA HOMY*'
@@ -233,15 +227,12 @@
       to: 'disarmed'
   action:
     # Apagado Sirenas y Aviso sonoro con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.sirena_stop_alarm
+    - service: script.sirena_xiaomi_play_alarm_disarmed
     # Apaga Luz Piloto Gateway
     - service: light.turn_off
       entity_id: light.gateway_light_7811dcb788fa
     # Script Notificación Evento
-    - service: script.turn_on
-      #entity_id: script.notifica_alarma CAMBIAR GO LIVE
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
         variables:
           title: '*ALARMA HOMY*'
@@ -311,8 +302,6 @@
       entity_id: alarm_control_panel.ha
       to: 'triggered'
   action:
-    # Aviso ALARMA con Xiaomi GW
-    - service: script.sirena_play_alarma
     # Script Notificación Alarma
     - service: script.notifica_alarma
       data:
@@ -322,6 +311,9 @@
             >>> URGENTE: ALARMA ACTIVADA
 
             >>> ZONA: {{ states('sensor.alarm_zone') }}
+
+    # Aviso ALARMA con Xiaomi GW
+    - service: script.sirena_play_alarma
 
 # REGLA: TRIGGER DESARMADO AUTOMATICO AL AMANECER
 #
@@ -706,7 +698,7 @@
     - service: script.luces_exterior_on
     # Notifica Evento
     #- service: script.turn_on
-    #  entity_id: script.notifica_warning
+    #  entity_id: script.notifica_evento
     #  data:
     #    variables:
     #      title: '*LUCES: ON*'
@@ -784,7 +776,7 @@
       entity_id: light.room_salon
     # Notifica a Familia
     #- service: script.turn_on
-    #  entity_id: script.notifica_warning
+    #  entity_id: script.notifica_evento
     #  data:
     #    variables:
     #      title: '*LUCES: ON*'
@@ -999,7 +991,7 @@
   action:
     # Script Notificación Alarma
     - service: script.turn_on
-      entity_id: script.notifica_alerta
+      entity_id: script.notifica_alarma
       data:
         variables:
           title: '*AVISO FALLO ELECTRICO*'
@@ -1017,7 +1009,7 @@
   action:
     # Script Notificación Alarma
     - service: script.turn_on
-      entity_id: script.notifica_alerta
+      entity_id: script.notifica_alarma
       data:
         variables:
           title: '*AVISO FALLO ELECTRICO*'
@@ -1180,7 +1172,7 @@
   action:
     # Script Notificación Alarma
     - service: script.turn_on
-      entity_id: script.notifica_alerta
+      entity_id: script.notifica_alarma
       data:
         variables:
           title: '*AVISO FALLO ELECTRICO*'

@@ -14,7 +14,7 @@
       entity_id: light.luces_interior
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_warning
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*LUCES: OFF*'
@@ -40,7 +40,7 @@
         - switch.esphome_s20_sw3
     # Notifica a Familia
     - service: script.turn_on
-      entity_id: script.notifica_warning
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*CALEFACCION: ON*'
