@@ -476,6 +476,52 @@
       # NMAP - 50 - 29 - MOBILE DEVICES
       # =====================================================================
       #
+      nmap_52_iphone_aac:
+        value_template: >-
+          {% if is_state('device_tracker.aac_iphone_nmap','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '52 Iphone 7S+ AAC'
+        icon_template: mdi:cellphone-iphone
+        entity_id: device_tracker.aac_iphone_nmap
+
+      nmap_53_iphone_mfc:
+        value_template: >-
+          {% if is_state('device_tracker.mfc_iphone_nmap','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '53 Iphone 6S MFC'
+        icon_template: mdi:cellphone-iphone
+        entity_id: device_tracker.mfc_iphone_nmap
+
+
+      nmap_54_iphone_paf:
+        value_template: >-
+          {% if is_state('device_tracker.paf_iphone_nmap','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '54 Iphone 6S PAF'
+        icon_template: mdi:cellphone-iphone
+        entity_id: device_tracker.paf_iphone_nmap
+
+
+      nmap_55_iphone_aaf:
+        value_template: >-
+          {% if is_state('device_tracker.aaf_iphone_nmap','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '55 Iphone 6S+ AAF'
+        icon_template: mdi:cellphone-iphone
+        entity_id: device_tracker.aaf_iphone_nmap
+
       nmap_56_ipad_air2:
         value_template: >-
           {% if is_state('device_tracker.nmap_56_ipad_air2','home') %}
