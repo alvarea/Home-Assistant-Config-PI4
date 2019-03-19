@@ -360,7 +360,7 @@
     to: 'off'
   action:
     # Llamada a script desactivado botón pánico.
-    - service: script.boton_panico_off
+    - service: script.alarma_boton_panico_off
 
 #
 # REGLA: BOTON APAGADO ESPHOME-SW1 ==> SIRENA OFF

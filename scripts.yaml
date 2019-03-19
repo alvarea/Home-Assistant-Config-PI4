@@ -170,6 +170,20 @@ alarma_boton_panico:
             >>> URGENTE: BOTON PANICO ACTIVADO
 
 
+alarma_boton_panico_off:
+  alias: 'Boton Panico OFF'
+  sequence:
+    # Llamada Scripts STOP SIRENAS ALARMA
+    - service: script.sirena_stop_alarma
+    # Notifica Telegram
+    - service: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> URGENTE: BOTON PANICO DESACTIVADO
+
+
 #
 # SCRIPTS PARA GESTION ALARMA DESDE ALEXA
 #
