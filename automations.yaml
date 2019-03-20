@@ -116,7 +116,8 @@
   action:
     - service: script.sirena_play_alarma
     # Script Notificación Alarma
-    - service: script.notifica_alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
       data:
         variables:
           title: '*ALARMA FUEGO*'
@@ -189,7 +190,8 @@
     - service: script.turn_on
       entity_id: script.sirena_xiaomi_play_alarm_armed
     # Notifica Evento
-    - service: script.notifica_evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*ALARMA HOMY*'
@@ -209,7 +211,8 @@
     - service: script.turn_on
       entity_id: script.sirena_xiaomi_play_alarm_armed
   # Notifica Evento
-    - service: script.notifica_evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*ALARMA HOMY*'
@@ -232,7 +235,8 @@
     - service: light.turn_off
       entity_id: light.gateway_light_7811dcb788fa
     # Script Notificación Evento
-    - service: script.notifica_evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*ALARMA HOMY*'
@@ -303,7 +307,8 @@
       to: 'triggered'
   action:
     # Script Notificación Alarma
-    - service: script.notifica_alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
       data:
         variables:
           title: '*ALARMA HOMY*'
@@ -444,12 +449,14 @@
         - device_tracker.aaf_iphone_nmap      # NMAP
         - device_tracker.aac_iphone_owntrack  # OWNTRACK
         - device_tracker.mfc_iphone_owntrack  # OWNTRACK
+        - device_tracker.paf_iphone_owntrack  # OWNTRACK
       to: 'not_home'
       for: '00:07:00'
     - platform: state
       entity_id:
         - device_tracker.aac_iphone_owntrack  # OWNTRACK
         - device_tracker.mfc_iphone_owntrack  # OWNTRACK
+        - device_tracker.paf_iphone_owntrack  # OWNTRACK
       to: 'home'
     - platform: state
       entity_id:
@@ -491,6 +498,10 @@
     from: 'on'
     to: 'off'
   action:
+    # Script Activación Alarma ARM AWAY
+    - service: script.homy_armado_total
+    # Delay para no bloquear notificaciones
+    - delay: 0:02
     # Script Luces Apagado Total
     - service: script.luces_off
     # Notifica a Familia NADIE en Casa
