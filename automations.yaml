@@ -509,11 +509,10 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*FAMILY_HOME: NO*'
+          title: '*FAMILY_HOME: NADIE*'
           message: >
             >>> EVENTO: Nadie en casa
 
-            >>> ACCION: Luces toda la casa OFF
 
       #     >>> EVENTO: Último en Salir {{ states('sensor.family_last_tracking') }}
 

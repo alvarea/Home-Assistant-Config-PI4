@@ -157,6 +157,7 @@ sirena_stop_alarma:
 alarma_boton_panico:
   alias: 'Boton Panico ON'
   sequence:
+    # When a condition does not return true, the script will finish
     - condition: template
       value_template: "{% if is_state('input_boolean.panic_button', 'on') %}true{% endif %}"
     # Llamada Scripts SIRENAS ALARMA
@@ -190,6 +191,9 @@ alarma_boton_panico_off:
 homy_armado_parcial:
   alias: 'Homy Armado Parcial'
   sequence:
+    # When a condition does not return true, the script will finish
+    - condition: template
+      value_template: "{% if not is_state('alarm_control_panel.ha', 'armed_home') %}true{% endif %}"
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
     # La notificación se hace mediente la activación de la regla:
@@ -198,6 +202,9 @@ homy_armado_parcial:
 homy_armado_total:
   alias: 'Homy Armado Total'
   sequence:
+    # When a condition does not return true, the script will finish
+    - condition: template
+      value_template: "{% if not is_state('alarm_control_panel.ha', 'armed_away') %}true{% endif %}"
     - service: alarm_control_panel.alarm_arm_away
       entity_id: alarm_control_panel.ha
     # La notificación se hace mediente la activación de la regla:
@@ -209,7 +216,7 @@ homy_desarmado_code:
     - service: alarm_control_panel.alarm_disarm
       entity_id: alarm_control_panel.ha
     # La notificación se hace mediente la activación de la regla:
-    # alias: 'A2 Alarm Armed Away'
+    # alias: 'A4_alarma_activa_desarmada'
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -357,7 +364,6 @@ luces_off_entrada_sensor:
         - light.hue_entrada
         - light.gateway_light_7811dcb788fa
 
-
 luz_on_armed_home:
   alias: 'Luces On Entrada si Sensor'
   sequence:
@@ -387,6 +393,9 @@ luces_on_family_home:
 luces_off:
   alias: 'Luces Off'
   sequence:
+    # When a condition does not return true, the script will finish
+    - condition: template
+      value_template: "{% if not is_state('group.luces_casa_grp', 'on') %}true{% endif %}"
     # Apagado Luces Interior Casa
     - service: light.turn_off
       entity_id: light.luces_interior
@@ -398,6 +407,10 @@ luces_off:
 luces_exterior_off:
   alias: 'Luces Exterior Off'
   sequence:
+    # When a condition does not return true, the script will finish
+    - condition: template
+      value_template: "{% if not is_state('group.luces_exterior_grp', 'on') %}true{% endif %}"
+
     # Apagado Luces Exterior
     - service: switch.turn_off
       entity_id: group.luces_exterior_grp

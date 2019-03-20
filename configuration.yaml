@@ -200,7 +200,14 @@ device_tracker:
       - !secret device_tracker_host2
   - platform: ping
     hosts:
+      ping_20_amazon_firetv: 192.168.0.20
+      ping_21_apple_tv: 192.168.0.21
       ping_22_amazon_alexa: 192.168.0.22
+      ping_23_decotv_salon: 192.168.0.23
+      ping_24_decotv_estudio: 192.168.0.24
+      ping_25_sonytv_salon: 192.168.0.25
+      ping_26_sonytv_estudio: 192.168.0.26
+      ping_27_sony_ps4: 192.168.0.27
       ping_57_amazon_kindle: 192.168.0.57
 
 # GEOFENCY: Platform & Device Tracker ==> changed on v.0.83.2
