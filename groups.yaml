@@ -124,13 +124,13 @@ luces_estudio_grp:
 luces_exterior_grp:
   name: Luces Exterior
   entities:
-    - switch.esphome_bas_sw4                   # Porche 1 Salón
-    - switch.esphome_bas_sw1                   # Porche 2 Piscina
-    - switch.wall_switch_right_158d0002236e75   # Luces Exterior Xiaomi Switch Right
-    - switch.esphome_4ch_relay_1                 # Balizas Cesped Jardín (CH1)
-    - switch.esphome_4ch_relay_3                 # Focos Entrada (Olivo1+Cica)(CH3)
-    - switch.esphome_4ch_relay_2                 # Focos Piscina (Olivo3+Yuca)(CH2)
-    - switch.esphome_4ch_relay_4                 # Pendiente Disponible
+    - switch.esphome_bas_sw4                      # Porche 1 Salón
+    - switch.esphome_bas_sw1                      # Porche 2 Piscina
+    - switch.wall_switch_right_158d0002236e75     # Luces Exterior Xiaomi Switch Right
+    - switch.esphome_4ch_relay_1                  # Balizas Cesped Jardín (CH1)
+    - switch.esphome_4ch_relay_3                  # Focos Entrada (Olivo1+Cica)(CH3)
+    - switch.esphome_4ch_relay_2                  # Focos Piscina (Olivo3+Yuca)(CH2)
+    - switch.esphome_4ch_relay_4                  # Pendiente Disponible
 
 setup_telegram_grp:
   name: Notificaciones Telegram

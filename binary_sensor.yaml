@@ -417,16 +417,16 @@
         icon_template: mdi:amazon-alexa
         entity_id: device_tracker.ping_22_amazon_alexa
 
-      nmap_23_deco_tv_salon:
+      nmap_23_decotv_salon:
         value_template: >-
-          {% if is_state('device_tracker.nmap_23_deco_tv_salon','home') %}
+          {% if is_state('device_tracker.nmap_23_decotv_salon','home') %}
             true
           {% else %}
             false
           {% endif %}
         friendly_name: '23 Deco TV Salon'
         icon_template: mdi:television-box
-        entity_id: device_tracker.nmap_23_deco_tv_salon
+        entity_id: device_tracker.nmap_23_decotv_salon
 
       ping_23_decotv_salon:
         value_template: >-
@@ -437,7 +437,18 @@
           {% endif %}
         friendly_name: '23 Deco TV Salon'
         icon_template: mdi:television-box
-        entity_id: device_tracker.nmap_23_deco_tv_salon
+        entity_id: device_tracker.ping_23_decotv_salon
+
+      nmap_24_decotv_estudio:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_24_decotv_estudio','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '24 Deco TV Estudio'
+        icon_template: mdi:television-box
+        entity_id: device_tracker.nmap_24_decotv_estudio
 
       ping_24_decotv_estudio:
         value_template: >-
@@ -448,40 +459,29 @@
           {% endif %}
         friendly_name: '24 Deco TV Estudio'
         icon_template: mdi:television-box
-        entity_id: device_tracker.nmap_23_deco_tv_salon
+        entity_id: device_tracker.ping_24_decotv_estudio
 
-      nmap_24_deco_tv_estudio:
+      nmap_25_sonytv_salon:
         value_template: >-
-          {% if is_state('device_tracker.nmap_24_deco_tv_estudio','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '24 Deco TV Estudio'
-        icon_template: mdi:television-box
-        entity_id: device_tracker.nmap_24_deco_tv_estudio
-
-      nmap_25_tv_sony_salon:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_25_tv_sony_salon','home') %}
+          {% if is_state('device_tracker.nmap_25_sonytv_salon','home') %}
             true
           {% else %}
             false
           {% endif %}
         friendly_name: '25 TV Sony Salon'
         icon_template: mdi:television
-        entity_id: device_tracker.nmap_25_tv_sony_salon
+        entity_id: device_tracker.nmap_25_sonytv_salon
 
-      nmap_26_sony_tv_estudio:
+      nmap_26_sonytv_estudio:
         value_template: >-
-          {% if is_state('device_tracker.nmap_26_sony_tv_estudio','home') %}
+          {% if is_state('device_tracker.nmap_26_sonytv_estudio','home') %}
             true
           {% else %}
             false
           {% endif %}
         friendly_name: '26 TV Sony Estudio'
         icon_template: mdi:television
-        entity_id: device_tracker.nmap_26_sony_tv_estudio
+        entity_id: device_tracker.nmap_26_sonytv_estudio
 
       nmap_27_sony_ps4_wifi:
         value_template: >-
@@ -493,6 +493,17 @@
         friendly_name: '27 Sony PS4 Wifi'
         icon_template: mdi:gamepad-variant
         entity_id: device_tracker.nmap_27_sony_ps4_wifi
+
+      ping_27_sony_ps4:
+        value_template: >-
+          {% if is_state('device_tracker.ping_27_sony_ps4','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '27 Sony PS4 (ping)'
+        icon_template: mdi:gamepad-variant
+        entity_id: device_tracker.ping_27_sony_ps4
 
       #
       # NMAP - 50 - 29 - MOBILE DEVICES
