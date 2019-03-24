@@ -100,6 +100,7 @@ sirena_xiaomi_play_alarm_disarmed:
             {{ states('input_number.xiaomi_volume_alarm_disarmed') | int }}
 
 
+
 # SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS DISPARO DE ALARMA
 #
 # {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
@@ -127,6 +128,21 @@ sirena_play_alarma:
     #
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw0
+
+sirena_play_alarma_humo:
+  alias: "Xiaomi GW Sonido Alarma"
+  sequence:
+    - service: xiaomi_aqara.stop_ringtone
+      data:
+        gw_mac: !secret xiaomi_gateway
+    - service: xiaomi_aqara.play_ringtone
+      data_template:
+        gw_mac: !secret xiaomi_gateway
+        ringtone_id: >-
+            {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
+        ringtone_vol: >-
+            {{ states('input_number.xiaomi_volume_alarm') | int}}
+
 
 # SCRIPT PARA NOTIFICACION MENSAJES SONORO SISTEMA ARMADO
 #
@@ -171,6 +187,7 @@ alarma_boton_panico:
             >>> URGENTE: BOTON PANICO ACTIVADO
 
 
+
 alarma_boton_panico_off:
   alias: 'Boton Panico OFF'
   sequence:
@@ -183,6 +200,7 @@ alarma_boton_panico_off:
           title: '*ALARMA HOMY*'
           message: >
             >>> URGENTE: BOTON PANICO DESACTIVADO
+
 
 
 #
@@ -339,6 +357,7 @@ notifica_evento:
         {{ states('input_text.mensaje_tit') }}
       message: >
         {{ states('input_text.mensaje_msg') }}
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

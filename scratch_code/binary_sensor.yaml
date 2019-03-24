@@ -1,0 +1,299 @@
+  - platform: template
+    sensors:
+      # Codigo excluido temporalmente por ping binary_sensor
+      #
+      # NMAP - 01 - 09 - NETWORK DEVICES
+      # =====================================================================
+      #
+
+      #
+      #DEVICE TRACKER
+      #
+      nmap_02_nas_time_capsule:
+        hide_if_away: false
+        icon: mdi:nas
+        mac: 5C:96:9D:6C:7E:D2
+        name: Apple Time Capsule
+        picture:
+        track: true
+        vendor: Apple, Inc.
+
+      nmap_04_router_wifi_zte:
+        hide_if_away: false
+        icon:
+        mac: A0:EC:80:2A:48:0A
+        name: Router WIFI ZTE Home Station
+        picture:
+        track: true
+
+      nmap_05_router_wifi_tplink:
+        hide_if_away: false
+        icon:
+        mac: 14:CC:20:46:A6:72
+        name: Router Wifi TP-Link Pasillo
+        picture:
+        track: true
+
+      nmap_06_router_wifi_jadin:
+        hide_if_away: false
+        icon:
+        mac: 00:90:4C:60:04:00
+        name: Router WIFI Linksys Jardín
+        picture:
+        track: true
+
+      nmap_07_switch_salon:
+        hide_if_away: false
+        icon:
+        mac: 30:B5:C2:2F:EC:B8
+        name: Switch TK-LINK Salón
+        picture:
+        track: true
+
+      nmap_09_switch_estudio:
+        hide_if_away: false
+        icon:
+        mac: 84:16:F9:3A:35:E3
+        name: Switch TK-LINK Estudio
+        picture:
+        track: true
+
+      # BINARY SENSOR
+      nmap_02_nas_time_capsule:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_02_nas_time_capsule','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '02 NAS Apple Time Capsule'
+        icon_template: mdi:nas
+        entity_id: device_tracker.nmap_02_nas_time_capsule
+
+      nmap_04_router_wifi_zte:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_04_router_wifi_zte','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '04 Router WIFI ZTE Home Station'
+        icon_template: mdi:wifi
+        entity_id: device_tracker.nmap_04_router_wifi_zte
+
+      nmap_05_router_wifi_tplink:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_05_router_wifi_tplink','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '05 Router Wifi TP-Link Pasillo'
+        icon_template: mdi:wifi
+        entity_id: device_tracker.nmap_05_router_wifi_tplink
+
+      nmap_06_router_wifi_jadin:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_06_router_wifi_jadin','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '06 Router WIFI Linksys Jardín'
+        icon_template: mdi:wifi
+        entity_id: device_tracker.nmap_06_router_wifi_jadin
+
+      nmap_07_switch_salon:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_07_switch_salon','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '07 Switch TK-LINK Salón'
+        icon_template: mdi:switch
+        entity_id: device_tracker.nmap_07_switch_salon
+
+      nmap_09_switch_estudio:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_09_switch_estudio','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '09 Switch TK-LINK Estudio'
+        icon_template: mdi:switch
+        entity_id: device_tracker.nmap_09_switch_estudio
+
+#
+      # NMAP - 10 - 19 - HOME & HUB DEVICES
+      # =====================================================================
+      #
+      nmap_12_p2pcam_estudio:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_12_p2pcam_estudio','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '12 P2P IPcam Estudio'
+        icon_template: mdi:cctv
+        entity_id: device_tracker.nmap_12_p2pcam_estudio
+
+      nmap_13_p2pcam_cocina:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_13_p2pcam_cocina','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '13 P2P IPcam Cocina'
+        icon_template: mdi:cctv
+        entity_id: device_tracker.nmap_13_p2pcam_cocina
+
+      nmap_17_philips_hue:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_17_philips_hue','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '17 Hub Philips Hue'
+        icon_template: mdi:lightbulb
+        entity_id: device_tracker.nmap_17_philips_hue
+
+      nmap_18_xiaomi_gateway:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_18_xiaomi_gateway','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '18 Xiaomi Aqara Gateway'
+        icon_template: mdi:alarm-plus
+        entity_id: device_tracker.nmap_18_xiaomi_gateway
+
+      #
+      # NMAP - 20 - 29 - MEDIA DEVICES
+      # =====================================================================
+      #
+      nmap_20_fire_tvstick:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_20_fire_tvstick','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '20 Fire TV Stick'
+        icon_template: mdi:youtube-tv
+        entity_id: device_tracker.nmap_20_fire_tvstick
+
+      nmap_21_apple_tv:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_21_apple_tv','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '21 Apple TV'
+        icon_template: mdi:youtube-tv
+        entity_id: device_tracker.nmap_21_apple_tv
+
+      ping_22_amazon_alexa:
+        value_template: >-
+          {% if is_state('device_tracker.ping_22_amazon_alexa','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '22 Amazon Alexa'
+        icon_template: mdi:amazon-alexa
+        entity_id: device_tracker.ping_22_amazon_alexa
+
+      nmap_23_decotv_salon:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_23_decotv_salon','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '23 Deco TV Salon'
+        icon_template: mdi:television-box
+        entity_id: device_tracker.nmap_23_decotv_salon
+
+      ping_23_decotv_salon:
+        value_template: >-
+          {% if is_state('device_tracker.ping_23_decotv_salon','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '23 Deco TV Salon'
+        icon_template: mdi:television-box
+        entity_id: device_tracker.ping_23_decotv_salon
+
+      nmap_24_decotv_estudio:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_24_decotv_estudio','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '24 Deco TV Estudio'
+        icon_template: mdi:television-box
+        entity_id: device_tracker.nmap_24_decotv_estudio
+
+      ping_24_decotv_estudio:
+        value_template: >-
+          {% if is_state('device_tracker.ping_24_decotv_estudio','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '24 Deco TV Estudio'
+        icon_template: mdi:television-box
+        entity_id: device_tracker.ping_24_decotv_estudio
+
+      nmap_25_sonytv_salon:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_25_sonytv_salon','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '25 TV Sony Salon'
+        icon_template: mdi:television
+        entity_id: device_tracker.nmap_25_sonytv_salon
+
+      nmap_26_sonytv_estudio:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_26_sonytv_estudio','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '26 TV Sony Estudio'
+        icon_template: mdi:television
+        entity_id: device_tracker.nmap_26_sonytv_estudio
+
+      nmap_27_sony_ps4_wifi:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_27_sony_ps4_wifi','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '27 Sony PS4 Wifi'
+        icon_template: mdi:gamepad-variant
+        entity_id: device_tracker.nmap_27_sony_ps4_wifi
+
+      ping_27_sony_ps4:
+        value_template: >-
+          {% if is_state('device_tracker.ping_27_sony_ps4','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '27 Sony PS4 (ping)'
+        icon_template: mdi:gamepad-variant
+        entity_id: device_tracker.ping_27_sony_ps4

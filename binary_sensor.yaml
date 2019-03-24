@@ -262,249 +262,6 @@
         friendly_name: 'SAI APC·700 Rack'
         icon_template: mdi:car-battery
 
-
-      #
-      # NMAP - 01 - 09 - NETWORK DEVICES
-      # =====================================================================
-      #
-      nmap_02_nas_time_capsule:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_02_nas_time_capsule','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '02 NAS Apple Time Capsule'
-        icon_template: mdi:nas
-        entity_id: device_tracker.nmap_02_nas_time_capsule
-
-      nmap_04_router_wifi_zte:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_04_router_wifi_zte','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '04 Router WIFI ZTE Home Station'
-        icon_template: mdi:wifi
-        entity_id: device_tracker.nmap_04_router_wifi_zte
-
-      nmap_05_router_wifi_tplink:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_05_router_wifi_tplink','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '05 Router Wifi TP-Link Pasillo'
-        icon_template: mdi:wifi
-        entity_id: device_tracker.nmap_05_router_wifi_tplink
-
-      nmap_06_router_wifi_jadin:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_06_router_wifi_jadin','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '06 Router WIFI Linksys Jardín'
-        icon_template: mdi:wifi
-        entity_id: device_tracker.nmap_06_router_wifi_jadin
-
-      nmap_07_switch_salon:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_07_switch_salon','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '07 Switch TK-LINK Salón'
-        icon_template: mdi:switch
-        entity_id: device_tracker.nmap_07_switch_salon
-
-      nmap_09_switch_estudio:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_09_switch_estudio','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '09 Switch TK-LINK Estudio'
-        icon_template: mdi:switch
-        entity_id: device_tracker.nmap_09_switch_estudio
-
-      #
-      # NMAP - 10 - 19 - HOME & HUB DEVICES
-      # =====================================================================
-      #
-      nmap_12_p2pcam_estudio:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_12_p2pcam_estudio','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '12 P2P IPcam Estudio'
-        icon_template: mdi:cctv
-        entity_id: device_tracker.nmap_12_p2pcam_estudio
-
-      nmap_13_p2pcam_cocina:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_13_p2pcam_cocina','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '13 P2P IPcam Cocina'
-        icon_template: mdi:cctv
-        entity_id: device_tracker.nmap_13_p2pcam_cocina
-
-      nmap_17_philips_hue:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_17_philips_hue','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '17 Hub Philips Hue'
-        icon_template: mdi:lightbulb
-        entity_id: device_tracker.nmap_17_philips_hue
-
-      nmap_18_xiaomi_gateway:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_18_xiaomi_gateway','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '18 Xiaomi Aqara Gateway'
-        icon_template: mdi:alarm-plus
-        entity_id: device_tracker.nmap_18_xiaomi_gateway
-      #
-      # NMAP - 20 - 29 - MEDIA DEVICES
-      # =====================================================================
-      #
-      nmap_20_fire_tvstick:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_20_fire_tvstick','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '20 Fire TV Stick'
-        icon_template: mdi:youtube-tv
-        entity_id: device_tracker.nmap_20_fire_tvstick
-
-      nmap_21_apple_tv:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_21_apple_tv','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '21 Apple TV'
-        icon_template: mdi:youtube-tv
-        entity_id: device_tracker.nmap_21_apple_tv
-
-      ping_22_amazon_alexa:
-        value_template: >-
-          {% if is_state('device_tracker.ping_22_amazon_alexa','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '22 Amazon Alexa'
-        icon_template: mdi:amazon-alexa
-        entity_id: device_tracker.ping_22_amazon_alexa
-
-      nmap_23_decotv_salon:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_23_decotv_salon','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '23 Deco TV Salon'
-        icon_template: mdi:television-box
-        entity_id: device_tracker.nmap_23_decotv_salon
-
-      ping_23_decotv_salon:
-        value_template: >-
-          {% if is_state('device_tracker.ping_23_decotv_salon','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '23 Deco TV Salon'
-        icon_template: mdi:television-box
-        entity_id: device_tracker.ping_23_decotv_salon
-
-      nmap_24_decotv_estudio:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_24_decotv_estudio','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '24 Deco TV Estudio'
-        icon_template: mdi:television-box
-        entity_id: device_tracker.nmap_24_decotv_estudio
-
-      ping_24_decotv_estudio:
-        value_template: >-
-          {% if is_state('device_tracker.ping_24_decotv_estudio','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '24 Deco TV Estudio'
-        icon_template: mdi:television-box
-        entity_id: device_tracker.ping_24_decotv_estudio
-
-      nmap_25_sonytv_salon:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_25_sonytv_salon','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '25 TV Sony Salon'
-        icon_template: mdi:television
-        entity_id: device_tracker.nmap_25_sonytv_salon
-
-      nmap_26_sonytv_estudio:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_26_sonytv_estudio','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '26 TV Sony Estudio'
-        icon_template: mdi:television
-        entity_id: device_tracker.nmap_26_sonytv_estudio
-
-      nmap_27_sony_ps4_wifi:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_27_sony_ps4_wifi','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '27 Sony PS4 Wifi'
-        icon_template: mdi:gamepad-variant
-        entity_id: device_tracker.nmap_27_sony_ps4_wifi
-
-      ping_27_sony_ps4:
-        value_template: >-
-          {% if is_state('device_tracker.ping_27_sony_ps4','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '27 Sony PS4 (ping)'
-        icon_template: mdi:gamepad-variant
-        entity_id: device_tracker.ping_27_sony_ps4
-
       #
       # NMAP - 50 - 29 - MOBILE DEVICES
       # =====================================================================
@@ -683,3 +440,134 @@
         icon_template: mdi:laptop
         entity_id: device_tracker.nmap_67_acer_notebook
 
+    #
+    # PING - 01 - 09 - NETWORK DEVICES
+    # =====================================================================
+    #
+    # ping_01_router_fibra_movistar:
+  - platform: ping
+    host: 192.168.0.1
+    count: 5
+    name: 'ping 01 Router Fibra Movistar'
+
+    #ping_02_nas_time_capsule:
+  - platform: ping
+    host: 192.168.0.2
+    count: 2
+    name: 'ping 02 NAS Time Capsule'
+
+    #ping_04_router_wifi_zte:
+  - platform: ping
+    host: 192.168.0.4
+    count: 2
+    name: 'ping 04 Router WIFI ZTE'
+
+    #ping_05_router_wifi_tplink:
+  - platform: ping
+    host: 192.168.0.5
+    count: 2
+    name: 'ping 05 Router Wifi TPlink'
+
+    #ping_06_router_wifi_linksys:
+  - platform: ping
+    host: 192.168.0.6
+    count: 2
+    name: 'ping 06 Router WIFI Linksys'
+
+    #ping_07_switch_salon:
+  - platform: ping
+    host: 192.168.0.7
+    count: 2
+    name: 'ping 07 Switch Salon'
+
+    #ping_09_switch_estudio:
+  - platform: ping
+    host: 192.168.0.9
+    count: 2
+    name: 'ping 09 Switch Estudio'
+
+    # PING  - 10 - 19 - HOME & HUB DEVICES
+    # =====================================================================
+    #
+    # ping_12_p2pcam_estudio:
+  - platform: ping
+    host: 192.168.0.12
+    count: 2
+    name: 'ping 12 IPcam Estudio'
+
+    # ping_13_p2pcam_cocina:
+  - platform: ping
+    host: 192.168.0.13
+    count: 2
+    name: 'ping 13 IPcam Cocina'
+
+    # ping_17_philips_hue:
+  - platform: ping
+    host: 192.168.0.17
+    count: 2
+    name: 'ping 17 Hub Philips Hue'
+
+    # ping_18_xiaomi_gateway:
+  - platform: ping
+    host: 192.168.0.18
+    count: 2
+    name: 'ping 18 Xiaomi Aqara Gateway'
+
+
+    # NMAP - 20 - 29 - MEDIA DEVICES
+    # =====================================================================
+    #
+    # ping_20_amazon_firetv:
+  - platform: ping
+    host: 192.168.0.20
+    count: 2
+    name: 'ping 20 Amazon FireTV '
+    #icon_template: mdi:youtube-tv
+
+    # ping_21_apple_tv:
+  - platform: ping
+    host: 192.168.0.21
+    count: 2
+    name: 'ping 21 Apple TV'
+    #icon_template: mdi:youtube-tv
+
+    # ping_22_amazon_alexa:
+  - platform: ping
+    host: 192.168.0.22
+    count: 2
+    name: 'ping 22 Amazon Alexa'
+    #icon_template: mdi:amazon-alexa
+
+    # ping23_decotv_salon:
+  - platform: ping
+    host: 192.168.0.23
+    count: 2
+    name: 'ping 23 Deco TV Salon'
+    #icon_template: mdi:television-box
+
+    # ping_24_decotv_estudio:
+  - platform: ping
+    host: 192.168.0.24
+    count: 2
+    name: 'ping 24 Deco TV Estudio'
+    #icon_template: mdi:television-box
+
+    # ping25_sonytv_salon:
+  - platform: ping
+    host: 192.168.0.25
+    name: 'ping 25 Sony TV Salon'
+    #icon_template: mdi:television
+
+    # ping26_sonytv_estudio:
+  - platform: ping
+    host: 192.168.0.26
+    count: 2
+    name: 'ping 26 Sony TV Estudio'
+    #icon_template: mdi:television
+
+    # ping27_sony_ps4:
+  - platform: ping
+    host: 192.168.0.27
+    count: 2
+    name: 'ping 27 Sony PS4'
+    #icon_template: mdi:gamepad-variant

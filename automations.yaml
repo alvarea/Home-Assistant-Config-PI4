@@ -114,7 +114,9 @@
       from: 'off'
       to: 'on'
   action:
-    - service: script.sirena_play_alarma
+    # Script Sirena Xiaomo Alarma Humo
+    - service: script.sirena_play_alarma_humo
+
     # Script Notificación Alarma
     - service: script.turn_on
       entity_id: script.notifica_alarma
@@ -892,12 +894,17 @@
     - service: automation.turn_on
       entity_id: automation.l07_luces_on_entrada_segun_sensor
 
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# REGLAS MAGIC CUBE                                                           #
+#                                                                             #
+#-----------------------------------------------------------------------------#
 #
-#
-# REGLAS: MAGIC CUBE
-#
-# Available events are flip90, flip180, move, tap_twice, shake_air, swing, alert, free_fall and rotate.
+# Available events are flip90, flip180, move, tap_twice, shake_air, swing, alert,
+# free_fall and rotate.
 # The component stores the last action as the attribute last_action.
+#
 - id: L10_cube_tap_twice_light_toogle
   alias: 'L10 Cube Tap Twice Light Toogle'
   trigger:
@@ -948,7 +955,6 @@
         - light.esphome_lb1_l01
       data:
         transition: 15
-
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

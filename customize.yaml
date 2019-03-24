@@ -14,7 +14,7 @@ script.sirena_stop_alarma:
   icon: mdi:volume-off
 
 # Centro Control Homy
-sensor.version_ha:
+sensor.version_local:
   icon: mdi:home-assistant
 
 #CERTIFICADO SSL
@@ -393,3 +393,84 @@ light.esphome_lb1_l01:
 sensor.ups_status:
   icon: mdi:car-battery
 
+
+# PING BINARY SENSORS
+binary_sensor.ping_01_router_fibra_movistar:
+  icon: mdi:wan
+  friendly_name: '02 NAS TimeCapsule'
+
+binary_sensor.ping_02_nas_time_capsule:
+  icon: mdi:nas
+  friendly_name: '02 NAS TimeCapsule'
+
+binary_sensor.ping_04_router_wifi_zte:
+  icon: mdi:router-wireless
+  friendly_name: '04 Router WIFI ZTE'
+
+binary_sensor.ping_05_router_wifi_tplink:
+  icon: mdi:router-wireless
+  friendly_name: '05 Router Wifi TPlink'
+
+binary_sensor.ping_06_router_wifi_linksys:
+  icon: mdi:router-wireless
+  friendly_name: ' 06 Router WIFI Linksys'
+
+binary_sensor.ping_07_switch_salon:
+  icon: mdi:server-network
+  friendly_name: '07 Switch Salon'
+
+binary_sensor.ping_09_switch_estudio:
+  icon: mdi:server-network
+  friendly_name: '09 Switch Estudio'
+
+binary_sensor.ping_12_ipcam_estudio:
+  friendly_name: '12 IPcam Estudio'
+  icon: mdi:cctv
+
+binary_sensor.ping_13_ipcam_cocina:
+  friendly_name: '13 IPcam Cocina'
+  icon: mdi:cctv
+
+binary_sensor.ping_17_hub_philips_hue:
+  friendly_name: '17 Hub Philips Hue'
+  icon: mdi:lightbulb
+
+binary_sensor.ping_18_xiaomi_aqara_gateway:
+  friendly_name: '18 Xiaomi Aqara Gateway'
+  icon: mdi:alarm-plus
+
+
+binary_sensor.ping_20_amazon_firetv:
+  friendly_name: '20 Amazon FireTV '
+  icon: mdi:youtube-tv
+
+binary_sensor.ping_21_apple_tv:
+  friendly_name: '21 Apple TV'
+  icon: mdi:youtube-tv
+
+binary_sensor.ping_22_amazon_alexa:
+  friendly_name: '22 Amazon Alexa'
+  icon: mdi:amazon-alexa
+
+binary_sensor.ping_23_deco_tv_salon:
+  friendly_name: '23 Deco TV Salon'
+  icon: mdi:television-box
+
+binary_sensor.ping_24_deco_tv_estudio:
+  friendly_name: '24 Deco TV Estudio'
+  icon: mdi:television-box
+
+binary_sensor.ping_25_sony_tv_salon:
+  friendly_name: '25 Sony TV Salon'
+  icon: mdi:television
+
+binary_sensor.ping_26_sony_tv_estudio:
+  friendly_name: '26 Sony TV Estudio'
+  icon: mdi:television
+
+binary_sensor.ping_27_sony_ps4:
+  friendly_name: '27 Sony PS4'
+  icon: mdi:gamepad-variant
+
+# Icono para dispositivos ESPHOME
+# ip-network-outline
