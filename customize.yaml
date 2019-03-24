@@ -437,8 +437,7 @@ binary_sensor.ping_17_hub_philips_hue:
 
 binary_sensor.ping_18_xiaomi_aqara_gateway:
   friendly_name: '18 Xiaomi Aqara Gateway'
-  icon: mdi:alarm-plus
-
+  icon: mdi:zigbee
 
 binary_sensor.ping_20_amazon_firetv:
   friendly_name: '20 Amazon FireTV '

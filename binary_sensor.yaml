@@ -263,7 +263,7 @@
         icon_template: mdi:car-battery
 
       #
-      # NMAP - 50 - 29 - MOBILE DEVICES
+      # NMAP - 50 - 59 - MOBILE DEVICES
       # =====================================================================
       #
       nmap_52_iphone_aac:
@@ -406,6 +406,17 @@
         icon_template: mdi:laptop-mac
         entity_id: device_tracker.nmap_61_macbook_pro_wifi
 
+      nmap_62_asus_zenbook_wifi:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_62_asus_zenbook_wifi','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: '62 AlvareA.net Asus Zenbook UX430UA'
+        icon_template: mdi:laptop
+        entity_id: device_tracker.nmap_62_asus_zenbook_wifi
+
       nmap_63_macbook_air_paf:
         value_template: >-
           {% if is_state('device_tracker.nmap_63_macbook_air_paf','home') %}
@@ -489,13 +500,13 @@
     # PING  - 10 - 19 - HOME & HUB DEVICES
     # =====================================================================
     #
-    # ping_12_p2pcam_estudio:
+    # ping_12_IPcam_estudio:
   - platform: ping
     host: 192.168.0.12
     count: 2
     name: 'ping 12 IPcam Estudio'
 
-    # ping_13_p2pcam_cocina:
+    # ping_13_IPcam_cocina:
   - platform: ping
     host: 192.168.0.13
     count: 2

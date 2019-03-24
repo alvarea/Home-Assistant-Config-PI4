@@ -1197,3 +1197,55 @@
           message: >
             >>> URGENTE: SAI RACK COMUNICACIONES SIN CORRIENTE
 
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# REGLAS DE CONTROL DE PING DEVICES BINARY SENSOR                             #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+
+#
+# ping_01_router_fibra_movistar:
+#
+- id: P01
+  alias: 'P01_router_fibra_movistar'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.ping_01_router_fibra_movistar
+      from: 'on'
+      to: 'off'
+      # for: '00:06:00'
+  action:
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*AVISO FALLO DE RED LOCAL'
+          message: >
+            >>> URGENTE: FALLO DE PING
+
+            >>> DISPOSITIVO: 01_router_fibra_movistar
+
+#
+# ping_05_router_wifi_tplink:
+#
+- id: P05
+  alias: 'P05_router_wifi_tplink'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.ping_05_router_wifi_tplink
+      from: 'on'
+      to: 'off'
+      # for: '00:06:00'
+  action:
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*AVISO FALLO DE RED LOCAL'
+          message: >
+            >>> URGENTE: FALLO DE PING
+
+            >>> DISPOSITIVO: 05_router_wifi_tplink
