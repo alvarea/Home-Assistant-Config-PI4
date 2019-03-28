@@ -413,7 +413,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '62 AlvareA.net Asus Zenbook UX430UA'
+        friendly_name: '62 AlvareA.net Asus Zenbook'
         icon_template: mdi:laptop
         entity_id: device_tracker.nmap_62_asus_zenbook_wifi
 

@@ -397,7 +397,7 @@ sensor.ups_status:
 # PING BINARY SENSORS
 binary_sensor.ping_01_router_fibra_movistar:
   icon: mdi:wan
-  friendly_name: '02 NAS TimeCapsule'
+  friendly_name: '01 Router Fibra Movistar'
 
 binary_sensor.ping_02_nas_time_capsule:
   icon: mdi:nas
