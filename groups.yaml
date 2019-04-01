@@ -119,7 +119,7 @@ luces_estudio_grp:
   name: Luces Estudio
   entities:
     - light.hue_estudio
-    - light.esphome_lb1_l01
+    #- light.esphome_lb1_l01
 
 luces_exterior_grp:
   name: Luces Exterior

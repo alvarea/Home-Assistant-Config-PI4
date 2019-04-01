@@ -822,7 +822,7 @@
             #before_offset: "00:30:00"
           - condition: numeric_state
             entity_id: sensor.illumination_158d0001e637f6
-            below: 0
+            below: 1
   action:
     - service: script.luces_exterior_timer
 
@@ -895,6 +895,46 @@
       entity_id: automation.l07_luces_on_entrada_segun_sensor
 
 
+- id: L08
+  alias: 'L08 Luces On Dormitorio Según Sensor'
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.door_window_sensor_158d00022b393c # Puerta Entrada
+        - binary_sensor.motion_sensor_158d0001e55903 # Sensor Entrada
+        - binary_sensor.motion_sensor_158d0001e637f6 # Sensor Exterior
+        - binary_sensor.motion_sensor_158d0001e05661 # Sensor Salón
+      to: 'on'
+  condition:
+    condition: or  # 'when dark' condition: either after sunset or before sunrise
+    conditions:
+      # Dormitorio Warning F-Mode = on
+      - condition: state
+        entity_id: input_select.dormitorio_warning
+        state: 'on'
+      - condition: time
+        after: '23:30:00'
+      - condition: sun
+        before: sunrise
+  action:
+    - service: automation.turn_off
+      entity_id: automation.l08
+    # Llamada al Script de Luces ON
+    - service: light.turn_on
+      entity_id: light.esphome_lb1_l01
+      data:
+        white_value: 0
+        rgb_color: [255, 0, 0]
+        brightness: 165
+        color_temp: 350
+    # Espera de 2'
+    - delay: '00:02:00'
+    # Llamada al Script de Luces OFF
+    - service: light.turn_off
+      entity_id: light.esphome_lb1_l01
+    - service: automation.turn_on
+      entity_id: automation.l08
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # REGLAS MAGIC CUBE                                                           #
@@ -917,7 +957,7 @@
     - service: light.toggle
       entity_id:
         - light.hue_estudio
-        - light.esphome_lb1_l01
+        #- light.esphome_lb1_l01
 
 - id: L11_cube_flip90_light_on
   alias: 'L11 Cube Flip90 Light on'
@@ -933,12 +973,12 @@
       data:
         brightness: 175
         rgb_color: [254, 200, 145]
-    - service: light.turn_on
-      entity_id: light.esphome_lb1_l01
-      data:
-        white_value: 200
-        rgb_color: [254, 126, 0]
-        brightness: 255
+    #- service: light.turn_on
+    #  entity_id: light.esphome_lb1_l01
+    #  data:
+    #    white_value: 200
+    #    rgb_color: [254, 126, 0]
+    #    brightness: 255
 
 - id: L12_cube_shake_light_off
   alias: 'L12 Cube Shake Light off'
@@ -949,8 +989,8 @@
       entity_id: binary_sensor.cube_158d00024a4a62_2
       action_type: shake_air
   action:
-    - service: light.turn_off
-      entity_id: light.esphome_lb1_l01
+    #- service: light.turn_off
+    #  entity_id: light.esphome_lb1_l01
     - service: light.turn_off
       entity_id: light.hue_estudio
       data:
@@ -965,7 +1005,7 @@
 #
 # ESPHOME 4CH - JARDIN
 #
-- id: S01_esphome_4ch_Boton1_On_off
+- id: S01
   alias: 'S01 Sonoff 4CH Boton1 On'
   trigger:
     - platform: state
@@ -976,7 +1016,7 @@
     - service: switch.toggle
       entity_id: switch.esphome_4ch_relay_1
 
-- id: S02_esphome_4ch_Boton2_On_off
+- id: S02
   alias: 'S01 Sonoff 4CH Boton2 On'
   trigger:
     - platform: state
@@ -987,7 +1027,7 @@
     - service: switch.toggle
       entity_id: switch.esphome_4ch_relay_2
 
-- id: S03_esphome_4ch_Boton3_On_off
+- id: S03
   alias: 'S03 Sonoff 4CH Boton3 On'
   trigger:
     - platform: state
@@ -998,7 +1038,7 @@
     - service: switch.toggle
       entity_id: switch.esphome_4ch_relay_3
 
-- id: S04_esphome_4ch_Status
+- id: S04
   alias: 'S04 Sonoff 4CH Status'
   trigger:
     - platform: state
@@ -1016,7 +1056,7 @@
           message: >
             >>> URGENTE: CUADRO ELECTRICO JARDIN SIN CORRIENTE
 
-- id: S05_Sonoff_POW_Status
+- id: S05
   alias: 'S05 Sonoff POW Status'
   trigger:
     - platform: state
@@ -1036,7 +1076,7 @@
 
 # ESPHOME POW - DEPURADORA PISCINA
 #
-- id: S06_timer_piscina_start
+- id: S06
   alias: 'S06 Timer Piscina Start'
   trigger:
     - platform: template
@@ -1055,7 +1095,7 @@
     - service: script.piscina_timer_start_diario
 
 
-- id: S07_timer_piscina_end
+- id: S07
   alias: 'S07 Timer Piscina End'
   trigger:
     - platform: event
@@ -1071,7 +1111,7 @@
       data_template:
         value: ''
 
-- id: S08_set_hora_final_planificado
+- id: S08
   alias: 'S08 Set Hora Final Planificado'
   trigger:
     - platform: state
@@ -1087,7 +1127,7 @@
 
 # ESPHOME S20 - SW1 Radiador Dormitorio Principal
 #
-- id: S09_esphome_S20_SW1_Toogle
+- id: S09
   alias: 'S09 Sonoff S20 SW1 Toogle'
   trigger:
     - platform: state
@@ -1098,7 +1138,7 @@
     - service: switch.toggle
       entity_id: switch.esphome_s20_sw1
 
-- id: S09b_esphome_S20_SW3_Toogle
+- id: S09b
   alias: 'S09b Sonoff S20 SW3 Toogle'
   trigger:
     - platform: state
@@ -1109,7 +1149,7 @@
     - service: switch.toggle
       entity_id: switch.esphome_s20_sw3
 
-- id: S10_esphome_S2_Switch_On
+- id: S10
   alias: 'S10 Calefaccion On'
   trigger:
     # Test mode
@@ -1130,7 +1170,7 @@
     - service: script.calefaccion_mfc_on
     - service: script.calefaccion_paf_on
 
-- id: S11_esphome_S20_Switch_Off
+- id: S11
   alias: 'S11 SonoffS20 Switch Off'
   trigger:
     - platform: time
@@ -1145,7 +1185,7 @@
 #
 # ESPHOME BASIC SW2 PORCHE PISCINA
 #
-- id: S13_esphome_bas_SW2_Porche_Piscina
+- id: S13
   alias: 'S13 Sonoff SW2 Porche Piscina'
   trigger:
     platform: state
@@ -1162,7 +1202,7 @@
 #
 # ESPHOME BASIC SW4 PORCHE SALON
 #
-- id: S14_esphome_bas_SW4_Porche_Piscina
+- id: S14
   alias: 'S14 Sonoff SW4 Porche Piscina'
   trigger:
     platform: state
@@ -1179,7 +1219,7 @@
 #
 # SAI RACK COMUNICACIONES
 #
-- id: S15_ups_apc700_status
+- id: S15
   alias: 'S15 ups apc700 status'
   trigger:
     - platform: state

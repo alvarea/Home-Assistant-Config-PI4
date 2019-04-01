@@ -7,7 +7,7 @@
 # 192.168.0.32  esphome_bas_SW2                                         NEW
 # 192.168.0.33  esphome_bas_SW3                                         NEW
 # 192.168.0.34  esphome_bas_SW4                     Luz Porche 1        Porche 1 Salón
-# 192.168.0.35  esphome_4ch_Jardi
+# 192.168.0.35  esphome_4ch_Jardin
 #               esphome_4ch_relay_1                 Luz Jardin          CH1 - Balizas Cesped
 #               esphome_4ch_relay_2                 Luz Olivo 3         CH2 - Focos Olivo 3 + Palmera Yuca
 #               esphome_4ch_relay_3                 Luz Olivo 1         CH3 - Focos Olivo 1 + Palmera Cica
@@ -17,6 +17,7 @@
 # 192.168.0.38  esphome_s20_SW1                     Radiador Malen      Radiador Dormitorio Principal (192.168.0.33)
 # 192.168.0.39  esphome_s20_SW2                     Nespresso
 # 192.168.0.40  esphome_s20_SW3                     Radiador Paloma     Radiador Dormitorio
+# 192.168.0.45  esphome_lb1_l01                     XXX                 Luz Mesilla AAC
 # 192.168.0.18  Xiaomi Aqara
 #               wall_switch_left_158d0002236e75     Luz Techo Entrada   Interruptor Luz Entrada
 #               wall_switch_right_158d0002236e75    Luz Exterior        Interruptor Luz Exterior

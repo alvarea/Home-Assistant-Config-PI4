@@ -114,3 +114,9 @@
     initial: off
     icon: mdi:power-settings
 
+# INTERRUPTORES BOOLEAN => Dormitorio Warning Mode
+#
+  dormitorio_warning:
+    name: Dormitorio Warning Mode
+    initial: off
+    icon: mdi:heart-multiple

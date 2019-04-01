@@ -297,7 +297,7 @@ light:
     name: Luces Planta Alta
     entities:
       - light.hue_estudio
-      - light.esphome_lb1_l01
+      #- light.esphome_lb1_l01
   - platform: group
     name: Luces Salon
     entities:

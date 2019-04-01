@@ -363,22 +363,9 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '80 Alvarea.net Phone Conchi'
+        friendly_name: '80 Phone Conchi'
         icon_template: mdi:cellphone-iphone
         entity_id: device_tracker.nmap_80_phone_conchi
-
-      nmap_81_phone_ale:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_81_phone_ale','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '81 Alvarea.net Phone Ale'
-        icon_template: mdi:cellphone-iphone
-        entity_id: device_tracker.nmap_81_phone_ale
-        #device_class: router
-        #attribute_template: "{{ state_attr('device_tracker.nmap_81_phone_ale','ip') }}"
 
       #
       # NMAP - 60 - 69 - COMPUTER LAPTOP DEVICES
@@ -413,7 +400,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '62 AlvareA.net Asus Zenbook'
+        friendly_name: '62 Asus Zenbook AAF'
         icon_template: mdi:laptop
         entity_id: device_tracker.nmap_62_asus_zenbook_wifi
 
@@ -424,7 +411,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '63 Alvarea.net Macbook Air PAF'
+        friendly_name: '63 Macbook Air PAF'
         icon_template: mdi:laptop-mac
         entity_id: device_tracker.nmap_63_macbook_air_paf
 
@@ -436,7 +423,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '65 Alvarea.net Elitebook Heineken'
+        friendly_name: '65 Elitebook Heineken'
         icon_template: mdi:laptop
         entity_id: device_tracker.nmap_65_elitebook_hk_wifi
 
@@ -447,9 +434,21 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '67 Alvarea.net Netbook Acer Aspire'
+        friendly_name: '67 Netbook Acer Aspire'
         icon_template: mdi:laptop
         entity_id: device_tracker.nmap_67_acer_notebook
+
+      ping_27_sony_ps4_lan_wifi:
+        value_template: >-
+          {% if is_state('binary_sensor.ping_27_sony_ps4','on')
+             or is_state('binary_sensor.ping_27_sony_ps4_lan','on') %}
+            on
+          {% else %}
+            off
+          {% endif %}
+        friendly_name: '27 Sony PS4'
+        icon_template: mdi:gamepad-variant
+        entity_id: binary_sensor.ping_27_sony_ps4_lan
 
     #
     # PING - 01 - 09 - NETWORK DEVICES
@@ -581,4 +580,11 @@
     host: 192.168.0.27
     count: 2
     name: 'ping 27 Sony PS4'
+    #icon_template: mdi:gamepad-variant
+
+  # ping27_sony_ps4_lan:
+  - platform: ping
+    host: 192.168.0.28
+    count: 2
+    name: 'ping 27 Sony PS4 LAN'
     #icon_template: mdi:gamepad-variant
