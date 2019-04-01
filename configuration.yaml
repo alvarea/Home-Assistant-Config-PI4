@@ -147,11 +147,11 @@ camera:
     username: admin
     password: !secret IPcam11
 
-apple_tv:
-  - host: !secret apple_tv_host
-    login_id: !secret apple_tv_loginid
-    name: Apple TV
-    credentials: !secret apple_tv_credentials
+#apple_tv:
+#  - host: !secret apple_tv_host
+#    login_id: !secret apple_tv_loginid
+#    name: Apple TV
+#    credentials: !secret apple_tv_credentials
 
 # Mediaplayer FireTV
 media_player:
