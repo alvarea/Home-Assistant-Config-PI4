@@ -286,16 +286,16 @@ light.esphome_bas_sw1_led:
   friendly_name: LED Porche 2
 
 switch.esphome_bas_sw2:
-  friendly_name: Luz Basic2
-  icon: mdi:ceiling-light
+  friendly_name: Luz Escalera
+  icon: mdi:floor-lamp
 binary_sensor.esphome_bas_sw2_status:
-  friendly_name: Sensor Basic2
+  friendly_name: Sensor Luz Escalera
 light.esphome_bas_sw2_led:
-  friendly_name: LED Basic2
+  friendly_name: LED BAS_SW2
 
 switch.esphome_bas_sw4:
   friendly_name: Luz Porche 1
-  icon: mdi:ceiling-light
+  icon: mdi:floor-lamp
 binary_sensor.esphome_bas_sw4_status:
   friendly_name: Sensor Porche 1
 light.esphome_bas_sw4_led:
