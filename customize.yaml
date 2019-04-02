@@ -328,24 +328,24 @@ switch.esphome_4ch_relay_4:
 # SERIE SONOFF S20
 #
 switch.esphome_s20_sw1:
-  friendly_name: Calefacción Dormitorio MFC
+  friendly_name: Dormitorio MFC
   icon: mdi:radiator
 
 binary_sensor.esphome_s20_sw1_status:
-  friendly_name: Sensor Calefacción MFC
+  friendly_name: Sensor Dormitorio MFC
 
 light.esphome_s20_sw1_led:
-  friendly_name: Led Calefacción MFC
+  friendly_name: Led Dormitorio MFC
 
 switch.esphome_s20_sw3:
-  friendly_name: Calefacción Dormitorio PAF
+  friendly_name: Dormitorio PAF
   icon: mdi:radiator
 
 binary_sensor.esphome_s20_sw3_status:
-  friendly_name: Sensor Calefacción PAF
+  friendly_name: Sensor Dormitorio PAF
 
 light.esphome_s20_sw3_led:
-  friendly_name: Led Calefacción PAF
+  friendly_name: Led Dormitorio PAF
 
 #
 # SERIE SONOFF POW

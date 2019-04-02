@@ -720,12 +720,12 @@
     #
     #        >>> LUCES: Alumbrado Exterior ON
 
-- id: L02_luces_off_exterior_sunset4h
-  alias: 'L02 Luces Off Exterior Sunset 4h'
+- id: L02_luces_off_exterior_sunset
+  alias: 'L02 Luces Off Exterior Sunset'
   trigger:
     - platform: sun
       event: sunset
-      offset: "+04:00:00"
+      offset: "+02:30:00"
   condition:
     condition: state
     entity_id: switch.wall_switch_right_158d0002236e75
@@ -867,9 +867,10 @@
   alias: 'L07 Luces On Entrada Según Sensor'
   trigger:
     - platform: state
-      entity_id:
-        - binary_sensor.motion_sensor_158d0001e55903
-        - binary_sensor.door_window_sensor_158d00022b393c
+      entity_id: binary_sensor.motion_sensor_158d0001e55903
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c
       to: 'on'
   condition:
     condition: or  # 'when dark' condition: either after sunset or before sunrise
@@ -895,46 +896,48 @@
     - service: automation.turn_on
       entity_id: automation.l07
 
-
 - id: L08
-  alias: 'L08 Luces On Dormitorio Según Sensor'
+  alias: 'L08 Luces On Dormitorio Warning'
   trigger:
     - platform: state
-      entity_id:
-        - binary_sensor.door_window_sensor_158d00022b393c # Puerta Entrada
-        - binary_sensor.motion_sensor_158d0001e55903 # Sensor Entrada
-        - binary_sensor.motion_sensor_158d0001e637f6 # Sensor Exterior
-        - binary_sensor.motion_sensor_158d0001e05661 # Sensor Salón
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c # Puerta Entrada
       to: 'on'
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e637f6 # Sensor Exterior
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e55903 # Sensor Entrada
+      to: 'on'
+      #- switch.esphome_bas_sw2 # Test Regla con Luz Escalera
+      #- binary_sensor.motion_sensor_158d0001e05661 # Sensor Salón
   condition:
-    condition: or  # 'when dark' condition: either after sunset or before sunrise
+    condition: and
     conditions:
       # Dormitorio Warning F-Mode = on
       - condition: state
-        entity_id: input_select.dormitorio_warning
+        entity_id: input_boolean.dormitorio_warning
         state: 'on'
-      - condition: time
-        after: '23:30:00'
       - condition: sun
-        before: sunrise
+        after: sunset
   action:
-    - service: automation.turn_off
-      entity_id: automation.l08
     # Llamada al Script de Luces ON
     - service: light.turn_on
       entity_id: light.esphome_lb1_l01
       data:
         white_value: 0
         rgb_color: [255, 0, 0]
-        brightness: 165
-        color_temp: 350
-    # Espera de 2'
-    - delay: '00:02:00'
-    # Llamada al Script de Luces OFF
+        brightness: 255
+    - delay: '00:01:00'
+    - service: light.turn_on
+      entity_id: light.esphome_lb1_l01
+      data:
+        white_value: 0
+        rgb_color: [255, 190, 0]
+        brightness: 255
     - service: light.turn_off
       entity_id: light.esphome_lb1_l01
-    - service: automation.turn_on
-      entity_id: automation.l08
+      data:
+        transition: 300
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
