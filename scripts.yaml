@@ -106,8 +106,8 @@ sirena_xiaomi_play_alarm_disarmed:
 # {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
 # {{ states('input_number.xiaomi_volume_alarm') | int }}
 #
-sirena_play_alarma:
-  alias: "Xiaomi GW Sonido Alarma"
+sirena_alarma_armed_away:
+  alias: "Sirena Alarma Armed Away"
   sequence:
     # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
     - condition: template
@@ -129,9 +129,15 @@ sirena_play_alarma:
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw0
 
-sirena_play_alarma_humo:
-  alias: "Xiaomi GW Sonido Alarma"
+# SCRIPT PARA ENCENDER SOLO SIRENA XIAOMI TRAS DISPARO
+# DE ALARMA ARMED HOME O SENSOR DE HUMO
+#
+sirena_alarma_armed_home:
+  alias: "Sirena Alarma Armed Home"
   sequence:
+    # IF Mute_Xiaomi = ON => True => CANCEL SCRIPT
+    - condition: template
+      value_template: "{% if is_state('input_boolean.mute_sonido_sirenas', 'off') %}true{% endif %}"
     - service: xiaomi_aqara.stop_ringtone
       data:
         gw_mac: !secret xiaomi_gateway
@@ -177,7 +183,7 @@ alarma_boton_panico:
     - condition: template
       value_template: "{% if is_state('input_boolean.panic_button', 'on') %}true{% endif %}"
     # Llamada Scripts SIRENAS ALARMA
-    - service: script.sirena_play_alarma
+    - service: script.sirena_alarma
     # Notifica Telegram
     - service: script.notifica_evento
       data:

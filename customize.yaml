@@ -166,6 +166,10 @@ sensor.coordination_158d0002a4eacc:
 sensor.tilt_angle_158d0002a4eacc:
   friendly_name: Inclinación Puerta Salón
 
+light.hue_lightstrip_plus_1:
+  friendly_name: Luz LED TV
+  icon: mdi:led-strip
+
 # Estudio
 #
 binary_sensor.motion_sensor_158d0001e464a6:
@@ -467,8 +471,8 @@ binary_sensor.ping_26_sony_tv_estudio:
   friendly_name: '26 Sony TV Estudio'
   icon: mdi:television
 
-binary_sensor.ping_27_sony_ps4:
-  friendly_name: '27 Sony PS4'
+binary_sensor.ping_27_sony_ps4_lan:
+  friendly_name: '27 Sony PS4 LAN'
   icon: mdi:gamepad-variant
 
 # Icono para dispositivos ESPHOME

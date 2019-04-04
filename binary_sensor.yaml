@@ -548,7 +548,7 @@
     name: 'ping 22 Amazon Alexa'
     #icon_template: mdi:amazon-alexa
 
-    # ping23_decotv_salon:
+    # ping_23_decotv_salon:
   - platform: ping
     host: 192.168.0.23
     count: 2
@@ -562,27 +562,27 @@
     name: 'ping 24 Deco TV Estudio'
     #icon_template: mdi:television-box
 
-    # ping25_sonytv_salon:
+    # ping_25_sonytv_salon:
   - platform: ping
     host: 192.168.0.25
     name: 'ping 25 Sony TV Salon'
     #icon_template: mdi:television
 
-    # ping26_sonytv_estudio:
+    # ping_26_sonytv_estudio:
   - platform: ping
     host: 192.168.0.26
     count: 2
     name: 'ping 26 Sony TV Estudio'
     #icon_template: mdi:television
 
-    # ping27_sony_ps4:
+    # ping_27_sony_ps4:
   - platform: ping
     host: 192.168.0.27
     count: 2
     name: 'ping 27 Sony PS4'
     #icon_template: mdi:gamepad-variant
 
-  # ping27_sony_ps4_lan:
+  # ping_27_sony_ps4_lan:
   - platform: ping
     host: 192.168.0.28
     count: 2

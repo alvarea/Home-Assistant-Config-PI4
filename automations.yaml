@@ -115,8 +115,7 @@
       to: 'on'
   action:
     # Script Sirena Xiaomo Alarma Humo
-    - service: script.sirena_play_alarma_humo
-
+    - service: script.sirena_alarma_armed_home
     # Script Notificación Alarma
     - service: script.turn_on
       entity_id: script.notifica_alarma
@@ -246,7 +245,7 @@
             >>> ESTADO: Desarmado
 
 #
-# REGLA: TRIGGER ALARMA POR SENSOR EN ARMADO AWAY
+# REGLA: TRIGGER SENSOR => MODO ARMADO AWAY => ALARMA TRIGGERED
 #
 - id: A5_alarma_trigger_armed_away
   alias: 'A5 Alarm Trigger Armed Away'
@@ -275,7 +274,7 @@
       entity_id: alarm_control_panel.ha
 
 #
-# REGLA: TRIGGER ALARMA POR SENSOR EN ARMADO HOME
+# REGLA: TRIGGER SENSOR => MODO ARMADO HOME => ALARMA TRIGGERED
 #
 - id: A6_alarma_trigger_armed_home
   alias: 'A6 Alarm Trigger Armed Home'
@@ -299,13 +298,14 @@
     - service: alarm_control_panel.alarm_trigger
       entity_id: alarm_control_panel.ha
 
-# REGLA: ALARMA ACTIVADA ==> SIRENA + NOTIFICACION COMPLETA
+# REGLA: ALARMA ARMED_AWAY TRIGGERED ==> SIRENA + NOTIFICACION COMPLETA
 #
-- id: A7_alarma_disparada
+- id: A7
   alias: 'A7 Alarm Triggered'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
+      from: 'armed_away'
       to: 'triggered'
   action:
     # Script Notificación Alarma
@@ -319,13 +319,38 @@
 
             >>> ZONA: {{ states('sensor.alarm_zone') }}
 
-    # Aviso ALARMA con Xiaomi GW
-    - service: script.sirena_play_alarma
+    # AVISO SIRENAS ALARMA
+    - service: script.sirena_alarma_armed_away
+
+# REGLA: ALARMA ARMED_HOME TRIGGERED ==> SIRENA + NOTIFICACION COMPLETA
+#
+- id: A8
+  alias: 'A8 Alarm Triggered'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.ha
+      from: 'armed_away'
+      to: 'triggered'
+  action:
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> URGENTE: ALARMA PERIMETRO ACTIVADA
+
+            >>> ZONA: {{ states('sensor.alarm_zone') }}
+
+    # AVISO SIRENAS ALARMA
+    - service: script.sirena_alarma_armed_home
+
 
 # REGLA: TRIGGER DESARMADO AUTOMATICO AL AMANECER
 #
-- id: A8_alarm_home_auto_disarm
-  alias: 'A8 Alarm Home Auto Disarm'
+- id: A9
+  alias: 'A9 Alarm Home Auto Disarm'
   trigger:
     - platform: sun
       event: sunrise
@@ -358,8 +383,8 @@
 #
 # REGLA: APAGADO BOTON PANICO
 #
-- id: A9_alarm_boton_panico_off
-  alias: 'A9 Alarm Boton Panico Off'
+- id: A10
+  alias: 'A10 Alarm Boton Panico Off'
   trigger:
     platform: state
     entity_id: input_boolean.panic_button
@@ -372,8 +397,8 @@
 #
 # REGLA: BOTON APAGADO ESPHOME-SW1 ==> SIRENA OFF
 #
-- id: A10_alarm_sirena_off
-  alias: 'A10 Alarm Sirena Interior Off'
+- id: A11
+  alias: 'A12 Alarm Sirena Interior Off'
   trigger:
     platform: state
     entity_id: binary_sensor.esphome_bas_sw0_boton
@@ -389,8 +414,8 @@
 #
 # REGLA: AVISO ALARMA POR SENSOR VIBRACION EN PUERTA RACK COMUNICACIONES ESTUDIO
 #
-- id: A11_alarma_Sensor_Vibracion_Rack_Estudio
-  alias: 'A11 Alarm Sensor Vibracion Rack Estudio'
+- id: A12
+  alias: 'A12 Alarm Sensor Vibracion Rack Estudio'
   trigger:
     - platform: event
       event_type: xiaomi_aqara.movement
@@ -438,7 +463,7 @@
 #                'device_tracker.aaf_ios',
 #                'device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195']
 
-- id: update_meta_tracker
+- id: U1
   alias: "Update Device Meta Tracker"
   initial_state: 'on'
   trigger:
@@ -1003,7 +1028,7 @@
       entity_id: light.hue_estudio
       data:
         transition: 10
-    - service: switch.turn_on
+    - service: switch.turn_off
       entity_id:
         - switch.esphome_bas_sw2
     #- service: light.turn_off

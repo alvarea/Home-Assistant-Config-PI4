@@ -79,7 +79,7 @@
   action:
     # Aviso ALARMA con Xiaomi Sirena
     - service: script.turn_on
-      entity_id: script.sirena_play_alarma
+      entity_id: script.sirena_alarma
     # Notifica Telegram
     - service: script.turn_on
       #entity_id: script.notifica_alarma CAMBIAR GO LIVE
