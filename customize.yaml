@@ -243,6 +243,12 @@ sensor.humidity_158d00025efda4:
   friendly_name: Dorm.MFC
   icon: mdi:water-percent
 
+binary_sensor.motion_sensor_158d0002ea1d0f:
+  friendly_name: Presencia Dormitorio
+
+sensor.illumination_158d0002ea1d0f:
+  friendly_name: Dormitorio
+
 # Scripts Timer Piscina
 #
 script.piscina_timer_start:

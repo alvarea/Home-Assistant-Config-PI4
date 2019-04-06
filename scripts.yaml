@@ -370,24 +370,16 @@ notifica_evento:
 # CONTROL DE LUCES Y ALUMBRADO                                                #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-luces_on_entrada_sensor:
-  alias: 'Luces On Entrada si Sensor'
+
+luces_dormitorio_lectura_aac:
+  alias: 'Luces Dormitorio Lectura Warm'
   sequence:
     - service: light.turn_on
-      entity_id: light.hue_entrada
+      entity_id: light.esphome_lb1_l01
       data:
-        brightness: 120
-        rgb_color: [254, 0, 0]
-    # Si Alarm.Armed_Home => Piloto ON
-    - service: script.luz_on_armed_home
-
-luces_off_entrada_sensor:
-  alias: 'Luces Off Entrada si Sensor'
-  sequence:
-    - service: light.turn_off
-      entity_id:
-        - light.hue_entrada
-        - light.gateway_light_7811dcb788fa
+        white_value: 0
+        rgb_color: [255, 190, 0]
+        brightness: 255
 
 luz_on_armed_home:
   alias: 'Luces On Entrada si Sensor'
@@ -538,15 +530,6 @@ luces_jardin_check_4ch_ch4:
   - service: switch.turn_on
     entity_id: switch.esphome_4ch_relay_4
 
-luces_dormitorio_lectura_warm:
-  alias: 'Luces Dormitorio Lectura Warm'
-  sequence:
-  - service: light.turn_on
-    entity_id: light.esphome_lb1_l01
-    data:
-      white_value: 0
-      rgb_color: [255, 190, 0]
-      brightness: 255
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # SCRIPTS DE DEPURADORA PISCINA                                               #

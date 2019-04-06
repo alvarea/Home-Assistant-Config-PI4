@@ -94,14 +94,6 @@ luces_casa_grp:
     - light.luces_planta_baja
     - light.luces_planta_alta
 
-luces_salon_grp:
-  name: Luces Salon
-  entities:
-    - light.room_salon
-    - light.hue_cilindro
-    - light.hue_seises
-    - light.hue_lectura
-
 luces_entrada_grp:
   name: Luces Entrada
   entities:
@@ -115,11 +107,23 @@ luces_cocina_grp:
   entities:
     - light.hue_cocina
 
+luces_salon_grp:
+  name: Luces Salon
+  entities:
+    - light.hue_cilindro
+    - light.hue_seises
+    - light.hue_lectura
+    - light.hue_lightstrip_plus_1
+
 luces_estudio_grp:
   name: Luces Estudio
   entities:
     - light.hue_estudio
-    #- light.esphome_lb1_l01
+
+luces_dormitorio_grp:
+  name: Luces Dormitorio Principal
+  entities:
+    - light.esphome_lb1_l01
 
 luces_exterior_grp:
   name: Luces Exterior
