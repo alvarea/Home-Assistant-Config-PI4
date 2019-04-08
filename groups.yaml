@@ -62,6 +62,7 @@ alarma_sensor_dormitorios_grp:
   name: Sensores Dormitorios
   view: no
   entities:
+    - binary_sensor.motion_sensor_158d0002ea1d0f
     - binary_sensor.door_window_sensor_158d000201dddb
     - binary_sensor.door_window_sensor_158d00020b7c27
     - binary_sensor.door_window_sensor_158d00020457e0
@@ -82,6 +83,7 @@ sensores_alarm_away:
   name: Grupo Sensores Away
   view: no
   entities:
+    - binary_sensor.motion_sensor_158d0002ea1d0f # Presencia Dormitorio
     - binary_sensor.motion_sensor_158d0001e55903 # Presencia Entrada Interior
     - binary_sensor.motion_sensor_158d0001e464a6 # Presencia Estudio
     - binary_sensor.motion_sensor_158d0001e05661 # Presencia Salón
@@ -119,11 +121,13 @@ luces_estudio_grp:
   name: Luces Estudio
   entities:
     - light.hue_estudio
+    - light.esphome_lb1_l01
 
 luces_dormitorio_grp:
   name: Luces Dormitorio Principal
   entities:
-    - light.esphome_lb1_l01
+    - light.hue_ambiance_candle_1
+    - light.hue_ambiance_candle_1_2
 
 luces_exterior_grp:
   name: Luces Exterior

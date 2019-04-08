@@ -688,7 +688,7 @@
 
             >>> Activado el control de Duerme en Casa.
 
-- id: T07_family_sleep_home_aaf
+- id: T07_family_sleep_home_paf
   alias: 'T05 Sleep Family Check PAF'
   trigger:
     - platform: time
@@ -713,7 +713,7 @@
         variables:
           title: '*FAMILY@HOME*'
           message: >
-            >>> Agu está en casa a las 23:00
+            >>> Paloma está en casa a las 23:00
 
             >>> Activado el control de Duerme en Casa.
 
@@ -944,7 +944,7 @@
       # entre las 18:00 y las 23:59 máximo.
       - condition: time
         after: '18:00:00'
-        before: '23:59:00'
+        before: '23:59:59'
       # si el sensor de luz está es < 1 lumx
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002ea1d0f
@@ -954,17 +954,12 @@
     - service: automation.turn_off
       entity_id: automation.l08
     # Luces On
-    - service: light.turn_on
-      entity_id: light.esphome_lb1_l01
-      data:
-        rgb_color: [255, 190, 0]
-        brightness: 255
-        white_value: 255
+    - service: script.luces_dormitorio_escena_relax
     # Espera de 5'
     - delay: '00:05:00'
     # Luces Off
-    - service: light.turn_off
-      entity_id: light.esphome_lb1_l01
+    - service: script.turn_off
+      entity_id: light.dormitorio
     # Regla On
     - service: automation.turn_on
       entity_id: automation.l08
@@ -973,16 +968,17 @@
   alias: 'L09 Luces On Dormitorio Warning'
   trigger:
     - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c # Puerta Entrada
+      entity_id: binary_sensor.motion_sensor_158d0002ea1d0f       # Sensor Dormitorio
       to: 'on'
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e637f6 # Sensor Exterior
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c  # Puerta Entrada
       to: 'on'
     - platform: state
-      entity_id: binary_sensor.motion_sensor_158d0001e55903 # Sensor Entrada
+      entity_id: binary_sensor.motion_sensor_158d0001e637f6       # Sensor Exterior
       to: 'on'
-      #- switch.esphome_bas_sw2 # Test Regla con Luz Escalera
-      #- binary_sensor.motion_sensor_158d0001e05661 # Sensor Salón
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e55903       # Sensor Entrada
+      to: 'on'
   condition:
     condition: and
     conditions:
@@ -993,23 +989,13 @@
       - condition: sun
         after: sunset
   action:
-    - service: light.turn_on
-      entity_id: light.esphome_lb1_l01
-      data:
-        white_value: 0
-        rgb_color: [255, 0, 0]
-        brightness: 255
-    - delay: '00:00:30'
-    - service: light.turn_on
-      entity_id: light.esphome_lb1_l01
-      data:
-        white_value: 0
-        rgb_color: [255, 190, 0]
-        brightness: 255
+    # Luces On
+    - service: script.luces_dormitorio_escena_dimmed
+    - delay: '00:00:10'
     - service: light.turn_off
-      entity_id: light.esphome_lb1_l01
+      entity_id: light.dormitorio
       data:
-        transition: 120
+        transition: 10
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1031,9 +1017,8 @@
       action_type: tap_twice
   action:
     - service: light.toggle
-      entity_id:
-        - light.hue_estudio
-        #- light.esphome_lb1_l01
+      entity_id: light.estudio
+      #- light.esphome_lb1_l01
     - service: switch.toggle
       entity_id:
         - switch.esphome_bas_sw2
@@ -1078,8 +1063,8 @@
     - service: switch.turn_off
       entity_id:
         - switch.esphome_bas_sw2
-    #- service: light.turn_off
-    #  entity_id: light.esphome_lb1_l01
+    - service: light.turn_off
+      entity_id: light.esphome_lb1_l01
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

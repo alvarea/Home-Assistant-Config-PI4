@@ -371,15 +371,38 @@ notifica_evento:
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-luces_dormitorio_lectura_aac:
-  alias: 'Luces Dormitorio Lectura Warm'
+luces_dormitorio_escena_read:
+  alias: 'Luces Dormitorio Escena Lectura'
   sequence:
-    - service: light.turn_on
-      entity_id: light.esphome_lb1_l01
+    # El nombre de la escena es case sensitive
+    - service: hue.hue_activate_scene
       data:
-        white_value: 0
-        rgb_color: [255, 190, 0]
-        brightness: 255
+        group_name: "Dormitorio"
+        scene_name: "Read"
+
+luces_dormitorio_escena_relax:
+  alias: 'Luces Dormitorio Escena Relax'
+  sequence:
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Dormitorio"
+        scene_name: "Relax"
+
+luces_dormitorio_escena_dimmed:
+  alias: 'Luces Dormitorio Escena Tenue'
+  sequence:
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Dormitorio"
+        scene_name: "Dimmed"
+
+luces_dormitorio_escena_nightlight:
+  alias: 'Luces Dormitorio Escena Noche'
+  sequence:
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Dormitorio"
+        scene_name: "Nightlight"
 
 luz_on_armed_home:
   alias: 'Luces On Entrada si Sensor'
