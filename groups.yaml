@@ -100,7 +100,7 @@ luces_entrada_grp:
   name: Luces Entrada
   entities:
     - light.hue_entrada
-    - light.hue_pasillo
+    #- light.hue_pasillo
     - switch.wall_switch_left_158d0002236e75
     - light.gateway_light_7811dcb788fa
 

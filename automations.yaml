@@ -528,7 +528,7 @@
     # Script Activación Alarma ARM AWAY
     - service: script.homy_armado_total
     # Delay para no bloquear notificaciones
-    - delay: 0:02
+    - delay: 0:01
     # Script Luces Apagado Total
     - service: script.luces_off
     # Notifica a Familia NADIE en Casa
@@ -540,9 +540,6 @@
           message: >
             >>> EVENTO: Nadie en casa
             >>> ALARMA: Armado Total en curso
-
-
-      #     >>> EVENTO: Último en Salir {{ states('sensor.family_last_tracking') }}
 
 - id: T02_family_at_home
   alias: 'T02 Family at Home'
@@ -744,10 +741,6 @@
     - platform: sun
       event: sunset
       offset: "+02:30:00"
-  condition:
-    condition: state
-    entity_id: switch.wall_switch_right_158d0002236e75
-    state: 'on'
   action:
     # Script Luces Exterior Off
     - service: script.luces_exterior_off
@@ -839,7 +832,7 @@
             before: sunrise
             # en el amanecer -30m / - 60m
             #before_offset: "00:15:00"     # Horario Invierno GMT+1
-            before_offset: "00:30:00"      # Horario Verano GMT+2
+            #before_offset: "00:30:00"      # Horario Verano GMT+2
           - condition: numeric_state
             entity_id: sensor.illumination_158d0001e637f6
             below: 1
@@ -958,7 +951,7 @@
     # Espera de 5'
     - delay: '00:05:00'
     # Luces Off
-    - service: script.turn_off
+    - service: light.turn_off
       entity_id: light.dormitorio
     # Regla On
     - service: automation.turn_on
