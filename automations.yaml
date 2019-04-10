@@ -430,7 +430,7 @@
   action:
     # Script Notificación Evento
     - service: script.turn_on
-      entity_id: script.notifica_alarma
+      entity_id: script.notifica_warning
       data:
         variables:
           title: '*ALARMA HOMY*'
@@ -827,12 +827,11 @@
           - condition: sun
             after: sunset
             #after_offset: "00:30:00"     # Horario Invierno GMT+1
-            after_offset: "01:00:00"      # Horario Verano GMT+2
+            after_offset: "+02:00:00"      # Horario Verano GMT+2
           - condition: sun
             before: sunrise
-            # en el amanecer -30m / - 60m
-            #before_offset: "00:15:00"     # Horario Invierno GMT+1
-            #before_offset: "00:30:00"      # Horario Verano GMT+2
+            #before_offset: "00:15:00"     # Horario Invierno GMT+1, en el amanecer +15m / +60m
+            #before_offset: "-00:30:00"      # Horario Verano GMT+2, el amanecer -30m
           - condition: numeric_state
             entity_id: sensor.illumination_158d0001e637f6
             below: 1
@@ -928,12 +927,12 @@
     conditions:
       # siempre que la luz no esté ya encendida
       - condition: state
-        entity_id: light.esphome_lb1_l01
+        entity_id: light.dormitorio
         state: 'off'
-      # en la puesta de sol - 1h
+      # en la puesta de sol + 1h
       - condition: sun
         after: sunset
-        after_offset: "-01:00:00"
+        after_offset: "+01:00:00"
       # entre las 18:00 y las 23:59 máximo.
       - condition: time
         after: '18:00:00'
@@ -941,7 +940,7 @@
       # si el sensor de luz está es < 1 lumx
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002ea1d0f
-        below: 1
+        below: 3
   action:
     # Regla Off
     - service: automation.turn_off
