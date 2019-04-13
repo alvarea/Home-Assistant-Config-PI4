@@ -142,8 +142,8 @@
 #
 # REGLA: ALARMA DISARMED A <PENDING>
 #
-- id: A0_alarma_disarmed_pending
-  alias: 'A0 Alarm Disarmed to Pending'
+- id: A0
+  alias: 'A0 Alarma Disarmed to Pending'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -159,8 +159,8 @@
 #
 # REGLA: ALARMA ARMED A <PENDING>
 #
-- id: A1_alarma_armed_pending
-  alias: 'A1 Alarm Armed to Pending'
+- id: A1
+  alias: 'A1 Alarma Armed to Pending'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -180,12 +180,15 @@
 #
 # REGLA: ARMADO COMPLETADO
 #
-- id: A2_alarm_armado_correcto
-  alias: 'A2 Alarm Armed Away'
+- id: A2
+  alias: 'A2 Alarma Armado OK'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
       to: 'armed_away'
+    - platform: state
+      entity_id: alarm_control_panel.ha
+      to: 'armed_home'
   action:
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
@@ -197,34 +200,14 @@
         variables:
           title: '*ALARMA HOMY*'
           message: >
-            >>> ESTADO: Sistema Armado Total
-
-      # >>> MODO: {{ trigger.to_state.state }}
-
-- id: A3_alarma_armado_home_correcto
-  alias: 'A3 Alarm Armed Home'
-  trigger:
-    - platform: state
-      entity_id: alarm_control_panel.ha
-      to: 'armed_home'
-  action:
-    # Aviso sonoro con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.sirena_xiaomi_play_alarm_armed
-  # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*ALARMA HOMY*'
-          message: >
-            >>> ESTADO: Sistema Armado Parcial
+            >>> ESTADO: Sistema Armado
+            >>> MODO: {{ trigger.to_state.state }}
 
 #
 # REGLA: DESARMADO OK => SIRENA OFF, AVISO Y NOTIFICACION
 #
-- id: A4_alarma_activa_desarmada
-  alias: 'A4 Alarm Disarmed'
+- id: A4
+  alias: 'A4 Alarma Disarmed'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
@@ -247,7 +230,7 @@
 #
 # REGLA: TRIGGER SENSOR => MODO ARMADO AWAY => ALARMA TRIGGERED
 #
-- id: A5_alarma_trigger_armed_away
+- id: A5
   alias: 'A5 Alarm Trigger Armed Away'
   trigger:
     - platform: state
@@ -255,11 +238,21 @@
         - group.sensores_alarm_home
         - group.sensores_alarm_away
       to: 'on'
+    # Los sensores vibración solo saltan por trigger = event
     - platform: event
       event_type: xiaomi_aqara.movement
       event_data:
-        entity_id: binary_sensor.vibration_158d0002a4eacc
+        entity_id:
+          - binary_sensor.vibration_158d0002b15e3b # Rack Comunicaciones
+          - binary_sensor.vibration_158d0002a4eacc # Puerta atras salon
         action_type: vibrate
+    - platform: event
+      event_type: xiaomi_aqara.movement
+      event_data:
+        entity_id:
+          - binary_sensor.vibration_158d0002b15e3b # Rack Comunicaciones
+          - binary_sensor.vibration_158d0002a4eacc # Puerta atras salon
+        action_type: tilt
   condition:
     condition: and
     conditions:
@@ -276,17 +269,27 @@
 #
 # REGLA: TRIGGER SENSOR => MODO ARMADO HOME => ALARMA TRIGGERED
 #
-- id: A6_alarma_trigger_armed_home
+- id: A6
   alias: 'A6 Alarm Trigger Armed Home'
   trigger:
     - platform: state
       entity_id: group.sensores_alarm_home
       to: 'on'
+    # Los sensores vibración solo saltan por trigger = event
     - platform: event
       event_type: xiaomi_aqara.movement
       event_data:
-        entity_id: binary_sensor.vibration_158d0002b15e3b
-        movement_type: vibrate
+        entity_id:
+          - binary_sensor.vibration_158d0002b15e3b # Rack Comunicaciones
+          - binary_sensor.vibration_158d0002a4eacc # Puerta atras salon
+        action_type: vibrate
+    - platform: event
+      event_type: xiaomi_aqara.movement
+      event_data:
+        entity_id:
+          - binary_sensor.vibration_158d0002b15e3b # Rack Comunicaciones
+          - binary_sensor.vibration_158d0002a4eacc # Puerta atras salon
+        action_type: tilt
   condition:
     - condition: state
       entity_id: alarm_control_panel.ha
@@ -430,12 +433,12 @@
   action:
     # Script Notificación Evento
     - service: script.turn_on
-      entity_id: script.notifica_warning
+      entity_id: script.notifica_evento
       data:
         variables:
           title: '*ALARMA HOMY*'
           message: >
-            >>> SENSOR VIBRACION: PUERTA RACK COMUNICACIONES HOMY
+            >>> SENSOR VIBRACION: RACK COMUNICACIONES
             >>> SALA: ESTUDIO
 
 #-----------------------------------------------------------------------------#
@@ -528,18 +531,9 @@
     # Script Activación Alarma ARM AWAY
     - service: script.homy_armado_total
     # Delay para no bloquear notificaciones
-    - delay: 0:01
+    - delay: 0:03
     # Script Luces Apagado Total
     - service: script.luces_off
-    # Notifica a Familia NADIE en Casa
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*FAMILY_HOME: NADIE*'
-          message: >
-            >>> EVENTO: Nadie en casa
-            >>> ALARMA: Armado Total en curso
 
 - id: T02_family_at_home
   alias: 'T02 Family at Home'
@@ -588,10 +582,9 @@
         state: disarmed
       - condition: time
         after: '01:00:00'
-        # en el amanecer -2h'
+        # antes del amanecer
       - condition: sun
         before: sunrise
-        before_offset: "01:00:00"
       - condition: numeric_state
         entity_id: sensor.baye_probability_aaf
         above: 98
@@ -798,17 +791,6 @@
   action:
     - service: light.turn_on
       entity_id: light.room_salon
-    # Notifica a Familia
-    #- service: script.turn_on
-    #  entity_id: script.notifica_evento
-    #  data:
-    #    variables:
-    #      title: '*LUCES: ON*'
-    #      message: >
-    #        >>> EVENTO: El sol se pone en 1hora
-    #
-    #        >>> LUCES: Luces Salón On
-
 
 - id: L05_luces_on_exterior_segun_sensor
   alias: 'L05 Luces On Exterior Segun Sensor'
@@ -827,14 +809,14 @@
           - condition: sun
             after: sunset
             #after_offset: "00:30:00"     # Horario Invierno GMT+1
-            after_offset: "+02:00:00"      # Horario Verano GMT+2
+            after_offset: "+02:00:00"     # Horario Verano GMT+2
           - condition: sun
             before: sunrise
-            #before_offset: "00:15:00"     # Horario Invierno GMT+1, en el amanecer +15m / +60m
-            #before_offset: "-00:30:00"      # Horario Verano GMT+2, el amanecer -30m
-          - condition: numeric_state
-            entity_id: sensor.illumination_158d0001e637f6
-            below: 1
+            #before_offset: "00:15:00"    # Horario Invierno GMT+1, en el amanecer +15m / +60m
+            #before_offset: "-00:30:00"   # Horario Verano GMT+2, el amanecer -30m
+          #- condition: numeric_state
+          #  entity_id: sensor.illumination_158d0001e637f6
+          #  below: 1
   action:
     - service: script.luces_exterior_timer
 
