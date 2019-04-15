@@ -36,10 +36,6 @@
         entity_id:
           - group.all_automations
 
-    # Reglas deshabilitadas temporalmente
-    #- service: automation.turn_off
-    #  entity_id: automation.l02_luces_off_exterior_all_family_home
-
 #
 # CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
 #
@@ -201,7 +197,11 @@
           title: '*ALARMA HOMY*'
           message: >
             >>> ESTADO: Sistema Armado
-            >>> MODO: {{ trigger.to_state.state }}
+
+
+    # Revisar
+    # https://community.home-assistant.io/t/automation-with-is-state-trigger-to-state-on-not-working/54691/2
+    #        >>> MODO: "{{ trigger.to_state.state }}"
 
 #
 # REGLA: DESARMADO OK => SIRENA OFF, AVISO Y NOTIFICACION
@@ -717,13 +717,14 @@
   alias: 'L01 Luces On Exterior Sunset'
   trigger:
     - platform: sun
+      # offset: "-00:30:00"   # Horario Invierno GMT+1
+      # offset: "+00:30:00"   # Horario Invierno GMT+2
       event: sunset
-      # offset: "+00:30:00"   # Horario Invierno GMT+1
-      offset: "+01:00:00"     # Horario Verano GMT+2
+      offset: "+01:10:00"     # Horario Verano GMT+2
   condition:
     condition: numeric_state
     entity_id: sensor.illumination_158d0001e637f6
-    below: 1
+    below: 50
   action:
     # Encendido Luces Exterior y Jardín
     - service: script.luces_exterior_on
@@ -732,8 +733,10 @@
   alias: 'L02 Luces Off Exterior Sunset'
   trigger:
     - platform: sun
+      # offset: "+02:30:00"   # Horario Invierno GMT+1
+      # offset: "+03:30:00"   # Horario Invierno GMT+2
       event: sunset
-      offset: "+02:30:00"
+      offset: "+03:30:00"
   action:
     # Script Luces Exterior Off
     - service: script.luces_exterior_off
@@ -807,9 +810,10 @@
       - condition: or  # 'when dark' condition: either after sunset or before sunrise
         conditions:
           - condition: sun
+            # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
+            # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
             after: sunset
-            #after_offset: "00:30:00"     # Horario Invierno GMT+1
-            after_offset: "+02:00:00"     # Horario Verano GMT+2
+            after_offset: "00:30:00"     # Horario Invierno GMT+1
           - condition: sun
             before: sunrise
             #before_offset: "00:15:00"    # Horario Invierno GMT+1, en el amanecer +15m / +60m
@@ -869,8 +873,9 @@
     condition: or  # 'when dark' condition: either after sunset or before sunrise
     conditions:
       - condition: sun
+        # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
+        # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
         after: sunset
-        # en la puesta de sol - 30'
         after_offset: "-00:30:00"
       - condition: sun
         before: sunrise
@@ -911,18 +916,19 @@
       - condition: state
         entity_id: light.dormitorio
         state: 'off'
-      # en la puesta de sol + 1h
-      - condition: sun
-        after: sunset
-        after_offset: "+01:00:00"
       # entre las 18:00 y las 23:59 máximo.
       - condition: time
         after: '18:00:00'
         before: '23:59:59'
+      - condition: sun
+        # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
+        # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
+        after: sunset
+        after_offset: "-00:30:00"
       # si el sensor de luz está es < 1 lumx
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002ea1d0f
-        below: 3
+        below: 5
   action:
     # Regla Off
     - service: automation.turn_off
