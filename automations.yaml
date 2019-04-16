@@ -519,7 +519,7 @@
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-- id: T01_family_away
+- id: T01
   alias: 'T01 Family Away'
   trigger:
     # Ya no hay nadie en casa
@@ -535,7 +535,7 @@
     # Script Luces Apagado Total
     - service: script.luces_off
 
-- id: T02_family_at_home
+- id: T02
   alias: 'T02 Family at Home'
   trigger:
     # Hay alguien en casa
@@ -555,7 +555,7 @@
           message: >
             >>> EVENTO: Primero en Entrar {{ states('sensor.family_last_tracking') }}
 
-- id: T03_Armed_home_family_at_home
+- id: T03
   alias: 'T03 Armed Home Family at Home'
   trigger:
     - platform: time
@@ -606,7 +606,7 @@
 
             >>> ESTADO: Sistema Armado Parcial
 
-- id: T04_family_sleep_home
+- id: T04
   alias: 'T04 Sleep Family Home'
   trigger:
     # Hay alguien en casa
@@ -620,7 +620,7 @@
     # Llamada al contador de personas que actualiza sensor.family_home
     - service: python_script.countpeople
 
-- id: T05_family_sleep_home_mfc
+- id: T05
   alias: 'T05 Sleep Family Check MFC'
   trigger:
     - platform: time
@@ -649,7 +649,7 @@
 
             >>> Activado el control de Duerme en Casa.
 
-- id: T06_family_sleep_home_aaf
+- id: T06
   alias: 'T05 Sleep Family Check AAF'
   trigger:
     - platform: time
@@ -678,7 +678,7 @@
 
             >>> Activado el control de Duerme en Casa.
 
-- id: T07_family_sleep_home_paf
+- id: T07
   alias: 'T05 Sleep Family Check PAF'
   trigger:
     - platform: time
@@ -713,14 +713,14 @@
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-- id: L01_luces_on_exterior_sunset
+- id: L01
   alias: 'L01 Luces On Exterior Sunset'
   trigger:
     - platform: sun
       # offset: "-00:30:00"   # Horario Invierno GMT+1
       # offset: "+00:30:00"   # Horario Invierno GMT+2
       event: sunset
-      offset: "+01:10:00"     # Horario Verano GMT+2
+      offset: "+00:30:00"     # Horario Verano GMT+2
   condition:
     condition: numeric_state
     entity_id: sensor.illumination_158d0001e637f6
@@ -729,19 +729,19 @@
     # Encendido Luces Exterior y Jardín
     - service: script.luces_exterior_on
 
-- id: L02_luces_off_exterior_sunset
+- id: L02
   alias: 'L02 Luces Off Exterior Sunset'
   trigger:
     - platform: sun
       # offset: "+02:30:00"   # Horario Invierno GMT+1
-      # offset: "+03:30:00"   # Horario Invierno GMT+2
+      # offset: "+02:30:00"   # Horario Invierno GMT+2
       event: sunset
-      offset: "+03:30:00"
+      offset: "+02:30:00"
   action:
     # Script Luces Exterior Off
     - service: script.luces_exterior_off
 
-- id: L03_luces_off_exterior_all_family_home
+- id: L03
   alias: 'L03 Luces Off Exterior All Family Home'
   trigger:
     # Los que duermen ya están en casa
@@ -780,22 +780,27 @@
 
             >>> LUCES: Alumbrado Exterior Off
 
-- id: L04_luces_on_salon_sunset
+- id: L04
   alias: 'L04 Luces On Salon Puesta Sol 30m'
   trigger:
     - platform: sun
       event: sunset
       offset: "-00:30:00"
   condition:
-    # Hay alguien en casa
-    condition: state
-    entity_id: binary_sensor.family_any_home
-    state: 'on'
+    condition: and
+    conditions:
+        # Hay alguien en casa
+      - condition: state
+        entity_id: binary_sensor.family_any_home
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0001e05661
+        below: 50
   action:
     - service: light.turn_on
-      entity_id: light.room_salon
+      entity_id: light.salon
 
-- id: L05_luces_on_exterior_segun_sensor
+- id: L05
   alias: 'L05 Luces On Exterior Segun Sensor'
   trigger:
     - platform: state
@@ -824,7 +829,7 @@
   action:
     - service: script.luces_exterior_timer
 
-- id: L06_luces_off_sunrise
+- id: L06
   alias: 'L06 Luces Off Before Sunrise'
   trigger:
     - platform: time
@@ -970,7 +975,7 @@
         after: sunset
   action:
     # Luces On
-    - service: script.luces_dormitorio_escena_dimmed
+    - service: script.luces_dormitorio_escena_relax
     - delay: '00:00:10'
     - service: light.turn_off
       entity_id: light.dormitorio
