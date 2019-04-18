@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Home-Assistant-Config.iml" filepath="$PROJECT_DIR$/.idea/Home-Assistant-Config.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Home-Assistant/.idea/Home-Assistant.iml" filepath="$PROJECT_DIR$/../Home-Assistant/.idea/Home-Assistant.iml" />
     </modules>
   </component>
 </project>
