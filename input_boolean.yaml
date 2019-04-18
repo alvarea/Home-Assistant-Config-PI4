@@ -1,5 +1,5 @@
 #
-# INTERRUPTORES BOOLEAN => ON/OFF Tracking Family
+# ON/OFF Tracking Family
 #
   family_home_mfc:
     name: Tracking Malen on/off
@@ -19,7 +19,7 @@
     icon: mdi:cellphone-iphone
 
 
-# INTERRUPTORES BOOLEAN => ON/OFF DUERME EN CASA
+# ON/OFF DUERME EN CASA
 #
   family_sleep_home_mfc:
     name: Malen Duerme en Casa
@@ -38,7 +38,7 @@
     initial: on
     icon: mdi:sleep
 
-# INTERRUPTORES BOOLEAN => Control alarma y notificaciones
+# Control alarma y notificaciones
 #
   panic_button:
     name: Alarma Botón Pánico
@@ -57,14 +57,14 @@
     name: Mute Sonidos Sirena
     icon: mdi:volume-off
 
-# INTERRUPTORES BOOLEAN => Depuradora Piscina
+# Depuradora Piscina
 #
   piscina_programador:
     name: Programador On/Off
     initial: on
     icon: mdi:dip-switch
 
-# INTERRUPTORES BOOLEAN => Programador Diario Luces Jardín
+# Programador Diario Luces Jardín
 
   jardin_programador_xia_ext:
     name: Prog. Faroles Exterior
@@ -101,8 +101,7 @@
     initial: off
     icon: mdi:power-settings
 
-
-# INTERRUPTORES BOOLEAN => Programador Calefacción
+# Programador Calefacción
 
   calefac_programador_mfc:
     name: Prog. Calefacción MFC
@@ -114,9 +113,17 @@
     initial: off
     icon: mdi:power-settings
 
-# INTERRUPTORES BOOLEAN => Dormitorio Warning Mode
+# Dormitorio Warning Mode
 #
   dormitorio_warning:
     name: Dormitorio Warning Mode
     initial: off
     icon: mdi:heart-multiple
+
+# Bloqueo del Sensor Vibración Rack
+#
+  rack_sensor_vibration_disable:
+    name: Bloqueo Sensor Vibración Rack
+    initial: off
+    icon: mdi:trackpad-lock
+

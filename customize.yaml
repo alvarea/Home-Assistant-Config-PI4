@@ -122,7 +122,7 @@ sensor.illumination_158d0001e637f6:
 sensor.temperature_158d00025d9289:
   friendly_name: Temperatura Exterior
   icon: mdi:thermometer
-sensor.pressure_158d0002e97092:
+sensor.pressure_158d00025d9289:
   icon: mdi:gauge
   friendly_name: P.Atm. Exterior
 sensor.humidity_158d00025d9289:
@@ -398,7 +398,7 @@ sensor.esphome_pow_sw2_voltage:
 # SERIE SONOFF B1
 #
 light.esphome_lb1_l01:
-  friendly_name: Luz Estudio Rack
+  friendly_name: Luz Estudio Escalera
 
 # UPS APC
 sensor.ups_status:

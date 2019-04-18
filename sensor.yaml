@@ -605,4 +605,29 @@
         friendly_name: 'Duración Programa Corto (Seg)'
         icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_manual_minutos') is not none }}"
 
+      densidad_sensor_humo:
+        # smoke_sensor_158d0001fd321c
+        friendly_name: 'Batería Magic Cube'
+        value_template: "{{ states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.density|default(-1)|int if states.binary_sensor.smoke_sensor_158d0001fd321c is not none }}"
+        unit_of_measurement: '%'
+        icon_template: mdi:fire
 
+# Sensores Miflora
+#
+# sensor.bonsai_ficus_battery
+# sensor.bonsai_ficus_conductivity
+# sensor.bonsai_ficus_light_intensity
+# sensor.bonsai_ficus_moisture
+# sensor.bonsai_ficus_temperature
+
+  - platform: miflora
+    mac: 'C4:7C:8D:67:C1:9E'
+    name: Bonsai Ficus
+    force_update: false
+    median: 3
+    monitored_conditions:
+      - moisture
+      - light
+      - temperature
+      - conductivity
+      - battery

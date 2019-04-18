@@ -184,9 +184,10 @@ media_player:
 
 # XIAOMI AQARA GATEWAY
 xiaomi_aqara:
+  discovery_retry: 10
   gateways:
-    - mac: !secret xiaomi_gateway
-      key: !secret xiaomi_mac
+    - mac: !secret xiaomi_mac
+      key: !secret xiaomi_gateway
 
 # NMAP
 device_tracker:
@@ -299,7 +300,7 @@ light:
     name: Luces Planta Alta
     entities:
       - light.hue_estudio
-      #- light.esphome_lb1_l01
+      - light.esphome_lb1_l01
   - platform: group
     name: Luces Salon
     entities:
@@ -430,6 +431,25 @@ person:
 # The stream component provides a way to proxy live streams through Home Assistant.
 # The component currently only supports the HLS format.
 stream:
+
+# sensor.bonsai_ficus_battery
+# sensor.bonsai_ficus_conductivity
+# sensor.bonsai_ficus_light_intensity
+# sensor.bonsai_ficus_moisture
+# sensor.bonsai_ficus_temperature
+plant:
+  bonsai_ficus_2:
+    sensors:
+      moisture: sensor.bonsai_ficus_moisture
+      battery: sensor.bonsai_ficus_battery
+      temperature: sensor.bonsai_ficus_temperature
+      conductivity: sensor.bonsai_ficus_conductivity
+      brightness: sensor.bonsai_ficus_light_intensity
+    min_moisture: 20
+    max_moisture: 60
+    min_battery: 20
+    min_conductivity: 500
+    min_temperature: 15
 
 #TO DO
 #

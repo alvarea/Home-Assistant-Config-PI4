@@ -110,8 +110,6 @@
       from: 'off'
       to: 'on'
   action:
-    # Script Sirena Xiaomo Alarma Humo
-    - service: script.sirena_alarma_armed_home
     # Script Notificación Alarma
     - service: script.turn_on
       entity_id: script.notifica_alarma
@@ -430,6 +428,10 @@
       event_data:
         entity_id: binary_sensor.vibration_158d0002b15e3b
         movement_type: tilt
+  condition:
+    - condition: state
+      entity_id: input_boolean.rack_sensor_vibration_disable
+      state: 'off'
   action:
     # Script Notificación Evento
     - service: script.turn_on
@@ -1002,11 +1004,12 @@
       action_type: tap_twice
   action:
     - service: light.toggle
-      entity_id: light.estudio
-      #- light.esphome_lb1_l01
-    - service: switch.toggle
       entity_id:
-        - switch.esphome_bas_sw2
+        - light.estudio
+        - light.esphome_lb1_l01
+    #- service: switch.toggle
+    #  entity_id:
+    #    - switch.esphome_bas_sw2
 
 - id: L11_cube_flip90_light_on
   alias: 'L11 Cube Flip90 Light on'
@@ -1025,12 +1028,12 @@
     - service: switch.turn_on
       entity_id:
         - switch.esphome_bas_sw2
-    #- service: light.turn_on
-    #  entity_id: light.esphome_lb1_l01
-    #  data:
-    #    white_value: 200
-    #    rgb_color: [254, 126, 0]
-    #    brightness: 255
+    - service: light.turn_on
+      entity_id: light.esphome_lb1_l01
+      data:
+        white_value: 200
+        rgb_color: [254, 126, 0]
+        brightness: 255
 
 - id: L12_cube_shake_light_off
   alias: 'L12 Cube Shake Light off'
@@ -1045,11 +1048,11 @@
       entity_id: light.hue_estudio
       data:
         transition: 10
-    - service: switch.turn_off
-      entity_id:
-        - switch.esphome_bas_sw2
     - service: light.turn_off
       entity_id: light.esphome_lb1_l01
+    #- service: switch.turn_off
+    #  entity_id:
+    #    - switch.esphome_bas_sw2
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
