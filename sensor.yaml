@@ -607,8 +607,8 @@
 
       densidad_sensor_humo:
         # smoke_sensor_158d0001fd321c
-        friendly_name: 'Batería Magic Cube'
-        value_template: "{{ states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.density|default(-1)|int if states.binary_sensor.smoke_sensor_158d0001fd321c is not none }}"
+        friendly_name: 'Densidad Humo Cocina'
+        value_template: "{{ states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.density|int if states.binary_sensor.smoke_sensor_158d0001fd321c is not none }}"
         unit_of_measurement: '%'
         icon_template: mdi:fire
 
@@ -622,7 +622,7 @@
 
   - platform: miflora
     mac: 'C4:7C:8D:67:C1:9E'
-    name: Bonsai Ficus
+    name: Bonsai Ficusde
     force_update: false
     median: 3
     monitored_conditions:
