@@ -614,17 +614,17 @@
 
 # Sensores Miflora
 #
-# sensor.bonsai_ficus_battery
-# sensor.bonsai_ficus_conductivity
-# sensor.bonsai_ficus_light_intensity
-# sensor.bonsai_ficus_moisture
-# sensor.bonsai_ficus_temperature
+# sensor.bonsai_ficus2_battery
+# sensor.bonsai_ficus2_conductivity
+# sensor.bonsai_ficus2_light_intensity
+# sensor.bonsai_ficus2_moisture
+# sensor.bonsai_ficus2_temperature
 
   - platform: miflora
     mac: 'C4:7C:8D:67:C1:9E'
-    name: Bonsai Ficusde
+    name: Bonsai Ficus2
     force_update: false
-    median: 3
+    median: 1
     monitored_conditions:
       - moisture
       - light

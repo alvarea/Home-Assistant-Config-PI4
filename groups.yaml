@@ -101,39 +101,6 @@ luces_casa_grp:
     - light.luces_planta_baja
     - light.luces_planta_alta
 
-luces_entrada_grp:
-  name: Luces Entrada
-  entities:
-    - light.hue_entrada
-    #- light.hue_pasillo
-    - switch.wall_switch_left_158d0002236e75
-    - light.gateway_light_7811dcb788fa
-
-luces_cocina_grp:
-  name: Luces Cocina
-  entities:
-    - light.hue_cocina
-
-luces_salon_grp:
-  name: Luces Salon
-  entities:
-    - light.hue_cilindro
-    - light.hue_seises
-    - light.hue_lectura
-    - light.hue_lightstrip_plus_1
-
-luces_estudio_grp:
-  name: Luces Estudio
-  entities:
-    - light.hue_estudio
-    - light.esphome_lb1_l01
-
-luces_dormitorio_grp:
-  name: Luces Dormitorio Principal
-  entities:
-    - light.hue_ambiance_candle_1
-    - light.hue_ambiance_candle_1_2
-
 luces_exterior_grp:
   name: Luces Exterior
   entities:
