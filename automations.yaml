@@ -722,9 +722,9 @@
   trigger:
     - platform: sun
       # offset: "-00:30:00"   # Horario Invierno GMT+1
-      # offset: "+00:30:00"   # Horario Invierno GMT+2
+      # offset: "-00:05:00"   # Horario Invierno GMT+2
       event: sunset
-      offset: "+00:30:00"     # Horario Verano GMT+2
+      offset: "-00:05:00"     # Horario Verano GMT+2
   condition:
     condition: numeric_state
     entity_id: sensor.illumination_158d0001e637f6
@@ -788,8 +788,10 @@
   alias: 'L04 Luces On Salon Puesta Sol 30m'
   trigger:
     - platform: sun
+      # offset: "-00:30:00"   # Horario Invierno GMT+1
+      # offset: "-00:05:00"   # Horario Invierno GMT+2
       event: sunset
-      offset: "-00:30:00"
+      offset: "-00:05:00"
   condition:
     condition: and
     conditions:
@@ -822,11 +824,11 @@
             # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
             # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
             after: sunset
-            after_offset: "00:30:00"     # Horario Invierno GMT+1
+            after_offset: "-00:30:00"     # Horario VERANO1
           - condition: sun
             before: sunrise
             #before_offset: "00:15:00"    # Horario Invierno GMT+1, en el amanecer +15m / +60m
-            #before_offset: "-00:30:00"   # Horario Verano GMT+2, el amanecer -30m
+            #before_offset: "-00:00:00"   # Horario Verano GMT+2, el amanecer
           #- condition: numeric_state
           #  entity_id: sensor.illumination_158d0001e637f6
           #  below: 1
