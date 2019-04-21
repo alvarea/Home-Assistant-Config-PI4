@@ -792,7 +792,12 @@ calefaccion_paf_off:
 sonoff_initialize:
   alias: 'Arranque Interruptores SONOFF'
   sequence:
-    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
+    #
+    # SONOFF_BAS_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
       entity_id: switch.esphome_bas_sw0
+    #
+    # SONOFF_POW_SW2_LAVADORA => ON
+    - service: switch.turn_on
+      entity_id: switch.esphome_pow_sw2
 

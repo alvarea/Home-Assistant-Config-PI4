@@ -466,7 +466,8 @@
 #
 #AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
 #                'device_tracker.aaf_ios',
-#                'device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195']
+#                'device_tracker.daa04833_9772_4800_bf22_57f406aeb129']
+#                'device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195'] <<== OLD
 
 - id: U1
   alias: "Update Device Meta Tracker"
@@ -507,6 +508,7 @@
         - device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222   # MFC
         - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496   # AAC
         - device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8   # PAF
+        - device_tracker.daa04833_9772_4800_bf22_57f406aeb129   # AAF
         - device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195   # AAF
   action:
     - service: script.updatetracker
@@ -1007,9 +1009,9 @@
       entity_id:
         - light.estudio
         - light.esphome_lb1_l01
-    #- service: switch.toggle
-    #  entity_id:
-    #    - switch.esphome_bas_sw2
+    - service: switch.toggle
+      entity_id:
+        - switch.esphome_bas_sw2
 
 - id: L11_cube_flip90_light_on
   alias: 'L11 Cube Flip90 Light on'
@@ -1050,9 +1052,9 @@
         transition: 10
     - service: light.turn_off
       entity_id: light.esphome_lb1_l01
-    #- service: switch.turn_off
-    #  entity_id:
-    #    - switch.esphome_bas_sw2
+    - service: switch.turn_off
+      entity_id:
+        - switch.esphome_bas_sw2
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1243,8 +1245,8 @@
 #
 # ESPHOME BASIC SW2 PORCHE PISCINA
 #
-- id: S13
-  alias: 'S13 Sonoff SW2 Porche Piscina'
+- id: S12
+  alias: 'S12 Sonoff SW2 Porche Piscina'
   trigger:
     platform: state
     entity_id: binary_sensor.esphome_bas_sw1_boton
@@ -1260,8 +1262,8 @@
 #
 # ESPHOME BASIC SW4 PORCHE SALON
 #
-- id: S14
-  alias: 'S14 Sonoff SW4 Porche Piscina'
+- id: S13
+  alias: 'S13 Sonoff SW4 Porche Piscina'
   trigger:
     platform: state
     entity_id: binary_sensor.esphome_bas_sw4_boton
@@ -1277,8 +1279,8 @@
 #
 # SAI RACK COMUNICACIONES
 #
-- id: S15
-  alias: 'S15 ups apc700 status'
+- id: S14
+  alias: 'S14 ups apc700 status'
   trigger:
     - platform: state
       entity_id: binary_sensor.ups_status
@@ -1295,6 +1297,29 @@
           message: >
             >>> URGENTE: SAI RACK COMUNICACIONES SIN CORRIENTE
 
+# ESPHOME POW R2 SW2 - LAVADORA
+#
+- id: S15
+  alias: 'S15 Sonoff POW Lavadora'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_pow_sw2_current
+    - platform: state
+      entity_id: binary_sensor.esphome_pow_sw2_power
+  action:
+    - service: light.toggle
+      entity_id: light.esphome_pow_sw2_led
+
+- id: S16
+  alias: 'S16 Sonoff POW Lavadora Boton'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.esphome_pow_sw2_boton
+    from: 'off'
+    to: 'on'
+  action:
+    - service: switch.toogle
+      entity_id: switch.esphome_pow_sw2
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

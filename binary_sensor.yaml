@@ -213,7 +213,7 @@
         friendly_name: 'Alarma Sirena Interior'
         icon_template: mdi:alarm-light
 
-      # Alarma SONOFF POW Rack
+      # SONOFF POW2. Sensores control consumo potencia
       esphome_pow_sw2_switch:
         value_template: >-
           {% if is_state('switch.esphome_pow_sw2','on') %}
@@ -221,8 +221,38 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Corriente Rack'
-        icon_template: mdi:toggle-switch
+
+      esphome_pow_sw2_blue_led:
+        value_template: >-
+          {% if is_state('light.esphome_pow_sw2_led','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw2_current:
+        value_template: >-
+          {% if states('sensor.esphome_pow_sw2_current')|int > 0 %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw2_power:
+        value_template: >-
+          {% if states('sensor.esphome_pow_sw2_power')|int > 0 %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw2_voltage:
+        value_template: >-
+          {% if states('sensor.esphome_pow_sw2_voltage')|int > 220 %}
+            true
+          {% else %}
+            false
+          {% endif %}
 
       # JARDIN - DEPURADORA PISCINA
       piscina_status:

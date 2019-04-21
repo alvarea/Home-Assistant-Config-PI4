@@ -239,7 +239,7 @@ binary_sensor.door_window_sensor_158d000201dddb:
 sensor.temperature_158d0002e97092:
   friendly_name: Dorm.PAF
   icon: mdi:thermometer
-sensor.pressure_158d00025d9289:
+sensor.pressure_158d0002e97092:
   icon: mdi:gauge
   friendly_name: Dorm.PAF
 sensor.humidity_158d0002e97092:
@@ -307,7 +307,7 @@ switch.esphome_bas_sw0:
   friendly_name: Sirena Alarma
   icon: mdi:alarm-snooze
 binary_sensor.esphome_bas_sw0_status:
-  friendly_name: Sensor Sirena
+  friendly_name: BAS.SW0 Sirena Alarma
 light.esphome_bas_sw0_led:
   friendly_name: LED Sirena
 
@@ -315,7 +315,7 @@ switch.esphome_bas_sw1:
   friendly_name: Luz Porche 2
   icon: mdi:ceiling-light
 binary_sensor.esphome_bas_sw1_status:
-  friendly_name: Sensor Porche 2
+  friendly_name: BAS.SW1 Porche 2
 light.esphome_bas_sw1_led:
   friendly_name: LED Porche 2
 
@@ -323,15 +323,15 @@ switch.esphome_bas_sw2:
   friendly_name: Luz Rack
   icon: mdi:lamp
 binary_sensor.esphome_bas_sw2_status:
-  friendly_name: Sensor Luz Rack
+  friendly_name: BAS.SW2 Luz Rack
 light.esphome_bas_sw2_led:
   friendly_name: LED BAS_SW2
 
 switch.esphome_bas_sw4:
-  friendly_name: Luz Porche 1
+  friendly_name: Porche 1
   icon: mdi:floor-lamp
 binary_sensor.esphome_bas_sw4_status:
-  friendly_name: Sensor Porche 1
+  friendly_name: BAS.SW4 Porche 1
 light.esphome_bas_sw4_led:
   friendly_name: LED Porche 1
 
@@ -339,7 +339,7 @@ light.esphome_bas_sw4_led:
 # SERIE SONOFF 4CH R2
 #
 binary_sensor.esphome_4ch_status:
-  friendly_name: Cuadro Eléctrico Jardín
+  friendly_name: 4CH.SW1 Cuadro Jardín
 
 switch.esphome_4ch_relay_1:
   friendly_name: Luz Cesped
@@ -366,7 +366,7 @@ switch.esphome_s20_sw1:
   icon: mdi:radiator
 
 binary_sensor.esphome_s20_sw1_status:
-  friendly_name: Sensor Dormitorio MFC
+  friendly_name: S20.SW1 Dormitorio MFC
 
 light.esphome_s20_sw1_led:
   friendly_name: Led Dormitorio MFC
@@ -376,7 +376,7 @@ switch.esphome_s20_sw3:
   icon: mdi:radiator
 
 binary_sensor.esphome_s20_sw3_status:
-  friendly_name: Sensor Dormitorio PAF
+  friendly_name: S20.SW3 Dormitorio PAF
 
 light.esphome_s20_sw3_led:
   friendly_name: Led Dormitorio PAF
@@ -384,23 +384,38 @@ light.esphome_s20_sw3_led:
 #
 # SERIE SONOFF POW
 #
-binary_sensor.esphome_pow_sw1_status:
-  friendly_name: Cuadro Eléctrico Piscina
-
 switch.esphome_pow_sw1:
   friendly_name: Depuradora Piscina
   icon: mdi:swim  # dip-switch
+binary_sensor.esphome_pow_sw1_status:
+  friendly_name: POW.SW1 Cuadro Piscina
 
-# ESPhome POW R2
+#
+# SERIE SONOFF POW-R2
+#
 
-# binary_sensor.esphome_pow_sw2_switch ==> definido en binay_sensor en base al switch
-
-binary_sensor.esphome_pow_sw2_status:
-  friendly_name: Sensor Rack Comunicaciones
-
+# Interruptor real (no usado en front-end)
 switch.esphome_pow_sw2:
-  friendly_name: Rack Comunicaciones
-  icon: mdi:server-security
+  friendly_name: 'Lavadora (Power-On)'
+  icon: mdi:power-plug
+
+# Sensor Read-Only para mostrar en front-end
+binary_sensor.esphome_pow_sw2_switch:
+  friendly_name: 'Lavadora (Power-On)'
+  icon: mdi:power-plug
+
+# Luz real (no usado en front-end)
+light.esphome_pow_sw2_led:
+  friendly_name: 'Lavado Activo'
+
+# Sensor Read-Only para mostrar en front-end
+binary_sensor.esphome_pow_sw2_blue_led:
+  friendly_name: 'Lavado Activo'
+  icon: mdi:washing-machine
+
+# Sensor Read-Only para mostrar en front-end
+binary_sensor.esphome_pow_sw2_status:
+  friendly_name: POW.SW2 Lavadora
 
 sensor.esphome_pow_sw2_current:
   #unit_of_measurement: A
@@ -417,6 +432,17 @@ sensor.esphome_pow_sw2_voltage:
   friendly_name: Voltage (V)
   icon: mdi:power-plug
 
+binary_sensor.esphome_pow_sw2_current:
+  friendly_name: 'Consumo Lavado (A)'
+  icon: mdi:washing-machine
+
+binary_sensor.esphome_pow_sw2_power:
+  friendly_name: 'Potencia Lavado (W)'
+  icon: mdi:washing-machine
+
+binary_sensor.esphome_pow_sw2_voltage:
+  friendly_name: '220V Corriente Lavado (V)'
+  icon: mdi:washing-machine
 
 #
 # UPS APC

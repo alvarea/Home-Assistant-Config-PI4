@@ -61,6 +61,7 @@ discovery:
     - igd
     - xiaomi_gw
     - philips_hue
+    - esphome
 
 # Enables support for tracking state changes over time
 history:
@@ -117,15 +118,15 @@ timer:
     name: Tiempo Restante (Timer)
     icon: mdi:timer
 
-counter:
-  nespresso_start:
-    initial: 0
-    step: 1
+#counter:
+#  nespresso_start:
+#    initial: 0
+#    step: 1
 
 history_graph:
   piscina_duracion:
     entities:
-      - sensor.piscina_duracion_programa
+      - binary_sensor.piscina_status
     name: Duracion Depuradora Piscina
     hours_to_show: 168
     refresh: 1800
