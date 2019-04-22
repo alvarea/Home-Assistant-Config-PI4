@@ -47,10 +47,10 @@ alarma_to_pending:
     # Aviso sonoro con Xiaomi GW
     - service: xiaomi_aqara.stop_ringtone
       data:
-        gw_mac: !secret xiaomi_gateway
+        gw_mac: !secret xiaomi_mac
     - service: xiaomi_aqara.play_ringtone
       data_template:
-        gw_mac: !secret xiaomi_gateway
+        gw_mac: !secret xiaomi_mac
         ringtone_id: '{{ringtone_msg}}'
         ringtone_vol: >
           {{ states('input_number.xiaomi_volume_alarm_armed') | int }}
@@ -69,10 +69,10 @@ sirena_xiaomi_play_alarm_armed:
     # Aviso Xiaomi GW
     - service: xiaomi_aqara.stop_ringtone
       data:
-        gw_mac: !secret xiaomi_gateway
+        gw_mac: !secret xiaomi_mac
     - service: xiaomi_aqara.play_ringtone
       data_template:
-        gw_mac: !secret xiaomi_gateway
+        gw_mac: !secret xiaomi_mac
         ringtone_id: >-
             {{ states.input_select.xiaomi_sound_alarm_armed.state.split('-')[0] }}
         ringtone_vol: >-
@@ -90,10 +90,10 @@ sirena_xiaomi_play_alarm_disarmed:
     # Aviso Xiaomi GW
     - service: xiaomi_aqara.stop_ringtone
       data:
-        gw_mac: !secret xiaomi_gateway
+        gw_mac: !secret xiaomi_mac
     - service: xiaomi_aqara.play_ringtone
       data_template:
-        gw_mac: !secret xiaomi_gateway
+        gw_mac: !secret xiaomi_mac
         ringtone_id: >-
             {{ states.input_select.xiaomi_sound_alarm_disarmed.state.split('-')[0] }}
         ringtone_vol: >-
@@ -114,10 +114,10 @@ sirena_alarma_armed_away:
       value_template: "{% if is_state('input_boolean.mute_sonido_sirenas', 'off') %}true{% endif %}"
     - service: xiaomi_aqara.stop_ringtone
       data:
-        gw_mac: !secret xiaomi_gateway
+        gw_mac: !secret xiaomi_mac
     - service: xiaomi_aqara.play_ringtone
       data_template:
-        gw_mac: !secret xiaomi_gateway
+        gw_mac: !secret xiaomi_mac
         ringtone_id: >-
             {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
         ringtone_vol: >-
@@ -140,10 +140,10 @@ sirena_alarma_armed_home:
       value_template: "{% if is_state('input_boolean.mute_sonido_sirenas', 'off') %}true{% endif %}"
     - service: xiaomi_aqara.stop_ringtone
       data:
-        gw_mac: !secret xiaomi_gateway
+        gw_mac: !secret xiaomi_mac
     - service: xiaomi_aqara.play_ringtone
       data_template:
-        gw_mac: !secret xiaomi_gateway
+        gw_mac: !secret xiaomi_mac
         ringtone_id: >-
             {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
         ringtone_vol: >-
@@ -161,7 +161,7 @@ sirena_stop_alarma:
     # Aviso Xiaomi GW
     - service: xiaomi_aqara.stop_ringtone
       data:
-        gw_mac: !secret xiaomi_gateway
+        gw_mac: !secret xiaomi_mac
 
 
 # SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS PULSAR EL DOBLE BOTON PANICO

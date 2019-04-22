@@ -309,7 +309,7 @@
       from: 'armed_away'
       to: 'triggered'
   action:
-    # Script Notificación Alarma
+    # Script Notificación Alarma Away
     - service: script.turn_on
       entity_id: script.notifica_alarma
       data:
@@ -330,10 +330,10 @@
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
-      from: 'armed_away'
+      from: 'armed_home'
       to: 'triggered'
   action:
-    # Script Notificación Alarma
+    # Script Notificación Alarma Perímetro
     - service: script.turn_on
       entity_id: script.notifica_alarma
       data:
