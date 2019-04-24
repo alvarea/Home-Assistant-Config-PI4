@@ -509,7 +509,7 @@
         - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496   # AAC
         - device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8   # PAF
         - device_tracker.daa04833_9772_4800_bf22_57f406aeb129   # AAF
-        - device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195   # AAF
+        #- device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195   # AAF
   action:
     - service: script.updatetracker
       data_template:

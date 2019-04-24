@@ -32,8 +32,7 @@ PAF_Trackers = ['device_tracker.paf_iphone_nmap',
 
 AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
                 'device_tracker.aaf_ios',
-                'device_tracker.daa04833_9772_4800_bf22_57f406aeb129',   # New AAF
-                'device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195']   # OLD Geofency AAF
+                'device_tracker.daa04833_9772_4800_bf22_57f406aeb129']   # New AAF
 
 # Get the entity that triggered the automation
 triggeredEntity = data.get('entity_id')
