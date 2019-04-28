@@ -249,11 +249,34 @@
 
       esphome_pow_sw2_voltage:
         value_template: >-
-          {% if states('sensor.esphome_pow_sw2_voltage')|int > 220 %}
+          {% if states('sensor.esphome_pow_sw2_voltage')|int > 0 %}
             true
           {% else %}
             false
           {% endif %}
+
+      esphome_pow_sw2_lavadora_lavando:
+        value_template: >-
+          {%  if is_state('binary_sensor.esphome_pow_sw2_switch','on')
+              and states('sensor.esphome_pow_sw2_voltage')|int > 200
+              and states('sensor.esphome_pow_sw2_power')|round(1) > 2.5
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw2_lavadora_warning:
+        value_template: >-
+          {%  if is_state('binary_sensor.esphome_pow_sw2_switch','on')
+              and states('sensor.esphome_pow_sw2_power')|round(1) >= 0.1
+              and states('sensor.esphome_pow_sw2_power')|round(1) < 3.0
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
 
       # JARDIN - DEPURADORA PISCINA
       piscina_status:

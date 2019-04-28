@@ -394,54 +394,88 @@ binary_sensor.esphome_pow_sw1_status:
 # SERIE SONOFF POW-R2
 #
 
-# Interruptor real (no usado en front-end)
-switch.esphome_pow_sw2:
-  friendly_name: 'Lavadora (Power-On)'
-  icon: mdi:power-plug
-
+# Nativo del codigo ESPHOME. Boton  pulsador del sensor esphome
 # Sensor Read-Only para mostrar en front-end
-binary_sensor.esphome_pow_sw2_switch:
-  friendly_name: 'Lavadora (Power-On)'
-  icon: mdi:power-plug
+binary_sensor.esphome_pow_sw2_boton:
+  friendly_name: Lavadora Pulsador On/off
 
-# Luz real (no usado en front-end)
-light.esphome_pow_sw2_led:
-  friendly_name: 'Lavado Activo'
-
-# Sensor Read-Only para mostrar en front-end
-binary_sensor.esphome_pow_sw2_blue_led:
-  friendly_name: 'Lavado Activo'
-  icon: mdi:washing-machine
-
+# Nativo del codigo ESPHOME. Indica solo la conectividad del sensor esphome
 # Sensor Read-Only para mostrar en front-end
 binary_sensor.esphome_pow_sw2_status:
   friendly_name: POW.SW2 Lavadora
 
+# Nativo del codigo ESPHOME. SWITCH
+# Interruptor real (no usado en front-end)
+switch.esphome_pow_sw2:
+  friendly_name: Lavadora (Power-On)
+  icon: mdi:power-plug
+
+# Binary sensor calculado en base al anterior
+# Sensor Read-Only para mostrar en front-end
+binary_sensor.esphome_pow_sw2_switch:
+  friendly_name: Lavadora (Power-On)
+  icon: mdi:power-plug
+
+# Nativo del codigo ESPHOME. Light LED azul
+# Luz real (no usado en front-end)
+light.esphome_pow_sw2_led:
+  friendly_name: Lavado Activo (LED)
+
+# Binary sensor calculado en base al anterior
+# Sensor Read-Only para mostrar en front-end
+binary_sensor.esphome_pow_sw2_blue_led:
+  friendly_name: Lavado Activo (LED)
+  icon: mdi:washing-machine
+
+# Nativo del codigo ESPHOME. Sensor Consumo A
+# Sensor real (no usado en front-end)
 sensor.esphome_pow_sw2_current:
   #unit_of_measurement: A
   friendly_name: Consumo (A)
   icon: mdi:flash
 
+# Binary sensor calculado en base al anterior
+# Sensor Read-Only para mostrar en front-end
+binary_sensor.esphome_pow_sw2_current:
+  friendly_name: Consumo Lavado (A)
+  icon: mdi:flash
+
+# Nativo del codigo ESPHOME. Sensor Consumo W
+# Sensor real (no usado en front-end)
 sensor.esphome_pow_sw2_power:
   #	unit_of_measurement: W
   friendly_name: Potencia (W)
   icon: mdi:trending-up
 
+# Binary sensor calculado en base al anterior
+# Sensor Read-Only para mostrar en front-end
+binary_sensor.esphome_pow_sw2_power:
+  friendly_name: Potencia Lavado (W)
+  icon: mdi:trending-up
+
+# Nativo del codigo ESPHOME. Sensor Consumo V
+# Sensor real (no usado en front-end)
 sensor.esphome_pow_sw2_voltage:
   #	unit_of_measurement: V
   friendly_name: Voltage (V)
   icon: mdi:power-plug
 
-binary_sensor.esphome_pow_sw2_current:
-  friendly_name: 'Consumo Lavado (A)'
-  icon: mdi:washing-machine
-
-binary_sensor.esphome_pow_sw2_power:
-  friendly_name: 'Potencia Lavado (W)'
-  icon: mdi:washing-machine
-
+# Binary sensor calculado en base al anterior
+# Sensor Read-Only para mostrar en front-end
 binary_sensor.esphome_pow_sw2_voltage:
-  friendly_name: '220V Corriente Lavado (V)'
+  friendly_name: 220V Corriente Lavado (V)
+  icon: mdi:power-plug
+
+# Binary sensor calculado Cuando Power > 2.5W and Voltage > 200V
+# Sensor Read-Only para mostrar en front-end
+binary_sensor.esphome_pow_sw2_lavadora_lavando:
+  friendly_name: Lavado Activo (W>2.5)
+  icon: mdi:washing-machine
+
+# Binary sensor calculado Cuando Power > 2.5W and Voltage > 200V
+# Sensor Read-Only para mostrar en front-end
+binary_sensor.esphome_pow_sw2_lavadora_warning:
+  friendly_name: Lavado Warning (W<2.5)
   icon: mdi:washing-machine
 
 #
