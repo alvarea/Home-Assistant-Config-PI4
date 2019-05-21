@@ -1313,7 +1313,7 @@
       entity_id: switch.esphome_pow_sw2
 
 - id: S16
-  alias: 'S16 Sonoff POW Lavadora'
+  alias: 'S16 Sonoff POW Lavadora Led'
   trigger:
     - platform: state
       entity_id: binary_sensor.esphome_pow_sw2_lavadora_lavando
@@ -1328,11 +1328,23 @@
       entity_id: binary_sensor.esphome_pow_sw2_lavadora_warning
       from: 'off'
       to: 'on'
-      for: '00:01:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: template
+        value_template: '{{ (as_timestamp(now())-as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed)) < 10 }}'
+      - condition: state
+        entity_id: binary_sensor.esphome_pow_sw2_lavadora_lavando
+        state: 'off'
   action:
-    - service: siwtch.turn_off
+    - service: switch.turn_off
       entity_id: switch.esphome_pow_sw2
 
+# {{ states.binary_sensor.esphome_pow_sw2_lavadora_lavando }}
+
+# {{ (as_timestamp(now())-as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_warning.last_changed)) < 180 }}
+
+# {{ (as_timestamp(now())-as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed)) < 1800 }}
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

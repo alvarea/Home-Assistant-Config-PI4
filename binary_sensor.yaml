@@ -278,6 +278,12 @@
           {% endif %}
 
 
+#{{ states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed
+#}}
+
+#{{ as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed) | default(0)| int | timestamp_custom("%Hh %Mm", false)
+#}}
+
       # JARDIN - DEPURADORA PISCINA
       piscina_status:
         value_template: >-
