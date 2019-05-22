@@ -1331,11 +1331,12 @@
   condition:
     condition: and
     conditions:
-      - condition: template
-        value_template: '{{ (as_timestamp(now())-as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed)) < 10 }}'
       - condition: state
         entity_id: binary_sensor.esphome_pow_sw2_lavadora_lavando
         state: 'off'
+      - condition: template
+        value_template: '{{ (as_timestamp(now())-as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed)) > 45 }}'
+
   action:
     - service: switch.turn_off
       entity_id: switch.esphome_pow_sw2
