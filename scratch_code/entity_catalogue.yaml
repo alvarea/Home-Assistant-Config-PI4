@@ -3,8 +3,8 @@
 # IP            ENTIDAD HOMY                        ALEXA               DESCRIPCION
 # ====================================================================================================
 # 192.168.0.30  esphome_bas_SW0                     Sirena Alarma       Sirena interior pasillo
-# 192.168.0.31  esphome_bas_SW1                     Luz Porche 2        Porche 2 Piscina
-# 192.168.0.32  esphome_bas_SW2                     Luz Rack            Luz Racl
+# 192.168.0.31  esphome_bas_SW1                     AVERIADO
+# 192.168.0.32  esphome_bas_SW2                     Luz Porche 2        Porche 2 Piscina
 # 192.168.0.33  esphome_bas_SW3                                         NEW
 # 192.168.0.34  esphome_bas_SW4                     Luz Porche 1        Porche 1 Salón
 # 192.168.0.35  esphome_4ch_Jardin
@@ -27,8 +27,8 @@
 # DOMAIN        ENTIDAD HOMY                        FABRICANTE          ALEXA               DESCRIPCION
 # =======================================================================================================================
 # SWITCH        esphome_bas_SW0                     SONOFF              Sirena Alarma       Sirena interior pasillo
-# SWITCH        esphome_bas_SW1                     SONOFF              Luz Porche 2        Porche 2 Piscina
-# SWITCH        esphome_bas_SW2                     SONOFF              N/A                 NEW
+# SWITCH        esphome_bas_SW1                     SONOFF              Luz Porche 2        Porche 2 Piscina ==> AVERIADO
+# SWITCH        esphome_bas_SW2                     SONOFF              Luz Porche 2        Porche 2 Piscina
 # SWITCH        esphome_bas_SW3                     SONOFF              N/A                 NEW
 # SWITCH        esphome_bas_SW4                     SONOFF              Luz Porche 1        Porche 1 Salón
 # SWITCH        esphome_4ch_relay_1                 SONOFF              Luz Jardin          CH1 - Balizas Cesped

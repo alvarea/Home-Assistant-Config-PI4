@@ -1010,9 +1010,9 @@
       entity_id:
         - light.estudio
         - light.esphome_lb1_l01
-    - service: switch.toggle
-      entity_id:
-        - switch.esphome_bas_sw2
+    #- service: switch.toggle
+    #  entity_id:
+    #    - switch.esphome_bas_sw2
 
 - id: L11_cube_flip90_light_on
   alias: 'L11 Cube Flip90 Light on'
@@ -1028,9 +1028,9 @@
       data:
         brightness: 175
         rgb_color: [254, 200, 145]
-    - service: switch.turn_on
-      entity_id:
-        - switch.esphome_bas_sw2
+    #- service: switch.turn_on
+    #  entity_id:
+    #    - switch.esphome_bas_sw2
     - service: light.turn_on
       entity_id: light.esphome_lb1_l01
       data:
@@ -1053,9 +1053,9 @@
         transition: 10
     - service: light.turn_off
       entity_id: light.esphome_lb1_l01
-    - service: switch.turn_off
-      entity_id:
-        - switch.esphome_bas_sw2
+    #- service: switch.turn_off
+    #  entity_id:
+    #    - switch.esphome_bas_sw2
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

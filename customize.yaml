@@ -320,10 +320,10 @@ light.esphome_bas_sw1_led:
   friendly_name: LED Porche 2
 
 switch.esphome_bas_sw2:
-  friendly_name: Luz Rack
+  friendly_name: Luz Porche 2
   icon: mdi:lamp
 binary_sensor.esphome_bas_sw2_status:
-  friendly_name: BAS.SW2 Luz Rack
+  friendly_name: BAS.SW2 Luz Porche 2
 light.esphome_bas_sw2_led:
   friendly_name: LED BAS_SW2
 
