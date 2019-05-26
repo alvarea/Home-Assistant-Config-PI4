@@ -1328,24 +1328,8 @@
       entity_id: binary_sensor.esphome_pow_sw2_lavadora_warning
       from: 'off'
       to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: binary_sensor.esphome_pow_sw2_lavadora_lavando
-        state: 'off'
-      - condition: template
-        value_template: '{{ (as_timestamp(now())-as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed)) > 45 }}'
-
   action:
-    - service: switch.turn_off
-      entity_id: switch.esphome_pow_sw2
-
-# {{ states.binary_sensor.esphome_pow_sw2_lavadora_lavando }}
-
-# {{ (as_timestamp(now())-as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_warning.last_changed)) < 180 }}
-
-# {{ (as_timestamp(now())-as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed)) < 1800 }}
+    - service: script.lavadora_switch_off
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

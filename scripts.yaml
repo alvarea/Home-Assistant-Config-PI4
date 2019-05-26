@@ -784,6 +784,47 @@ calefaccion_paf_off:
 
             >>> LUGAR: Dormitorio PAF
 
+# SONOFF POW R2 - LAVADORA
+#
+lavadora_switch_off:
+  alias: Lavadora Switch Off
+  sequence:
+    - delay: '00:00:05'
+
+    - condition: template
+      value_template: '{{ as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_warning.last_changed) - as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed) < 300 }}'
+
+    - service: switch.turn_off
+      entity_id: switch.esphome_pow_sw2
+
+    # Si la diferencia de hora ultimo cambio entre Warning y Lavando < 5' => TRUE => CONTINUA
+    #
+    # WARNING:
+    #  2019-05-26 10:21:08.137265+00:00
+    #  1558866068.137265
+    #
+    # LAVANDO:
+    #  2019-05-26 10:20:52.612011+00:00
+    #  1558866052.612011
+    #
+    # DIF:
+    #  15.525254011154175
+    #  TRUE
+
+    # WARNING:
+    # {{ states.binary_sensor.esphome_pow_sw2_lavadora_warning.last_changed }}
+    # {{ as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_warning.last_changed) }}
+    #
+    # LAVANDO:
+    # {{ states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed }}
+    # {{ as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed) }}
+    #
+    # DIF:
+    # {{ as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_warning.last_changed) - as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed) }}
+    #
+    # {{ as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_warning.last_changed) - as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed) < 300 }}
+
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # SCRIPTS DE ARRANQUE DEL SISTEMA                                             #
