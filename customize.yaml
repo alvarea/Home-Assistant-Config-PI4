@@ -312,15 +312,15 @@ light.esphome_bas_sw0_led:
   friendly_name: LED Sirena
 
 switch.esphome_bas_sw1:
-  friendly_name: Luz Porche 2
+  friendly_name: Pendiente_SW1
   icon: mdi:ceiling-light
 binary_sensor.esphome_bas_sw1_status:
-  friendly_name: BAS.SW1 Porche 2
+  friendly_name: BAS.SW1 Pendiente_SW1
 light.esphome_bas_sw1_led:
-  friendly_name: LED Porche 2
+  friendly_name: LED Pendiente_SW1
 
 switch.esphome_bas_sw2:
-  friendly_name: Luz Porche 2
+  friendly_name: Porche 2
   icon: mdi:lamp
 binary_sensor.esphome_bas_sw2_status:
   friendly_name: BAS.SW2 Luz Porche 2
@@ -336,7 +336,7 @@ light.esphome_bas_sw4_led:
   friendly_name: LED Porche 1
 
 #
-# SERIE SONOFF 4CH R2
+# SERIE SONOFF 4CH
 #
 binary_sensor.esphome_4ch_status:
   friendly_name: 4CH.SW1 Cuadro Jardín
@@ -357,6 +357,28 @@ switch.esphome_4ch_relay_4:
   friendly_name: Luz Garaje
   icon: mdi:track-light
   #icon: mdi:car-side
+
+#
+# SERIE SONOFF 4CH R2
+#
+binary_sensor.esphome_4ch_sw2_status:
+  friendly_name: 4CH.SW2 Control Riego
+
+switch.esphome_4ch_sw2_relay_1:
+  friendly_name: Riego CH1
+  icon: mdi:track-light
+
+switch.esphome_4ch_sw2_relay_2:
+  friendly_name: Riego CH2
+  icon: mdi:track-light
+
+switch.esphome_4ch_sw2_relay_3:
+  friendly_name: Riego CH3
+  icon: mdi:track-light
+
+switch.esphome_4ch_sw2_relay_4:
+  friendly_name: Riego CH1
+  icon: mdi:track-light
 
 #
 # SERIE SONOFF S20

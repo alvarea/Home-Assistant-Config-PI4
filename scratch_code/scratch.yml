@@ -1,4 +1,8 @@
+{{states('sensor.time')}}
 
+{{(states.input_datetime.riego_ch1_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}
+
+{{input_boolean.riego_ch1_programador}}
 
 
 

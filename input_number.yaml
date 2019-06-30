@@ -23,7 +23,7 @@
   xiaomi_volume_alarm_armed:
     name: Volumen
     mode: slider
-    initial: 4
+    initial: 2
     min: 0
     max: 100
     step: 2
@@ -38,13 +38,13 @@
     max: 100
     step: 2
     icon: mdi:volume-high
-#
+
 #
 # Duración Depuradora Piscina
   piscina_diario_horas:
     name: Horas
     mode: slider
-    initial: 1
+    initial: 4
     min: 0
     max: 12
     step: 1
@@ -57,4 +57,24 @@
     min: 0
     max: 240
     step: 15
+    icon: mdi:timelapse
+
+#
+# Duración Riego Bonsais
+  riego_ch1_diario_minutos:
+    name: Minutos
+    mode: slider
+    initial: 5
+    min: 0
+    max: 60
+    step: 1
+    icon: mdi:timelapse
+
+  riego_ch1_manual_minutos:
+    name: 'Programa Manual (min)'
+    mode: slider
+    initial: 5
+    min: 0
+    max: 60
+    step: 1
     icon: mdi:timelapse

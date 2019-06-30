@@ -13,10 +13,12 @@
 #               esphome_4ch_relay_3                 Luz Olivo 1         CH3 - Focos Olivo 1 + Palmera Cica
 #               esphome_4ch_relay_4                 Luz Garaje          CH4 - Pendiente
 # 192.168.0.36  esphome_pow_sw1                     Depuradora          Piscina
-# 192.168.0.37  esphome_pow_sw2                     NEW
+# 192.168.0.37  esphome_pow_sw2                     Lavadora            Cocina
 # 192.168.0.38  esphome_s20_SW1                     Radiador Malen      Radiador Dormitorio Principal (192.168.0.33)
 # 192.168.0.39  esphome_s20_SW2                     Nespresso
 # 192.168.0.40  esphome_s20_SW3                     Radiador Paloma     Radiador Dormitorio
+# 192.168.0.41  esphome_pow_SW3
+# 192.168.0.42  esphome_4ch_sw2                                         Riego Bonsais
 # 192.168.0.45  esphome_lb1_l01                     Luz Escalera        Luz Estudio Escalera
 # 192.168.0.18  Xiaomi Aqara
 #               wall_switch_left_158d0002236e75     Luz Techo Entrada   Interruptor Luz Entrada

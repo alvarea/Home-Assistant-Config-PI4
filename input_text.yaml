@@ -18,3 +18,7 @@
     name: Duración Programa Activo
     initial: ''
     icon: mdi:timer-sand
+  riego_ch1_duracion_programa:
+    name: Duración Programa Activo
+    initial: ''
+    icon: mdi:timer-sand

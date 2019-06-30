@@ -9,17 +9,6 @@
     initial: Telegram
     icon: mdi:bell-ring
 
-# Depuradora Piscina
-  piscina_programador_dias:
-    name: Diario/Semanal
-    options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
-    initial: Domingo
-    icon: mdi:calendar
-
 # ALARM WARNING BEFORE ARMED : PENDING TIME
 #
   xiaomi_sound_alarm_armed:
@@ -86,3 +75,27 @@
       - "13 - Alarm clock"
     icon: mdi:music-note
     initial: '2 - Accident'
+
+
+# Depuradora Piscina
+  piscina_programador_dias:
+    name: Diario/Semanal
+    options:
+     - 'Diario'
+     - 'Sábado'
+     - 'Domingo'
+     - 'Weekend'
+    initial: Diario
+    icon: mdi:calendar
+
+
+# Riego Bonsais
+  riego_ch1_programador_dias:
+    name: Diario/Semanal
+    options:
+     - 'Diario'
+     - 'Sábado'
+     - 'Domingo'
+     - 'Weekend'
+    initial: Diario
+    icon: mdi:calendar

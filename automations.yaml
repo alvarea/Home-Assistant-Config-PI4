@@ -66,8 +66,8 @@
       at: '23:55:00'
   action:
     # Para todas las reglas durante el arranque del sistema
-    - service: counter.reset
-      entity_id: counter.nespresso_start
+    #- service: counter.reset
+    #  entity_id: counter.nespresso_start
     # HASS Alarm Nigth Volume
     - service: input_number.set_value
       data_template:
@@ -1330,6 +1330,58 @@
       to: 'on'
   action:
     - service: script.lavadora_switch_off
+
+
+# ESPHOME 4CH-R2 SW2 RIEGO BONSAIS Relay1 - Relay4
+#
+- id: S18
+  alias: 'S18 Timer Riego CH1 Start'
+  trigger:
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states.input_datetime.riego_ch1_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.riego_ch1_programador  # Sensor del programador on/off
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.riego_ch1_dia_ejecucion  # Sensor que indica si es día de ejecución en función de la lista input_select.riego_ch1_programador_dias
+        state: 'on'
+  action:
+    # Timer Programador Diario Piscina
+    - service: script.riego_ch1_timer_start_diario
+
+
+- id: S19
+  alias: 'S19 Timer Riego CH1 End'
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.riego_relay1
+  action:
+    # Inicia el Timer de la Piscina
+    - service: script.riego_ch1_timer_cancel
+    # Actualiza Valor Duración Programa Activo
+    - service: input_text.set_value
+      entity_id: input_text.riego_ch1_duracion_programa
+      data_template:
+        value: ''
+
+- id: S20
+  alias: 'S20 Set Hora Final Planificado'
+  trigger:
+    - platform: state
+      entity_id: sensor.riego_ch1_diario_endtime
+    - platform: state
+      entity_id: sensor.riego_ch1_duracion_planificada
+  action:
+    # Actualiza Valor input_datetime.riego_ch1_end_time
+    - service: input_datetime.set_datetime
+      entity_id: input_datetime.riego_ch1_end_time
+      data_template:
+        time: '{{ states.sensor.riego_ch1_diario_endtime.state }}'
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

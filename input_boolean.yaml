@@ -64,6 +64,14 @@
     initial: on
     icon: mdi:dip-switch
 
+# Riego Bonsais
+#
+  riego_ch1_programador:
+    name: Programador Riego REL1 On/Off
+    initial: on
+    icon: mdi:dip-switch
+
+
 # Programador Diario Luces Jardín
 
   jardin_programador_xia_ext:

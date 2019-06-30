@@ -15,10 +15,35 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '19:00'
+    initial: '18:00'
 
   piscina_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '23:00'
+    initial: '22:00'
+
+#
+# Programador Riego Bonsais
+#
+  riego_ch1_real_start_time:
+    name: Inicio Última Ejecución
+    has_date: false
+    has_time: true
+
+  riego_ch1_real_end_time:
+    name: Fin Última Ejecución
+    has_date: false
+    has_time: true
+
+  riego_ch1_start_time:
+    name: Hora Inicio Planificado
+    has_date: false
+    has_time: true
+    initial: '18:00'
+
+  riego_ch1_end_time:
+    name: Hora Final Planificado
+    has_date: false
+    has_time: true
+    initial: '22:00'
