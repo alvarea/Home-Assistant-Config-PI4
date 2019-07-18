@@ -115,7 +115,19 @@ alarm_control_panel:
 # Timer temporizador Depuradora Piscina
 timer:
   piscina:
-    name: Tiempo Restante (Timer)
+    name: Timer Piscina
+    icon: mdi:timer
+  riego_ch1:
+    name: Timer CH1
+    icon: mdi:timer
+  riego_ch2:
+    name: Timer CH2
+    icon: mdi:timer
+  riego_ch3:
+    name: Timer CH3
+    icon: mdi:timer
+  riego_ch4:
+    name: Timer CH4
     icon: mdi:timer
 
 #counter:
@@ -432,23 +444,23 @@ stream:
 
 #
 # Sensores Xiaomi Miflora - Componente Plant
-plant:
-  bonsai_ficus_2:
-    sensors:
-      moisture: sensor.bonsai_ficus2_moisture
-      battery: sensor.bonsai_ficus2_battery
-      temperature: sensor.bonsai_ficus2_temperature
-      conductivity: sensor.bonsai_ficus2_conductivity
-      brightness: sensor.bonsai_ficus2_light_intensity
-    min_moisture: 20
-    max_moisture: 60
-    min_conductivity: 350
-    max_conductivity: 2000
-    min_temperature: 10
-    max_temperature: 32
-    min_brightness: 1000
-    max_brightness: 30000
-    min_battery: 20
+#plant:
+#  bonsai_ficus_2:
+#    sensors:
+#      moisture: sensor.bonsai_ficus2_moisture
+#      battery: sensor.bonsai_ficus2_battery
+#      temperature: sensor.bonsai_ficus2_temperature
+#      conductivity: sensor.bonsai_ficus2_conductivity
+#      brightness: sensor.bonsai_ficus2_light_intensity
+#    min_moisture: 20
+#    max_moisture: 60
+#    min_conductivity: 350
+#    max_conductivity: 2000
+#    min_temperature: 10
+#    max_temperature: 32
+#    min_brightness: 1000
+#    max_brightness: 30000
+#    min_battery: 20
 
 #TO DO
 #

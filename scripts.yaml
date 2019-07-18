@@ -671,85 +671,18 @@ piscina_timer_resume:
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# SCRIPTS DE RIEGO BONSAIS SONOFF 4CH-SW2                                     #
+# SCRIPTS DE RIEGO BONSAIS SONOFF 4CH-SW2 CH1 - CH4                           #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-
-riego_ch1_timer_start:
-  alias: Timer Riego CH1 Start
-  sequence:
-    - service: timer.start
-      data_template:
-        entity_id: timer.riego_relay1
-        duration: '{{ states.sensor.riego_ch1_manual_segundos.state}}'
-    - service: switch.turn_on
-      entity_id: switch.esphome_4ch_sw2_relay_1
-      #entity_id: switch.esphome_4ch_relay_2
-    # Actualiza Valor Hora Arranque Real
-    - service: input_datetime.set_datetime
-      entity_id: input_datetime.riego_ch1_real_start_time
-      data_template:
-        time: '{{ (as_timestamp(now()) | timestamp_custom("%H:%M:%S")) }}'
-    # Actualiza Valor Duración Programa Activo
-    - service: input_text.set_value
-      entity_id: input_text.riego_ch1_duracion_programa
-      data_template:
-        value: '{{ states.sensor.riego_ch1_duracion_manual.state}}'
-
-riego_ch1_timer_start_diario:
-  alias: Timer Riego CH1 Start Automatico
-  sequence:
-    - service: timer.start
-      data_template:
-        entity_id: timer.riego_relay1
-        duration: '{{ states.sensor.riego_ch1_duracion_planificada.state}}'
-    - service: switch.turn_on
-      entity_id: switch.esphome_4ch_sw2_relay_1
-    # Actualiza Valor Hora Arranque Real
-    - service: input_datetime.set_datetime
-      entity_id: input_datetime.riego_ch1_real_start_time
-      data_template:
-        time: '{{ (as_timestamp(now()) | timestamp_custom("%H:%M:%S")) }}'
-    # Actualiza Valor Duración Programa Activo
-    - service: input_text.set_value
-      entity_id: input_text.riego_ch1_duracion_programa
-      data_template:
-        value: '{{ states.sensor.riego_ch1_duracion_planificada.state}}'
-
-
-riego_ch1_timer_cancel:
-  alias: Timer Riego CH1 Cancel
-  sequence:
-    - service: timer.cancel
-      entity_id: timer.riego_relay1
-    - service: switch.turn_off
-      entity_id: switch.esphome_4ch_sw2_relay_1
-    # Actualiza Valor Hora Arranque Real
-    - service: input_datetime.set_datetime
-      entity_id: input_datetime.riego_ch1_real_end_time
-      data_template:
-        time: '{{ (as_timestamp(now()) | timestamp_custom("%H:%M:%S")) }}'
-    # Actualiza Valor Duración Programa Activo
-    - service: input_text.set_value
-      entity_id: input_text.riego_ch1_duracion_programa
-      data_template:
-        value: ''
-
-riego_ch1_timer_pause:
-  alias: Timer Riego CH1 Pause
-  sequence:
-    - service: timer.pause
-      entity_id: timer.riego_relay1
-    - service: switch.turn_off
-      entity_id: switch.esphome_4ch_sw2_relay_1
-
-riego_ch1_timer_resume:
-  alias: Timer Riego CH1 Resume
-  sequence:
-    - service: timer.start
-      entity_id: timer.riego_relay1
-    - service: switch.turn_on
-      entity_id: switch.esphome_4ch_sw2_relay_1
+#riego_ch1_timer_start_diario:
+#  alias: Timer Riego CH1 Start Automatico
+#  sequence:
+#    - service: timer.start
+#      data_template:
+#        entity_id: timer.riego_ch1
+#        duration: '{{ states.sensor.riego_ch1_duracion_planificada.state}}'
+#    - service: switch.turn_on
+#      entity_id: switch.esphome_4ch_sw2_relay_1
 
 
 #-----------------------------------------------------------------------------#

@@ -58,23 +58,3 @@
     max: 240
     step: 15
     icon: mdi:timelapse
-
-#
-# Duración Riego Bonsais
-  riego_ch1_diario_minutos:
-    name: Minutos
-    mode: slider
-    initial: 5
-    min: 0
-    max: 60
-    step: 1
-    icon: mdi:timelapse
-
-  riego_ch1_manual_minutos:
-    name: 'Programa Manual (min)'
-    mode: slider
-    initial: 5
-    min: 0
-    max: 60
-    step: 1
-    icon: mdi:timelapse

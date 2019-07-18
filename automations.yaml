@@ -1334,6 +1334,9 @@
 
 # ESPHOME 4CH-R2 SW2 RIEGO BONSAIS Relay1 - Relay4
 #
+# https://community.home-assistant.io/t/timer-execute-and-action-from-lovelace-ui/123512
+# https://community.home-assistant.io/t/lovelace-irrigation-card-help-needed/67667/2
+#
 - id: S18
   alias: 'S18 Timer Riego CH1 Start'
   trigger:
@@ -1349,9 +1352,13 @@
         entity_id: binary_sensor.riego_ch1_dia_ejecucion  # Sensor que indica si es día de ejecución en función de la lista input_select.riego_ch1_programador_dias
         state: 'on'
   action:
-    # Timer Programador Diario Piscina
-    - service: script.riego_ch1_timer_start_diario
-
+    # Timer Programador Diario
+    - service: timer.start
+      data_template:
+        entity_id: timer.riego_ch1
+        duration: '{{ states.sensor.riego_ch1_duracion_planificada.state}}'
+    - service: switch.turn_on
+      entity_id: switch.esphome_4ch_sw2_relay_1
 
 - id: S19
   alias: 'S19 Timer Riego CH1 End'
@@ -1359,29 +1366,51 @@
     - platform: event
       event_type: timer.finished
       event_data:
-        entity_id: timer.riego_relay1
+        entity_id: timer.riego_ch1
   action:
-    # Inicia el Timer de la Piscina
-    - service: script.riego_ch1_timer_cancel
-    # Actualiza Valor Duración Programa Activo
-    - service: input_text.set_value
-      entity_id: input_text.riego_ch1_duracion_programa
-      data_template:
-        value: ''
+    - service: timer.cancel
+      entity_id: timer.riego_ch1
+    - service: switch.turn_off
+      entity_id: switch.esphome_4ch_sw2_relay_1
+
 
 - id: S20
-  alias: 'S20 Set Hora Final Planificado'
+  alias: 'S20 Timer Fuente CH3 Start'
   trigger:
-    - platform: state
-      entity_id: sensor.riego_ch1_diario_endtime
-    - platform: state
-      entity_id: sensor.riego_ch1_duracion_planificada
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states.input_datetime.riego_ch3_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.riego_ch3_programador  # Sensor del programador on/off
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.riego_ch3_dia_ejecucion  # Sensor que indica si es día de ejecución en función de la lista input_select.riego_ch1_programador_dias
+        state: 'on'
   action:
-    # Actualiza Valor input_datetime.riego_ch1_end_time
-    - service: input_datetime.set_datetime
-      entity_id: input_datetime.riego_ch1_end_time
+    # Timer Programador Automático
+    - service: timer.start
       data_template:
-        time: '{{ states.sensor.riego_ch1_diario_endtime.state }}'
+        entity_id: timer.riego_ch3
+        duration: '{{ states.sensor.riego_ch3_duracion_planificada.state}}'
+    - service: switch.turn_on
+      entity_id: switch.esphome_4ch_sw2_relay_3
+
+
+- id: S21
+  alias: 'S21 Timer Fuente CH3 End'
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.riego_ch3
+  action:
+    - service: timer.cancel
+      entity_id: timer.riego_ch3
+    - service: switch.turn_off
+      entity_id: switch.esphome_4ch_sw2_relay_3
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

@@ -143,6 +143,10 @@ luces_off_escalera_sensor:
 
 TEMPLATE EDITOR
 ================
+{{
+(states.input_datetime.riego_ch1_end_time.attributes.timestamp -  states.input_datetime.riego_ch1_start_time.attributes.timestamp)
+}}
+
 
 # Diferencia entre 2 fechas-horas
 {{ as_timestamp(now()) | timestamp_local
