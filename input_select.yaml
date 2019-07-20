@@ -100,8 +100,30 @@
     initial: Diario
     icon: mdi:calendar
 
+# Riego
+  riego_ch2_programador_dias:
+    name: Diario/Semanal
+    options:
+     - 'Diario'
+     - 'Sábado'
+     - 'Domingo'
+     - 'Weekend'
+    initial: Diario
+    icon: mdi:calendar
+
 # Fuente Zen
   riego_ch3_programador_dias:
+    name: Diario/Semanal
+    options:
+     - 'Diario'
+     - 'Sábado'
+     - 'Domingo'
+     - 'Weekend'
+    initial: Diario
+    icon: mdi:calendar
+
+# Riego
+  riego_ch4_programador_dias:
     name: Diario/Semanal
     options:
      - 'Diario'

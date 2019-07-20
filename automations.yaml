@@ -1368,11 +1368,7 @@
       event_data:
         entity_id: timer.riego_ch1
   action:
-    - service: timer.cancel
-      entity_id: timer.riego_ch1
-    - service: switch.turn_off
-      entity_id: switch.esphome_4ch_sw2_relay_1
-
+    - service: script.riego_ch1_timer_cancel
 
 - id: S20
   alias: 'S20 Timer Fuente CH3 Start'
@@ -1406,10 +1402,7 @@
       event_data:
         entity_id: timer.riego_ch3
   action:
-    - service: timer.cancel
-      entity_id: timer.riego_ch3
-    - service: switch.turn_off
-      entity_id: switch.esphome_4ch_sw2_relay_3
+    - service: script.riego_ch3_timer_cancel
 
 
 #-----------------------------------------------------------------------------#

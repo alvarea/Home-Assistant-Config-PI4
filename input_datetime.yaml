@@ -61,3 +61,15 @@
     has_date: false
     has_time: true
     initial: '23:00'
+
+  riego_ch4_start_time:
+    name: Hora Inicio Planificado
+    has_date: false
+    has_time: true
+    initial: '19:00'
+
+  riego_ch4_end_time:
+    name: Hora Final Planificado
+    has_date: false
+    has_time: true
+    initial: '23:00'

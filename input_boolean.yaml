@@ -81,6 +81,11 @@
     initial: on
     icon: mdi:dip-switch
 
+  riego_ch4_programador:
+    name: Programador CH4 On/Off
+    initial: on
+    icon: mdi:dip-switch
+
 # Programador Diario Luces Jardín
 
   jardin_programador_xia_ext:
