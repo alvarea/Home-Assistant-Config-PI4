@@ -1418,7 +1418,7 @@
   alias: 'P01_router_fibra_movistar'
   trigger:
     - platform: state
-      entity_id: binary_sensor.ping_01_router_fibra_movistar
+      entity_id: binary_sensor.ping_00_wan_router_fibra_movistar
       from: 'on'
       to: 'off'
       # for: '00:06:00'
@@ -1428,11 +1428,11 @@
       entity_id: script.notifica_alarma
       data:
         variables:
-          title: '*AVISO FALLO DE RED LOCAL'
+          title: '*AVISO ERROR CONECTIVIDAD'
           message: >
-            >>> URGENTE: FALLO DE PING
+            >>> URGENTE: ERROR CONEXION INTERNET
 
-            >>> DISPOSITIVO: 01_router_fibra_movistar
+            >>> DISPOSITIVO: 00 WAN ROUTER MOVISTAR
 
 #
 # ping_05_router_wifi_tplink:
@@ -1451,7 +1451,7 @@
       entity_id: script.notifica_alarma
       data:
         variables:
-          title: '*AVISO FALLO DE RED LOCAL'
+          title: '*AVISO ERROR CONECTIVIDAD'
           message: >
             >>> URGENTE: FALLO DE PING
 

@@ -621,6 +621,14 @@
     # =====================================================================
     #
     # ping_01_router_fibra_movistar:
+
+  - platform: command_line
+    command: "/home/homeassistant/.homeassistant/ssh_scripts/wan_test.sh"
+    device_class: connectivity
+    payload_on: "Up"
+    payload_off: "Down"
+    name: 'ping 00 WAN Router Fibra Movistar'
+
   - platform: ping
     host: 192.168.0.1
     count: 5

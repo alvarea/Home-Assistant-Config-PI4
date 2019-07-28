@@ -507,6 +507,10 @@ sensor.ups_status:
 
 
 # PING BINARY SENSORS
+binary_sensor.ping_00_wan_router_fibra_movistar:
+  icon: mdi:wan
+  friendly_name: '00 WAN Router Internet Check'
+
 binary_sensor.ping_01_router_fibra_movistar:
   icon: mdi:wan
   friendly_name: '01 Router Fibra Movistar'
