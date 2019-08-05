@@ -88,7 +88,6 @@
     initial: Diario
     icon: mdi:calendar
 
-
 # Riego Bonsais
   riego_ch1_programador_dias:
     name: Diario/Semanal
@@ -124,6 +123,17 @@
 
 # Riego
   riego_ch4_programador_dias:
+    name: Diario/Semanal
+    options:
+     - 'Diario'
+     - 'Sábado'
+     - 'Domingo'
+     - 'Weekend'
+    initial: Diario
+    icon: mdi:calendar
+
+# Fuente Tortugas ffrog
+  ffrog_sw2_programador_dias:
     name: Diario/Semanal
     options:
      - 'Diario'

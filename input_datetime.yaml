@@ -73,3 +73,18 @@
     has_date: false
     has_time: true
     initial: '23:00'
+
+#
+# Programador Sonoff SW2 Jardín
+#
+  ffrog_sw2_start_time:
+    name: Hora Inicio Planificado
+    has_date: false
+    has_time: true
+    initial: '19:00'
+
+  ffrog_sw2_end_time:
+    name: Hora Final Planificado
+    has_date: false
+    has_time: true
+    initial: '23:00'

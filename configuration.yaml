@@ -112,7 +112,7 @@ alarm_control_panel:
       pending_time: 0
       delay_time: 0
 
-# Timer temporizador Depuradora Piscina
+# Timer temporizadores
 timer:
   piscina:
     name: Timer Piscina
@@ -128,6 +128,9 @@ timer:
     icon: mdi:timer
   riego_ch4:
     name: Timer CH4
+    icon: mdi:timer
+  ffrog_sw2:
+    name: Timer Fuente Frog
     icon: mdi:timer
 
 #counter:

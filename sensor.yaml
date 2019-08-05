@@ -632,6 +632,12 @@
         friendly_name: 'Duración Programa Planificado'
         icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_ch4_duracion_planificada') is not none }}"
 
+      ffrog_sw2_duracion_planificada:
+        value_template: '{{ states.input_datetime.ffrog_sw2_end_time.attributes.timestamp -  states.input_datetime.ffrog_sw2_start_time.attributes.timestamp }}'
+        friendly_name: 'Duración Programa Planificado'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.ffrog_sw2_duracion_planificada') is not none }}"
+
+
       densidad_sensor_humo:
         # smoke_sensor_158d0001fd321c
         friendly_name: 'Densidad Humo Cocina'

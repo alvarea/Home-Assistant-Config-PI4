@@ -320,12 +320,12 @@ light.esphome_bas_sw1_led:
   friendly_name: LED Pendiente_SW1
 
 switch.esphome_bas_sw2:
-  friendly_name: Porche 2
-  icon: mdi:lamp
+  friendly_name: Fuente Tortugas
+  icon: mdi:waves
 binary_sensor.esphome_bas_sw2_status:
-  friendly_name: BAS.SW2 Luz Porche 2
+  friendly_name: BAS.SW2 Fuente Tortugas
 light.esphome_bas_sw2_led:
-  friendly_name: LED BAS_SW2
+  friendly_name: LED BAS_SW2 Fuente Tortugas
 
 switch.esphome_bas_sw4:
   friendly_name: Porche 1
@@ -508,8 +508,8 @@ sensor.ups_status:
 
 # PING BINARY SENSORS
 binary_sensor.ping_00_wan_router_fibra_movistar:
-  icon: mdi:wan
   friendly_name: '00 WAN Router Internet Check'
+  icon: mdi:wan
 
 binary_sensor.ping_01_router_fibra_movistar:
   icon: mdi:wan

@@ -86,6 +86,14 @@
     initial: on
     icon: mdi:dip-switch
 
+# Fuente Tortugas
+#
+  ffrog_sw2_programador:
+    name: Programador Fuente Tortugas On/Off
+    initial: on
+    icon: mdi:dip-switch
+
+
 # Programador Diario Luces Jardín
 
   jardin_programador_xia_ext:
