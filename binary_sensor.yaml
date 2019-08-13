@@ -689,29 +689,21 @@
     count: 2
     name: 'ping 13 IPcam Cocina'
 
-    # ping_xiaomi_gateway:
+    # ping_52_amazon_alexa:
+  - platform: ping
+    host: 192.168.0.52
+    count: 2
+    name: 'ping Amazon Alexa'
+    #icon_template: mdi:amazon-alexa
+
+    # ping_53_xiaomi_gateway:
   - platform: ping
     host: 192.168.0.53
     count: 2
-    name: 'ping 53 Xiaomi Aqara Gateway'
+    name: 'ping Xiaomi Aqara Gateway'
 
-    # ping_philips_hue:
+    # ping_54_philips_hue:
   - platform: ping
     host: 192.168.0.54
     count: 2
-    name: 'ping 54 Hub Philips Hue'
-
-
-    # ping_27_sony_ps4:
-  - platform: ping
-    host: 192.168.0.27
-    count: 2
-    name: 'ping 27 Sony PS4'
-    #icon_template: mdi:gamepad-variant
-
-  # ping_27_sony_ps4_lan:
-  - platform: ping
-    host: 192.168.0.28
-    count: 2
-    name: 'ping 27 Sony PS4 LAN'
-    #icon_template: mdi:gamepad-variant
+    name: 'ping Hub Philips Hue'
