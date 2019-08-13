@@ -700,11 +700,11 @@ riego_ch4_timer_cancel:
     - service: switch.turn_off
       entity_id: switch.esphome_4ch_sw2_relay_4
 
-ffrog_sw2_timer_cancel:
+fzen_sw2_timer_cancel:
   alias: Timer Tortugas SW2 Cancel
   sequence:
     - service: timer.cancel
-      entity_id: timer.ffrog_sw2
+      entity_id: timer.fzen_sw2
     - service: switch.turn_off
       entity_id: switch.esphome_bas_sw2
 

@@ -1408,22 +1408,22 @@
   alias: 'S22 Timer Fuente Frog SW2 Start'
   trigger:
     - platform: template
-      value_template: "{{ states('sensor.time') == (states.input_datetime.ffrog_sw2_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+      value_template: "{{ states('sensor.time') == (states.input_datetime.fzen_sw2_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
   condition:
     condition: and
     conditions:
       - condition: state
-        entity_id: input_boolean.ffrog_sw2_programador  # Sensor del programador on/off
+        entity_id: input_boolean.fzen_sw2_programador  # Sensor del programador on/off
         state: 'on'
       - condition: state
-        entity_id: binary_sensor.ffrog_sw2_dia_ejecucion  # Sensor que indica si es día de ejecución en función de la lista input_select.riego_ch1_programador_dias
+        entity_id: binary_sensor.fzen_sw2_dia_ejecucion  # Sensor que indica si es día de ejecución en función de la lista input_select.riego_ch1_programador_dias
         state: 'on'
   action:
     # Timer Programador Automático
     - service: timer.start
       data_template:
-        entity_id: timer.ffrog_sw2
-        duration: '{{ states.sensor.ffrog_sw2_duracion_planificada.state}}'
+        entity_id: timer.fzen_sw2
+        duration: '{{ states.sensor.fzen_sw2_duracion_planificada.state}}'
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw2
 
@@ -1434,9 +1434,9 @@
     - platform: event
       event_type: timer.finished
       event_data:
-        entity_id: timer.ffrog_sw2
+        entity_id: timer.fzen_sw2
   action:
-    - service: script.ffrog_sw2_timer_cancel
+    - service: script.fzen_sw2_timer_cancel
 
 
 #-----------------------------------------------------------------------------#

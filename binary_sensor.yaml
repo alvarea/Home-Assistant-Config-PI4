@@ -416,7 +416,7 @@
             false
           {% endif %}
 
-      ffrog_sw2_status:
+      fzen_sw2_status:
         value_template: >-
           {% if is_state('switch.esphome_bas_sw2','on') %}
             true
@@ -426,17 +426,17 @@
         friendly_name: 'Fuente Tortugas on/off'
         icon_template: mdi:power
 
-      ffrog_sw2_dia_ejecucion:
+      fzen_sw2_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy? (Frog)'
         icon_template: mdi:calendar-check
         value_template: >-
-          {% if is_state('input_select.ffrog_sw2_programador_dias','Diario') and is_state('input_boolean.ffrog_sw2_programador','on') %}
+          {% if is_state('input_select.fzen_sw2_programador_dias','Diario') and is_state('input_boolean.fzen_sw2_programador','on') %}
             true
-          {% elif is_state('input_select.ffrog_sw2_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.ffrog_sw2_programador','on') %}
+          {% elif is_state('input_select.fzen_sw2_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.fzen_sw2_programador','on') %}
             true
-          {% elif is_state('input_select.ffrog_sw2_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.ffrog_sw2_programador','on') %}
+          {% elif is_state('input_select.fzen_sw2_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.fzen_sw2_programador','on') %}
             true
-          {% elif is_state('input_select.ffrog_sw2_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.ffrog_sw2_programador','on') %}
+          {% elif is_state('input_select.fzen_sw2_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.fzen_sw2_programador','on') %}
             true
           {% else %}
             false
@@ -464,7 +464,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '52 Iphone 7S+ AAC'
+        friendly_name: 'Iphone 7S+ AAC'
         icon_template: mdi:cellphone-iphone
         entity_id: device_tracker.aac_iphone_nmap
 
@@ -475,7 +475,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '53 Iphone 6S MFC'
+        friendly_name: 'Iphone 6S MFC'
         icon_template: mdi:cellphone-iphone
         entity_id: device_tracker.mfc_iphone_nmap
 
@@ -487,7 +487,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '54 Iphone 6S PAF'
+        friendly_name: 'Iphone 6S PAF'
         icon_template: mdi:cellphone-iphone
         entity_id: device_tracker.paf_iphone_nmap
 
@@ -499,7 +499,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '55 Iphone 6S+ AAF'
+        friendly_name: 'Iphone 6S+ AAF'
         icon_template: mdi:cellphone-iphone
         entity_id: device_tracker.aaf_iphone_nmap
 
@@ -510,7 +510,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '56 Apple Ipad Air2'
+        friendly_name: 'Apple Ipad Air2'
         icon_template: mdi:tablet-ipad
         entity_id: device_tracker.nmap_56_ipad_air2
 
@@ -521,7 +521,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '57 Amazon Kindle'
+        friendly_name: 'Amazon Kindle'
         icon_template: mdi:tablet-android
         entity_id: device_tracker.ping_57_amazon_kindle
 
@@ -532,31 +532,9 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: '58 Apple Ipad Mini4'
+        friendly_name: 'Apple Ipad Mini4'
         icon_template: mdi:tablet-ipad
         entity_id: device_tracker.nmap_58_ipad_mini4
-
-      nmap_59_apple_watch:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_59_apple_watch','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '59 Apple Watch'
-        icon_template: mdi:watch
-        entity_id: device_tracker.nmap_59_apple_watch
-
-      nmap_80_phone_conchi:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_80_phone_conchi','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: '80 Phone Conchi'
-        icon_template: mdi:cellphone-iphone
-        entity_id: device_tracker.nmap_80_phone_conchi
 
       #
       # NMAP - 60 - 69 - COMPUTER LAPTOP DEVICES
@@ -711,69 +689,18 @@
     count: 2
     name: 'ping 13 IPcam Cocina'
 
-    # ping_17_philips_hue:
+    # ping_xiaomi_gateway:
   - platform: ping
-    host: 192.168.0.17
+    host: 192.168.0.53
     count: 2
-    name: 'ping 17 Hub Philips Hue'
+    name: 'ping 53 Xiaomi Aqara Gateway'
 
-    # ping_18_xiaomi_gateway:
+    # ping_philips_hue:
   - platform: ping
-    host: 192.168.0.18
+    host: 192.168.0.54
     count: 2
-    name: 'ping 18 Xiaomi Aqara Gateway'
+    name: 'ping 54 Hub Philips Hue'
 
-
-    # NMAP - 20 - 29 - MEDIA DEVICES
-    # =====================================================================
-    #
-    # ping_20_amazon_firetv:
-  - platform: ping
-    host: 192.168.0.20
-    count: 2
-    name: 'ping 20 Amazon FireTV '
-    #icon_template: mdi:youtube-tv
-
-    # ping_21_apple_tv:
-  - platform: ping
-    host: 192.168.0.21
-    count: 2
-    name: 'ping 21 Apple TV'
-    #icon_template: mdi:youtube-tv
-
-    # ping_22_amazon_alexa:
-  - platform: ping
-    host: 192.168.0.22
-    count: 2
-    name: 'ping 22 Amazon Alexa'
-    #icon_template: mdi:amazon-alexa
-
-    # ping_23_decotv_salon:
-  - platform: ping
-    host: 192.168.0.23
-    count: 2
-    name: 'ping 23 Deco TV Salon'
-    #icon_template: mdi:television-box
-
-    # ping_24_decotv_estudio:
-  - platform: ping
-    host: 192.168.0.24
-    count: 2
-    name: 'ping 24 Deco TV Estudio'
-    #icon_template: mdi:television-box
-
-    # ping_25_sonytv_salon:
-  - platform: ping
-    host: 192.168.0.25
-    name: 'ping 25 Sony TV Salon'
-    #icon_template: mdi:television
-
-    # ping_26_sonytv_estudio:
-  - platform: ping
-    host: 192.168.0.26
-    count: 2
-    name: 'ping 26 Sony TV Estudio'
-    #icon_template: mdi:television
 
     # ping_27_sony_ps4:
   - platform: ping

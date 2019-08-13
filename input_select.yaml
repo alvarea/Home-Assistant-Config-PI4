@@ -132,8 +132,8 @@
     initial: Diario
     icon: mdi:calendar
 
-# Fuente Tortugas ffrog
-  ffrog_sw2_programador_dias:
+# Fuente Tortugas fzen
+  fzen_sw2_programador_dias:
     name: Diario/Semanal
     options:
      - 'Diario'
