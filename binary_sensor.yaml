@@ -457,7 +457,7 @@
       # NMAP - 50 - 59 - MOBILE DEVICES
       # =====================================================================
       #
-      nmap_52_iphone_aac:
+      nmap_iphone_aac:
         value_template: >-
           {% if is_state('device_tracker.aac_iphone_nmap','home') %}
             true
@@ -468,7 +468,7 @@
         icon_template: mdi:cellphone-iphone
         entity_id: device_tracker.aac_iphone_nmap
 
-      nmap_53_iphone_mfc:
+      nmap_iphone_mfc:
         value_template: >-
           {% if is_state('device_tracker.mfc_iphone_nmap','home') %}
             true
@@ -480,7 +480,7 @@
         entity_id: device_tracker.mfc_iphone_nmap
 
 
-      nmap_54_iphone_paf:
+      nmap_iphone_paf:
         value_template: >-
           {% if is_state('device_tracker.paf_iphone_nmap','home') %}
             true
@@ -492,7 +492,7 @@
         entity_id: device_tracker.paf_iphone_nmap
 
 
-      nmap_55_iphone_aaf:
+      nmap_iphone_aaf:
         value_template: >-
           {% if is_state('device_tracker.aaf_iphone_nmap','home') %}
             true
@@ -503,121 +503,132 @@
         icon_template: mdi:cellphone-iphone
         entity_id: device_tracker.aaf_iphone_nmap
 
-      nmap_56_ipad_air2:
+      nmap_ipad_air2:
         value_template: >-
-          {% if is_state('device_tracker.nmap_56_ipad_air2','home') %}
+          {% if is_state('device_tracker.nmap_ipad_air2','home') %}
             true
           {% else %}
             false
           {% endif %}
         friendly_name: 'Apple Ipad Air2'
         icon_template: mdi:tablet-ipad
-        entity_id: device_tracker.nmap_56_ipad_air2
+        entity_id: device_tracker.nmap_ipad_air2
 
-      ping_57_amazon_kindle:
+      ping_amazon_kindle:
         value_template: >-
-          {% if is_state('device_tracker.ping_57_amazon_kindle','home') %}
+          {% if is_state('device_tracker.ping_amazon_kindle','home') %}
             true
           {% else %}
             false
           {% endif %}
         friendly_name: 'Amazon Kindle'
         icon_template: mdi:tablet-android
-        entity_id: device_tracker.ping_57_amazon_kindle
+        entity_id: device_tracker.ping_amazon_kindle
 
-      nmap_58_ipad_mini4:
+      nmap_ipad_mini4:
         value_template: >-
-          {% if is_state('device_tracker.nmap_58_ipad_mini4','home') %}
+          {% if is_state('device_tracker.nmap_ipad_mini4','home') %}
             true
           {% else %}
             false
           {% endif %}
         friendly_name: 'Apple Ipad Mini4'
         icon_template: mdi:tablet-ipad
-        entity_id: device_tracker.nmap_58_ipad_mini4
+        entity_id: device_tracker.nmap_ipad_mini4
 
       #
       # NMAP - 60 - 69 - COMPUTER LAPTOP DEVICES
       # =====================================================================
       #
-      nmap_60_macbook_pro_lan:
+      nmap_macbook_pro_lan:
         value_template: >-
-          {% if is_state('device_tracker.nmap_60_macbook_pro_lan','home') %}
+          {% if is_state('device_tracker.nmap_macbook_pro_lan','home') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: '60 Apple Macbook Pro LAN'
+        friendly_name: 'Apple Macbook Pro LAN'
         icon_template: mdi:laptop-mac
-        entity_id: device_tracker.nmap_60_macbook_pro_lan
+        entity_id: device_tracker.nmap_macbook_pro_lan
 
-      nmap_61_macbook_pro_wifi:
+      nmap_macbook_pro_wifi:
         value_template: >-
-          {% if is_state('device_tracker.nmap_61_macbook_pro_wifi','home') %}
+          {% if is_state('device_tracker.nmap_macbook_pro_wifi','home') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: '61 Apple Macbook Pro Wifi'
+        friendly_name: 'Apple Macbook Pro Wifi'
         icon_template: mdi:laptop-mac
-        entity_id: device_tracker.nmap_61_macbook_pro_wifi
+        entity_id: device_tracker.nmap_macbook_pro_wifi
 
-      nmap_62_asus_zenbook_wifi:
+      nmap_asus_zenbook_wifi:
         value_template: >-
-          {% if is_state('device_tracker.nmap_62_asus_zenbook_wifi','home') %}
+          {% if is_state('device_tracker.nmap_asus_zenbook_wifi','home') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: '62 Asus Zenbook AAF'
+        friendly_name: 'Asus Zenbook AAF'
         icon_template: mdi:laptop
-        entity_id: device_tracker.nmap_62_asus_zenbook_wifi
+        entity_id: device_tracker.nmap_asus_zenbook_wifi
 
-      nmap_63_macbook_air_paf:
+      nmap_macbook_air_paf:
         value_template: >-
-          {% if is_state('device_tracker.nmap_63_macbook_air_paf','home') %}
+          {% if is_state('device_tracker.nmap_macbook_air_paf','home') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: '63 Macbook Air PAF'
+        friendly_name: 'Macbook Air PAF'
         icon_template: mdi:laptop-mac
-        entity_id: device_tracker.nmap_63_macbook_air_paf
+        entity_id: device_tracker.nmap_macbook_air_paf
 
-      nmap_65_elitebook_hk:
+      nmap_elitebook_hk:
         value_template: >-
-          {% if is_state('device_tracker.nmap_65_elitebook_hk_wifi','home')
-             or is_state('device_tracker.nmap_66_elitebook_hk_lan','home') %}
+          {% if is_state('device_tracker.nmap_elitebook_hk_wifi','home')
+             or is_state('device_tracker.nmap_elitebook_hk_lan','home') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: '65 Elitebook Heineken'
+        friendly_name: 'Elitebook Heineken'
         icon_template: mdi:laptop
-        entity_id: device_tracker.nmap_65_elitebook_hk_wifi
+        entity_id: device_tracker.nmap_elitebook_hk_wifi
 
-      nmap_67_acer_notebook:
+      nmap_acer_notebook:
         value_template: >-
-          {% if is_state('device_tracker.nmap_67_acer_notebook','home') %}
+          {% if is_state('device_tracker.nmap_acer_notebook','home') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: '67 Netbook Acer Aspire'
+        friendly_name: 'Netbook Acer Aspire'
         icon_template: mdi:laptop
-        entity_id: device_tracker.nmap_67_acer_notebook
+        entity_id: device_tracker.nmap_acer_notebook
 
-      ping_27_sony_ps4_lan_wifi:
+      nmap_amazon_alexa:
         value_template: >-
-          {% if is_state('binary_sensor.ping_27_sony_ps4','on')
-             or is_state('binary_sensor.ping_27_sony_ps4_lan','on') %}
+          {% if is_state('device_tracker.nmap_amazon_alexa','home') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: 'Amazon Alexa Echo'
+        icon_template: mdi:laptop
+        entity_id: device_tracker.nmap_amazon_alexa
+
+      ping_sony_ps4_lan_wifi:
+        value_template: >-
+          {% if is_state('device_tracker.nmap_sony_ps4','on')
+             or is_state('binary_sensor.ping_sony_ps4_lan','on') %}
             on
           {% else %}
             off
           {% endif %}
-        friendly_name: '27 Sony PS4'
+        friendly_name: 'Sony PS4'
         icon_template: mdi:gamepad-variant
-        entity_id: binary_sensor.ping_27_sony_ps4_lan
+        entity_id: device_tracker.nmap_sony_ps4
 
     #
     # PING - 01 - 09 - NETWORK DEVICES
@@ -688,13 +699,6 @@
     host: 192.168.0.13
     count: 2
     name: 'ping 13 IPcam Cocina'
-
-    # ping_52_amazon_alexa:
-  - platform: ping
-    host: 192.168.0.52
-    count: 2
-    name: 'ping Amazon Alexa'
-    #icon_template: mdi:amazon-alexa
 
     # ping_53_xiaomi_gateway:
   - platform: ping
