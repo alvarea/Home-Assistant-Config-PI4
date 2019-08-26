@@ -615,13 +615,13 @@
             false
           {% endif %}
         friendly_name: 'Amazon Alexa Echo'
-        icon_template: mdi:laptop
+        icon_template: mdi:amazon-alexa
         entity_id: device_tracker.nmap_amazon_alexa
 
       ping_sony_ps4_lan_wifi:
         value_template: >-
-          {% if is_state('device_tracker.nmap_sony_ps4','on')
-             or is_state('binary_sensor.ping_sony_ps4_lan','on') %}
+          {% if is_state('device_tracker.nmap_sony_ps4','home')
+             or is_state('device_tracker.nmap_sony_ps4_wifi','home') %}
             on
           {% else %}
             off

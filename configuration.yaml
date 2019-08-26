@@ -158,10 +158,10 @@ camera:
     password: !secret IPcam12
   - platform: generic
     still_image_url: !secret still_image_url_cam13
-    #stream_source: !secret stream_source_url_cam13
-    name: IPcam11 Cocina
+    stream_source: !secret stream_source_url_cam13
+    name: IPcam13 Cocina
     username: admin
-    password: !secret IPcam11
+    password: !secret IPcam13
 
 #ffmpeg:
 

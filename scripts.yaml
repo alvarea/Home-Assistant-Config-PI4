@@ -677,7 +677,7 @@ riego_ch1_timer_cancel:
       entity_id: switch.esphome_4ch_sw2_relay_1
 
 riego_ch2_timer_cancel:
-  alias: Timer Riego CH1 Cancel
+  alias: Timer Riego CH2 Cancel
   sequence:
     - service: timer.cancel
       entity_id: timer.riego_ch2
@@ -685,7 +685,7 @@ riego_ch2_timer_cancel:
       entity_id: switch.esphome_4ch_sw2_relay_2
 
 riego_ch3_timer_cancel:
-  alias: Timer Riego CH1 Cancel
+  alias: Timer Riego CH3 Cancel
   sequence:
     - service: timer.cancel
       entity_id: timer.riego_ch3
@@ -693,7 +693,7 @@ riego_ch3_timer_cancel:
       entity_id: switch.esphome_4ch_sw2_relay_3
 
 riego_ch4_timer_cancel:
-  alias: Timer Riego CH1 Cancel
+  alias: Timer Riego CH3 Cancel
   sequence:
     - service: timer.cancel
       entity_id: timer.riego_ch4

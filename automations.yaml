@@ -1240,8 +1240,8 @@
       event: sunrise
       offset: "-00:15:00"
   action:
-    - service: script.calefaccion_mfc_off
-    - service: script.calefaccion_paf_off
+    #- service: script.calefaccion_mfc_off
+    #- service: script.calefaccion_paf_off
 
 #
 # ESPHOME BASIC SW2 PORCHE PISCINA
@@ -1371,7 +1371,40 @@
     - service: script.riego_ch1_timer_cancel
 
 - id: S20
-  alias: 'S20 Timer Fuente CH3 Start'
+  alias: 'S20 Timer Riego - CH2 Start'
+  trigger:
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states.input_datetime.riego_ch2_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.riego_ch2_programador  # Sensor del programador on/off
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.riego_ch2_dia_ejecucion  # Sensor que indica si es día de ejecución en función de la lista input_select.riego_ch1_programador_dias
+        state: 'on'
+  action:
+    # Timer Programador Diario
+    - service: timer.start
+      data_template:
+        entity_id: timer.riego_ch2
+        duration: '{{ states.sensor.riego_ch2_duracion_planificada.state|int * 60}}'
+    - service: switch.turn_on
+      entity_id: switch.esphome_4ch_sw2_relay_2
+
+- id: S21
+  alias: 'S21 Timer Riego CH2 End'
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.riego_ch2
+  action:
+    - service: script.riego_ch2_timer_cancel
+
+- id: S22
+  alias: 'S22 Timer Fuente CH3 Start'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.riego_ch3_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1394,8 +1427,8 @@
       entity_id: switch.esphome_4ch_sw2_relay_3
 
 
-- id: S21
-  alias: 'S21 Timer Fuente CH3 End'
+- id: S23
+  alias: 'S23 Timer Fuente CH3 End'
   trigger:
     - platform: event
       event_type: timer.finished
@@ -1404,8 +1437,8 @@
   action:
     - service: script.riego_ch3_timer_cancel
 
-- id: S22
-  alias: 'S22 Timer Fuente Frog SW2 Start'
+- id: S24
+  alias: 'S24 Timer Fuente Frog SW2 Start'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.fzen_sw2_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1427,9 +1460,8 @@
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw2
 
-
-- id: S21
-  alias: 'S21 Timer Fuente Frow SW2 End'
+- id: S25
+  alias: 'S25 Timer Fuente Frow SW2 End'
   trigger:
     - platform: event
       event_type: timer.finished
@@ -1437,7 +1469,6 @@
         entity_id: timer.fzen_sw2
   action:
     - service: script.fzen_sw2_timer_cancel
-
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
