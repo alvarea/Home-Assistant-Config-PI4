@@ -60,8 +60,8 @@ discovery:
   ignore:
     - igd
     - xiaomi_gw
-    - philips_hue
     - esphome
+#   - philips_hue
 
 # Enables support for tracking state changes over time
 history:
@@ -75,7 +75,8 @@ sun:
 # Philips Hue Bridge
 hue:
   bridges:
-    - host: !secret hue_bridge_host
+    - host: 192.168.0.20
+      allow_unreachable: true
 
 # Dispositivos Apple IOS
 ios:
@@ -471,3 +472,6 @@ stream:
 # custom_updater:
 #  card_urls:
 #    - https://raw.githubusercontent.com/kalkih/mini-graph-card/master/tracker.json
+
+
+
