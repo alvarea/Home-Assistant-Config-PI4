@@ -409,27 +409,23 @@ cloud:
       light.esphome_lb1_l01:
         display_categories: LIGHT
 
-# Restaurar valores tras reinicio
-#
-#recorder:
-#  include:
-#    domains:
-#      - binary_sensor
-#      - sensor
-#      - input_boolean
-#      - input_text
-#      - input_select
-#      - switch
-#      - media_player
-
-# TV Sony
-# media_player:
-#   - platform: braviatv
-#     host: 192.168.0.14
-#     name: TV Sony Salón
-#   - platform: braviatv
-#     host: 192.168.0.15
-#     name: TV Sony Estudio
+recorder:
+  purge_interval: 1
+  purge_keep_days: 30
+  exclude:
+    domains:
+      - input_boolean
+      - input_text
+      - input_select
+      - media_player
+      - camera
+      - automation
+      - climate
+      - group
+      - script
+      - sun
+      - weather
+      - zone
 
 weather:
   - platform: darksky
@@ -465,6 +461,17 @@ stream:
 #    min_brightness: 1000
 #    max_brightness: 30000
 #    min_battery: 20
+
+
+# TV Sony
+# media_player:
+#   - platform: braviatv
+#     host: 192.168.0.14
+#     name: TV Sony Salón
+#   - platform: braviatv
+#     host: 192.168.0.15
+#     name: TV Sony Estudio
+
 
 #TO DO
 #

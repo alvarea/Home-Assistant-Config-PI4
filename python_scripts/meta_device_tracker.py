@@ -44,7 +44,7 @@ if triggeredEntity in AAC_Trackers:
     metatrackerName = 'device_tracker.meta_aac'
 elif triggeredEntity in MFC_Trackers:
     newFriendlyName = 'Malen Tracker'
-    newEntityPicture = '/local/MFC_2017_co.jpeg'
+    newEntityPicture = '/local/MFC_2014_co.jpeg'
     metatrackerName = 'device_tracker.meta_mfc'
 elif triggeredEntity in PAF_Trackers:
     newFriendlyName = 'Paloma Tracker'
