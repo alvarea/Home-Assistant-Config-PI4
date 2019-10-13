@@ -1483,10 +1483,10 @@
   alias: 'P01_router_fibra_movistar'
   trigger:
     - platform: state
-      entity_id: binary_sensor.ping_00_wan_router_fibra_movistar
+      entity_id: binary_sensor.ping_00_wan_internet_google
       from: 'on'
       to: 'off'
-      # for: '00:06:00'
+      for: '00:01:00'
   action:
     # Script Notificación Alarma
     - service: script.turn_on

@@ -622,9 +622,9 @@
         value_template: >-
           {% if is_state('device_tracker.nmap_sony_ps4','home')
              or is_state('device_tracker.nmap_sony_ps4_wifi','home') %}
-            on
+            true
           {% else %}
-            off
+            false
           {% endif %}
         friendly_name: 'Sony PS4'
         icon_template: mdi:gamepad-variant
@@ -636,13 +636,13 @@
     #
     # ping_01_router_fibra_movistar:
 
-#  - platform: command_line
-#    command: "/home/homeassistant/.homeassistant/ssh_scripts/wan_test.sh"
-#    device_class: connectivity
-#    payload_on: "Up"
-#    payload_off: "Down"
-#    name: 'ping 00 WAN Router Fibra Movistar'
-#    scan_interval: 300
+  - platform: command_line
+    command: "/home/homeassistant/.homeassistant/ssh_scripts/wan_test.sh"
+    device_class: connectivity
+    payload_on: "Up"
+    payload_off: "Down"
+    name: 'ping 00 WAN Internet - Google'
+    scan_interval: 300
 
   - platform: ping
     host: 192.168.0.1
@@ -685,29 +685,29 @@
     count: 2
     name: 'ping 09 Switch Estudio'
 
+    # ping_philips_hue:
+  - platform: ping
+    host: 192.168.0.20
+    count: 2
+    name: 'ping Hub Philips Hue'
+
     # PING  - 10 - 19 - HOME & HUB DEVICES
     # =====================================================================
     #
-    # ping_12_IPcam_estudio:
+    # ping_IPcam_estudio:
   - platform: ping
-    host: 192.168.0.12
+    host: 192.168.0.82
     count: 2
-    name: 'ping 12 IPcam Estudio'
+    name: 'ping IPcam Estudio'
 
-    # ping_13_IPcam_cocina:
+    # ping_IPcam_cocina:
   - platform: ping
-    host: 192.168.0.13
+    host: 192.168.0.81
     count: 2
-    name: 'ping 13 IPcam Cocina'
+    name: 'ping IPcam Bonsais'
 
-    # ping_53_xiaomi_gateway:
+    # ping_xiaomi_gateway:
   - platform: ping
     host: 192.168.0.53
     count: 2
     name: 'ping Xiaomi Aqara Gateway'
-
-    # ping_54_philips_hue:
-  - platform: ping
-    host: 192.168.0.54
-    count: 2
-    name: 'ping Hub Philips Hue'
