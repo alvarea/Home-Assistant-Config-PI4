@@ -1,0 +1,494 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: HOMY home assistant
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude_home
+  longitude: !secret longitude_home
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 172
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Madrid
+  # Customization file
+  customize: !include customize.yaml
+  auth_providers:
+    - type: trusted_networks
+      trusted_networks: !secret trusted_networks
+
+
+# External configuration files
+group: !include groups.yaml
+script: !include scripts.yaml
+automation: !include automations.yaml
+sensor: !include sensor.yaml
+binary_sensor: !include binary_sensor.yaml
+input_boolean: !include input_boolean.yaml
+input_select: !include input_select.yaml
+input_text: !include input_text.yaml
+input_number: !include input_number.yaml
+input_datetime: !include input_datetime.yaml
+zone: !include zone.yaml
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# Enable Python Scripts
+python_script:
+
+#http:
+#  ssl_certificate: !secret http_ssl_certificate
+#  ssl_key: !secret http_ssl_key
+#  base_url: !secret http_base_url
+#  ip_ban_enabled: True
+#  login_attempts_threshold: 10
+
+http:
+  server_port: 2309
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+  base_url: https://alvareahomy.duckdns.org:2309
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+
+
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+  ignore:
+    - igd
+    - xiaomi_gw
+    - esphome
+#   - philips_hue
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Philips Hue Bridge
+hue:
+  bridges:
+    - host: 192.168.0.20
+      allow_unreachable: true
+
+# Dispositivos Apple IOS
+ios:
+
+# Enable System Health View
+system_health:
+
+# ALARM MANUAL CONTROL PANEL
+#
+#   TRANSICION: Disarmed => Armed (Home/Night/Away) => Triggered => Disarmed
+#
+#   STATUS      DURACION TRANSICION               DESCRIPCION
+#   ========    =============================     ==================================================
+#   DISARMED    Permanante                        Estado inicial de alarma desarmada
+#   PENDING     <PENDING_TIME>                    Estado transición a ARMED durante <pending_time> Segundos
+#   ARMED_AWAY  Permanante                        Estado de alarma ARMED HOME / ARMED AWAY
+#   PENDING     <PENDING_TIME> + <DELAY_TIME>     Estado transición a TRIGGERED durante <pending_time> + <delay_time> Segundos
+#   TRIGGERED   <TRIGGER_TIME>                    Estado de alarma TRIGGERED durante <trigger_time> segundos
+#   ARMED_AWAY  Permanante                        Estado anterior de alarma armada
+#
+alarm_control_panel:
+  - platform: manual
+    name: HA
+    # code: !secret alarm_control_code
+    # Pending: The time in seconds of the pending time before effecting a state change. Default is 60 seconds.
+    # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
+    # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
+    pending_time: 15
+    delay_time: 30
+    trigger_time: 300
+    disarmed:
+      trigger_time: 0 # the disarmed state never triggers the alarm;
+    armed_home:
+      pending_time: 0
+      delay_time: 0
+
+# Timer temporizadores
+timer:
+  piscina:
+    name: Timer Piscina
+    icon: mdi:timer
+  riego_ch1:
+    name: Timer CH1
+    icon: mdi:timer
+  riego_ch2:
+    name: Timer CH2
+    icon: mdi:timer
+  riego_ch3:
+    name: Timer CH3
+    icon: mdi:timer
+  riego_ch4:
+    name: Timer CH4
+    icon: mdi:timer
+  fzen_sw2:
+    name: Timer Fuente Frog
+    icon: mdi:timer
+
+#counter:
+#  nespresso_start:
+#    initial: 0
+#    step: 1
+
+history_graph:
+  piscina_duracion:
+    entities:
+      - binary_sensor.piscina_status
+    name: Duracion Depuradora Piscina
+    hours_to_show: 168
+    refresh: 1800
+
+# GENERIC IP CAMERA
+camera:
+  - platform: generic
+    still_image_url: https://api.sat24.com/mostrecent/SP/visual5hdcomplete%20width=500%20height=304
+    name: Weather Satelite
+  - platform: generic
+    still_image_url: !secret still_image_url_cam12
+    name: IPcam12 Estudio
+    username: admin
+    password: !secret IPcam12
+  - platform: generic
+    still_image_url: !secret still_image_url_cam13
+    stream_source: !secret stream_source_url_cam13
+    name: IPcam13 Cocina
+    username: admin
+    password: !secret IPcam13
+
+#ffmpeg:
+
+#apple_tv:
+#  - host: !secret apple_tv_host
+#    login_id: !secret apple_tv_loginid
+#    name: Apple TV
+#    credentials: !secret apple_tv_credentials
+
+# Mediaplayer FireTV
+#media_player:
+#  - platform: androidtv
+#    name: Fire TV
+#    host: !secret firetv_host
+#    adbkey: "/home/homeassistant/.homeassistant/config/android/adbkey"
+     #adbkey: "config/android/adbkey" ==> Error Invalid config for [media_player.firetv]: not a file for dictionary
+
+# MQTT - BROKER: Local Mosquitto Broker
+#
+#mqtt:
+#  broker: alvarea.duckdns.org
+#  port: 1883
+#  client_id: hassbian_alvarea
+#  keepalive: 60
+#  username: hassbian_mqtt
+#  password: !secret hassbian_mqtt
+#  discovery: true
+#  discovery_prefix: homeassistant#
+
+#  broker: m23.cloudmqtt.com
+#  port: 11024
+#  client_id: hass_alvarea
+#  keepalive: 60
+#  username: HASS
+#  password: !secret cloudmqtt
+
+# XIAOMI AQARA GATEWAY
+xiaomi_aqara:
+  discovery_retry: 10
+  gateways:
+    - mac: !secret xiaomi_mac
+      key: !secret xiaomi_gateway
+
+# NMAP
+device_tracker:
+  - platform: nmap_tracker
+    hosts: !secret device_tracker_range1
+    home_interval: 10
+    consider_home: 0:10:00
+    interval_seconds: 60
+    track_new_devices: yes
+    scan_options: -Pn --host-timeout 5s
+    exclude:
+      - !secret device_tracker_host1
+  - platform: ping
+    hosts:
+      ping_57_amazon_kindle: 192.168.0.57
+
+# GEOFENCY: Platform & Device Tracker ==> changed on v.0.83.2
+geofency:
+
+# OWNTRACKS: Device tracker integration using Nabu Cloud
+#owntracks:
+  #max_gps_accuracy: 300
+  #waypoints: false
+  #mqtt_topic: "owntracks/#"
+  #events_only: true
+
+# NOTIFICACIONES
+notify:
+  - platform: group # notification group for IOS
+    name: notifica_grupo_ios
+    services:
+      - service: ios_aac_ios
+      - service: ios_mfc_ios
+      - service: ios_paf_ios
+      - service: ios_aaf_ios
+  - name: telegram_alarm
+    platform: telegram
+    chat_id: !secret telegram_grp_alarm
+  - name: telegram_notify
+    platform: telegram
+    chat_id: !secret telegram_grp_notif
+
+  #- name: pushover_aac
+  #  platform: pushover
+  #  api_key: uovpmpj3cv6ijvyo6dcma2eaeaa8ts
+  #  user_key: aac_ios
+  #- name: telegram_mfc
+  #  platform: telegram
+  #  chat_id: !secret telegram_chat_mfc
+  #- name: telegram_paf
+  #  platform: telegram
+  #  chat_id: !secret telegram_chat_paf
+  #- name: telegram_aaf
+  #  platform: telegram
+  #  chat_id: !secret telegram_chat_aaf
+
+# Notifications via Telegram Bot
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_apikey
+    allowed_chat_ids:
+      - !secret telegram_grp_notif
+      - !secret telegram_grp_alarm
+      #- !secret telegram_chat_aac
+
+alert:
+  alerta_alarma_ha:
+    name: ALERTA - ALARMA HOMY ACTIVADA
+    done_message: Alarma Desactivada OK
+    entity_id: alarm_control_panel.ha
+    state: 'triggered'
+    repeat: 1
+    can_acknowledge: true
+    skip_first: true
+    notifiers:
+      - telegram_alarm
+
+  alerta_test:
+    name: ALERTA - LUCES ENCENDIDAS DE DIA
+    done_message: Test Alerta De Día Solucionado
+    entity_id: binary_sensor.test_alert_sensor
+    state: 'on'
+    repeat: 1
+    can_acknowledge: true
+    skip_first: false
+    notifiers:
+      - telegram_aac
+
+# Enables a map showing the location of tracked devices
+map:
+
+shopping_list:
+
+light:
+  - platform: group
+    name: Luces Planta Baja
+    entities:
+      - light.cocina
+      - light.dormitorio
+      - light.entrada
+      - light.pasillo
+      - light.salon
+  - platform: group
+    name: Luces Planta Alta
+    entities:
+      - light.luces_estudio
+  - platform: group
+    name: Luces Estudio
+    entities:
+      - light.estudio
+      - light.esphome_lb1_l01
+  - platform: group
+    name: Luces Interior
+    entities:
+      - light.luces_planta_baja
+      - light.luces_planta_alta
+
+# Cloud -  Home Assistant Cloud - NABU CASA
+cloud:
+ alexa:
+    filter:
+      include_domains:
+        - switch
+      exclude_domains:
+        - alert
+        - automation
+        - input_boolean
+        - sensor
+        - switch
+        - light
+        - group
+        - script
+      include_entities:
+        - light.luces_planta_baja
+        - light.luces_planta_alta
+        - light.luces_interior
+        - light.luces_salon
+        - light.esphome_lb1_l01
+        - group.luces_exterior_grp
+        - group.luces_casa_grp
+        - script.homy_armado_parcial
+        - script.homy_armado_total
+        - script.homy_desarmado_code
+      exclude_entities:
+        - switch.esphome_bas_sw0
+        - switch.esphome_bas_sw1
+        - switch.esphome_bas_sw2
+        - switch.esphome_bas_sw3
+        - switch.esphome_bas_sw4
+        - switch.esphome_pow_sw
+        - switch.esphome_pow_sw2
+        - light.hue_cilindro
+        - light.hue_cocina
+        - light.hue_entrada
+        - light.hue_estudio
+        - light.hue_lectura
+        - light.hue_pasillo
+        - light.hue_seises
+        - light.entrada
+        - light.cocina
+        - light.estudio
+        - light.pasillo
+        - light.salon
+        - light.esphome_4ch_blue_led
+        - light.esphome_bas_sw1_led
+        - light.esphome_bas_sw2_led
+        - light.esphome_bas_sw4_led
+        - light.esphome_pow_sw1
+        - light.esphome_pow_sw1_led
+        - light.esphome_s20_nespresso_led
+        - light.esphome_s20_sw1_led
+        - light.esphome_s20_sw2_led
+        - light.esphome_s20_sw3_led
+    entity_config:
+      script.homy_armado_parcial:
+        name: Armado Parcial
+      script.homy_armado_total:
+        name: Armado Total
+      script.homy_desarmado_code:
+        name: !secret desarmado_code
+      group.luces_toda_la_casa_grp:
+        name: Luces Toda La Casa
+        description: Luces Interior y Exterior
+      group.luces_exterior_grp:
+        name: Luces Exterior y Jardín
+      switch.wall_switch_left_158d0002236e75:
+        display_categories: LIGHT
+      switch.wall_switch_right_158d0002236e75:
+        display_categories: LIGHT
+      switch.esphome_4ch_relay_1:
+        display_categories: LIGHT
+      switch.esphome_4ch_relay_2:
+        display_categories: LIGHT
+      switch.esphome_4ch_relay_3:
+        display_categories: LIGHT
+      switch.esphome_4ch_relay_4:
+        display_categories: LIGHT
+      switch.esphome_bas_sw1:
+        display_categories: LIGHT
+      switch.esphome_bas_sw4:
+        display_categories: LIGHT
+      light.esphome_lb1_l01:
+        display_categories: LIGHT
+
+recorder:
+  purge_interval: 1
+  purge_keep_days: 30
+  exclude:
+    domains:
+      - input_boolean
+      - input_text
+      - input_select
+      - media_player
+      - camera
+      - automation
+      - climate
+      - group
+      - script
+      - sun
+      - weather
+      - zone
+
+weather:
+  - platform: darksky
+    api_key: !secret weather_apikey
+    mode: daily
+
+apcupsd:
+  host: 127.0.0.1
+  port: 3551
+
+person:
+
+# The stream component provides a way to proxy live streams through Home Assistant.
+# The component currently only supports the HLS format.
+stream:
+
+#
+# Sensores Xiaomi Miflora - Componente Plant
+#plant:
+#  bonsai_ficus_2:
+#    sensors:
+#      moisture: sensor.bonsai_ficus2_moisture
+#      battery: sensor.bonsai_ficus2_battery
+#      temperature: sensor.bonsai_ficus2_temperature
+#      conductivity: sensor.bonsai_ficus2_conductivity
+#      brightness: sensor.bonsai_ficus2_light_intensity
+#    min_moisture: 20
+#    max_moisture: 60
+#    min_conductivity: 350
+#    max_conductivity: 2000
+#    min_temperature: 10
+#    max_temperature: 32
+#    min_brightness: 1000
+#    max_brightness: 30000
+#    min_battery: 20
+
+
+# TV Sony
+# media_player:
+#   - platform: braviatv
+#     host: 192.168.0.14
+#     name: TV Sony Salón
+#   - platform: braviatv
+#     host: 192.168.0.15
+#     name: TV Sony Estudio
+
+
+#TO DO
+#
+# https://github.com/custom-components/custom_updater/wiki/Installation
+# custom_updater:
+#  card_urls:
+#    - https://raw.githubusercontent.com/kalkih/mini-graph-card/master/tracker.json
+
+
+
