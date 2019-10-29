@@ -109,8 +109,8 @@ luces_off_escalera_sensor:
   trigger:
     - platform: state
       entity_id:
-        - light.hue_pasillo
-        - light.hue_entrada
+        - light.luz_pasillo
+        - light.luz_entrada
       from: 'off'
       to: 'on'
   condition:
@@ -122,7 +122,7 @@ luces_off_escalera_sensor:
       - condition: time
         before: '11:00:00'
       - condition: state
-        entity_id: light.hue_pasillo
+        entity_id: light.luz_pasillo
         state: 'on'
       - condition: numeric_state
         entity_id: counter.nespresso_start
@@ -204,7 +204,7 @@ states.input_datetime.magiccube_last_action1.attributes.timestamp < 5
         before_offset: "1:30:00"
   action:
     - service: light.turn_on
-      entity_id: light.hue_estudio
+      entity_id: light.luz_estudio
       data:
         brightness: 180
         rgb_color: [255, 187, 106]

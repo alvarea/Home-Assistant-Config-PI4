@@ -62,7 +62,7 @@
         before_offset: "1:30:00"
   action:
     - service: light.turn_on
-      entity_id: light.hue_estudio
+      entity_id: light.luz_estudio
       data:
         brightness: 180
         rgb_color: [255, 187, 106]

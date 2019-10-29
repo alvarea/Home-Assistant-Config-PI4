@@ -366,13 +366,13 @@ cloud:
         - switch.esphome_bas_sw4
         - switch.esphome_pow_sw
         - switch.esphome_pow_sw2
-        - light.hue_cilindro
-        - light.hue_cocina
-        - light.hue_entrada
-        - light.hue_estudio
-        - light.hue_lectura
-        - light.hue_pasillo
-        - light.hue_seises
+        - light.luz_cilindro
+        - light.luz_cocina
+        - light.luz_entrada
+        - light.luz_estudio
+        - light.luz_lectura
+        - light.luz_pasillo
+        - light.luz_seises
         - light.entrada
         - light.cocina
         - light.estudio

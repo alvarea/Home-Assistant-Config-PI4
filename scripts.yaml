@@ -458,7 +458,7 @@ luces_on_family_home:
     - condition: sun
       after: sunset
     - service: light.turn_on
-      entity_id: light.hue_entrada
+      entity_id: light.luz_entrada
 
 # Apagado Luces Toda La Casa
 luces_off:

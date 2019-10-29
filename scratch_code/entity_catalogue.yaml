@@ -51,9 +51,9 @@
 # LIGHT         hue_lectura	                        PHILIPS             Luz Lectura         Integrado en Alexa por Hue
 # LIGHT         hue_seises	                        PHILIPS             Luz Cuadro          Integrado en Alexa por Hue
 # LIGHT         hue_estudio                         PHILIPS             Luz Estudio         Integrado en Alexa por Hue
-# LIGHT         hue_lightstrip_plus_1               PHILIPS             PENDIENTE           Integrado en Alexa por Hue
-# LIGHT         hue_ambiance_candle_1               PHILIPS             PENDIENTE           Integrado en Alexa por Hue
-# LIGHT         hue_ambiance_candle_1_2             PHILIPS             PENDIENTE           Integrado en Alexa por Hue
+# LIGHT         hue_ledsalon               PHILIPS             PENDIENTE           Integrado en Alexa por Hue
+# LIGHT         hue_dormitorio_mfc               PHILIPS             PENDIENTE           Integrado en Alexa por Hue
+# LIGHT         hue_dormitorio_aac             PHILIPS             PENDIENTE           Integrado en Alexa por Hue
 # LIGHT         room_cocina	                        PHILIPS             Cocina
 # LIGHT         room_entrada	                    PHILIPS             Entrada
 # LIGHT         room_estudio	                    PHILIPS             Estudio

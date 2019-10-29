@@ -135,7 +135,7 @@
     sensors:
       # Test Alert Component
       test_alert_sensor:
-        value_template: '{{ states.light.hue_estudio }}'
+        value_template: '{{ states.light.luz_estudio }}'
         friendly_name: 'Estado Hue Estudio'
 
       # Sensores finales de control de presencia basados en el bayesian(on/off) AND input_boolean(on/off) de cada Uno.

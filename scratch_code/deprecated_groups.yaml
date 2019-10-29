@@ -261,27 +261,27 @@ luces_salon_grp:
   name: Luces Salon
   entities:
     - light.room_salon
-    - light.hue_cilindro
-    - light.hue_seises
-    - light.hue_lectura
+    - light.luz_cilindro
+    - light.luz_seises
+    - light.luz_lectura
 
 luces_entrada_grp:
   name: Luces Entrada
   entities:
-    - light.hue_entrada
-    - light.hue_pasillo
+    - light.luz_entrada
+    - light.luz_pasillo
     - switch.wall_switch_left_158d0002236e75
     - light.gateway_light_7811dcb788fa
 
 luces_cocina_grp:
   name: Luces Cocina
   entities:
-    - light.hue_cocina
+    - light.luz_cocina
 
 luces_estudio_grp:
   name: Luces Estudio
   entities:
-    - light.hue_estudio
+    - light.luz_estudio
     #- light.esphome_lb1_l01
 
 

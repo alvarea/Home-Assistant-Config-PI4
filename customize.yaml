@@ -89,27 +89,27 @@ sensor.last_boot:
 #
 # COMPONENTES PHILIPS HUE + SONOFF LIGHTS
 #
-light.hue_ambiance_candle_1:
+light.luz_dormitorio_mfc:
   friendly_name: Luz Dormitorio AAC
   icon: mdi:lamp
-light.hue_ambiance_candle_1_2:
+light.luz_dormitorio_aac:
   friendly_name: Luz Dormitorio MFC
   icon: mdi:lamp
-light.hue_lectura:
+light.luz_lectura:
   icon: mdi:floor-lamp
-light.hue_seises:
+light.luz_seises:
   icon: mdi:lamp
-light.hue_cilindro:
+light.luz_cilindro:
   icon: mdi:lava-lamp
-light.hue_lightstrip_plus_1:
+light.luz_ledsalon:
   friendly_name: Luz LED TV
   icon: mdi:led-strip
-light.hue_estudio:
+light.luz_estudio:
   icon: mdi:floor-lamp
 light.esphome_lb1_l01:
   friendly_name: Luz Estudio Escalera
   icon: mdi:floor-lamp
-light.hue_cocina:
+light.luz_cocina:
   icon: mdi:lamp
 
 #

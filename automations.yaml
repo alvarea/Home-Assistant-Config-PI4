@@ -896,7 +896,7 @@
       entity_id: automation.l07
     # Luces Entrada ON
     - service: light.turn_on
-      entity_id: light.hue_entrada
+      entity_id: light.luz_entrada
       data:
         brightness: 120
         rgb_color: [254, 0, 0]
@@ -907,7 +907,7 @@
     # Luces Entrada OFF
     - service: light.turn_off
       entity_id:
-        - light.hue_entrada
+        - light.luz_entrada
         - light.gateway_light_7811dcb788fa
     #
     - service: automation.turn_on
@@ -1024,7 +1024,7 @@
       action_type: flip90
   action:
     - service: light.turn_on
-      entity_id: light.hue_estudio
+      entity_id: light.luz_estudio
       data:
         brightness: 175
         rgb_color: [254, 200, 145]
@@ -1048,7 +1048,7 @@
       action_type: shake_air
   action:
     - service: light.turn_off
-      entity_id: light.hue_estudio
+      entity_id: light.luz_estudio
       data:
         transition: 10
     - service: light.turn_off
