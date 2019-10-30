@@ -262,7 +262,7 @@ luces_salon_grp:
   entities:
     - light.room_salon
     - light.luz_cilindro
-    - light.luz_seises
+    - light.luz_vitrina
     - light.luz_lectura
 
 luces_entrada_grp:

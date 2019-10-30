@@ -372,7 +372,7 @@ cloud:
         - light.luz_estudio
         - light.luz_lectura
         - light.luz_pasillo
-        - light.luz_seises
+        - light.luz_vitrina
         - light.entrada
         - light.cocina
         - light.estudio
