@@ -736,10 +736,10 @@
   alias: 'L02 Luces Off Exterior Sunset'
   trigger:
     - platform: sun
-      # offset: "+02:30:00"   # Horario Invierno GMT+1
-      # offset: "+02:30:00"   # Horario Invierno GMT+2
+      # offset: "+03:30:00"   # Horario Invierno GMT+1
+      # offset: "+02:30:00"   # Horario Verano GMT+2
       event: sunset
-      offset: "+02:30:00"
+      offset: "+03:30:00"
   action:
     # Script Luces Exterior Off
     - service: script.luces_exterior_off
@@ -838,6 +838,8 @@
   alias: 'L06 Luces Off Before Sunrise'
   trigger:
     - platform: time
+      at: "01:00:00"
+    - platform: time
       at: "02:00:00"
     - platform: time
       at: "03:30:00"
@@ -886,14 +888,14 @@
         # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
         # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
         after: sunset
-        after_offset: "-00:30:00"
+        after_offset: "-01:00:00"
       - condition: sun
         before: sunrise
         # en el amanecer +3h'
         before_offset: "+03:00:00"
   action:
     - service: automation.turn_off
-      entity_id: automation.l07
+      entity_id: automation.l07_luces_on_entrada_segun_sensor
     # Luces Entrada ON
     - service: light.turn_on
       entity_id: light.luz_entrada
@@ -911,7 +913,7 @@
         - light.gateway_light_7811dcb788fa
     #
     - service: automation.turn_on
-      entity_id: automation.l07
+      entity_id: automation.l07_luces_on_entrada_segun_sensor
 
 - id: L08
   alias: 'L08 Luces On Dormitorio Según Sensor'

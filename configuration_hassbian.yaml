@@ -13,6 +13,7 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   auth_providers:
+    - type: homeassistant
     - type: trusted_networks
       trusted_networks: !secret trusted_networks
 
@@ -50,11 +51,9 @@ http:
   server_port: 2309
   ip_ban_enabled: true
   login_attempts_threshold: 5
-  base_url: https://alvareahomy.duckdns.org:2309
+  base_url: https://alvareahomy.duckdns.org
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
-
-
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -183,12 +182,12 @@ camera:
 #    credentials: !secret apple_tv_credentials
 
 # Mediaplayer FireTV
-#media_player:
-#  - platform: androidtv
-#    name: Fire TV
-#    host: !secret firetv_host
-#    adbkey: "/home/homeassistant/.homeassistant/config/android/adbkey"
-     #adbkey: "config/android/adbkey" ==> Error Invalid config for [media_player.firetv]: not a file for dictionary
+media_player:
+  - platform: androidtv
+    name: Fire TV
+    host: !secret firetv_host
+    adbkey: "/home/homeassistant/.homeassistant/config/android/adbkey"
+    #adbkey: "config/android/adbkey" ==> Error Invalid config for [media_player.firetv]: not a file for dictionary
 
 # MQTT - BROKER: Local Mosquitto Broker
 #

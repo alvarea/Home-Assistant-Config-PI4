@@ -13,9 +13,11 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   auth_providers:
+    - type: homeassistant
     - type: trusted_networks
-      trusted_networks: !secret trusted_networks
-
+      trusted_networks:
+        - 127.0.0.1
+        - 192.168.0.0/24
 
 # External configuration files
 group: !include groups.yaml
@@ -39,12 +41,20 @@ config:
 # Enable Python Scripts
 python_script:
 
+#http:
+#  ssl_certificate: !secret http_ssl_certificate
+#  ssl_key: !secret http_ssl_key
+#  base_url: !secret http_base_url
+#  ip_ban_enabled: True
+#  login_attempts_threshold: 10
+
 http:
-  ssl_certificate: !secret http_ssl_certificate
-  ssl_key: !secret http_ssl_key
-  base_url: !secret http_base_url
-  ip_ban_enabled: True
-  login_attempts_threshold: 10
+  server_port: 2309
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+  base_url: https://alvareahomy.duckdns.org
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
 
 # Checks for available updates
 # Note: This component will send some information about your system to
