@@ -41,13 +41,6 @@ config:
 # Enable Python Scripts
 python_script:
 
-#http:
-#  ssl_certificate: !secret http_ssl_certificate
-#  ssl_key: !secret http_ssl_key
-#  base_url: !secret http_base_url
-#  ip_ban_enabled: True
-#  login_attempts_threshold: 10
-
 http:
   server_port: 2309
   ip_ban_enabled: true
@@ -187,8 +180,8 @@ media_player:
   - platform: androidtv
     name: Fire TV
     host: !secret firetv_host
-    adbkey: "/home/homeassistant/.homeassistant/config/android/adbkey"
-    #adbkey: "config/android/adbkey" ==> Error Invalid config for [media_player.firetv]: not a file for dictionary
+    adbkey: "/config/android/adbkey"
+    #    adbkey: "/home/homeassistant/.homeassistant/config/android/adbkey"
 
 # MQTT - BROKER: Local Mosquitto Broker
 #

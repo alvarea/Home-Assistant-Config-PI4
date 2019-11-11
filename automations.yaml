@@ -1005,7 +1005,7 @@
     platform: event
     event_type: xiaomi_aqara.cube_action
     event_data:
-      entity_id: binary_sensor.cube_158d00024a4a62_2
+      entity_id: binary_sensor.cube_158d00024a4a62
       action_type: tap_twice
   action:
     - service: light.toggle
@@ -1022,7 +1022,7 @@
     platform: event
     event_type: xiaomi_aqara.cube_action
     event_data:
-      entity_id: binary_sensor.cube_158d00024a4a62_2
+      entity_id: binary_sensor.cube_158d00024a4a62
       action_type: flip90
   action:
     - service: light.turn_on
@@ -1046,7 +1046,7 @@
     platform: event
     event_type: xiaomi_aqara.cube_action
     event_data:
-      entity_id: binary_sensor.cube_158d00024a4a62_2
+      entity_id: binary_sensor.cube_158d00024a4a62
       action_type: shake_air
   action:
     - service: light.turn_off
