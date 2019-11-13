@@ -450,24 +450,23 @@
 #-----------------------------------------------------------------------------#
 #
 #MFC_Trackers = ['device_tracker.mfc_iphone_nmap',
-#                'device_tracker.mfc_iphone_owntrack',
+#                'device_tracker.mfc_iphone_owntrack_2',
 #                'device_tracker.mfc_ios',
-#                'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222']
+#                'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2']
 #
 #AAC_Trackers = ['device_tracker.aac_iphone_nmap',
-#                'device_tracker.aac_iphone_owntrack',
+#                'device_tracker.aac_iphone_owntrack_2',
 #                'device_tracker.aac_ios',
-#                'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496']
+#                'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496_2']
 #
 #PAF_Trackers = ['device_tracker.paf_iphone_nmap',
-#                'device_tracker.paf_iphone_owntrack',
+#                'device_tracker.paf_iphone_owntrack_2',
 #                'device_tracker.paf_ios',
-#                'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8' #PAF
+#                'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2' #PAF
 #
 #AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
 #                'device_tracker.aaf_ios',
-#                'device_tracker.daa04833_9772_4800_bf22_57f406aeb129']
-#                'device_tracker.bef743fa_74f2_464b_a458_612ad3e1c195'] <<== OLD
+#                'device_tracker.daa04833_9772_4800_bf22_57f406aeb129_2']
 
 - id: U1
   alias: "Update Device Meta Tracker"
@@ -476,20 +475,20 @@
     # Delayed action for router-based and Owntracks trackers that are not 100% reliable
     - platform: state
       entity_id:
-        - device_tracker.aac_iphone_nmap      # NMAP
-        - device_tracker.mfc_iphone_nmap      # NMAP
-        - device_tracker.paf_iphone_nmap      # NMAP
-        - device_tracker.aaf_iphone_nmap      # NMAP
-        - device_tracker.aac_iphone_owntrack  # OWNTRACK
-        - device_tracker.mfc_iphone_owntrack  # OWNTRACK
-        - device_tracker.paf_iphone_owntrack  # OWNTRACK
+        - device_tracker.aac_iphone_nmap        # NMAP
+        - device_tracker.mfc_iphone_nmap        # NMAP
+        - device_tracker.paf_iphone_nmap        # NMAP
+        - device_tracker.aaf_iphone_nmap        # NMAP
+        - device_tracker.aac_iphone_owntrack_2  # OWNTRACK
+        - device_tracker.mfc_iphone_owntrack_2  # OWNTRACK
+        - device_tracker.paf_iphone_owntrack_2  # OWNTRACK
       to: 'not_home'
       for: '00:07:00'
     - platform: state
       entity_id:
-        - device_tracker.aac_iphone_owntrack  # OWNTRACK
-        - device_tracker.mfc_iphone_owntrack  # OWNTRACK
-        - device_tracker.paf_iphone_owntrack  # OWNTRACK
+        - device_tracker.aac_iphone_owntrack_2  # OWNTRACK
+        - device_tracker.mfc_iphone_owntrack_2  # OWNTRACK
+        - device_tracker.paf_iphone_owntrack_2  # OWNTRACK
       to: 'home'
     - platform: state
       entity_id:
@@ -501,14 +500,14 @@
       for: '00:00:30'
     - platform: state
       entity_id:
-        - device_tracker.aac_ios                                # IOSAPP
-        - device_tracker.mfc_ios                                # IOSAPP
-        - device_tracker.paf_ios                                # IOSAPP
-        - device_tracker.aaf_ios                                # IOSAPP
-        - device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222   # MFC
-        - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496   # AAC
-        - device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8   # PAF
-        - device_tracker.daa04833_9772_4800_bf22_57f406aeb129   # AAF
+        - device_tracker.aac_ios                                  # IOSAPP
+        - device_tracker.mfc_ios                                  # IOSAPP
+        - device_tracker.paf_ios                                  # IOSAPP
+        - device_tracker.aaf_ios                                  # IOSAPP
+        - device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2   # MFC
+        - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496_2   # AAC
+        - device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2   # PAF
+        - device_tracker.daa04833_9772_4800_bf22_57f406aeb129_2   # AAF
   action:
     - service: script.updatetracker
       data_template:
