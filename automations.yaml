@@ -787,9 +787,9 @@
   trigger:
     - platform: sun
       # offset: "-00:30:00"   # Horario Invierno GMT+1
-      # offset: "-00:05:00"   # Horario Invierno GMT+2
+      # offset: "-00:05:00"   # Horario Verano GMT+2
       event: sunset
-      offset: "-00:05:00"
+      offset: "-00:30:00"
   condition:
     condition: and
     conditions:
@@ -802,7 +802,7 @@
         below: 50
   action:
     - service: light.turn_on
-      entity_id: light.salon
+      entity_id: light.luz_vitrina
 
 - id: L05
   alias: 'L05 Luces On Exterior Segun Sensor'
@@ -822,7 +822,7 @@
             # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
             # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
             after: sunset
-            after_offset: "-00:30:00"     # Horario VERANO1
+            after_offset: "-01:00:00"     # Horario VERANO1
           - condition: sun
             before: sunrise
             #before_offset: "00:15:00"    # Horario Invierno GMT+1, en el amanecer +15m / +60m
@@ -935,7 +935,7 @@
         # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
         # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
         after: sunset
-        after_offset: "-00:30:00"
+        after_offset: "-01:00:00"
       # si el sensor de luz está es < 1 lumx
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002ea1d0f
@@ -1214,12 +1214,10 @@
 - id: S10
   alias: 'S10 Calefaccion On'
   trigger:
-    # Test mode
-    #- platform: time
-    #  at: '23:58:00'
     - platform: sun
+      # offset: "+03:30:00"   # Horario Invierno GMT+1  => 18:30 + 3:30 = 22:00
       event: sunset
-      offset: "+03:00:00"
+      offset: "-03:30:00"     # Horario Verano GMT+2
     - platform: sun
       event: sunrise
       offset: "-02:00:00"
@@ -1236,13 +1234,13 @@
   alias: 'S11 SonoffS20 Switch Off'
   trigger:
     - platform: time
-      at: '02:00:00'
+      at: '01:00:00'
     - platform: sun
       event: sunrise
       offset: "-00:15:00"
   action:
-    #- service: script.calefaccion_mfc_off
-    #- service: script.calefaccion_paf_off
+    - service: script.calefaccion_mfc_off
+    - service: script.calefaccion_paf_off
 
 #
 # ESPHOME BASIC SW2 PORCHE PISCINA
