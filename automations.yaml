@@ -1217,7 +1217,7 @@
     - platform: sun
       # offset: "+03:30:00"   # Horario Invierno GMT+1  => 18:30 + 3:30 = 22:00
       event: sunset
-      offset: "-03:30:00"     # Horario Verano GMT+2
+      offset: "+03:30:00"
     - platform: sun
       event: sunrise
       offset: "-02:00:00"
@@ -1228,6 +1228,7 @@
     state: 'on'
   action:
     - service: script.calefaccion_mfc_on
+    - delay: 10
     - service: script.calefaccion_paf_on
 
 - id: S11
@@ -1240,6 +1241,7 @@
       offset: "-00:15:00"
   action:
     - service: script.calefaccion_mfc_off
+    - delay: 10
     - service: script.calefaccion_paf_off
 
 #

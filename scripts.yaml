@@ -785,7 +785,12 @@ calefaccion_paf_on:
   sequence:
     # Si el interruptor duerme en casa está On continua
     - condition: template
-      value_template: "{% if is_state('input_boolean.calefac_programador_paf', 'on') and is_state('input_boolean.family_sleep_home_paf', 'on') %}true{% else %}false{% endif %}"
+      value_template: "{% if is_state('input_boolean.calefac_programador_paf', 'on')
+                          and is_state('input_boolean.family_sleep_home_paf', 'on')
+                            %}true{%
+                          else
+                            %}false{%
+                          endif %}"
     - service: switch.turn_on
       entity_id: switch.esphome_s20_sw3
     # Notifica a Familia
