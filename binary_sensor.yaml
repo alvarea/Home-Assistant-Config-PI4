@@ -137,37 +137,38 @@
 
       # Sensores finales de control de presencia basados en el bayesian(on/off) AND input_boolean(on/off) de cada Uno.
       #
+      # and is_state('binary_sensor.baye_home_aac','on') %}
       family_home_aac:
         value_template: >-
           {% if is_state('input_boolean.family_home_aac','on')
-              and is_state('binary_sensor.baye_home_aac','on') %}
+              and is_state('person.agustin','home') %}
             true
           {% else %}
             false
           {% endif %}
-
+      # and is_state('binary_sensor.baye_home_mfc','on') %}
       family_home_mfc:
         value_template: >-
           {% if is_state('input_boolean.family_home_mfc','on')
-              and is_state('binary_sensor.baye_home_mfc','on') %}
+              and is_state('person.malen','home') %}
             true
           {% else %}
             false
           {% endif %}
-
+      # and is_state('binary_sensor.baye_home_paf','on') %}
       family_home_paf:
         value_template: >-
           {% if is_state('input_boolean.family_home_paf','on')
-              and is_state('binary_sensor.baye_home_paf','on') %}
+              and is_state('person.paloma','home') %}
             true
           {% else %}
             false
           {% endif %}
-
+      # and is_state('binary_sensor.baye_home_aaf','on') %}
       family_home_aaf:
         value_template: >-
           {% if is_state('input_boolean.family_home_aaf','on')
-              and is_state('binary_sensor.baye_home_aaf','on') %}
+              and is_state('person.agu','home') %}
             true
           {% else %}
             false

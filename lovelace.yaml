@@ -106,48 +106,47 @@ views:
               - entities:
                   - sensor.iphone_aac_battery_level
                   - sensor.iphone_aac_battery_state
-                entity: binary_sensor.family_home_aac
+                entity: person.agustin
                 state_image:
-                  'off': /local/AAC_2017_bw.jpeg
-                  'on': /local/AAC_2017_co.jpeg
+                  not_home: /local/AAC_2017_bw.jpeg
+                  home: /local/AAC_2017_co.jpeg
                 title: AAC
                 type: picture-glance
               - aspect_ratio: 243
                 entities:
                   - sensor.iphone_malen_battery_level
                   - sensor.iphone_malen_battery_state
-                entity: binary_sensor.family_home_mfc
+                entity: person.malen
                 state_image:
-                  'off': /local/MFC_2014_bw.jpeg
-                  'on': /local/MFC_2014_co.jpeg
+                  not_home: /local/MFC_2014_bw.jpeg
+                  home: /local/MFC_2014_co.jpeg
                 title: MFC
                 type: picture-glance
             type: horizontal-stack
           - cards:
               - aspect_ratio: 243
                 entities:
-                  - sensor.a2f_battery_level_2
-                  - sensor.a2f_battery_state_2
-                entity: binary_sensor.family_home_aaf
+                  - sensor.a2f_battery_level
+                  - sensor.a2f_battery_state
+                entity: person.agu
                 state_image:
-                  'off': /local/AAF_2017_bw.png
-                  'on': /local/AAF_2017_co.png
+                  not_home: /local/AAF_2017_bw.png
+                  home: /local/AAF_2017_co.png
                 title: AAF
                 type: picture-glance
               - aspect_ratio: 243
                 entities:
                   - sensor.iphone_paf_battery_level
                   - sensor.iphone_paf_battery_state
-                entity: binary_sensor.family_home_paf
+                entity: person.paloma
                 state_image:
-                  'off': /local/PAF_2017_bw.png
-                  'on': /local/PAF_2017_co.png
+                  not_home: /local/PAF_2017_bw.png
+                  home: /local/PAF_2017_co.png
                 title: PAF
                 type: picture-glance
             type: horizontal-stack
           - entities:
               - entity: person.agustin
-                secondary_info: last-changed
               - entity: person.malen
               - entity: person.agu
               - entity: person.paloma
@@ -378,7 +377,7 @@ views:
           - entity: input_boolean.family_sleep_home_aaf
           - entity: binary_sensor.family_home_aaf
             secondary_info: last-changed
-          - entity: device_tracker.daa04833_9772_4800_bf22_57f406aeb129
+          - entity: device_tracker.daa04833_9772_4800_bf22_57f406aeb129_2
           - entity: device_tracker.aaf_ios
           - entity: device_tracker.aaf_iphone_nmap
           - entity: sensor.baye_probability_aaf
@@ -867,6 +866,11 @@ views:
           - sensor.a2f_battery_state
         show_header_toggle: false
         title: Iphone Battery Tracking
+        type: entities
+      - entities:
+          - sensor.ipad_alvarea_battery_level
+          - sensor.ipad_alvarea_battery_state
+        title: Baterías Ipad
         type: entities
       - entities:
           - sensor.bateria_detector_incendios

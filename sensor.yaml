@@ -28,8 +28,8 @@
 # Sensores Rendimiento de PI y CERT_SSL
 #
   - platform: cert_expiry
-    host: alvarea.duckdns.org
-    port: 443
+    host: alvareahomy.duckdns.org
+    port: 2309
 
   - platform: command_line
     name: Temperatura CPU
