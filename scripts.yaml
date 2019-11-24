@@ -318,18 +318,6 @@ notifica_alarma:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
-  # Notificación Telegram
-  - service: notify.telegram_alarm
-    data:
-      title: '*ALARMA*'
-      message: Cámaras Seguridad
-      data:
-        photo:
-          - url: http://192.168.0.13/snapshot/image0.jpg
-            caption: Cámara Cocina
-          - url: http://192.168.0.12:8080/snapshot.cgi
-            caption: Cámara Estudio
-
   # Notificación IOS
   - service: notify.notifica_grupo_ios
     data_template:
@@ -337,6 +325,18 @@ notifica_alarma:
         {{ states('input_text.mensaje_tit') }}
       message: >
         {{ states('input_text.mensaje_msg') }}
+
+  # Notificación Telegram
+  #- service: notify.telegram_alarm
+  #  data:
+  #    title: '*ALARMA*'
+  #    message: Cámaras Seguridad
+  #    data:
+  #      photo:
+  #        - url: http://192.168.0.13/snapshot/image0.jpg
+  #          caption: Cámara Cocina
+  #        - url: http://192.168.0.12:8080/snapshot.cgi
+  #          caption: Cámara Estudio
 
 notifica_warning:
   alias: 'Mensaje Alarma'

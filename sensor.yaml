@@ -27,9 +27,9 @@
 
 # Sensores Rendimiento de PI y CERT_SSL
 #
-  - platform: cert_expiry
-    host: alvareahomy.duckdns.org
-    port: 2309
+  #- platform: cert_expiry
+  #  host: alvareahomy.duckdns.org
+  #  port: 2309
 
   - platform: command_line
     name: Temperatura CPU
@@ -633,9 +633,13 @@
 
       fzen_sw2_duracion_planificada:
         value_template: '{{ "{:}".format((states.input_datetime.fzen_sw2_end_time.attributes.timestamp -  states.input_datetime.fzen_sw2_start_time.attributes.timestamp)/60)|int }}'
-        friendly_name: 'Duración Programa Planificado (Min)'
+        friendly_name: 'Duración Programa Planificado (Tramo1)'
         icon_template: "{{ 'mdi:timer-sand' if states('sensor.fzen_sw2_duracion_planificada') is not none }}"
 
+      fzen_sw2_duracion_planificada2:
+        value_template: '{{ "{:}".format((states.input_datetime.fzen_sw2_end_time2.attributes.timestamp -  states.input_datetime.fzen_sw2_start_time2.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Duración Programa Planificado (Tramo2)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.fzen_sw2_duracion_planificada2') is not none }}"
 
       densidad_sensor_humo:
         # smoke_sensor_158d0001fd321c

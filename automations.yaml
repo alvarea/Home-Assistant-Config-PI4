@@ -36,6 +36,10 @@
         entity_id:
           - group.all_automations
 
+    # 30" y actualiza certificado
+    - delay: 30
+    - service: homeassistant.update_entity
+      entity_id: sensor.ssl_certificate_expiry
 #
 # CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
 #
@@ -44,7 +48,7 @@
   trigger:
     platform: numeric_state
     entity_id: sensor.ssl_certificate_expiry
-    below: 21
+    below: 15
   action:
     service: script.turn_on
     entity_id: script.notifica_evento
@@ -100,7 +104,7 @@
 #-----------------------------------------------------------------------------#
 
 #
-# ALARMA AUTOMATICA SENSOR HUMO/FUEGO COCINA
+# ALARMA AUTOMATICA SENSOR HUMO COCINA
 #
 - id: F1_alarma_fuego_cocina
   alias: 'F1 Alarma Fuego Cocina'
@@ -115,7 +119,7 @@
       entity_id: script.notifica_alarma
       data:
         variables:
-          title: '*ALARMA FUEGO*'
+          title: '*ALARMA HUMO*'
           message: >
             >>> URGENTE: SENSOR HUMO COCINA
 #
@@ -1462,7 +1466,30 @@
       entity_id: switch.esphome_bas_sw2
 
 - id: S25
-  alias: 'S25 Timer Fuente Frow SW2 End'
+  alias: 'S25 Timer Fuente Frog SW2 Start2'
+  trigger:
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states.input_datetime.fzen_sw2_start_time2.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.fzen_sw2_programador  # Sensor del programador on/off
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.fzen_sw2_dia_ejecucion  # Sensor que indica si es día de ejecución en función de la lista input_select.riego_ch1_programador_dias
+        state: 'on'
+  action:
+    # Timer Programador Automático
+    - service: timer.start
+      data_template:
+        entity_id: timer.fzen_sw2
+        duration: '{{ states.sensor.fzen_sw2_duracion_planificada2.state|int * 60 }}'
+    - service: switch.turn_on
+      entity_id: switch.esphome_bas_sw2
+
+- id: S26
+  alias: 'S26 Timer Fuente Frow SW2 End'
   trigger:
     - platform: event
       event_type: timer.finished
