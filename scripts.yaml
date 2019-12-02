@@ -732,115 +732,45 @@ fzen_sw2_timer_cancel:
 
 # SONOFF S20 - NESSPRESSO
 #
-nesspreso_on_timer:
-  alias: Nespresso On Timer
-  sequence:
-    - service: automation.turn_off
-      entity_id: automation.S10_esphome_s20_Sunrise_Switch_On
-    # Incremento del contador de autoencendido
-    - service: counter.increment
-      entity_id: counter.nespresso_start
-    # Enciende la Nespresso
-    - service: switch.turn_on
-      entity_id: switch.esphome_s20_nespresso
-    # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*HOMY: BUENOS DIAS*'
-          message: >
-            >>> Nespresso auto-encendida al amanecer.
-            >>> Por favor, apáguela al terminar.
-
-    - delay: '00:30:00'
-    - service: automation.turn_on
-      entity_id: automation.S10_esphome_s20_Sunrise_Switch_On
+#nesspreso_on_timer:
+#  alias: Nespresso On Timer
+#  sequence:
+#    - service: automation.turn_off
+#      entity_id: automation.S10_esphome_s20_Sunrise_Switch_On
+#    # Incremento del contador de autoencendido
+#    - service: counter.increment
+#      entity_id: counter.nespresso_start
+#    # Enciende la Nespresso
+#    - service: switch.turn_on
+#      entity_id: switch.esphome_s20_nespresso
+#    # Notifica Evento
+#    - service: script.turn_on
+#      entity_id: script.notifica_evento
+#      data:
+#        variables:
+#          title: '*HOMY: BUENOS DIAS*'
+#          message: >
+#            >>> Nespresso auto-encendida al amanecer.
+#            >>> Por favor, apáguela al terminar.
+#
+#    - delay: '00:30:00'
+#   - service: automation.turn_on
+#      entity_id: automation.S10_esphome_s20_Sunrise_Switch_On
 
 # SONOFF S20 - CALEFACCION
 #
-calefaccion_mfc_on:
-  alias: Calefacción On Dormitorio MFC
-  sequence:
+#calefaccion_mfc_on:
+#  alias: Calefacción On Dormitorio MFC
+#  sequence:
     # Si el interruptor duerme en casa está On continua
-    - condition: template
-      value_template: "{% if is_state('input_boolean.calefac_programador_mfc', 'on') and
-                             (is_state('input_boolean.family_sleep_home_mfc', 'on') or is_state('input_boolean.family_sleep_home_aac', 'on'))
-                              %}true{% else %}false{% endif %}"
-    - service: switch.turn_on
-      entity_id: switch.esphome_s20_sw1
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*CALEFACCION ON*'
-          message: >
-            >>> EVENTO: Se enciende calefacción
+    #- condition: template
+    #  value_template: "{% if is_state('input_boolean.calefac_programador_mfc', 'on') and
+    #                         (is_state('input_boolean.family_sleep_home_mfc', 'on') or is_state('input_boolean.family_sleep_home_aac', 'on'))
+    #                          %}true{% else %}false{% endif %}"
+    #
+#    - service: switch.turn_on
+#      entity_id: switch.esphome_s20_sw1
 
-            >>> LUGAR: Dormitorio MFC
-
-calefaccion_paf_on:
-  alias: Calefacción On Dormitorio PAF
-  sequence:
-    # Si el interruptor duerme en casa está On continua
-    - condition: template
-      value_template: "{% if is_state('input_boolean.calefac_programador_paf', 'on')
-                          and is_state('input_boolean.family_sleep_home_paf', 'on')
-                            %}true{%
-                          else
-                            %}false{%
-                          endif %}"
-    - service: switch.turn_on
-      entity_id: switch.esphome_s20_sw3
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*CALEFACCION ON*'
-          message: >
-            >>> EVENTO: Se enciende calefacción
-
-            >>> LUGAR: Dormitorio PAF
-
-calefaccion_mfc_off:
-  alias: Calefacción Off Dormitorio MFC
-  sequence:
-    # Si el interruptor está On continua
-    - condition: template
-      value_template: "{% if is_state('switch.esphome_s20_sw1', 'on') %}true{% else %}false{% endif %}"
-    - service: switch.turn_off
-      entity_id: switch.esphome_s20_sw1
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*CALEFACCION*'
-          message: >
-            >>> EVENTO: Se apaga calefacción S20_SW1
-
-            >>> LUGAR: Dormitorio MFC
-
-calefaccion_paf_off:
-  alias: Calefacción Off Dormitorio PAF
-  sequence:
-    # Si el interruptor está On continua
-    - condition: template
-      value_template: "{% if is_state('switch.esphome_s20_sw3', 'on') %}true{% else %}false{% endif %}"
-    - service: switch.turn_off
-      entity_id: switch.esphome_s20_sw3
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*CALEFACCION*'
-          message: >
-            >>> EVENTO: Se apaga calefacción S20_SW3
-
-            >>> LUGAR: Dormitorio PAF
 
 # SONOFF POW R2 - LAVADORA
 #

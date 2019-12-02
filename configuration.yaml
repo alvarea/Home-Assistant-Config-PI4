@@ -32,11 +32,48 @@ input_number: !include input_number.yaml
 input_datetime: !include input_datetime.yaml
 zone: !include zone.yaml
 
+# This integration is a meta-component and configures a default set of integrations for Home Assistant to load.
+default_config:
+
+# The integrations that will be loaded are:
+#   automation
+#   cloud
+#   config
+#   frontend
+#   history
+#   logbook
+#   map
+#   mobile_app
+#   person
+#   script
+#   ssdp
+#   sun
+#   system_health
+#   updater
+#   zeroconf
+
 # Enables the frontend
-frontend:
+#frontend:
 
 # Enables configuration UI
-config:
+#config:
+
+# Enables support for tracking state changes over time
+#history:
+
+# View all events in a logbook
+#logbook:
+
+# Track the sun
+#sun:
+
+# Enable System Health View
+#system_health:
+
+# Enables a map showing the location of tracked devices
+#map:
+
+#shopping_list:
 
 # Enable Python Scripts
 python_script:
@@ -64,16 +101,7 @@ discovery:
     - igd
     - xiaomi_gw
     - esphome
-#   - philips_hue
 
-# Enables support for tracking state changes over time
-history:
-
-# View all events in a logbook
-logbook:
-
-# Track the sun
-sun:
 
 # Philips Hue Bridge
 hue:
@@ -83,9 +111,6 @@ hue:
 
 # Dispositivos Apple IOS
 ios:
-
-# Enable System Health View
-system_health:
 
 # ALARM MANUAL CONTROL PANEL
 #
@@ -295,11 +320,6 @@ alert:
     skip_first: false
     notifiers:
       - telegram_aac
-
-# Enables a map showing the location of tracked devices
-map:
-
-shopping_list:
 
 light:
   - platform: group

@@ -359,7 +359,7 @@
   trigger:
     - platform: sun
       event: sunrise
-      #offset: "+00:30:00"
+      offset: "-00:15:00"
   condition:
     condition: and
     conditions:
@@ -1226,27 +1226,71 @@
       event: sunrise
       offset: "-02:00:00"
   condition:
-    # Hay alguien en casa
-    condition: state
-    entity_id: binary_sensor.family_any_home
-    state: 'on'
+    condition: and
+    conditions:
+      # Hay alguien en casa
+      - condition: state
+        entity_id: input_boolean.calefac_programador_mfc
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.family_sleep_home_mfc
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.family_any_home
+        state: 'on'
   action:
-    - service: script.calefaccion_mfc_on
-    - delay: 10
-    - service: script.calefaccion_paf_on
+    - service: switch.turn_on
+      entity_id: switch.esphome_s20_sw1
 
 - id: S11
-  alias: 'S11 SonoffS20 Switch Off'
+  alias: 'S11 Calefaccion PAF On'
+  trigger:
+    - platform: sun
+      # offset: "+03:30:00"   # Horario Invierno GMT+1  => 18:30 + 3:30 = 22:00
+      event: sunset
+      offset: "+03:30:00"
+    - platform: sun
+      event: sunrise
+      offset: "-02:00:00"
+  condition:
+    condition: and
+    conditions:
+      # Hay alguien en casa
+      - condition: state
+        entity_id: input_boolean.calefac_programador_paf
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.family_sleep_home_paf
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.family_any_home
+        state: 'on'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.esphome_s20_sw3
+
+- id: S12
+  alias: 'S12 SonoffS20 Switch Off'
   trigger:
     - platform: time
       at: '01:00:00'
     - platform: sun
       event: sunrise
       offset: "-00:15:00"
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: switch.esphome_s20_sw1
+        state: 'on'
+      - condition: state
+        entity_id: switch.esphome_s20_sw3
+        state: 'on'
   action:
-    - service: script.calefaccion_mfc_off
-    - delay: 10
-    - service: script.calefaccion_paf_off
+    - service: switch.turn_off
+      entity_id: switch.esphome_s20_sw1
+    - service: switch.turn_off
+      entity_id: switch.esphome_s20_sw3
 
 #
 # ESPHOME BASIC SW2 PORCHE PISCINA
