@@ -188,6 +188,10 @@
       entity_id: alarm_control_panel.ha
       to: 'armed_home'
   action:
+    # ARMADO PANEL ALARMA BLINK
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.blink_casa
+    #
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
       entity_id: script.sirena_xiaomi_play_alarm_armed
@@ -215,6 +219,10 @@
       entity_id: alarm_control_panel.ha
       to: 'disarmed'
   action:
+    # DESARMADO PANEL ALARMA BLINK
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: alarm_control_panel.blink_casa
+    #
     # Apagado Sirenas y Aviso sonoro con Xiaomi GW
     - service: script.sirena_xiaomi_play_alarm_disarmed
     # Apaga Luz Piloto Gateway
@@ -235,6 +243,7 @@
 - id: A5
   alias: 'A5 Alarm Trigger Armed Away'
   trigger:
+    # MUY IMPORTANTE: EN EL ARM AWAY SE CHEQUEA GRUPO SENSORES HOME + AWAY
     - platform: state
       entity_id:
         - group.sensores_alarm_home
@@ -371,8 +380,11 @@
         entity_id: binary_sensor.family_any_home
         state: 'on'
   action:
+    # Desarmado de Alarmas
     - service: alarm_control_panel.alarm_disarm
       entity_id: alarm_control_panel.ha
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: alarm_control_panel.blink_casa
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
       entity_id: script.sirena_stop_alarm
@@ -455,17 +467,17 @@
 #
 #MFC_Trackers = ['device_tracker.mfc_iphone_nmap',
 #                'device_tracker.mfc_iphone_owntrack_2',
-#                'device_tracker.mfc_ios',
+#                'device_tracker.iphone_malen',
 #                'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2']
 #
 #AAC_Trackers = ['device_tracker.aac_iphone_nmap',
 #                'device_tracker.aac_iphone_owntrack_2',
-#                'device_tracker.aac_ios',
+#                'device_tracker.iphone_aac',
 #                'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496_2']
 #
 #PAF_Trackers = ['device_tracker.paf_iphone_nmap',
 #                'device_tracker.paf_iphone_owntrack_2',
-#                'device_tracker.paf_ios',
+#                'device_tracker.iphone_paf',
 #                'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2' #PAF
 #
 #AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
@@ -504,9 +516,9 @@
       for: '00:00:30'
     - platform: state
       entity_id:
-        - device_tracker.aac_ios                                  # IOSAPP
-        - device_tracker.mfc_ios                                  # IOSAPP
-        - device_tracker.paf_ios                                  # IOSAPP
+        - device_tracker.iphone_aac                               # IOSAPP
+        - device_tracker.iphone_malen                             # IOSAPP
+        - device_tracker.iphone_mfc                               # IOSAPP
         - device_tracker.aaf_ios                                  # IOSAPP
         - device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2   # MFC
         - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496_2   # AAC
@@ -598,6 +610,8 @@
     - delay: 0:30
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.blink_casa
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
       entity_id: script.sirena_xiaomi_play_alarm_armed
@@ -1055,7 +1069,7 @@
     - service: light.turn_off
       entity_id: light.luz_estudio
       data:
-        transition: 10
+        transition: 30
     - service: light.turn_off
       entity_id: light.esphome_lb1_l01
     #- service: switch.turn_off

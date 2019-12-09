@@ -12,12 +12,12 @@ homeassistant:
   time_zone: Europe/Madrid
   # Customization file
   customize: !include customize.yaml
-  auth_providers:
-    - type: homeassistant
-    - type: trusted_networks
-      trusted_networks:
-        - 127.0.0.1
-        - 192.168.0.0/24
+#  auth_providers:
+#    - type: homeassistant
+#    - type: trusted_networks
+#      trusted_networks:
+#        - 127.0.0.1
+#        - 192.168.0.0/24
 
 # External configuration files
 group: !include groups.yaml
@@ -181,16 +181,16 @@ camera:
     still_image_url: https://api.sat24.com/mostrecent/SP/visual5hdcomplete%20width=500%20height=304
     name: Weather Satelite
   - platform: generic
-    still_image_url: !secret still_image_url_cam12
-    name: IPcam12 Estudio
+    still_image_url: !secret still_image_url_cam_estudio
+    name: IPcam Estudio
     username: admin
-    password: !secret IPcam12
+    password: !secret IPcam_estudio
   - platform: generic
-    still_image_url: !secret still_image_url_cam13
-    stream_source: !secret stream_source_url_cam13
-    name: IPcam13 Cocina
+    still_image_url: !secret still_image_url_cam_jardin
+    stream_source: !secret stream_source_url_cam_jardin
+    name: IPcam Jardín
     username: admin
-    password: !secret IPcam13
+    password: !secret IPcam_jardin
 
 #ffmpeg:
 
@@ -264,9 +264,9 @@ notify:
   - platform: group # notification group for IOS
     name: notifica_grupo_ios
     services:
-      - service: ios_aac_ios
-      - service: ios_mfc_ios
-      - service: ios_paf_ios
+      - service: mobile_app_iphone_aac
+      - service: mobile_app_iphone_malen
+      - service: mobile_app_iphone_paf
       - service: ios_aaf_ios
   - name: telegram_alarm
     platform: telegram
@@ -465,6 +465,11 @@ person:
 # The component currently only supports the HLS format.
 stream:
 
+
+blink:
+  username: !secret blink_usr
+  password: !secret blink_pwd
+  scan_interval: 3600
 #
 # Sensores Xiaomi Miflora - Componente Plant
 #plant:

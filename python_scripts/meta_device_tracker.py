@@ -17,17 +17,17 @@
 
 MFC_Trackers = ['device_tracker.mfc_iphone_nmap',
                 'device_tracker.mfc_iphone_owntrack_2',
-                'device_tracker.mfc_ios',
+                'device_tracker.iphone_malen',
                 'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2']
 
 AAC_Trackers = ['device_tracker.aac_iphone_nmap',
                 'device_tracker.aac_iphone_owntrack_2',
-                'device_tracker.aac_ios',
+                'device_tracker.iphone_aac',
                 'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496_2']
 
 PAF_Trackers = ['device_tracker.paf_iphone_nmap',
                 'device_tracker.paf_iphone_owntrack_2',
-                'device_tracker.paf_ios',
+                'device_tracker.iphone_paf',
                 'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2']
 
 AAF_Trackers = ['device_tracker.aaf_iphone_nmap',

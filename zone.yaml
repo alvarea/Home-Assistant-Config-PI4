@@ -13,10 +13,6 @@
   longitude: -5.957486
   icon: mdi:tree
   radius: 50
-- name: C.Abuela
-  latitude: 37.3748
-  longitude: -6.0530
-  icon: mdi:home-account
 - name: Fac.Económicas
   latitude: 37.3783
   longitude: -5.9763
@@ -33,3 +29,7 @@
   latitude: 37.3585411
   longitude: -6.0501132
   icon: mdi:tennis
+#- name: C.Abuela
+#  latitude: 37.3748
+#  longitude: -6.0530
+#  icon: mdi:home-account

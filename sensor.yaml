@@ -27,10 +27,10 @@
 
 # Sensores Rendimiento de PI y CERT_SSL
 #
-  #- platform: cert_expiry
-  #  host: alvareahomy.duckdns.org
-  #  port: 2309
-
+#  - platform: cert_expiry
+#    host: alvareahomy.duckdns.org
+#    port: 2309
+#
   - platform: command_line
     name: Temperatura CPU
     command: "cat /sys/class/thermal/thermal_zone0/temp"

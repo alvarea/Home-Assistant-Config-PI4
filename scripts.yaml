@@ -124,8 +124,9 @@ sirena_alarma_armed_away:
             {{ states('input_number.xiaomi_volume_alarm') | int}}
     # Retraso 5"
     - delay: '00:00:05'
-    # SONOFF_SW1_SIRENA INTERIOR ==> ON
-    #
+    #######################################
+    #  SONOFF_SW1_SIRENA INTERIOR ==> ON  #
+    #######################################
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw0
 
@@ -272,13 +273,13 @@ reset_meta_tracker:
   sequence:
     - service: python_script.meta_device_tracker
       data_template:
-        entity_id: device_tracker.aac_ios #AAC
+        entity_id: device_tracker.iphone_aac #AAC
     - service: python_script.meta_device_tracker
       data_template:
-        entity_id: device_tracker.mfc_ios #MFC
+        entity_id: device_tracker.iphone_malen #MFC
     - service: python_script.meta_device_tracker
       data_template:
-        entity_id: device_tracker.paf_ios #PAF
+        entity_id: device_tracker.iphone_paf #PAF
     - service: python_script.meta_device_tracker
       data_template:
         entity_id: device_tracker.aaf_ios #AAF

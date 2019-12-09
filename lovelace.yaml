@@ -1,3 +1,8 @@
+# 06/12/2019
+# sensor.connection_type
+# sensor.battery_state_2
+# sensor.battery_level_2
+#
 resources:
   - type: module
     url: /local/mini-graph-card-bundle.js?v=0.3.0
@@ -106,20 +111,20 @@ views:
               - entities:
                   - sensor.iphone_aac_battery_level
                   - sensor.iphone_aac_battery_state
-                entity: person.agustin
+                entity: binary_sensor.family_home_aac
                 state_image:
-                  not_home: /local/AAC_2017_bw.jpeg
-                  home: /local/AAC_2017_co.jpeg
+                  'off': /local/AAC_2017_bw.jpeg
+                  'on': /local/AAC_2017_co.jpeg
                 title: AAC
                 type: picture-glance
               - aspect_ratio: 243
                 entities:
                   - sensor.iphone_malen_battery_level
                   - sensor.iphone_malen_battery_state
-                entity: person.malen
+                entity: binary_sensor.family_home_mfc
                 state_image:
-                  not_home: /local/MFC_2014_bw.jpeg
-                  home: /local/MFC_2014_co.jpeg
+                  'off': /local/MFC_2014_bw.jpeg
+                  'on': /local/MFC_2014_co.jpeg
                 title: MFC
                 type: picture-glance
             type: horizontal-stack
@@ -128,25 +133,26 @@ views:
                 entities:
                   - sensor.a2f_battery_level
                   - sensor.a2f_battery_state
-                entity: person.agu
+                entity: binary_sensor.family_home_aaf
                 state_image:
-                  not_home: /local/AAF_2017_bw.png
-                  home: /local/AAF_2017_co.png
+                  'off': /local/AAF_2017_bw.png
+                  'on': /local/AAF_2017_co.png
                 title: AAF
                 type: picture-glance
               - aspect_ratio: 243
                 entities:
                   - sensor.iphone_paf_battery_level
                   - sensor.iphone_paf_battery_state
-                entity: person.paloma
+                entity: binary_sensor.family_home_paf
                 state_image:
-                  not_home: /local/PAF_2017_bw.png
-                  home: /local/PAF_2017_co.png
+                  'off': /local/PAF_2017_bw.png
+                  'on': /local/PAF_2017_co.png
                 title: PAF
                 type: picture-glance
             type: horizontal-stack
           - entities:
               - entity: person.agustin
+                secondary_info: last-changed
               - entity: person.malen
               - entity: person.agu
               - entity: person.paloma
@@ -326,14 +332,13 @@ views:
           - entity: input_boolean.family_sleep_home_aac
           - entity: binary_sensor.family_home_aac
             secondary_info: last-changed
+          - entity: person.agustin
           - entity: device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496_2
           - entity: device_tracker.aac_iphone_owntrack_2
-          - entity: device_tracker.aac_ios
+          - entity: device_tracker.iphone_aac
           - entity: device_tracker.aac_iphone_nmap
           - entity: sensor.baye_probability_aac
           - entity: binary_sensor.baye_home_aac
-          - entity: person.agustin
-            secondary_info: last-changed
         show_header_toggle: false
         title: Agustín Tracking
         type: entities
@@ -343,14 +348,13 @@ views:
           - entity: input_boolean.family_sleep_home_mfc
           - entity: binary_sensor.family_home_mfc
             secondary_info: last-changed
+          - entity: person.malen
           - entity: device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2
           - entity: device_tracker.mfc_iphone_owntrack_2
-          - entity: device_tracker.mfc_ios
+          - entity: device_tracker.iphone_malen
           - entity: device_tracker.mfc_iphone_nmap
           - entity: sensor.baye_probability_mfc
           - entity: binary_sensor.baye_home_mfc
-          - entity: person.malen
-            secondary_info: last-changed
         show_header_toggle: false
         title: Malen Tracking
         type: entities
@@ -360,14 +364,13 @@ views:
           - entity: input_boolean.family_sleep_home_paf
           - entity: binary_sensor.family_home_paf
             secondary_info: last-changed
+          - entity: person.paloma
           - entity: device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2
           - entity: device_tracker.paf_iphone_owntrack_2
-          - entity: device_tracker.paf_ios
+          - entity: device_tracker.iphone_paf
           - entity: device_tracker.paf_iphone_nmap
           - entity: sensor.baye_probability_paf
           - entity: binary_sensor.baye_home_paf
-          - entity: person.paloma
-            secondary_info: last-changed
         show_header_toggle: false
         title: Paloma Tracking
         type: entities
@@ -377,13 +380,12 @@ views:
           - entity: input_boolean.family_sleep_home_aaf
           - entity: binary_sensor.family_home_aaf
             secondary_info: last-changed
+          - entity: person.agu
           - entity: device_tracker.daa04833_9772_4800_bf22_57f406aeb129_2
           - entity: device_tracker.aaf_ios
           - entity: device_tracker.aaf_iphone_nmap
           - entity: sensor.baye_probability_aaf
           - entity: binary_sensor.baye_home_aaf
-          - entity: person.agu
-            secondary_info: last-changed
         show_header_toggle: false
         title: Agu Tracking
         type: entities
@@ -577,15 +579,19 @@ views:
       - cards:
           - entities:
               - entity: binary_sensor.esphome_bas_sw0_status
+              - entity: binary_sensor.esphome_bas_sw1_status
+                name: BAS.SW1 Luz Estudio
+              - entity: binary_sensor.esphome_bas_sw2_status
+                name: BAS.SW2 Piscina Tortugas
               - entity: binary_sensor.esphome_bas_sw4_status
                 name: BAS.SW4 Porche 1 Salón
-              - entity: binary_sensor.esphome_bas_sw2_status
-                name: BAS.SW2 Porche 2 Piscina
               - entity: binary_sensor.esphome_4ch_status
               - entity: binary_sensor.esphome_4ch_sw2_status
               - entity: binary_sensor.esphome_pow_sw1_status
               - entity: binary_sensor.esphome_pow_sw2_status
+              - entity: binary_sensor.esphome_pow_sw3_status
               - entity: binary_sensor.esphome_s20_sw1_status
+              - entity: binary_sensor.esphome_s20_sw2_status
               - entity: binary_sensor.esphome_s20_sw3_status
             show_header_toggle: false
             title: IOT Sonoff Devices (esphome)
@@ -734,6 +740,8 @@ views:
         type: vertical-stack
       - cards:
           - entities:
+              - entity: switch.esphome_4ch_sw2_relay_3
+                secondary_info: last-changed
               - entity: input_boolean.riego_ch3_programador
                 name: Programador Automático
               - entity: input_select.riego_ch3_programador_dias
@@ -745,13 +753,17 @@ views:
             title: FUENTE ZEN
             type: entities
           - entities:
+              - entity: switch.esphome_bas_sw2
+                secondary_info: last-changed
               - entity: input_boolean.fzen_sw2_programador
                 name: Programador Automático
               - entity: input_select.fzen_sw2_programador_dias
               - entity: input_datetime.fzen_sw2_start_time
               - entity: input_datetime.fzen_sw2_end_time
               - entity: sensor.fzen_sw2_duracion_planificada
-                name: Duración Programa (Min)
+              - entity: input_datetime.fzen_sw2_start_time2
+              - entity: input_datetime.fzen_sw2_end_time2
+              - entity: sensor.fzen_sw2_duracion_planificada2
             show_header_toggle: false
             title: FUENTE TORTUGAS
             type: entities
@@ -1105,6 +1117,43 @@ views:
     title: Cocina
   - badges: []
     cards:
+      - cards:
+          - cards:
+              - entity: light.luz_estudio
+                type: light
+              - entity: light.esphome_lb1_l01
+                type: light
+            type: horizontal-stack
+          - cards:
+              - entity: switch.esphome_bas_sw1
+                icon: 'mdi:track-light'
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_bas_sw1
+                type: entity-button
+              - entity: input_boolean.rack_sensor_vibration_disable
+                icon: 'mdi:switch'
+                name: Bloqueo Sensor Rack
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: input_boolean.rack_sensor_vibration_disable
+                type: entity-button
+            type: horizontal-stack
+        type: vertical-stack
+      - entities:
+          - sensor.magiccube_lastaction
+        name: Cube
+        show_name: false
+        show_state: true
+        type: glance
+      - entity: camera.ipcam12_estudio
+        type: picture-entity
+      - entity: media_player.fire_tv
+        type: media-control
       - entities:
           - light.luz_estudio
           - light.esphome_lb1_l01
@@ -1117,8 +1166,6 @@ views:
           'on': /local/Home_Room_Estudio_RGB.jpg
         title: Estudio
         type: picture-glance
-      - entity: camera.ipcam12_estudio
-        type: picture-entity
       - cards:
           - color_thresholds:
               - color: black
@@ -1214,22 +1261,6 @@ views:
         show_header_toggle: false
         title: Rack Comunicaciones
         type: entities
-      - cards:
-          - cards:
-              - entity: light.luz_estudio
-                type: light
-              - entity: light.esphome_lb1_l01
-                type: light
-            type: horizontal-stack
-          - cards:
-              - entities:
-                  - sensor.magiccube_lastaction
-                name: Cube
-                show_name: false
-                show_state: true
-                type: glance
-            type: horizontal-stack
-        type: vertical-stack
     icon: 'mdi:desktop-mac-dashboard'
     path: estudio_view
     title: Estudio

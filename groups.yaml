@@ -80,18 +80,21 @@ sensores_alarm_home:
     - binary_sensor.door_window_sensor_158d00020457e0
     - binary_sensor.door_window_sensor_158d00020910b1
     - binary_sensor.door_window_sensor_158d000201e2e7
-    - binary_sensor.vibration_158d0002b15e3b          # Rack Comunicaciones
-    - binary_sensor.vibration_158d0002a4eacc          # Puerta atras salon
+    - binary_sensor.vibration_158d0002b15e3b                # Rack Comunicaciones
+    - binary_sensor.vibration_158d0002a4eacc                # Puerta atras salon
+    - binary_sensor.blink_puerta_garaje_motion_detected     # Blink Puerta Garaje
+    - binary_sensor.blink_puerta_principal_motion_detected  # Blink Puerta Principal
 
 sensores_alarm_away:
   name: Grupo Sensores Away
   view: no
   entities:
-    - binary_sensor.motion_sensor_158d0002ea1d0f      # Presencia Dormitorio
-    - binary_sensor.motion_sensor_158d0001e55903      # Presencia Entrada Interior
-    - binary_sensor.motion_sensor_158d0001e464a6      # Presencia Estudio
-    - binary_sensor.motion_sensor_158d0001e05661      # Presencia Salón
-    - binary_sensor.door_window_sensor_158d00030996fc # Ventana Estudio
+    - binary_sensor.motion_sensor_158d0002ea1d0f            # Presencia Dormitorio
+    - binary_sensor.motion_sensor_158d0001e55903            # Presencia Entrada Interior
+    - binary_sensor.motion_sensor_158d0001e464a6            # Presencia Estudio
+    - binary_sensor.motion_sensor_158d0001e05661            # Presencia Salón
+    - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
+    - binary_sensor.blink_entrada_motion_detected           # Blink Entrada Interior
 
 luces_casa_grp:
   name: Luces De Toda La Casa
