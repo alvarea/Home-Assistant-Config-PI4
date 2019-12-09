@@ -8,9 +8,10 @@
   #   - device_tracker.aaf_iphone_nmap
 
   # IOS APP ==> prob_given_true: 0.99 - prob_given_false: 0.10
-  #   - device_tracker.aac_ios
-  #   - device_tracker.mfc_ios
-  #   - device_tracker.paf_ios
+  #   - device_tracker.iphone_aac
+  #   - device_tracker.iphone_malen
+  #   - device_tracker.iphone_paf
+  #   - devoce_tracker.a2f
 
   # OWNTRACK ==> prob_given_true: 0.99 - prob_given_false: 0.4
   #   - device_tracker.aac_iphone_owntrack_2
@@ -39,7 +40,7 @@
         prob_given_false: 0.2
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.mfc_ios'  # IOS APP
+      - entity_id: 'device_tracker.iphone_malen'  # IOS APP
         prob_given_true: 0.99
         prob_given_false: 0.1
         platform: 'state'
@@ -65,7 +66,7 @@
         prob_given_false: 0.2
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.aac_ios'  # IOS APP
+      - entity_id: 'device_tracker.iphone_aac'  # IOS APP
         prob_given_true: 0.99
         prob_given_false: 0.1
         platform: 'state'
@@ -91,7 +92,7 @@
         prob_given_false: 0.2
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.paf_ios'  # IOS APP
+      - entity_id: 'device_tracker.iphone_paf'  # IOS APP
         prob_given_true: 0.99
         prob_given_false: 0.1
         platform: 'state'
@@ -117,7 +118,7 @@
         prob_given_false: 0.1   # original 0.1
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.aaf_ios'  # IOS APP
+      - entity_id: 'device_tracker.a2f'  # IOS APP
         prob_given_true: 0.8
         prob_given_false: 0.2
         platform: 'state'

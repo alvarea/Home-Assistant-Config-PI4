@@ -31,7 +31,7 @@ PAF_Trackers = ['device_tracker.paf_iphone_nmap',
                 'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2']
 
 AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
-                'device_tracker.aaf_ios',
+                'device_tracker.a2f',
                 'device_tracker.daa04833_9772_4800_bf22_57f406aeb1292_']   # New AAF
 
 # Get the entity that triggered the automation

@@ -282,7 +282,7 @@ reset_meta_tracker:
         entity_id: device_tracker.iphone_paf #PAF
     - service: python_script.meta_device_tracker
       data_template:
-        entity_id: device_tracker.aaf_ios #AAF
+        entity_id: device_tracker.a2f #AAF
 
 reset_meta_alarm_trigger:
   alias: 'Reset Meta-Alarm-Trigger'
