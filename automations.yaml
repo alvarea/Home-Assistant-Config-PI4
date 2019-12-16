@@ -37,26 +37,9 @@
           - group.all_automations
 
     # 30" y actualiza certificado
-    - delay: 30
-    - service: homeassistant.update_entity
-      entity_id: sensor.ssl_certificate_expiry
-#
-# CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
-#
-- id: S1_ssl_expiry_notification
-  alias: 'S1 SSL expiry notification'
-  trigger:
-    platform: numeric_state
-    entity_id: sensor.ssl_certificate_expiry
-    below: 15
-  action:
-    service: script.turn_on
-    entity_id: script.notifica_evento
-    data:
-      variables:
-        title: '*CERTIFICADO SSL*'
-        message: >
-          >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
+    #- delay: 30
+    #- service: homeassistant.update_entity
+    #  entity_id: sensor.ssl_certificate_expiry
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -740,7 +723,7 @@
       # offset: "-00:30:00"   # Horario Invierno GMT+1
       # offset: "-00:05:00"   # Horario Invierno GMT+2
       event: sunset
-      offset: "-00:05:00"     # Horario Verano GMT+2
+      offset: "-00:15:00"     # Horario Verano GMT+2
   condition:
     condition: numeric_state
     entity_id: sensor.illumination_158d0001e637f6
@@ -753,10 +736,10 @@
   alias: 'L02 Luces Off Exterior Sunset'
   trigger:
     - platform: sun
-      # offset: "+03:30:00"   # Horario Invierno GMT+1
+      # offset: "+04:30:00"   # Horario Invierno GMT+1
       # offset: "+02:30:00"   # Horario Verano GMT+2
       event: sunset
-      offset: "+03:30:00"
+      offset: "+04:30:00"
   action:
     # Script Luces Exterior Off
     - service: script.luces_exterior_off

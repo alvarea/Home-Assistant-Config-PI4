@@ -1,0 +1,17 @@
+#
+# CERTBOT SSL CERTIFICATE: ALERT TO WARN US IF SOMETHING WENT WRONG.
+#
+- id: S1_ssl_expiry_notification
+  alias: 'S1 SSL expiry notification'
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.ssl_certificate_expiry
+    below: 15
+  action:
+    service: script.turn_on
+    entity_id: script.notifica_evento
+    data:
+      variables:
+        title: '*CERTIFICADO SSL*'
+        message: >
+          >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}

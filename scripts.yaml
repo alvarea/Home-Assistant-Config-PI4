@@ -831,3 +831,46 @@ sonoff_initialize:
     #- service: switch.turn_on
     #  entity_id: switch.esphome_pow_sw2
 
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# SISTEMA DE CAMARAS BLINK                                                    #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+blink_trigger_cam_entrada:
+  alias: 'Blink Trigger Camera Entrada'
+  sequence:
+    - service: blink.trigger_camera
+      data:
+        name: ENTRADA
+    - delay: 00:00:05
+    - service: blink.blink_update
+    - service: camera.snapshot
+      data:
+        entity_id: camera.blink_entrada
+        filename: /share/blink_entrada.jpg
+
+blink_trigger_cam_puerta_ppal:
+  alias: 'Blink Trigger Camera Puerta'
+  sequence:
+    - service: blink.trigger_camera
+      data:
+        name: PUERTA PRINCIPAL
+    - delay: 00:00:05
+    - service: blink.blink_update
+    - service: camera.snapshot
+      data:
+        entity_id: camera.blink_puerta_entrada
+        filename: /share/blink_puerta.jpg
+
+blink_trigger_cam_puerta_garaje:
+  alias: 'Blink Trigger Camera Garaje'
+  sequence:
+    - service: blink.trigger_camera
+      data:
+        name: PUERTA GARAJE
+    - delay: 00:00:05
+    - service: blink.blink_update
+    - service: camera.snapshot
+      data:
+        entity_id: camera.blink_puerta_garaje
+        filename: /share/blink_garaje.jpg

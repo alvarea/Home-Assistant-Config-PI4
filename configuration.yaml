@@ -356,7 +356,6 @@ cloud:
         - automation
         - input_boolean
         - sensor
-        - switch
         - light
         - group
         - script
@@ -469,7 +468,15 @@ stream:
 blink:
   username: !secret blink_usr
   password: !secret blink_pwd
-  scan_interval: 3600
+  scan_interval: 600
+  binary_sensors:
+    monitored_conditions:
+      - motion_enabled
+      - motion_detected
+  sensors:
+    monitored_conditions:
+      - battery
+
 #
 # Sensores Xiaomi Miflora - Componente Plant
 #plant:
