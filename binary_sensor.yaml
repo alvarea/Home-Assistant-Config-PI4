@@ -213,7 +213,7 @@
         friendly_name: 'Alarma Sirena Interior'
         icon_template: mdi:alarm-light
 
-      # SONOFF POW2. Sensores control consumo potencia
+      # SONOFF POW_SW2. Sensores control consumo potencia
       esphome_pow_sw2_switch:
         value_template: >-
           {% if is_state('switch.esphome_pow_sw2','on') %}
@@ -276,6 +276,68 @@
             false
           {% endif %}
 
+      # SONOFF POW_SW3. Sensores control consumo potencia
+      esphome_pow_sw2_switch:
+        value_template: >-
+          {% if is_state('switch.esphome_pow_sw3','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw3_blue_led:
+        value_template: >-
+          {% if is_state('light.esphome_pow_sw3_led','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw3_current:
+        value_template: >-
+          {% if states('sensor.esphome_pow_sw3_current')|int > 0 %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw3_power:
+        value_template: >-
+          {% if states('sensor.esphome_pow_sw3_power')|int > 0 %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw3_voltage:
+        value_template: >-
+          {% if states('sensor.esphome_pow_sw3_voltage')|int > 0 %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw3_piscina_depurando:
+        value_template: >-
+          {%  if is_state('binary_sensor.esphome_pow_sw3_switch','on')
+              and states('sensor.esphome_pow_sw3_voltage')|int > 200
+              and states('sensor.esphome_pow_sw3_power')|round(1) > 2.5
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw3_piscina_warning:
+        value_template: >-
+          {%  if is_state('binary_sensor.esphome_pow_sw3_switch','on')
+              and states('sensor.esphome_pow_sw3_power')|round(1) >= 0.1
+              and states('sensor.esphome_pow_sw3_power')|round(1) < 3.0
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
 
 #{{ states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed
 #}}
@@ -286,7 +348,7 @@
       # JARDIN - DEPURADORA PISCINA
       piscina_status:
         value_template: >-
-          {% if is_state('switch.esphome_pow_sw1','on') %}
+          {% if is_state('switch.esphome_pow_sw3','on') %}
             true
           {% else %}
             false

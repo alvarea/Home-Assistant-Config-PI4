@@ -12,12 +12,12 @@
 #               esphome_4ch_relay_2                 Luz Olivo 3         CH2 - Focos Olivo 3 + Palmera Yuca
 #               esphome_4ch_relay_3                 Luz Olivo 1         CH3 - Focos Olivo 1 + Palmera Cica
 #               esphome_4ch_relay_4                 Luz Garaje          CH4 - Pendiente
-# 192.168.0.36  esphome_pow_sw1                     Depuradora          Piscina
+# 192.168.0.36  esphome_pow_sw1                     Disponible
 # 192.168.0.37  esphome_pow_sw2                     Lavadora            Cocina
 # 192.168.0.38  esphome_s20_SW1                     Radiador Malen      Radiador Dormitorio Principal (192.168.0.33)
 # 192.168.0.39  esphome_s20_SW2                     Nespresso
 # 192.168.0.40  esphome_s20_SW3                     Radiador Paloma     Radiador Dormitorio
-# 192.168.0.41  esphome_pow_SW3
+# 192.168.0.41  esphome_pow_SW3                     Piscina             Depuradora
 # 192.168.0.42  esphome_4ch_sw2                                         Riego Bonsais
 # 192.168.0.45  esphome_lb1_l01                     Luz Escalera        Luz Estudio Escalera
 # 192.168.0.18  Xiaomi Aqara
@@ -37,7 +37,7 @@
 # SWITCH        esphome_4ch_relay_2                 SONOFF              Luz Olivo 3         CH2 - Olivo 3 + Palmera Yuca
 # SWITCH        esphome_4ch_relay_3                 SONOFF              Luz Olivo 1         CH3 - Olivo 1 + Palmera Cica
 # SWITCH        esphome_4ch_relay_4                 SONOFF              Luz Garaje          CH4 - Pendiente
-# SWITCH        esphome_pow_sw1                     SONOFF              Depuradora          Piscina
+# SWITCH        esphome_pow_sw1                     SONOFF              Dispo
 # SWITCH        esphome_pow_sw2                     SONOFF              N/A                 NEW
 # SWITCH        esphome_s20_SW1                     SONOFF              Radiador Malen      Radiador Dormitorio Principal (SWITCH33)
 # SWITCH        esphome_s20_SW2                     SONOFF              Radiador Paloma     NEW

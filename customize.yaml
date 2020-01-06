@@ -406,10 +406,10 @@ light.esphome_s20_sw3_led:
 #
 # SERIE SONOFF POW
 #
-switch.esphome_pow_sw1:
+switch.esphome_pow_sw3:
   friendly_name: Depuradora Piscina
   icon: mdi:swim  # dip-switch
-binary_sensor.esphome_pow_sw1_status:
+binary_sensor.esphome_pow_sw3_status:
   friendly_name: POW.SW1 Cuadro Piscina
 
 #

@@ -90,7 +90,7 @@
 #
   fzen_sw2_programador:
     name: Programador Fuente Tortugas On/Off
-    initial: off
+    initial: on
     icon: mdi:dip-switch
 
 

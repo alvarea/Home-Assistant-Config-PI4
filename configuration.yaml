@@ -394,7 +394,7 @@ cloud:
         - light.esphome_bas_sw1_led
         - light.esphome_bas_sw2_led
         - light.esphome_bas_sw4_led
-        - light.esphome_pow_sw1
+        - light.esphome_pow_sw3_led
         - light.esphome_pow_sw1_led
         - light.esphome_s20_nespresso_led
         - light.esphome_s20_sw1_led

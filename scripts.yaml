@@ -599,8 +599,7 @@ piscina_timer_start:
         entity_id: timer.piscina
         duration: '{{ states.sensor.piscina_manual_segundos.state}}'
     - service: switch.turn_on
-      entity_id: switch.esphome_pow_sw1
-      #entity_id: switch.esphome_4ch_relay_2
+      entity_id: switch.esphome_pow_sw3
     # Actualiza Valor Hora Arranque Real
     - service: input_datetime.set_datetime
       entity_id: input_datetime.piscina_real_start_time
@@ -620,7 +619,7 @@ piscina_timer_start_diario:
         entity_id: timer.piscina
         duration: '{{ states.sensor.piscina_duracion_planificada.state}}'
     - service: switch.turn_on
-      entity_id: switch.esphome_pow_sw1
+      entity_id: switch.esphome_pow_sw3
     # Actualiza Valor Hora Arranque Real
     - service: input_datetime.set_datetime
       entity_id: input_datetime.piscina_real_start_time
@@ -638,7 +637,7 @@ piscina_timer_cancel:
     - service: timer.cancel
       entity_id: timer.piscina
     - service: switch.turn_off
-      entity_id: switch.esphome_pow_sw1
+      entity_id: switch.esphome_pow_sw3
       #entity_id: switch.esphome_4ch_relay_2
     # Actualiza Valor Hora Arranque Real
     - service: input_datetime.set_datetime
@@ -657,8 +656,7 @@ piscina_timer_pause:
     - service: timer.pause
       entity_id: timer.piscina
     - service: switch.turn_off
-      entity_id: switch.esphome_pow_sw1
-      #entity_id: switch.esphome_4ch_relay_2
+      entity_id: switch.esphome_pow_sw3
 
 piscina_timer_resume:
   alias: Timer Piscina Resume
@@ -666,8 +664,7 @@ piscina_timer_resume:
     - service: timer.start
       entity_id: timer.piscina
     - service: switch.turn_on
-      entity_id: switch.esphome_pow_sw1
-      #entity_id: switch.esphome_4ch_relay_2
+      entity_id: switch.esphome_pow_sw3
 
 riego_ch1_timer_cancel:
   alias: Timer Riego CH1 Cancel

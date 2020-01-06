@@ -159,21 +159,15 @@
         ringtone_msg: 10004
 
 #
-# REGLA: ARMADO COMPLETADO
+# REGLA: ARMADO AWAY COMPLETADO
 #
 - id: A2
-  alias: 'A2 Alarma Armado OK'
+  alias: 'A2 Alarma Armado Away OK'
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
       to: 'armed_away'
-    - platform: state
-      entity_id: alarm_control_panel.ha
-      to: 'armed_home'
   action:
-    # ARMADO PANEL ALARMA BLINK
-    - service: alarm_control_panel.alarm_arm_away
-      entity_id: alarm_control_panel.blink_casa
     #
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
@@ -185,7 +179,39 @@
         variables:
           title: '*ALARMA HOMY*'
           message: >
-            >>> ESTADO: Sistema Armado
+            >>> ESTADO: ARMADO TOTAL (AWAY)
+
+    - delay: 00:05
+    # ARMADO PANEL ALARMA BLINK
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.blink_casa
+
+#
+# REGLA: ARMADO HOME COMPLETADO
+#
+- id: A3
+  alias: 'A3 Alarma Armado Home OK'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.ha
+      to: 'armed_home'
+  action:
+    #
+    # Aviso sonoro con Xiaomi GW
+    - service: script.turn_on
+      entity_id: script.sirena_xiaomi_play_alarm_armed
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> ESTADO: ARMADO PARCIAL (HOME)
+
+    # ARMADO PANEL ALARMA BLINK
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.blink_casa
 
 
     # Revisar
@@ -590,24 +616,27 @@
         entity_id: sensor.baye_probability_aaf
         above: 98
   action:
-    - delay: 0:30
+    - delay: 0:15
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
-    - service: alarm_control_panel.alarm_arm_away
-      entity_id: alarm_control_panel.blink_casa
+    #
+    #- service: alarm_control_panel.alarm_arm_away
+    #  entity_id: alarm_control_panel.blink_casa
+    #  Con la regla A3 , el sistema Blink se activa a armed away y se envía las notificaciones.
+    #
     # Aviso sonoro con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.sirena_xiaomi_play_alarm_armed
+    #- service: script.turn_on
+    #  entity_id: script.sirena_xiaomi_play_alarm_armed
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*ALARMA HOMY*'
-          message: >
-            >>> EVENTO: Todos en casa después de media noche
-
-            >>> ESTADO: Sistema Armado Parcial
+    #- service: script.turn_on
+    #  entity_id: script.notifica_evento
+    #  data:
+    #    variables:
+    #      title: '*ALARMA HOMY*'
+    #      message: >
+    #        >>> EVENTO: Todos en casa después de media noche
+    #
+    #        >>> ESTADO: ARMADO PARCIAL (HOME)
 
 - id: T04
   alias: 'T04 Sleep Family Home'
@@ -944,7 +973,7 @@
   action:
     # Regla Off
     - service: automation.turn_off
-      entity_id: automation.l08
+      entity_id: automation.l08_luces_on_dormitorio_segun_sensor
     # Luces On
     - service: script.luces_dormitorio_escena_relax
     # Espera de 5'
@@ -954,7 +983,7 @@
       entity_id: light.dormitorio
     # Regla On
     - service: automation.turn_on
-      entity_id: automation.l08
+      entity_id: automation.l08_luces_on_dormitorio_segun_sensor
 
 - id: L09
   alias: 'L09 Luces On Dormitorio Warning'
@@ -989,6 +1018,55 @@
       data:
         transition: 10
 
+- id: L10
+  alias: 'L10 Luces On Estudio Según Sensor'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_sensor_158d0001e464a6
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      # siempre que la luz no esté ya encendida
+      - condition: state
+        entity_id: light.luz_estudio
+        state: 'off'
+      # entre las 18:00 y las 23:59 máximo.
+      #- condition: time
+      #  after: '18:00:00'
+      #  before: '23:59:59'
+      #- condition: sun
+        # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
+        # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
+      #  after: sunset
+      #  after_offset: "-01:00:00"
+      # si el sensor de luz está es < 3 lumx
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0001e464a6
+        below: 3
+  action:
+    # Luces On
+    - service: light.turn_on
+      entity_id: light.luz_estudio
+      data:
+        brightness: 175
+        rgb_color: [254, 200, 145]
+    - service: light.turn_on
+      entity_id: light.esphome_lb1_l01
+      data:
+        white_value: 200
+        rgb_color: [254, 126, 0]
+        brightness: 255
+    # Regla Off
+    - service: automation.turn_off
+      entity_id: automation.l10_luces_on_estudio_segun_sensor
+    # Espera de 5'
+    - delay: '00:05:00'
+    # Regla On
+    - service: automation.turn_on
+      entity_id: automation.l10_luces_on_estudio_segun_sensor
+
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # REGLAS MAGIC CUBE                                                           #
@@ -999,8 +1077,8 @@
 # free_fall and rotate.
 # The component stores the last action as the attribute last_action.
 #
-- id: L10
-  alias: 'L10 Cube Tap Twice Light Toggle'
+- id: L11
+  alias: 'L11 Cube Tap Twice Light Toggle'
   trigger:
     platform: event
     event_type: xiaomi_aqara.cube_action
@@ -1016,7 +1094,7 @@
     #  entity_id:
     #    - switch.esphome_bas_sw2
 
-- id: L11_cube_flip90_light_on
+- id: L12_cube_flip90_light_on
   alias: 'L11 Cube Flip90 Light on'
   trigger:
     platform: event
@@ -1040,7 +1118,7 @@
         rgb_color: [254, 126, 0]
         brightness: 255
 
-- id: L12_cube_shake_light_off
+- id: L13_cube_shake_light_off
   alias: 'L12 Cube Shake Light off'
   trigger:
     platform: event
@@ -1055,6 +1133,15 @@
         transition: 30
     - service: light.turn_off
       entity_id: light.esphome_lb1_l01
+    # Regla L10 OFF (sensor estudio) para que no se vuelva encender las luces
+    - service: automation.turn_off
+      entity_id: automation.l10_luces_on_estudio_segun_sensor
+    # Espera de 2'
+    - delay: 00:02
+    # Regla On
+    - service: automation.turn_on
+      entity_id: automation.l10_luces_on_estudio_segun_sensor
+
     #- service: switch.turn_off
     #  entity_id:
     #    - switch.esphome_bas_sw2
@@ -1123,7 +1210,7 @@
   alias: 'S05 Sonoff POW Status'
   trigger:
     - platform: state
-      entity_id: binary_sensor.esphome_pow_sw1_status
+      entity_id: binary_sensor.esphome_pow_sw3_status
       from: 'on'
       to: 'off'
       for: '00:05:00'
