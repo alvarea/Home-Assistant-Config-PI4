@@ -15,3 +15,35 @@
         title: '*CERTIFICADO SSL*'
         message: >
           >>> EVENTO: El certificado SSL expira en {{ states('sensor.ssl_certificate_expiry') }}
+
+
+#
+# REGLA: AVISO ALARMA POR SENSOR VIBRACION EN PUERTA RACK COMUNICACIONES ESTUDIO
+#
+- id: A12
+  alias: 'A12 Alarm Sensor Vibracion Rack Estudio'
+  trigger:
+    - platform: event
+      event_type: xiaomi_aqara.movement
+      event_data:
+        entity_id: binary_sensor.vibration_158d0002b15e3b
+        action_type: vibrate
+    - platform: event
+      event_type: xiaomi_aqara.movement
+      event_data:
+        entity_id: binary_sensor.vibration_158d0002b15e3b
+        movement_type: tilt
+  condition:
+    - condition: state
+      entity_id: input_boolean.rack_sensor_vibration_disable
+      state: 'off'
+  action:
+    # Script Notificación Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*ALARMA HOMY*'
+          message: >
+            >>> SENSOR VIBRACION: RACK COMUNICACIONES
+            >>> SALA: ESTUDIO

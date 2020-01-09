@@ -327,6 +327,15 @@ notifica_alarma:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
+  # Notificación Persistente App HOMY
+  - service: persistent_notification.create
+    data_template:
+    data_template:
+      title: >
+        {{ states('input_text.mensaje_tit') }}
+      message: >
+        {{ states('input_text.mensaje_msg') }}
+
   # Notificación Telegram
   #- service: notify.telegram_alarm
   #  data:
@@ -339,7 +348,7 @@ notifica_alarma:
   #        - url: http://192.168.0.12:8080/snapshot.cgi
   #          caption: Cámara Estudio
 
-notifica_warning:
+notifica_testing:
   alias: 'Mensaje Alarma'
   sequence:
   # Actualiza el valor de input_text.mensaje_tit con el título recibido.
@@ -355,20 +364,13 @@ notifica_warning:
       value: "{{ message }}"
 
   # Notificación Telegram
-  - service: notify.telegram_alarm
+  - service: notify.telegram_aac
     data_template:
       title: >
         {{ states('input_text.mensaje_tit') }}
       message: >
         {{ states('input_text.mensaje_msg') }}
 
-  # Notificación IOS
-  - service: notify.notifica_grupo_ios
-    data_template:
-      title: >
-        {{ states('input_text.mensaje_tit') }}
-      message: >
-        {{ states('input_text.mensaje_msg') }}
 
 notifica_evento:
   alias: 'Notifica Evento a Family'

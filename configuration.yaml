@@ -274,6 +274,9 @@ notify:
   - name: telegram_notify
     platform: telegram
     chat_id: !secret telegram_grp_notif
+  - name: telegram_aac
+    platform: telegram
+    chat_id: !secret telegram_aac
 
   #- name: pushover_aac
   #  platform: pushover
