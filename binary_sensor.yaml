@@ -277,7 +277,7 @@
           {% endif %}
 
       # SONOFF POW_SW3. PISCINA. Sensores control consumo potencia
-      esphome_pow_sw2_switch:
+      esphome_pow_sw3_switch:
         value_template: >-
           {% if is_state('switch.esphome_pow_sw3','on') %}
             true

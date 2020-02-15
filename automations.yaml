@@ -563,7 +563,7 @@
 #-----------------------------------------------------------------------------#
 
 - id: T01
-  alias: 'T01 Family Away'
+  alias: 'T01 Family Away Armado Total'
   trigger:
     # Ya no hay nadie en casa
     platform: state
@@ -579,27 +579,7 @@
     - service: script.luces_off
 
 - id: T02
-  alias: 'T02 Family at Home'
-  trigger:
-    # Hay alguien en casa
-    - platform: state
-      entity_id: binary_sensor.family_any_home
-      from: 'off'
-      to: 'on'
-  action:
-    # Script encendido Luz piloto si es de noche
-    - service: script.turn_on
-      entity_id: script.luces_on_family_home
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*FAMILY_HOME: SI*'
-          message: >
-            >>> EVENTO: Primero en Entrar {{ states('sensor.family_last_tracking') }}
-
-- id: T03
-  alias: 'T03 Armed Home Family at Home'
+  alias: 'T02 Family Home Armado Parcial'
   trigger:
     - platform: time
       at: '01:00:00'
@@ -654,8 +634,28 @@
     #
     #        >>> ESTADO: ARMADO PARCIAL (HOME)
 
+- id: T03
+  alias: 'T03 Family Home Telegram'
+  trigger:
+    # Hay alguien en casa
+    - platform: state
+      entity_id: binary_sensor.family_any_home
+      from: 'off'
+      to: 'on'
+  action:
+    # Script encendido Luz piloto si es de noche
+    - service: script.turn_on
+      entity_id: script.luces_on_family_home
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*FAMILY_HOME: SI*'
+          message: >
+            >>> EVENTO: Primero en Entrar {{ states('sensor.family_last_tracking') }}
+
 - id: T04
-  alias: 'T04 Sleep Family Home'
+  alias: 'T04 Family Home How Many Sleep'
   trigger:
     # Hay alguien en casa
     - platform: state
@@ -669,7 +669,7 @@
     - service: python_script.countpeople
 
 - id: T05
-  alias: 'T05 Sleep Family Check MFC'
+  alias: 'T05 Family MFC - Check Sleep'
   trigger:
     - platform: time
       at: '23:00:00'
@@ -698,7 +698,7 @@
             >>> Activado el control de Duerme en Casa.
 
 - id: T06
-  alias: 'T05 Sleep Family Check AAF'
+  alias: 'T06 Family AAF - Check Sleep'
   trigger:
     - platform: time
       at: '23:00:00'
@@ -727,7 +727,7 @@
             >>> Activado el control de Duerme en Casa.
 
 - id: T07
-  alias: 'T05 Sleep Family Check PAF'
+  alias: 'T07 Family PAF - Check Sleep'
   trigger:
     - platform: time
       at: '23:00:00'
@@ -752,6 +752,35 @@
           title: '*FAMILY@HOME*'
           message: >
             >>> Paloma está en casa a las 23:00
+
+            >>> Activado el control de Duerme en Casa.
+
+- id: T08
+  alias: 'T08 Family AAC - Check Sleep'
+  trigger:
+    - platform: time
+      at: '23:00:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.family_home_aac
+        state: 'on'
+      - condition: state
+        entity_id: input_boolean.family_sleep_home_aac
+        state: 'off'
+  action:
+    # Llamada al contador de personas que actualiza sensor.family_home
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.family_sleep_home_paf
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*FAMILY@HOME*'
+          message: >
+            >>> Agustín está en casa a las 23:00
 
             >>> Activado el control de Duerme en Casa.
 
@@ -1047,7 +1076,7 @@
     conditions:
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e464a6
-        below: 10
+        below: 5
       # siempre que la luz no esté ya encendida
       - condition: state
         entity_id: light.luz_estudio
@@ -1071,6 +1100,36 @@
         rgb_color: [254, 126, 0]
         brightness: 255
 
+- id: L11
+  alias: 'L11 Luces Estudio Off'
+  trigger:
+    - platform: time_pattern
+      minutes: '/60'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.luz_estudio
+        state: 'on'
+      # antes del amanecer
+      - condition: sun
+        after: sunrise
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0001e464a6
+        above: 5
+  action:
+    # Apagado Luces Casa
+    - service: script.luces_off
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*LUCES: OFF*'
+          message: >
+            >>> EVENTO: Luces encendidas antes del amanecer
+
+            >>> LUCES: Apagado total
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # REGLAS MAGIC CUBE                                                           #
@@ -1387,8 +1446,8 @@
 #
 # ESPHOME BASIC SW2 PORCHE PISCINA
 #
-- id: S12
-  alias: 'S12 Sonoff SW2 Porche Piscina'
+- id: S13
+  alias: 'S13 Sonoff SW2 Porche Piscina'
   trigger:
     platform: state
     entity_id: binary_sensor.esphome_bas_sw1_boton
@@ -1404,8 +1463,8 @@
 #
 # ESPHOME BASIC SW4 PORCHE SALON
 #
-- id: S13
-  alias: 'S13 Sonoff SW4 Porche Piscina'
+- id: S14
+  alias: 'S14 Sonoff SW4 Porche Piscina'
   trigger:
     platform: state
     entity_id: binary_sensor.esphome_bas_sw4_boton
@@ -1421,8 +1480,8 @@
 #
 # SAI RACK COMUNICACIONES
 #
-- id: S14
-  alias: 'S14 ups apc700 status'
+- id: S15
+  alias: 'S15 ups apc700 status'
   trigger:
     - platform: state
       entity_id: binary_sensor.ups_status
@@ -1441,8 +1500,8 @@
 
 # ESPHOME POW R2 SW2 - LAVADORA
 #
-- id: S15
-  alias: 'S15 Sonoff POW Lavadora Boton Switch on'
+- id: S16
+  alias: 'S16 Sonoff POW Lavadora Boton Switch on'
   trigger:
     platform: state
     entity_id: binary_sensor.esphome_pow_sw2_boton
@@ -1453,8 +1512,8 @@
     - service: switch.toggle
       entity_id: switch.esphome_pow_sw2
 
-- id: S16
-  alias: 'S16 Sonoff POW Lavadora Led'
+- id: S17
+  alias: 'S17 Sonoff POW Lavadora Led'
   trigger:
     - platform: state
       entity_id: binary_sensor.esphome_pow_sw2_lavadora_lavando
@@ -1462,8 +1521,8 @@
     - service: light.toggle
       entity_id: light.esphome_pow_sw2_led
 
-- id: S17
-  alias: 'S17 Sonoff POW Lavadora Warning off'
+- id: S18
+  alias: 'S18 Sonoff POW Lavadora Warning off'
   trigger:
     - platform: state
       entity_id: binary_sensor.esphome_pow_sw2_lavadora_warning
@@ -1478,8 +1537,8 @@
 # https://community.home-assistant.io/t/timer-execute-and-action-from-lovelace-ui/123512
 # https://community.home-assistant.io/t/lovelace-irrigation-card-help-needed/67667/2
 #
-- id: S18
-  alias: 'S18 Timer Riego CH1 Start'
+- id: S19
+  alias: 'S19 Timer Riego CH1 Start'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.riego_ch1_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1501,8 +1560,8 @@
     - service: switch.turn_on
       entity_id: switch.esphome_4ch_sw2_relay_1
 
-- id: S19
-  alias: 'S19 Timer Riego CH1 End'
+- id: S20
+  alias: 'S20 Timer Riego CH1 End'
   trigger:
     - platform: event
       event_type: timer.finished
@@ -1511,8 +1570,8 @@
   action:
     - service: script.riego_ch1_timer_cancel
 
-- id: S20
-  alias: 'S20 Timer Riego - CH2 Start'
+- id: S21
+  alias: 'S21 Timer Riego - CH2 Start'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.riego_ch2_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1534,8 +1593,8 @@
     - service: switch.turn_on
       entity_id: switch.esphome_4ch_sw2_relay_2
 
-- id: S21
-  alias: 'S21 Timer Riego CH2 End'
+- id: S22
+  alias: 'S22 Timer Riego CH2 End'
   trigger:
     - platform: event
       event_type: timer.finished
@@ -1544,8 +1603,8 @@
   action:
     - service: script.riego_ch2_timer_cancel
 
-- id: S22
-  alias: 'S22 Timer Fuente CH3 Start'
+- id: S23
+  alias: 'S23 Timer Fuente CH3 Start'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.riego_ch3_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1568,8 +1627,8 @@
       entity_id: switch.esphome_4ch_sw2_relay_3
 
 
-- id: S23
-  alias: 'S23 Timer Fuente CH3 End'
+- id: S24
+  alias: 'S24 Timer Fuente CH3 End'
   trigger:
     - platform: event
       event_type: timer.finished
@@ -1578,8 +1637,8 @@
   action:
     - service: script.riego_ch3_timer_cancel
 
-- id: S24
-  alias: 'S24 Timer Fuente Frog SW2 Start'
+- id: S25
+  alias: 'S25 Timer Fuente Frog SW2 Start'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.fzen_sw2_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1601,8 +1660,8 @@
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw2
 
-- id: S25
-  alias: 'S25 Timer Fuente Frog SW2 Start2'
+- id: S26
+  alias: 'S26 Timer Fuente Frog SW2 Start2'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.fzen_sw2_start_time2.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1624,8 +1683,8 @@
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw2
 
-- id: S26
-  alias: 'S26 Timer Fuente Frow SW2 End'
+- id: S27
+  alias: 'S27 Timer Fuente Frow SW2 End'
   trigger:
     - platform: event
       event_type: timer.finished
@@ -1685,3 +1744,4 @@
             >>> URGENTE: FALLO DE PING
 
             >>> DISPOSITIVO: 05_router_wifi_tplink
+

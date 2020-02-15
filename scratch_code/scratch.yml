@@ -1,3 +1,25 @@
+
+
+  - entities:
+      - entity: automation.s17_sonoff_pow_lavadora_warning_off
+        name: Apagado Automático Lavadora
+        secondary_info: last-changed
+      - entity: switch.esphome_pow_sw2
+        name: Lavadora (Sonoff Power)
+        secondary_info: last-changed
+      - entity: binary_sensor.esphome_pow_sw2_blue_led
+        icon: 'mdi:lightbulb-on'
+        name: LED Lavado Activo
+        secondary_info: last-changed
+      - entity: binary_sensor.esphome_pow_sw2_lavadora_lavando
+        name: Lavado en Marcha (W>2.5)
+        secondary_info: last-changed
+      - entity: binary_sensor.esphome_pow_sw2_lavadora_warning
+        name: Warning Aviso Lavadora (W<2.5)
+        secondary_info: last-changed
+
+
+
 {{states('sensor.time')}}
 
 {{(states.input_datetime.riego_ch1_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}

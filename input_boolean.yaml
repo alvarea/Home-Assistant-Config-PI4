@@ -18,6 +18,34 @@
     initial: on
     icon: mdi:cellphone-iphone
 
+#
+# ON/OFF Camaras Seguridad
+#
+  camara_estudio:
+    name: Camara Estudio on/off
+    initial: on
+    icon: mdi:webcam
+
+  camara_jardin:
+    name: Camara Jardín on/off
+    initial: on
+    icon: mdi:webcam
+
+  camara_hall_interior:
+    name: Camara Hall on/off
+    initial: on
+    icon: mdi:webcam
+
+  camara_puerta_exterior:
+    name: Camara Puerta on/off
+    initial: on
+    icon: mdi:webcam
+
+  camara_cancela_exterior:
+    name: Camara Cancela on/off
+    initial: on
+    icon: mdi:webcam
+
 
 # ON/OFF DUERME EN CASA
 #
