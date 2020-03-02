@@ -82,7 +82,8 @@ DORMITORIO MFC      sensor.humidity_158d00025efda4                      SENSOR H
 DORMITORIO MFC      sensor.illumination_158d0002ea1d0f                  SENSOR LUZ            ZONA INTERIOR
 DORMITORIO MFC      sensor.pressure_158d00025efda4                      SENSOR PREXION.ATM    ZONA INTERIOR
 DORMITORIO MFC      sensor.temperature_158d00025efda4                   SENSOR TEMPERATURA    ZONA INTERIOR
-DORMITORIO PAF      binary_sensor.door_window_sensor_158d000201dddb     SENSOR VENTANA        ZONA DORMITORIO
+DORMITORIO PAF      binary_sensor.door_window_sensor_158d000201dddb     SENSOR VENTANA        ZONA DORMITORIO - RIP
+DORMITORIO PAF      binary_sensor.door_window_sensor_158d00045d69a6     SENSOR VENTANA        ZONA DORMITORIO NUEVO
 DORMITORIO PAF      sensor.humidity_158d0002e97092                      SENSOR HUMEDAD        ZONA INTERIOR
 DORMITORIO PAF      sensor.pressure_158d0002e97092                      SENSOR PREXION.ATM    ZONA INTERIOR
 DORMITORIO PAF      sensor.temperature_158d0002e97092                   SENSOR TEMPERATURA    ZONA INTERIOR

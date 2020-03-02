@@ -272,7 +272,7 @@
         - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
         - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
         - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
-        - binary_sensor.door_window_sensor_158d000201dddb       # Ventana PAF
+        - binary_sensor.door_window_sensor_158d00045d69a6       # Ventana PAF
       # Grupo Sensores Away
         - binary_sensor.motion_sensor_158d0001e637f6            # Presencia Exterior
         - binary_sensor.motion_sensor_158d0002ea1d0f            # Presencia Dormitorio
@@ -344,7 +344,7 @@
         - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
         - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
         - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
-        - binary_sensor.door_window_sensor_158d000201dddb       # Ventana PAF
+        - binary_sensor.door_window_sensor_158d00045d69a6       # Ventana PAF
         #- binary_sensor.blink_puerta_garaje_motion_detected     # Blink Puerta Garaje
         #- binary_sensor.blink_puerta_principal_motion_detected  # Blink Puerta Principal
       to: 'on'
@@ -789,7 +789,6 @@
 # REGLAS DE CONTROL DE LUCES Y ALUMBRADO                                      #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-
 - id: L01
   alias: 'L01 Luces On Exterior Sunset'
   trigger:
@@ -1130,6 +1129,7 @@
             >>> EVENTO: Luces encendidas antes del amanecer
 
             >>> LUCES: Apagado total
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # REGLAS MAGIC CUBE                                                           #
@@ -1140,8 +1140,8 @@
 # free_fall and rotate.
 # The component stores the last action as the attribute last_action.
 #
-- id: L11
-  alias: 'L11 Cube Tap Twice Light Toggle'
+- id: L12
+  alias: 'L12 Cube Tap Twice Light Toggle'
   trigger:
     platform: event
     event_type: xiaomi_aqara.cube_action
@@ -1157,8 +1157,8 @@
     #  entity_id:
     #    - switch.esphome_bas_sw2
 
-- id: L12_cube_flip90_light_on
-  alias: 'L11 Cube Flip90 Light on'
+- id: L13_cube_flip90_light_on
+  alias: 'L13 Cube Flip90 Light on'
   trigger:
     platform: event
     event_type: xiaomi_aqara.cube_action
@@ -1181,8 +1181,8 @@
         rgb_color: [254, 126, 0]
         brightness: 255
 
-- id: L13_cube_shake_light_off
-  alias: 'L12 Cube Shake Light off'
+- id: L14_cube_shake_light_off
+  alias: 'L14 Cube Shake Light off'
   trigger:
     platform: event
     event_type: xiaomi_aqara.cube_action
@@ -1661,7 +1661,7 @@
       entity_id: switch.esphome_bas_sw2
 
 - id: S26
-  alias: 'S26 Timer Fuente Frog SW2 Start2'
+  alias: 'S26 Timer Fuente Frog SW2 Start'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.fzen_sw2_start_time2.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1684,7 +1684,7 @@
       entity_id: switch.esphome_bas_sw2
 
 - id: S27
-  alias: 'S27 Timer Fuente Frow SW2 End'
+  alias: 'S27 Timer Fuente Frog SW2 End'
   trigger:
     - platform: event
       event_type: timer.finished

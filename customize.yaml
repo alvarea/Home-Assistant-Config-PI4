@@ -233,7 +233,7 @@ binary_sensor.door_window_sensor_158d00020457e0:
 #
 # ZONA DORMITORIO PAF
 #
-binary_sensor.door_window_sensor_158d000201dddb:
+binary_sensor.door_window_sensor_158d00045d69a6:
   friendly_name: Ventana PAF
   icon: mdi:window-closed
 sensor.temperature_158d0002e97092:

@@ -19,13 +19,14 @@ alarma_sirena_grp:
 alarma_sensores_perimetro:
   name: Sensores Perímetro
   entities:
-    - binary_sensor.door_window_sensor_158d00022b393c
-    - binary_sensor.door_window_sensor_158d000201e2e7
-    - binary_sensor.door_window_sensor_158d000201dddb
-    - binary_sensor.door_window_sensor_158d00020b7c27
-    - binary_sensor.door_window_sensor_158d00020457e0
-    - binary_sensor.door_window_sensor_158d00020910b1
-    - binary_sensor.door_window_sensor_158d00030996fc
+    #- binary_sensor.door_window_sensor_158d000201dddb      # Ventana PAF ESTROPEADO - RIP
+    - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Principal
+    - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Trasera Jardín
+    - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
+    - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
+    - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
+    - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
+    - binary_sensor.door_window_sensor_158d00045d69a6       # Ventana PAF
 
 alarma_sensores_exterior:
   name: Sensores Exterior
@@ -63,12 +64,14 @@ alarma_sensor_jardin_grp:
 sensores_alarm_home:
   name: Grupo Sensores Home
   entities:
-    - binary_sensor.door_window_sensor_158d00022b393c
-    - binary_sensor.door_window_sensor_158d000201dddb
-    - binary_sensor.door_window_sensor_158d00020b7c27
-    - binary_sensor.door_window_sensor_158d00020457e0
-    - binary_sensor.door_window_sensor_158d00020910b1
-    - binary_sensor.door_window_sensor_158d000201e2e7
+    #- binary_sensor.door_window_sensor_158d000201dddb      # Ventana PAF ESTROPEADO - RIP
+    - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Principal
+    - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Trasera Jardín
+    - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
+    - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
+    - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
+    - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
+    - binary_sensor.door_window_sensor_158d00045d69a6       # Ventana PAF
     - binary_sensor.vibration_158d0002b15e3b                # Rack Comunicaciones
     - binary_sensor.vibration_158d0002a4eacc                # Puerta atras salon
 
