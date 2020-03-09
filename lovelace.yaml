@@ -1,6 +1,6 @@
 resources:
   - type: module
-    url: /local/mini-graph-card-bundle.js?v=0.3.0
+    url: /local/mini-graph-card-bundle.js?v=0.9.3
 title: HOMY Home Assistant
 views:
   - badges: []
@@ -205,7 +205,7 @@ views:
               - sensor.humidity_158d0002d79546
               - binary_sensor.smoke_sensor_158d0001fd321c
               - media_player.fire_tv
-            entity: light.luz_cocina
+            entity: light.luz_office
             state_image:
               'off': /local/Home_Room_Kitchen_BW.jpg
               'on': /local/Home_Room_Kitchen_RGB.jpg
@@ -366,7 +366,7 @@ views:
             secondary_info: last-changed
           - entity: binary_sensor.door_window_sensor_158d00020910b1
             secondary_info: last-changed
-          - entity: binary_sensor.door_window_sensor_158d000201dddb
+          - entity: binary_sensor.door_window_sensor_158d00045d69a6
             secondary_info: last-changed
           - entity: binary_sensor.vibration_158d0002a4eacc
             secondary_info: last-changed
@@ -569,12 +569,7 @@ views:
                 type: entity-button
             type: horizontal-stack
         type: vertical-stack
-      - conditions:
-          - entity: input_boolean.camara_hall_interior
-            state: 'on'
-        type: conditional
-        card:
-          type: picture-entity
+      - card:
           aspect_ratio: 50%
           camera_image: camera.blink_entrada
           entity: camera.blink_entrada
@@ -584,6 +579,11 @@ views:
           tap_action:
             action: call-service
             service: script.blink_trigger_cam_entrada
+          type: picture-entity
+        conditions:
+          - entity: input_boolean.camara_hall_interior
+            state: 'on'
+        type: conditional
       - aspect_ratio: 50%
         camera_image: camera.blink_puerta_entrada
         entity: camera.blink_puerta_entrada
@@ -950,7 +950,7 @@ views:
   - badges: []
     cards:
       - cards:
-          - entity: binary_sensor.esphome_pow_sw3_piscina_depurando
+          - entity: binary_sensor.piscina_status
             hold_action:
               action: call-service
               service: switch.turn_off
@@ -993,13 +993,13 @@ views:
             type: glance
           - cards:
               - entities:
-                  - sensor.esphome_pow_sw3_current
+                  - entity: sensor.esphome_pow_sw3_current
                 font_size: 50
                 line_color: blue
                 line_width: 6
                 type: 'custom:mini-graph-card'
               - entities:
-                  - sensor.esphome_pow_sw3_power
+                  - entity: sensor.esphome_pow_sw3_power
                 font_size: 50
                 line_color: green
                 line_width: 6
@@ -1497,34 +1497,34 @@ views:
         type: media-control
       - cards:
           - color_thresholds:
-              - color: black
-                value: 0
-              - color: violet
-                value: 5
-              - color: blue
-                value: 10
-              - color: teal
-                value: 15
-              - color: green
-                value: 20
-              - color: chartreuse
-                value: 25
-              - color: yellow
-                value: 30
-              - color: amber
-                value: 35
-              - color: orange
-                value: 38
-              - color: vermillion
-                value: 40
-              - color: red
-                value: 42
-              - color: magenta
-                value: 44
               - color: purple
                 value: 46
+              - color: magenta
+                value: 44
+              - color: red
+                value: 42
+              - color: vermillion
+                value: 40
+              - color: orange
+                value: 38
+              - color: amber
+                value: 35
+              - color: yellow
+                value: 30
+              - color: chartreuse
+                value: 25
+              - color: green
+                value: 20
+              - color: teal
+                value: 15
+              - color: blue
+                value: 10
+              - color: violet
+                value: 5
+              - color: black
+                value: 0
             entities:
-              - sensor.temperature_158d00022b65ff
+              - entity: sensor.temperature_158d00022b65ff
             font_size: 120
             line_width: 6
             points_per_hour: 1
@@ -1534,34 +1534,34 @@ views:
               state: true
             type: 'custom:mini-graph-card'
           - color_thresholds:
-              - color: black
-                value: 0
-              - color: violet
-                value: 5
-              - color: blue
-                value: 10
-              - color: teal
-                value: 20
-              - color: green
-                value: 30
-              - color: chartreuse
-                value: 40
-              - color: yellow
-                value: 50
-              - color: amber
-                value: 60
-              - color: orange
-                value: 70
-              - color: vermillion
-                value: 80
-              - color: red
-                value: 90
-              - color: magenta
-                value: 100
               - color: purple
                 value: 110
+              - color: magenta
+                value: 100
+              - color: red
+                value: 90
+              - color: vermillion
+                value: 80
+              - color: orange
+                value: 70
+              - color: amber
+                value: 60
+              - color: yellow
+                value: 50
+              - color: chartreuse
+                value: 40
+              - color: green
+                value: 30
+              - color: teal
+                value: 20
+              - color: blue
+                value: 10
+              - color: violet
+                value: 5
+              - color: black
+                value: 0
             entities:
-              - sensor.illumination_158d0001e05661
+              - entity: sensor.illumination_158d0001e05661
             font_size: 120
             line_width: 6
             points_per_hour: 1
@@ -1572,13 +1572,13 @@ views:
             type: 'custom:mini-graph-card'
           - cards:
               - entities:
-                  - sensor.humidity_158d00022b65ff
+                  - entity: sensor.humidity_158d00022b65ff
                 font_size: 50
                 line_color: blue
                 line_width: 6
                 type: 'custom:mini-graph-card'
               - entities:
-                  - sensor.pressure_158d00022b65ff
+                  - entity: sensor.pressure_158d00022b65ff
                 font_size: 50
                 line_color: green
                 line_width: 6
@@ -1928,6 +1928,12 @@ views:
           - entity: automation.l05_luces_on_exterior_segun_sensor
           - entity: automation.l06_luces_off_before_sunrise
           - entity: automation.l07_luces_on_entrada_segun_sensor
+          - entity: automation.l08_luces_on_dormitorio_segun_sensor
+          - entity: automation.l09_luces_on_dormitorio_warning
+          - entity: automation.l10_luces_on_estudio_segun_sensor
+          - entity: automation.l11_cube_flip90_light_on
+          - entity: automation.l11_cube_tap_twice_light_toggle
+          - entity: automation.l12_cube_shake_light_off
         show_header_toggle: false
         title: Reglas Luces
         type: entities
@@ -1940,4 +1946,3 @@ views:
     icon: 'mdi:settings'
     path: config_view
     title: Configuración
-

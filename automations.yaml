@@ -418,7 +418,7 @@
   trigger:
     - platform: sun
       event: sunrise
-      offset: "-00:15:00"
+      offset: "-00:30:00"
   condition:
     condition: and
     conditions:
@@ -582,21 +582,32 @@
   alias: 'T02 Family Home Armado Parcial'
   trigger:
     - platform: time
-      at: '01:00:00'
-    # Están todos en casa
-    - platform: state
-      entity_id: binary_sensor.family_all_home
-      from: 'off'
-      to: 'on'
-    - platform: numeric_state
-      entity_id: sensor.baye_probability_aaf
-      above: 95
+      at: '00:30:00'
+    # Versión original: Están todos en casa y Agu ha llegado
+    #- platform: state
+    #  entity_id: binary_sensor.family_all_home
+    #  from: 'off'
+    #  to: 'on'
+    #- platform: numeric_state
+    #  entity_id: sensor.baye_probability_aaf
+    #  above: 95
   condition:
     condition: and
     conditions:
+      # Nueva versión 2020 hay algun en casa
       - condition: state
-        entity_id: binary_sensor.family_all_home
+        entity_id: binary_sensor.family_any_home
         state: 'on'
+      # Versión original: Están todos en casa y Agu ha llegado
+      #- condition: state
+      #  entity_id: binary_sensor.family_all_home
+      #  state: 'on'
+      #- condition: numeric_state
+      #  entity_id: sensor.baye_probability_aaf
+      #  above: 98
+      # antes del amanecer
+      #- condition: sun
+      #  before: sunrise
       - condition: state
         entity_id: group.sensores_alarm_home
         state: 'off'
@@ -604,15 +615,9 @@
         entity_id: alarm_control_panel.ha
         state: disarmed
       - condition: time
-        after: '01:00:00'
-        # antes del amanecer
-      - condition: sun
-        before: sunrise
-      - condition: numeric_state
-        entity_id: sensor.baye_probability_aaf
-        above: 98
+        after: '00:29:00'
   action:
-    - delay: 0:15
+    - delay: '00:00:30'  # antes versión original 15'
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
     #
@@ -898,11 +903,12 @@
             # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
             # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
             after: sunset
-            after_offset: "-01:00:00"     # Horario VERANO1
+            after_offset: "-01:00:00"
           - condition: sun
+            # before_offset: "00:15:00"  ==> Horario Invierno GMT+1, en el amanecer +15m / +60m
+            # before_offset: "-00:00:00" ==> Horario Verano GMT+2, el amanecer
             before: sunrise
-            #before_offset: "00:15:00"    # Horario Invierno GMT+1, en el amanecer +15m / +60m
-            #before_offset: "-00:00:00"   # Horario Verano GMT+2, el amanecer
+            before_offset: "00:15:00"
           #- condition: numeric_state
           #  entity_id: sensor.illumination_158d0001e637f6
           #  below: 1
@@ -1073,18 +1079,31 @@
   condition:
     condition: and
     conditions:
+      # si el sensor de luz está es < 3 lumx
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e464a6
-        below: 5
+        below: 3
       # siempre que la luz no esté ya encendida
       - condition: state
         entity_id: light.luz_estudio
         state: 'off'
+      # 'when dark' condition: either after sunset or before sunrise
+      - condition: or
+        conditions:
+          - condition: sun
+            # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
+            # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
+            after: sunset
+            after_offset: "-01:00:00"
+          - condition: sun
+            # before_offset: "00:15:00"  ==> Horario Invierno GMT+1, en el amanecer +15m / +60m
+            # before_offset: "-00:00:00" ==> Horario Verano GMT+2, el amanecer
+            before: sunrise
+            before_offset: "00:15:00"
       # entre las 18:00 y las 23:59 máximo.
       #- condition: time
       #  after: '18:00:00'
-      #  before: '23:59:59'
-      # si el sensor de luz está es < 3 lumx
+      #  before: '09:00:00'
   action:
     # Luces On
     - service: light.turn_on

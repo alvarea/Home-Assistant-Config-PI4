@@ -87,13 +87,13 @@
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '12:00'
+    initial: '09:00'
 
   fzen_sw2_start_time2:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '17:00'
+    initial: '21:00'
 
   fzen_sw2_end_time2:
     name: Hora Final Planificado
