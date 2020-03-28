@@ -730,6 +730,22 @@ fzen_sw2_timer_cancel:
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
+# Apagado SW Sonoff Jardín
+jardin_off:
+  alias: 'Jardin Off'
+  sequence:
+    # When a condition does not return true, the script will finish
+    # Apagado Depuradora Piscina
+    - service: switch.turn_off
+      entity_id: switch.esphome_pow_sw3
+    # Apagado Riego Jardin y Fuentes
+    - service: switch.turn_off
+      entity_id: switch.esphome_4ch_sw2_relay_1
+    - service: switch.turn_off
+      entity_id: switch.esphome_4ch_sw2_relay_2
+    - service: switch.turn_off
+      entity_id: switch.esphome_4ch_sw2_relay_3
+
 # SONOFF S20 - NESSPRESSO
 #
 #nesspreso_on_timer:

@@ -1643,7 +1643,7 @@
         entity_id: timer.riego_ch3
         duration: '{{ states.sensor.riego_ch3_duracion_planificada.state|int * 60}}'
     - service: switch.turn_on
-      entity_id: switch.esphome_4ch_sw2_relay_3
+      entity_id: switch.es3wssçphome_4ch_sw2_relay_3
 
 
 - id: S24
@@ -1711,6 +1711,53 @@
         entity_id: timer.fzen_sw2
   action:
     - service: script.fzen_sw2_timer_cancel
+
+- id: S28
+  alias: 'L28 Control Jardin Before Sunrise'
+  trigger:
+    - platform: time
+      at: "00:00:00"
+    - platform: time
+      at: "01:00:00"
+    - platform: time
+      at: "02:00:00"
+    - platform: time
+      at: "03:30:00"
+    - platform: time
+      at: "04:00:00"
+    - platform: time
+      at: "05:00:00"
+    - platform: time
+      at: "06:00:00"
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: switch.esphome_4ch_sw2_relay_1
+        state: 'on'
+      - condition: state
+        entity_id: switch.esphome_4ch_sw2_relay_2
+        state: 'on'
+      - condition: state
+        entity_id: switch.esphome_4ch_sw2_relay_3
+        state: 'on'
+      - condition: state
+        entity_id: switch.esphome_pow_sw3
+        state: 'on'
+  action:
+    # Apagado Luces Casa
+    - service: script.jardin_off
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*JARDIN: OFF*'
+          message: >
+            >>> EVENTO: Control Riego/Fuentes encendidas antes del amanecer
+
+            >>> JARDIN: Apagado total
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
