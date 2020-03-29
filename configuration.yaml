@@ -167,13 +167,13 @@ timer:
 #    initial: 0
 #    step: 1
 
-history_graph:
-  piscina_duracion:
-    entities:
-      - binary_sensor.piscina_status
-    name: Duracion Depuradora Piscina
-    hours_to_show: 168
-    refresh: 1800
+#history_graph:
+#  piscina_duracion:
+#    entities:
+#      - binary_sensor.piscina_status
+#    name: Duracion Depuradora Piscina
+#    hours_to_show: 168
+#    refresh: 1800
 
 # GENERIC IP CAMERA
 camera:

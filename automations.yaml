@@ -1643,7 +1643,7 @@
         entity_id: timer.riego_ch3
         duration: '{{ states.sensor.riego_ch3_duracion_planificada.state|int * 60}}'
     - service: switch.turn_on
-      entity_id: switch.es3wssçphome_4ch_sw2_relay_3
+      entity_id: switch.esphome_4ch_sw2_relay_3
 
 
 - id: S24
@@ -1757,7 +1757,6 @@
             >>> EVENTO: Control Riego/Fuentes encendidas antes del amanecer
 
             >>> JARDIN: Apagado total
-
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
