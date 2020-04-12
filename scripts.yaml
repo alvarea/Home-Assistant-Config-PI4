@@ -165,6 +165,29 @@ sirena_stop_alarma:
         gw_mac: !secret xiaomi_mac
 
 
+# SCRIPT PARA UN MICRO AVISO DE SIRENA INTERIOR
+#
+#  SONOFF_SW1_SIRENA INTERIOR ==> ON  #
+sirena_alarma_micro_aviso:
+  alias: "Sirena Alarma Warning"
+  sequence:
+    # IF Mute Sonido Sirenas = ON => True => CANCEL SCRIPT
+    - condition: template
+      value_template: "{% if is_state('input_boolean.mute_sonido_sirenas', 'off') %}true{% endif %}"
+    #
+    # CICLO 1:
+    - service: switch.turn_on
+      entity_id: switch.esphome_bas_sw0
+    - delay:
+        milliseconds: 50
+    - service: switch.turn_off
+      entity_id: switch.esphome_bas_sw0
+
+    # LUZ ESTUDIO
+    #- service: light.turn_off
+    #  entity_id: light.esphome_lb1_l01
+    #
+
 # SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS PULSAR EL DOBLE BOTON PANICO
 #
 # La secuencia requerida es:
@@ -330,7 +353,6 @@ notifica_alarma:
   # Notificación Persistente App HOMY
   - service: persistent_notification.create
     data_template:
-    data_template:
       title: >
         {{ states('input_text.mensaje_tit') }}
       message: >
@@ -397,7 +419,6 @@ notifica_evento:
         {{ states('input_text.mensaje_tit') }}
       message: >
         {{ states('input_text.mensaje_msg') }}
-
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

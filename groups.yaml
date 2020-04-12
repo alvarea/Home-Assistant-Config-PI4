@@ -56,12 +56,12 @@ alarma_sensores_luz:
 alarma_sensor_jardin_grp:
   name: Sensores Jardín
   entities:
-    - binary_sensor.esphome_4ch_status           # Sensor de conectividad sonoff 4CH
-    - binary_sensor.esphome_pow_sw3_status       # Sensor de conectividad sonoff POW
+    - binary_sensor.esphome_4ch_status                      # Sensor de conectividad sonoff 4CH
+    - binary_sensor.esphome_pow_sw3_status                  # Sensor de conectividad sonoff POW
     - binary_sensor.esphome_bas_sw4_status
     - binary_sensor.esphome_bas_sw1_status
 
-sensores_alarm_home:
+alarma_grp_sensores_home:
   name: Grupo Sensores Home
   entities:
     #- binary_sensor.door_window_sensor_158d000201dddb      # Ventana PAF ESTROPEADO - RIP
@@ -75,7 +75,7 @@ sensores_alarm_home:
     - binary_sensor.vibration_158d0002b15e3b                # Rack Comunicaciones
     - binary_sensor.vibration_158d0002a4eacc                # Puerta atras salon
 
-sensores_alarm_away:
+alarma_grp_sensores_away:
   name: Grupo Sensores Away
   entities:
     - binary_sensor.motion_sensor_158d0001e637f6            # Presencia Exterior

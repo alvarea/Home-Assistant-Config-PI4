@@ -52,10 +52,6 @@
     - platform: time
       at: '23:55:00'
   action:
-    # Para todas las reglas durante el arranque del sistema
-    #- service: counter.reset
-    #  entity_id: counter.nespresso_start
-    # HASS Alarm Nigth Volume
     - service: input_number.set_value
       data_template:
         entity_id: input_number.xiaomi_volume_alarm_armed
@@ -89,14 +85,16 @@
 #
 # ALARMA AUTOMATICA SENSOR HUMO COCINA
 #
-- id: F1_alarma_fuego_cocina
-  alias: 'F1 Alarma Fuego Cocina'
+- id: X1_alarma_humo_cocina
+  alias: 'X1 Alarma Humo Cocina'
   trigger:
     - platform: state
       entity_id: binary_sensor.smoke_sensor_158d0001fd321c
       from: 'off'
       to: 'on'
   action:
+    # Micro Aviso Sirena Interior
+    - service: script.sirena_alarma_micro_aviso
     # Script Notificación Alarma
     - service: script.turn_on
       entity_id: script.notifica_alarma
@@ -105,11 +103,34 @@
           title: '*ALARMA HUMO*'
           message: >
             >>> URGENTE: SENSOR HUMO COCINA
+
+#
+# ALARMA AUTOMATICA SENSOR SENSOR AGUA ARQUETA
+#
+- id: X2_alarma_agua_arqueta
+  alias: 'X1 Alarma Agua Arqueta'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.water_leak_sensor_158d00045a3376
+      from: 'off'
+      to: 'on'
+  action:
+    # Micro Aviso Sirena Interior
+    - service: script.sirena_alarma_micro_aviso
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_alarma
+      data:
+        variables:
+          title: '*ALARMA AGUA*'
+          message: >
+            >>> URGENTE: SENSOR AGUA ARQUETA BAÑO
+
 #
 # REGLA: TEST SONIDOS ALARMA
 #
-- id: X1_test
-  alias: 'X1 TEST ON'
+- id: X3_test
+  alias: 'X3 TEST ON'
   trigger:
     - platform: state
       entity_id: input_boolean.alarm_test_sirenas
@@ -118,7 +139,11 @@
   action:
     #ringtone_vol:
     # Aviso sonoro con Xiaomi GW
-    - service: script.sirena_xiaomi_play_alarm_armed
+    #- service: script.sirena_xiaomi_play_alarm_armed
+    #
+    # Micro Aviso Sirena Interior
+    #
+    - service: script.sirena_alarma_micro_aviso
 
 #
 # REGLA: ALARMA DISARMED A <PENDING>
@@ -263,8 +288,8 @@
     # MUY IMPORTANTE: EN EL ARM AWAY SE CHEQUEA GRUPO SENSORES HOME + AWAY
     - platform: state
       entity_id:
-      # - group.sensores_alarm_home
-      # - group.sensores_alarm_away
+      # - group.alarma_grp_sensores_home
+      # - group.alarma_grp_sensores_away
       # Grupo Sensores Perimetrales
         - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
         - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
@@ -336,7 +361,7 @@
   alias: 'A6 Alarm Trigger Armed Home'
   trigger:
     - platform: state
-      #entity_id: group.sensores_alarm_home
+      #entity_id: group.alarma_grp_sensores_home
       entity_id:
         - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
         - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
@@ -579,68 +604,63 @@
     - service: script.luces_off
 
 - id: T02
-  alias: 'T02 Family Home Armado Parcial'
+  alias: 'T02 Armado Parcial Midnight'
   trigger:
     - platform: time
       at: '00:30:00'
-    # Versión original: Están todos en casa y Agu ha llegado
-    #- platform: state
-    #  entity_id: binary_sensor.family_all_home
-    #  from: 'off'
-    #  to: 'on'
-    #- platform: numeric_state
-    #  entity_id: sensor.baye_probability_aaf
-    #  above: 95
   condition:
     condition: and
     conditions:
-      # Nueva versión 2020 hay algun en casa
       - condition: state
         entity_id: binary_sensor.family_any_home
         state: 'on'
-      # Versión original: Están todos en casa y Agu ha llegado
-      #- condition: state
-      #  entity_id: binary_sensor.family_all_home
-      #  state: 'on'
-      #- condition: numeric_state
-      #  entity_id: sensor.baye_probability_aaf
-      #  above: 98
-      # antes del amanecer
-      #- condition: sun
-      #  before: sunrise
       - condition: state
-        entity_id: group.sensores_alarm_home
+        entity_id: alarm_control_panel.ha
+        state: disarmed
+  action:
+    - delay: '00:00:30'  # antes versión original 15'
+    - service: alarm_control_panel.alarm_arm_home
+      entity_id: alarm_control_panel.ha
+
+- id: T03
+  alias: 'T03 Family Home Armado Parcial'
+  trigger:
+    # Versión original: Están todos en casa y Agu ha llegado
+    - platform: state
+      entity_id: binary_sensor.family_all_home
+      from: 'off'
+      to: 'on'
+    - platform: numeric_state
+      entity_id: sensor.baye_probability_aaf
+      above: 95
+  condition:
+    condition: and
+    conditions:
+      # Versión original: Están todos en casa y Agu ha llegado
+      - condition: state
+        entity_id: binary_sensor.family_all_home
+        state: 'on'
+      - condition: numeric_state
+        entity_id: sensor.baye_probability_aaf
+        above: 95
+      # antes del amanecer
+      - condition: sun
+        before: sunrise
+      - condition: state
+        entity_id: group.alarma_grp_sensores_home
         state: 'off'
       - condition: state
         entity_id: alarm_control_panel.ha
         state: disarmed
       - condition: time
-        after: '00:29:00'
+        after: '00:35:00'
   action:
     - delay: '00:00:30'  # antes versión original 15'
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
-    #
-    #- service: alarm_control_panel.alarm_arm_away
-    #  entity_id: alarm_control_panel.blink_casa
-    #  Con la regla A3 , el sistema Blink se activa a armed away y se envía las notificaciones.
-    #
-    # Aviso sonoro con Xiaomi GW
-    #- service: script.turn_on
-    #  entity_id: script.sirena_xiaomi_play_alarm_armed
-    # Notifica Evento
-    #- service: script.turn_on
-    #  entity_id: script.notifica_evento
-    #  data:
-    #    variables:
-    #      title: '*ALARMA HOMY*'
-    #      message: >
-    #        >>> EVENTO: Todos en casa después de media noche
-    #
-    #        >>> ESTADO: ARMADO PARCIAL (HOME)
 
-- id: T03
-  alias: 'T03 Family Home Telegram'
+- id: T04
+  alias: 'T04 Family Home Telegram'
   trigger:
     # Hay alguien en casa
     - platform: state
@@ -659,8 +679,8 @@
           message: >
             >>> EVENTO: Primero en Entrar {{ states('sensor.family_last_tracking') }}
 
-- id: T04
-  alias: 'T04 Family Home How Many Sleep'
+- id: T05
+  alias: 'T05 Family Home How Many Sleep'
   trigger:
     # Hay alguien en casa
     - platform: state
@@ -673,8 +693,8 @@
     # Llamada al contador de personas que actualiza sensor.family_home
     - service: python_script.countpeople
 
-- id: T05
-  alias: 'T05 Family MFC - Check Sleep'
+- id: T06
+  alias: 'T06 Family MFC - Check Sleep'
   trigger:
     - platform: time
       at: '23:00:00'
@@ -702,8 +722,8 @@
 
             >>> Activado el control de Duerme en Casa.
 
-- id: T06
-  alias: 'T06 Family AAF - Check Sleep'
+- id: T07
+  alias: 'T07 Family AAF - Check Sleep'
   trigger:
     - platform: time
       at: '23:00:00'
@@ -731,8 +751,8 @@
 
             >>> Activado el control de Duerme en Casa.
 
-- id: T07
-  alias: 'T07 Family PAF - Check Sleep'
+- id: T08
+  alias: 'T08 Family PAF - Check Sleep'
   trigger:
     - platform: time
       at: '23:00:00'
@@ -760,8 +780,8 @@
 
             >>> Activado el control de Duerme en Casa.
 
-- id: T08
-  alias: 'T08 Family AAC - Check Sleep'
+- id: T09
+  alias: 'T09 Family AAC - Check Sleep'
   trigger:
     - platform: time
       at: '23:00:00'

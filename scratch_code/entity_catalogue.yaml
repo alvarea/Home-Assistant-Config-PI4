@@ -92,7 +92,7 @@ ENTRADA             binary_sensor.door_window_sensor_158d00022b393c     SENSOR P
 ENTRADA             binary_sensor.motion_sensor_158d0001e55903          SENSOR MOVIMIENTO     ZONA INTERIOR
 ENTRADA             sensor.illumination_158d0001e55903                  SENSOR LUZ            ZONA INTERIOR
 ENTRADA             sensor.illumination_7811dcb788fa                    SENSOR LUZ            GATEWAY AQARA
-ESTUDIO             binary_sensor.cube_158d00024a4a62                 INTERRUPTOR CUBO      ZONA INTERIOR
+ESTUDIO             binary_sensor.cube_158d00024a4a62                   INTERRUPTOR CUBO      ZONA INTERIOR
 ESTUDIO             binary_sensor.door_window_sensor_158d00030996fc     SENSOR VENTANA        ZONA INTERIOR
 ESTUDIO             binary_sensor.motion_sensor_158d0001e464a6          SENSOR MOVIMIENTO     ZONA INTERIOR
 ESTUDIO             binary_sensor.vibration_158d0002b15e3b              SENSOR VIBRACION      RACK COMUNICACIONES
@@ -111,3 +111,4 @@ SALON               binary_sensor.vibration_158d0002a4eacc              SENSOR V
 SALON               sensor.humidity_158d00022b65ff                      SENSOR HUMEDAD        ZONA INTERIOR
 SALON               sensor.illumination_158d0001e05661                  SENSOR LUZ            ZONA INTERIOR
 SALON               sensor.pressure_158d00022b65ff                      SENSOR PREXION.ATM    ZONA INTERIOR
+DORMITORIO PAF      binary_sensor.water_leak_sensor_158d00045a3376      SENSOR AGUA           ZONA INTERIOR
