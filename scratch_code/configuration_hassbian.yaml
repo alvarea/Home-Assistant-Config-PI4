@@ -454,13 +454,13 @@ stream:
 #
 # Sensores Xiaomi Miflora - Componente Plant
 #plant:
-#  bonsai_ficus_2:
+#  orquidea_entrada:
 #    sensors:
-#      moisture: sensor.bonsai_ficus2_moisture
-#      battery: sensor.bonsai_ficus2_battery
-#      temperature: sensor.bonsai_ficus2_temperature
-#      conductivity: sensor.bonsai_ficus2_conductivity
-#      brightness: sensor.bonsai_ficus2_light_intensity
+#      moisture: sensor.orquidea_entrada2_moisture
+#      battery: sensor.orquidea_entrada2_battery
+#      temperature: sensor.orquidea_entrada2_temperature
+#      conductivity: sensor.orquidea_entrada2_conductivity
+#      brightness: sensor.orquidea_entrada2_light_intensity
 #    min_moisture: 20
 #    max_moisture: 60
 #    min_conductivity: 350

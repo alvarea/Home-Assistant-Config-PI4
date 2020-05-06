@@ -921,14 +921,14 @@
         conditions:
           - condition: sun
             # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
-            # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
+            # after_offset: "-00:10:00"  ==> HORARIO VERANO GMT+2
             after: sunset
-            after_offset: "-01:00:00"
+            after_offset: "-00:10:00"
           - condition: sun
             # before_offset: "00:15:00"  ==> Horario Invierno GMT+1, en el amanecer +15m / +60m
             # before_offset: "-00:00:00" ==> Horario Verano GMT+2, el amanecer
             before: sunrise
-            before_offset: "00:15:00"
+            before_offset: "00:00:00"
           #- condition: numeric_state
           #  entity_id: sensor.illumination_158d0001e637f6
           #  below: 1
@@ -989,7 +989,7 @@
         # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
         # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
         after: sunset
-        after_offset: "-01:00:00"
+        after_offset: "-00:30:00"
       - condition: sun
         before: sunrise
         # en el amanecer +3h'
@@ -1037,7 +1037,7 @@
         # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
         # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
         after: sunset
-        after_offset: "-01:00:00"
+        after_offset: "-00:30:00"
       # si el sensor de luz está es < 1 lumx
       - condition: numeric_state
         entity_id: sensor.illumination_158d0002ea1d0f
@@ -1114,7 +1114,7 @@
             # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
             # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
             after: sunset
-            after_offset: "-01:00:00"
+            after_offset: "-00:30:00"
           - condition: sun
             # before_offset: "00:15:00"  ==> Horario Invierno GMT+1, en el amanecer +15m / +60m
             # before_offset: "-00:00:00" ==> Horario Verano GMT+2, el amanecer
@@ -1269,7 +1269,7 @@
       entity_id: switch.esphome_4ch_relay_1
 
 - id: S02
-  alias: 'S01 Sonoff 4CH Boton2 On'
+  alias: 'S02 Sonoff 4CH Boton2 On'
   trigger:
     - platform: state
       entity_id: binary_sensor.esphome_4ch_button_2
@@ -1610,7 +1610,7 @@
     - service: script.riego_ch1_timer_cancel
 
 - id: S21
-  alias: 'S21 Timer Riego - CH2 Start'
+  alias: 'S21 Timer Riego CH2 Start'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.riego_ch2_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1733,7 +1733,7 @@
     - service: script.fzen_sw2_timer_cancel
 
 - id: S28
-  alias: 'L28 Control Jardin Before Sunrise'
+  alias: 'S28 Control Jardin Before Sunrise'
   trigger:
     - platform: time
       at: "00:00:00"
