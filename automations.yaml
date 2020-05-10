@@ -820,26 +820,35 @@
     - platform: sun
       # offset: "+01:00:00"   # Horario Invierno GMT+1 - Enero
       # offset: "-00:30:00"   # Horario Invierno GMT+1
-      # offset: "-00:05:00"   # Horario Verano GMT+2
-
+      # offset: "-00:00:00"   # Horario Verano GMT+2
       event: sunset
-      offset: "+01:00:00"     # Enero
+      #offset: "-00:00:00"
   condition:
     condition: numeric_state
     entity_id: sensor.illumination_158d0001e637f6
-    below: 50
+    below: 100
   action:
     # Encendido Luces Exterior y Jardín
     - service: script.luces_exterior_on
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*LUCES: OFF*'
+          message: >
+            >>> EVENTO: Puesta de Sol
+
+            >>> LUCES: Alumbrado Exterior On
 
 - id: L02
   alias: 'L02 Luces Off Exterior Sunset'
   trigger:
     - platform: sun
       # offset: "+04:00:00"   # Horario Invierno GMT+1
-      # offset: "+02:00:00"   # Horario Verano GMT+2
+      # offset: "+02:30:00"   # Horario Verano GMT+2
       event: sunset
-      offset: "+04:00:00"
+      offset: "+02:30:00"
   action:
     # Script Luces Exterior Off
     - service: script.luces_exterior_off
@@ -853,14 +862,12 @@
       from: 'off'
       to: 'on'
     - platform: time
-      at: '00:01:00'
+      at: '00:00:00'
   condition:
     condition: and
     conditions:
       - condition: time
-        after: '23:00:00'
-      - condition: time
-        before: '20:00:00'
+        after: '23:55:00'
       - condition: state
         entity_id: switch.wall_switch_right_158d0002236e75 # Luces exterior
         state: 'on'
@@ -869,7 +876,7 @@
         entity_id: binary_sensor.family_all_home
         state: 'on'
   action:
-    - delay: 0:05
+    - delay: 0:01
     # Script Luces Exterior Off
     - service: script.luces_exterior_off
     # Notifica a Familia
@@ -884,13 +891,13 @@
             >>> LUCES: Alumbrado Exterior Off
 
 - id: L04
-  alias: 'L04 Luces On Salon Puesta Sol 30m'
+  alias: 'L04 Luces On Salon Sunset'
   trigger:
     - platform: sun
       # offset: "-00:30:00"   # Horario Invierno GMT+1
-      # offset: "-00:05:00"   # Horario Verano GMT+2
+      # offset: "-00:15:00"   # Horario Verano GMT+2
       event: sunset
-      offset: "-00:30:00"
+      #offset: "-00:05"
   condition:
     condition: and
     conditions:
@@ -904,6 +911,16 @@
   action:
     - service: light.turn_on
       entity_id: light.luz_vitrina
+    # Notifica a Familia
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*LUCES: OFF*'
+          message: >
+            >>> EVENTO: Anochece y gente en casa
+
+            >>> LUCES: Alumbrado Salon On
 
 - id: L05
   alias: 'L05 Luces On Exterior Segun Sensor'
@@ -926,9 +943,9 @@
             after_offset: "-00:10:00"
           - condition: sun
             # before_offset: "00:15:00"  ==> Horario Invierno GMT+1, en el amanecer +15m / +60m
-            # before_offset: "-00:00:00" ==> Horario Verano GMT+2, el amanecer
+            # before_offset: "-00:10:00" ==> Horario Verano GMT+2, el amanecer
             before: sunrise
-            before_offset: "00:00:00"
+            before_offset: "-00:10:00"
           #- condition: numeric_state
           #  entity_id: sensor.illumination_158d0001e637f6
           #  below: 1
@@ -1165,9 +1182,9 @@
         variables:
           title: '*LUCES: OFF*'
           message: >
-            >>> EVENTO: Luces encendidas antes del amanecer
+            >>> EVENTO: Luces estudio On antes del amanecer
 
-            >>> LUCES: Apagado total
+            >>> LUCES: Apagado Estudio
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1570,7 +1587,6 @@
   action:
     - service: script.lavadora_switch_off
 
-
 # ESPHOME 4CH-R2 SW2 RIEGO BONSAIS Relay1 - Relay4
 #
 # https://community.home-assistant.io/t/timer-execute-and-action-from-lovelace-ui/123512
@@ -1788,7 +1804,7 @@
 # ping_01_router_fibra_movistar:
 #
 - id: P01
-  alias: 'P01_router_fibra_movistar'
+  alias: 'P01_ping_router_fibra'
   trigger:
     - platform: state
       entity_id: binary_sensor.ping_00_wan_internet_google
@@ -1805,13 +1821,13 @@
           message: >
             >>> URGENTE: ERROR CONEXION INTERNET
 
-            >>> DISPOSITIVO: 00 WAN ROUTER MOVISTAR
+            >>> DISPOSITIVO: 00 WAN ROUTER FIBRA
 
 #
 # ping_05_router_wifi_tplink:
 #
-- id: P05
-  alias: 'P05_router_wifi_tplink'
+- id: P02
+  alias: 'P02_ping_ap_wifi_tplink'
   trigger:
     - platform: state
       entity_id: binary_sensor.ping_05_router_wifi_tplink
@@ -1828,5 +1844,49 @@
           message: >
             >>> URGENTE: FALLO DE PING
 
-            >>> DISPOSITIVO: 05_router_wifi_tplink
+            >>> DISPOSITIVO: 05 AP WIFI TPLINK
+
+#
+# nmap_sony_ps4:
+#
+- id: P03
+  alias: 'P03_sony_ps4_on'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.nmap_sony_ps4_lan_wifi
+      from: 'off'
+      to: 'on'
+  action:
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*AVISO CONSOLA PS4*'
+          message: >
+            >>> AVISO: ENCENDIDO
+
+            >>> DISPOSITIVO: CONSOLA SONY PS4
+
+#
+# nmap_sony_ps4:
+#
+- id: P04
+  alias: 'P04_sony_ps4_off'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.nmap_sony_ps4_lan_wifi
+      from: 'on'
+      to: 'off'
+  action:
+    # Script Notificación Alarma
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*AVISO CONSOLA PS4*'
+          message: >
+            >>> URGENTE: APAGADO
+
+            >>> DISPOSITIVO: CONSOLA SONY PS4
 

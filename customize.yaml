@@ -535,57 +535,10 @@ binary_sensor.ping_07_switch_salon:
   icon: mdi:server-network
   friendly_name: '07 Switch Salon'
 
+binary_sensor.ping_08_switch_pasillo:
+  icon: mdi:server-network
+  friendly_name: '08 Switch Pasillo'
+
 binary_sensor.ping_09_switch_estudio:
   icon: mdi:server-network
   friendly_name: '09 Switch Estudio'
-
-binary_sensor.ping_12_ipcam_estudio:
-  friendly_name: '12 IPcam Estudio'
-  icon: mdi:cctv
-
-binary_sensor.ping_13_ipcam_cocina:
-  friendly_name: '13 IPcam Cocina'
-  icon: mdi:cctv
-
-binary_sensor.ping_17_hub_philips_hue:
-  friendly_name: '17 Hub Philips Hue'
-  icon: mdi:lightbulb
-
-binary_sensor.ping_18_xiaomi_aqara_gateway:
-  friendly_name: '18 Xiaomi Aqara Gateway'
-  icon: mdi:zigbee
-
-binary_sensor.ping_20_amazon_firetv:
-  friendly_name: '20 Amazon FireTV '
-  icon: mdi:youtube-tv
-
-binary_sensor.ping_21_apple_tv:
-  friendly_name: '21 Apple TV'
-  icon: mdi:youtube-tv
-
-binary_sensor.ping_22_amazon_alexa:
-  friendly_name: '22 Amazon Alexa'
-  icon: mdi:amazon-alexa
-
-binary_sensor.ping_23_deco_tv_salon:
-  friendly_name: '23 Deco TV Salon'
-  icon: mdi:television-box
-
-binary_sensor.ping_24_deco_tv_estudio:
-  friendly_name: '24 Deco TV Estudio'
-  icon: mdi:television-box
-
-binary_sensor.ping_25_sony_tv_salon:
-  friendly_name: '25 Sony TV Salon'
-  icon: mdi:television
-
-binary_sensor.ping_26_sony_tv_estudio:
-  friendly_name: '26 Sony TV Estudio'
-  icon: mdi:television
-
-binary_sensor.ping_27_sony_ps4_lan:
-  friendly_name: '27 Sony PS4 LAN'
-  icon: mdi:gamepad-variant
-
-# Icono para dispositivos ESPHOME
-# ip-network-outline

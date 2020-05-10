@@ -766,7 +766,7 @@ views:
             title: Mobile Devices (nmap)
             type: entities
           - entities:
-              - entity: binary_sensor.ping_sony_ps4_lan_wifi
+              - entity: binary_sensor.nmap_sony_ps4_lan_wifi
               - entity: binary_sensor.nmap_macbook_pro_lan
               - entity: binary_sensor.nmap_macbook_pro_wifi
               - entity: binary_sensor.nmap_asus_zenbook_wifi
