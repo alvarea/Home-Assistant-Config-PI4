@@ -1,6 +1,3 @@
-resources:
-  - type: module
-    url: /local/mini-graph-card-bundle.js?v=0.9.3
 title: HOMY Home Assistant
 views:
   - badges: []
@@ -342,15 +339,19 @@ views:
                 secondary_info: last-changed
               - entity: input_text.alarm_trigger
                 icon: 'mdi:security-network'
-                name: Sensor Detectado
+                name: Sensor
                 secondary_info: last-changed
               - script.sirena_stop_alarma
               - entity: binary_sensor.smoke_sensor_158d0001fd321c
+                secondary_info: last-changed
+              - entity: binary_sensor.water_leak_sensor_158d00045a3376
                 secondary_info: last-changed
               - entity: automation.t01_family_away
                 name: Nadie en Casa - Armado Total
               - entity: automation.t02_family_at_home
                 name: Todos en Casa - Armado Parcial
+            show_header_toggle: false
+            title: PANEL CONTROL ALARMA
             type: entities
         type: vertical-stack
       - entities:
@@ -387,17 +388,6 @@ views:
         show_header_toggle: false
         title: Sensores Presencia Exterior
         type: entities
-      - cards:
-          - entities:
-              - entity: binary_sensor.esphome_bas_sw0_status
-              - entity: binary_sensor.esphome_bas_sw0
-                secondary_info: last-changed
-              - entity: input_boolean.panic_button
-              - entity: script.alarma_boton_panico
-            show_header_toggle: false
-            title: Botón Pánico / Sirena
-            type: entities
-        type: vertical-stack
       - entities:
           - entity: binary_sensor.motion_sensor_158d0001e55903
             name: Entrada
@@ -443,6 +433,19 @@ views:
         show_header_toggle: false
         title: Sensores Luminosidad
         type: entities
+      - cards:
+          - entities:
+              - entity: binary_sensor.esphome_bas_sw0_status
+              - entity: binary_sensor.esphome_bas_sw0
+                secondary_info: last-changed
+              - entity: input_boolean.panic_button
+              - entity: script.alarma_boton_panico
+              - entity: script.sirena_alarma_micro_aviso
+                name: Micro test sirena
+            show_header_toggle: false
+            title: Botón Pánico / Sirena
+            type: entities
+        type: vertical-stack
     icon: 'mdi:shield-home'
     path: alarma_view
     title: Panel Control Alarma
@@ -717,16 +720,16 @@ views:
               - binary_sensor.ping_05_router_wifi_tplink
               - binary_sensor.ping_06_router_wifi_linksys
               - binary_sensor.ping_07_switch_salon
+              - binary_sensor.ping_08_switch_pasillo
               - binary_sensor.ping_09_switch_estudio
             show_header_toggle: false
             title: Network Devices (ping)
             type: entities
           - entities:
-              - binary_sensor.ping_ipcam_estudio
-              - binary_sensor.ping_ipcam_bonsais
-              - binary_sensor.nmap_amazon_alexa
-              - binary_sensor.ping_hub_philips_hue
-              - binary_sensor.ping_xiaomi_aqara_gateway
+              - binary_sensor.nmap_alexa_entrada
+              - binary_sensor.nmap_alexa_dormitorio
+              - binary_sensor.hub_philips_hue
+              - binary_sensor.xiaomi_aqara_gateway
             show_header_toggle: false
             title: HOME Domotic & Hub (ping)
             type: entities
@@ -834,7 +837,7 @@ views:
                   action: call-service
                   service: script.riego_ch2_timer_cancel
                 icon: 'mdi:pine-tree'
-                name: Shohin (CH1)
+                name: Bonsais Top (CH1)
                 tap_action:
                   action: call-service
                   service: switch.toggle
@@ -846,7 +849,7 @@ views:
                   action: call-service
                   service: script.riego_ch1_timer_cancel
                 icon: 'mdi:tree'
-                name: Chuhin (CH2)
+                name: Plantas Entrada (CH2)
                 tap_action:
                   action: call-service
                   service: switch.toggle
@@ -900,18 +903,19 @@ views:
               - entity: sensor.riego_ch1_duracion_planificada
                 name: Duración Programa (Min)
             show_header_toggle: false
-            title: CHUHIN
+            title: Bonsais TOP
             type: entities
           - entities:
               - entity: input_boolean.riego_ch2_programador
                 name: Programador Automático
+              - entity: binary_sensor.riego_ch2_status
               - entity: input_select.riego_ch2_programador_dias
               - entity: input_datetime.riego_ch2_start_time
               - entity: input_datetime.riego_ch2_end_time
               - entity: sensor.riego_ch2_duracion_planificada
                 name: Duración Programa (Min)
             show_header_toggle: false
-            title: SHOHIN
+            title: Plantas Entrada
             type: entities
         type: vertical-stack
       - cards:
@@ -926,7 +930,7 @@ views:
               - entity: sensor.riego_ch1_duracion_planificada
                 name: Duración Programa (Min)
             show_header_toggle: false
-            title: FUENTE ZEN
+            title: Fuente Zen
             type: entities
           - entities:
               - entity: switch.esphome_bas_sw2
@@ -941,9 +945,12 @@ views:
               - entity: input_datetime.fzen_sw2_end_time2
               - entity: sensor.fzen_sw2_duracion_planificada2
             show_header_toggle: false
-            title: FUENTE TORTUGAS
+            title: Fuente Tortuga
             type: entities
         type: vertical-stack
+      - entity: plant.miflora_s1
+        name: Orquídea Entrada
+        type: plant-status
     icon: 'mdi:tree'
     path: jardin_view
     title: Jardín
@@ -1024,11 +1031,6 @@ views:
           - script.piscina_timer_cancel
         show_header_toggle: false
         title: Control Manual
-        type: entities
-      - entities:
-          - history_graph.duracion_depuradora_piscina
-        show_header_toggle: false
-        title: Historial gráfico
         type: entities
     icon: 'mdi:swim'
     path: piscina_view
@@ -1190,7 +1192,7 @@ views:
                 entity_id: switch.esphome_pow_sw2
             type: entity-button
           - entities:
-              - entity: automation.s17_sonoff_pow_lavadora_warning_off
+              - entity: automation.s18_sonoff_pow_lavadora_warning_off
                 name: Apagado Automático Lavadora
                 secondary_info: last-changed
               - entity: switch.esphome_pow_sw2
@@ -1206,6 +1208,7 @@ views:
               - entity: binary_sensor.esphome_pow_sw2_lavadora_warning
                 name: Warning Aviso Lavadora (W<2.5)
                 secondary_info: last-changed
+            show_header_toggle: false
             type: entities
           - entities:
               - entity: sensor.esphome_pow_sw2_voltage
@@ -1946,3 +1949,4 @@ views:
     icon: 'mdi:settings'
     path: config_view
     title: Configuración
+
