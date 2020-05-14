@@ -268,6 +268,10 @@ notify:
       - service: mobile_app_iphone_malen
       - service: mobile_app_iphone_paf
       - service: ios_aaf_ios
+    name: notifica_grupo_agus
+    services:
+      - service: mobile_app_iphone_aac
+      - service: ios_aaf_ios
   - name: telegram_alarm
     platform: telegram
     chat_id: !secret telegram_grp_alarm
@@ -492,11 +496,11 @@ blink:
 plant:
   miflora_s1:
     sensors:
-      moisture: sensor.xiaomi_miflora_humedad
-      battery: sensor.xiaomi_miflora_bateria
-      temperature: sensor.xiaomi_miflora_temperatura
-      conductivity: sensor.xiaomi_miflora_fertilidad
-      brightness: sensor.xiaomi_miflora_luminosidad
+      moisture: sensor.miflora_s1_humedad
+      temperature: sensor.miflora_s1_temperatura
+      conductivity: sensor.miflora_s1_fertilidad
+      brightness: sensor.miflora_s1_luminosidad
+      # battery: sensor.miflora_s1_bateria
     min_moisture: 1
     max_moisture: 50
     min_conductivity: 350

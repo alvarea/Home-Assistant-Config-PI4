@@ -1859,7 +1859,7 @@
   action:
     # Script Notificación Alarma
     - service: script.turn_on
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_evento_plus
       data:
         variables:
           title: '*AVISO CONSOLA PS4*'
@@ -1881,12 +1881,12 @@
   action:
     # Script Notificación Alarma
     - service: script.turn_on
-      entity_id: script.notifica_evento
+      entity_id: script.notifica_evento_plus
       data:
         variables:
           title: '*AVISO CONSOLA PS4*'
           message: >
-            >>> URGENTE: APAGADO
+            >>> AVISO: APAGADO
 
             >>> DISPOSITIVO: CONSOLA SONY PS4
 
