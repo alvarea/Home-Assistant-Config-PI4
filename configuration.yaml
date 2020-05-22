@@ -82,7 +82,7 @@ http:
   server_port: 2309
   ip_ban_enabled: true
   login_attempts_threshold: 5
-  base_url: https://alvareahomy.duckdns.org
+  # base_url: https://alvareahomy.duckdns.org
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
 
@@ -98,9 +98,9 @@ updater:
 # Discover some devices automatically
 discovery:
   ignore:
-    - igd
+    #- igd
     - xiaomi_gw
-    - esphome
+    #- esphome
 
 
 # Philips Hue Bridge
@@ -119,9 +119,9 @@ ios:
 #   STATUS      DURACION TRANSICION               DESCRIPCION
 #   ========    =============================     ==================================================
 #   DISARMED    Permanante                        Estado inicial de alarma desarmada
-#   PENDING     <PENDING_TIME>                    Estado transición a ARMED durante <pending_time> Segundos
+#   ARMING     <ARMING_TIME>                      Estado transición a ARMED durante <arming_time> Segundos
 #   ARMED_AWAY  Permanante                        Estado de alarma ARMED HOME / ARMED AWAY
-#   PENDING     <PENDING_TIME> + <DELAY_TIME>     Estado transición a TRIGGERED durante <pending_time> + <delay_time> Segundos
+#   PENDING     <DELAY_TIME>                      Estado transición a TRIGGERED durante <delay_time> Segundos
 #   TRIGGERED   <TRIGGER_TIME>                    Estado de alarma TRIGGERED durante <trigger_time> segundos
 #   ARMED_AWAY  Permanante                        Estado anterior de alarma armada
 #
@@ -132,14 +132,15 @@ alarm_control_panel:
     # Pending: The time in seconds of the pending time before effecting a state change. Default is 60 seconds.
     # Delay: The time in seconds of the pending time before triggering the alarm. Default is 0 seconds.
     # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
-    pending_time: 15
-    delay_time: 30
+    code: !secret alarm_control_code
+    code_arm_required: false
+    arming_time: 30
+    delay_time: 60
     trigger_time: 300
     disarmed:
       trigger_time: 0 # the disarmed state never triggers the alarm;
     armed_home:
-      pending_time: 0
-      delay_time: 0
+      arming_time: 0
 
 # Timer temporizadores
 timer:
@@ -261,14 +262,15 @@ geofency:
 
 # NOTIFICACIONES
 notify:
-  - platform: group # notification group for IOS
-    name: notifica_grupo_ios
+  - name: notifica_grupo_ios
+    platform: group # notification group for IOS
     services:
       - service: mobile_app_iphone_aac
       - service: mobile_app_iphone_malen
       - service: mobile_app_iphone_paf
       - service: ios_aaf_ios
-    name: notifica_grupo_agus
+  - name: notifica_grupo_agus
+    platform: group
     services:
       - service: mobile_app_iphone_aac
       - service: ios_aaf_ios
@@ -439,7 +441,7 @@ cloud:
         display_categories: LIGHT
 
 recorder:
-  purge_interval: 1
+  # purge_interval: 1
   purge_keep_days: 30
   exclude:
     domains:
@@ -476,13 +478,13 @@ blink:
   username: !secret blink_usr
   password: !secret blink_pwd
   scan_interval: 600
-  binary_sensors:
-    monitored_conditions:
-      - motion_enabled
-      - motion_detected
-  sensors:
-    monitored_conditions:
-      - battery
+  #binary_sensors:
+  #  monitored_conditions:
+  #    - motion_enabled
+  #    - motion_detected
+  #sensors:
+  #  monitored_conditions:
+  #    - battery
 
 #
 # Sensores Xiaomi Miflora - C

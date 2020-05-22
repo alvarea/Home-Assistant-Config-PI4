@@ -1,4 +1,10 @@
 
+image: /local/Bonsai_locker_aufrechte_Form.svg.png
+show_name: false
+show_state: false
+type: picture
+
+
 
   - entities:
       - entity: automation.s17_sonoff_pow_lavadora_warning_off
