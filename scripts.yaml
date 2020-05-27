@@ -183,11 +183,6 @@ sirena_alarma_micro_aviso:
     - service: switch.turn_off
       entity_id: switch.esphome_bas_sw0
 
-    # LUZ ESTUDIO
-    #- service: light.turn_off
-    #  entity_id: light.esphome_lb1_l01
-    #
-
 # SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS PULSAR EL DOBLE BOTON PANICO
 #
 # La secuencia requerida es:
@@ -216,8 +211,6 @@ alarma_boton_panico:
           message: >
             >>> URGENTE: BOTON PANICO ACTIVADO
 
-
-
 alarma_boton_panico_off:
   alias: 'Boton Panico OFF'
   sequence:
@@ -230,8 +223,6 @@ alarma_boton_panico_off:
           title: '*ALARMA HOMY*'
           message: >
             >>> URGENTE: BOTON PANICO DESACTIVADO
-
-
 
 #
 # SCRIPTS PARA GESTION ALARMA DESDE ALEXA
@@ -328,11 +319,28 @@ notifica_alarma:
     data_template:
       value: "{{ title }}"
 
-  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
+  # Actualiza el valor de input_text.mensaje_msg con el mensaje recibido.
   - service: input_text.set_value
     entity_id: input_text.mensaje_msg
     data_template:
       value: "{{ message }}"
+
+  # Actualiza el valor de input_text.mensaje_voz con el texto voice recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_voz
+    data_template:
+      value: "{{ voice }}"
+
+  # Notificación Alexa
+  - service: notify.alexa_media
+    data_template:
+      target: media_player.echo_alexa_entrada
+        #- media_player.echo_alexa_dormitorio
+      title: "{{ title }}"
+      message: "{{ voice }}"
+      data:
+        type: announce
+        #method: all
 
   # Notificación Telegram
   - service: notify.telegram_alarm
@@ -389,6 +397,24 @@ notifica_evento:
     data_template:
       value: "{{ message }}"
 
+  # Actualiza el valor de input_text.mensaje_voz con el texto voice recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_voz
+    data_template:
+      value: "{{ voice }}"
+
+  # Notificación Alexa
+  - service: notify.alexa_media
+    data_template:
+      target: media_player.echo_alexa_entrada
+      #  - media_player.echo_alexa_dormitorio
+      title: "{{ title }}"
+      message: "{{ voice }}"
+      data:
+        type: announce
+        #method: all
+
+  # Notificación Telegram
   - service: notify.telegram_notify
     data_template:
       title: >
@@ -415,6 +441,25 @@ notifica_evento_plus:
     data_template:
       value: "{{ message }}"
 
+  # Actualiza el valor de input_text.mensaje_voz con el texto voice recibido.
+  - service: input_text.set_value
+    entity_id: input_text.mensaje_voz
+    data_template:
+      value: "{{ voice }}"
+
+  # Notificación Alexa
+  - service: notify.alexa_media
+    data_template:
+      target: media_player.echo_alexa_entrada
+      #target: notify.alexa_media_en_todas_partes
+      #target: media_player.echo_alexa_dormitorio
+      title: "{{ title }}"
+      message: "{{ voice }}"
+      data:
+        type: announce
+        #method: all
+
+  # Notificación Telegram
   - service: notify.telegram_notify
     data_template:
       title: >
@@ -431,28 +476,43 @@ notifica_evento_plus:
         {{ states('input_text.mensaje_msg') }}
 
 
-notifica_testing:
-  alias: 'Mensaje Alarma'
+notifica_alexa_entrada:
+  alias: 'Notificacion Alexa Entrada'
   sequence:
-  # Actualiza el valor de input_text.mensaje_tit con el título recibido.
-  - service: input_text.set_value
-    entity_id: input_text.mensaje_tit
-    data_template:
-      value: "{{ title }}"
+    - service: notify.alexa_media
+      data_template:
+        target: media_player.echo_alexa_entrada
+        title: >
+          {{ states('input_text.mensaje_tit') }}
+        message: >
+          {{ states('input_text.mensaje_voz') }}
+        data:
+          type: announce
+          #method: all
 
-  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
-  - service: input_text.set_value
-    entity_id: input_text.mensaje_msg
-    data_template:
-      value: "{{ message }}"
+notifica_alexa_dormitorio:
+  alias: 'Notificacion Alexa Dormitorio'
+  sequence:
+    - service: notify.alexa_media
+      data_template:
+        target: media_player.echo_alexa_dormitorio
+        title: >
+          {{ states('input_text.mensaje_tit') }}
+        message: >
+          {{ states('input_text.mensaje_voz') }}
+        data:
+          type: announce
+          #method: all
 
-  # Notificación Telegram
-  - service: notify.telegram_aac
-    data_template:
-      title: >
-        {{ states('input_text.mensaje_tit') }}
-      message: >
-        {{ states('input_text.mensaje_msg') }}
+
+notifica_alexa_sound:
+  sequence:
+    - service: media_player.play_media
+      data:
+        entity_id: media_player.echo_alexa_entrada
+        media_content_type: sound
+        media_content_id: amzn_sfx_doorbell_chime_01
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -944,3 +1004,5 @@ blink_trigger_cam_puerta_garaje:
       data:
         entity_id: camera.blink_puerta_garaje
         filename: /share/blink_garaje.jpg
+
+

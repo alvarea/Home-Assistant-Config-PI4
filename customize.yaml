@@ -385,7 +385,6 @@ switch.esphome_4ch_sw2_relay_4:
 #
 switch.esphome_s20_sw1:
   friendly_name: Dormitorio MFC
-  icon: mdi:radiator
 
 binary_sensor.esphome_s20_sw1_status:
   friendly_name: S20.SW1 Dormitorio MFC
@@ -395,7 +394,6 @@ light.esphome_s20_sw1_led:
 
 switch.esphome_s20_sw3:
   friendly_name: Dormitorio PAF
-  icon: mdi:radiator
 
 binary_sensor.esphome_s20_sw3_status:
   friendly_name: S20.SW3 Dormitorio PAF

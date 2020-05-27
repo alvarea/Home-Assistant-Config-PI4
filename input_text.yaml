@@ -6,6 +6,9 @@
   mensaje_msg:
     name: Cuerpo Notificaciones
     initial: <OK>
+  mensaje_voz:
+    name: Mensaje de Voz
+    initial: Jomi
   family_last_tracking:
     name: Input Text Último Tracking
     initial: ''
