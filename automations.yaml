@@ -506,8 +506,12 @@
     # Desarmado de Alarmas
     - service: alarm_control_panel.alarm_disarm
       entity_id: alarm_control_panel.ha
-    - service: alarm_control_panel.alarm_disarm
-      entity_id: alarm_control_panel.blink_casa
+      data:
+        code: !secret alarm_control_code
+    # Blink se desarma sola al dispararse el evento disarmed
+    #- service: alarm_control_panel.alarm_disarm
+    #  entity_id: alarm_control_panel.blink_casa
+    #
     # Aviso sonoro con Xiaomi GW
     - service: script.turn_on
       entity_id: script.sirena_stop_alarm
