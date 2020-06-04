@@ -678,28 +678,28 @@
       to: 'on'
     - platform: numeric_state
       entity_id: sensor.baye_probability_aaf
-      above: 95
+      above: 90
   condition:
     condition: and
     conditions:
       # Versión original: Están todos en casa y Agu ha llegado
       - condition: state
+        entity_id: alarm_control_panel.ha
+        state: disarmed
+      - condition: time
+        after: '00:30:00'
+      - condition: state
         entity_id: binary_sensor.family_all_home
         state: 'on'
       - condition: numeric_state
         entity_id: sensor.baye_probability_aaf
-        above: 95
+        above: 90
       # antes del amanecer
       - condition: sun
         before: sunrise
-      - condition: state
-        entity_id: group.alarma_grp_sensores_home
-        state: 'off'
-      - condition: state
-        entity_id: alarm_control_panel.ha
-        state: disarmed
-      - condition: time
-        after: '00:35:00'
+      #- condition: state
+      #  entity_id: group.alarma_grp_sensores_home
+      #  state: 'off'
   action:
     - delay: '00:00:30'  # antes versión original 15'
     - service: alarm_control_panel.alarm_arm_home
