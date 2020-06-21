@@ -92,6 +92,8 @@
     - platform: time
       at: '14:30:00'
     - platform: time
+      at: '15:00:00'
+    - platform: time
       at: '16:00:00'
     - platform: time
       at: '18:00:00'
@@ -110,6 +112,8 @@
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora de preparar la comida"
           {% elif (now().hour ==14) %}
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora del almuerzo"
+          {% elif (now().hour ==15) %}
+            "Buenas tardes papa hijo. Es la hora de tomarse la pastilla"
           {% elif (now().hour ==16) %}
             "Buenas tardes. Son las {{ now().hour }}, es la hora de la siesta"
           {% elif (now().hour ==18) %}
@@ -120,6 +124,36 @@
         data:
           type: announce
           #method: all
+
+- id: hass_blink_update
+  alias: 'BLINK Camera Update'
+  trigger:
+    - platform: time
+      at: '08:00:00'
+    - platform: time
+      at: '10:00:00'
+    - platform: time
+      at: '12:00:00'
+    - platform: time
+      at: '14:00'
+    - platform: time
+      at: '16:00:00'
+    - platform: time
+      at: '18:00:00'
+    - platform: time
+      at: '22:00:00'
+    - platform: time
+      at: '23:59:00'
+    #- platform: time
+    #  minutes: '00'
+    #  seconds: '00'
+  action:
+    # Actualizacion imagen cámaras última hora.
+    - service: script.blink_trigger_cam_entrada
+    - delay: 00:00:05
+    - service: script.blink_trigger_cam_puerta_ppal
+    - delay: 00:00:05
+    - service: script.blink_trigger_cam_puerta_garaje
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -646,7 +680,7 @@
     # Script Activación Alarma ARM AWAY
     - service: script.homy_armado_total
     # Delay para no bloquear notificaciones
-    - delay: 0:03
+    - delay: 0:05
     # Script Luces Apagado Total
     - service: script.luces_off
 
@@ -669,7 +703,7 @@
       entity_id: alarm_control_panel.ha
 
 - id: T03
-  alias: 'T03 Family Home Armado Parcial'
+  alias: 'T03 Family Home Armado Home'
   trigger:
     # Versión original: Están todos en casa y Agu ha llegado
     - platform: state
@@ -701,9 +735,19 @@
       #  entity_id: group.alarma_grp_sensores_home
       #  state: 'off'
   action:
-    - delay: '00:00:30'  # antes versión original 15'
+    # Notifica Evento
+    - service: script.turn_on
+      entity_id: script.notifica_evento
+      data:
+        variables:
+          title: '*FAMILY HOME*'
+          message: >
+            >>> EN 5' AUTO ARMADO HOME
+
+    - delay: '00:05:00'  # antes versión original 15'
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
+
 
 - id: T04
   alias: 'T04 Family Home Telegram'
@@ -721,7 +765,7 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*FAMILY_HOME: SI*'
+          title: '*FAMILY HOME: SI*'
           message: >
             >>> EVENTO: Primero en Entrar {{ states('sensor.family_last_tracking') }}
 
@@ -762,7 +806,7 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*FAMILY@HOME*'
+          title: '*FAMILY HOME*'
           message: >
             >>> Malen está en casa a las 23:00
 
@@ -791,7 +835,7 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*FAMILY@HOME*'
+          title: '*FAMILY HOME*'
           message: >
             >>> Agu está en casa a las 23:00
 
@@ -820,7 +864,7 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*FAMILY@HOME*'
+          title: '*FAMILY HOME*'
           message: >
             >>> Paloma está en casa a las 23:00
 
@@ -849,7 +893,7 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          title: '*FAMILY@HOME*'
+          title: '*FAMILY HOME*'
           message: >
             >>> Agustín está en casa a las 23:00
 
@@ -1133,16 +1177,11 @@
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e464a6
         below: 5
-      # siempre que la luz no esté ya encendida
-      - condition: state
-        entity_id: light.luz_estudio
-        state: 'off'
       # 'when dark' condition: either after sunset or before sunrise
       - condition: sun
         # before_offset: "00:60:00"  ==> Horario Invierno GMT+1, en el amanecer +60m
         # before_offset: "00:30:00" ==> Horario Verano GMT+2, el amanecer +30m
         before: sunrise
-        before_offset: "00:30:00"
   action:
     # Luces On
     - service: light.turn_on
@@ -1856,7 +1895,7 @@
       entity_id: script.notifica_evento_plus
       data:
         variables:
-          voice: 'Control Dispositivos. Consola Sony PS4 encendida'
+          # voice: 'Consola Sony PS4 encendida'
           title: '*AVISO CONSOLA PS4*'
           message: >
             >>> AVISO: ENCENDIDO
@@ -1879,10 +1918,9 @@
       entity_id: script.notifica_evento_plus
       data:
         variables:
-          voice: 'Control Dispositivos. Consola Sony PS4 apagada'
+          # voice: 'Consola Sony PS4 apagada'
           title: '*AVISO CONSOLA PS4*'
           message: >
             >>> AVISO: APAGADO
 
             >>> DISPOSITIVO: CONSOLA SONY PS4
-

@@ -166,13 +166,13 @@
 # Programador Calefacción
 
   calefac_programador_mfc:
-    name: Prog. Calefacción MFC
-    initial: off
+    name: Prog. Dormitorio MFC
+    initial: on
     icon: mdi:power-settings
 
   calefac_programador_paf:
-    name: Prog. Calefacción PAC
-    initial: off
+    name: Prog. Dormitorio PAC
+    initial: on
     icon: mdi:power-settings
 
 # Dormitorio Warning Mode

@@ -388,10 +388,13 @@ cloud:
         - switch.esphome_pow_sw
         - switch.esphome_pow_sw2
         - light.luz_cilindro
-        - light.luz_cocina
+        - light.luz_cueva_agu
+        - light.luz_dormitorio_aac
+        - light.luz_dormitorio_mfc
         - light.luz_entrada
         - light.luz_estudio
         - light.luz_lectura
+        - light.luz_tv
         - light.luz_pasillo
         - light.luz_vitrina
         - light.entrada
@@ -399,16 +402,7 @@ cloud:
         - light.estudio
         - light.pasillo
         - light.salon
-        - light.esphome_4ch_blue_led
-        - light.esphome_bas_sw1_led
-        - light.esphome_bas_sw2_led
-        - light.esphome_bas_sw4_led
-        - light.esphome_pow_sw3_led
-        - light.esphome_pow_sw1_led
-        - light.esphome_s20_nespresso_led
-        - light.esphome_s20_sw1_led
-        - light.esphome_s20_sw2_led
-        - light.esphome_s20_sw3_led
+        - light.dormitorio_aaf
     entity_config:
       script.homy_armado_parcial:
         name: Armado Parcial

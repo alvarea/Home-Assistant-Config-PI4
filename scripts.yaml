@@ -254,6 +254,8 @@ homy_desarmado_code:
   sequence:
     - service: alarm_control_panel.alarm_disarm
       entity_id: alarm_control_panel.ha
+      data:
+        code: !secret alarm_control_code
     # La notificación se hace mediente la activación de la regla:
     # alias: 'A4_alarma_activa_desarmada'
 
@@ -971,7 +973,7 @@ blink_trigger_cam_entrada:
   sequence:
     - service: blink.trigger_camera
       data:
-        name: ENTRADA
+        entity_id: camera.blink_entrada
     - delay: 00:00:05
     - service: blink.blink_update
     - service: camera.snapshot
@@ -984,7 +986,7 @@ blink_trigger_cam_puerta_ppal:
   sequence:
     - service: blink.trigger_camera
       data:
-        name: PUERTA PRINCIPAL
+        entity_id: camera.blink_puerta_entrada
     - delay: 00:00:05
     - service: blink.blink_update
     - service: camera.snapshot
@@ -997,7 +999,7 @@ blink_trigger_cam_puerta_garaje:
   sequence:
     - service: blink.trigger_camera
       data:
-        name: PUERTA GARAJE
+        entity_id: camera.blink_puerta_garaje
     - delay: 00:00:05
     - service: blink.blink_update
     - service: camera.snapshot
