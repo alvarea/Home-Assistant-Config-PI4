@@ -210,10 +210,10 @@ sensor.pressure_158d00022c6a47:
   friendly_name: Estudio
   icon: mdi:gauge
 sensor.temperature_158d00022c6a47:
-  friendly_name: Estudio
+  friendly_name: Dormitorio Agu
   icon: mdi:thermometer
 sensor.humidity_158d00022c6a47:
-  friendly_name: Estudio
+  friendly_name: Dormitorio Agu
   icon: mdi:water-percent
 binary_sensor.vibration_158d0002b15e3b: # Vibración Rack Estudio
   friendly_name: Vibración Rack Estudio

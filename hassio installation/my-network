@@ -1,0 +1,9 @@
+[connection]
+id=HassOS default
+uuid=1edb18b0-24f4-4fda-8fa4-59de8c088ae1
+type=802-3-ethernet
+
+[ipv4]
+method=manual
+address=192.168.0.10/24,192.168.0.1
+dns=8.8.8.8;8.8.4.4

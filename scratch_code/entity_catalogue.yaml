@@ -39,6 +39,7 @@
 # SWITCH        esphome_4ch_relay_4                 SONOFF              Luz Garaje          CH4 - Pendiente
 # SWITCH        esphome_pow_sw1                     SONOFF              Dispo
 # SWITCH        esphome_pow_sw2                     SONOFF              N/A                 NEW
+# SWITCH        esphome_pow_sw3                     SONOFF              N/A                 Depuradora Piscina
 # SWITCH        esphome_s20_SW1                     SONOFF              Radiador Malen      Radiador Dormitorio Principal (SWITCH33)
 # SWITCH        esphome_s20_SW2                     SONOFF              Radiador Paloma     NEW
 # SWITCH        esphome_s20_SW3                     SONOFF              Nespresso           NEW

@@ -78,11 +78,13 @@ default_config:
 # Enable Python Scripts
 python_script:
 
+
+# HTTP - SSL
+# base_url: https://alvareahomy.duckdns.org
 http:
   server_port: 2309
   ip_ban_enabled: true
   login_attempts_threshold: 5
-  # base_url: https://alvareahomy.duckdns.org
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
 
@@ -202,12 +204,12 @@ camera:
 #    credentials: !secret apple_tv_credentials
 
 # Mediaplayer FireTV
-media_player:
-  - platform: androidtv
-    name: Fire TV
-    host: !secret firetv_host
-    adbkey: "/config/android/adbkey"
-    #    adbkey: "/home/homeassistant/.homeassistant/config/android/adbkey"
+#media_player:
+#  - platform: androidtv
+#    name: Fire TV
+#    host: !secret firetv_host
+#    adbkey: "/config/android/adbkey"
+#    ####adbkey: "/home/homeassistant/.homeassistant/config/android/adbkey"
 
 # MQTT - BROKER: Local Mosquitto Broker
 #
