@@ -163,7 +163,7 @@
     initial: off
     icon: mdi:power-settings
 
-# Programador Calefacción
+# Programador Calefacción / Mosquitos
 
   calefac_programador_mfc:
     name: Prog. Dormitorio MFC
@@ -171,7 +171,12 @@
     icon: mdi:power-settings
 
   calefac_programador_paf:
-    name: Prog. Dormitorio PAC
+    name: Prog. Dormitorio PAF
+    initial: on
+    icon: mdi:power-settings
+
+  calefac_programador_aaf:
+    name: Prog. Dormitorio AAF
     initial: on
     icon: mdi:power-settings
 

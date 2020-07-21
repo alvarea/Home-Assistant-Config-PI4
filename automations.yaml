@@ -94,9 +94,7 @@
     - platform: time
       at: '15:00:00'
     - platform: time
-      at: '16:00:00'
-    - platform: time
-      at: '18:00:00'
+      at: '21:30:00'
     - platform: time
       at: '23:30:00'
   action:
@@ -113,12 +111,10 @@
           {% elif (now().hour ==14) %}
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora del almuerzo"
           {% elif (now().hour ==15) %}
-            "Buenas tardes papa hijo. Es la hora de tomarse la pastilla"
-          {% elif (now().hour ==16) %}
-            "Buenas tardes. Son las {{ now().hour }}, es la hora de la siesta"
-          {% elif (now().hour ==18) %}
-            "Buenas tardes. Son las {{ now().hour }}, es la hora de la merienda"
-          {% elif (now().hour ==23) %}
+            "Buenas tardes. papi, hijo, es la hora de tomarse la pastilla"
+          {% elif (now().hour ==21) %}
+            "Buenas tardes. Son las {{ now().hour }}, es la hora de preparar la cena"
+          {% elif (now().hour ==23) and now().weekday() != 4 and now().weekday() != 5 %} %}
             "Buenas noches. Son las {{ now().hour }} y {{ now().minute }}, es hora de acostarse"
           {% endif %}
         data:

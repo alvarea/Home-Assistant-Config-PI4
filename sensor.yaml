@@ -676,30 +676,21 @@
         unit_of_measurement: '%'
         icon_template: mdi:fire
 
-# Sensores Xiaomi Mijia BLE Temperature and Humidity Sensor - Conectados Directos RPI
   - platform: mitemp_bt
-    mac: 'A4:C1:38:6B:AA:C8'
-    name: Xiaomi BLE Estudio
-    force_update: true
-    median: 1
-    monitored_conditions:
-      - temperature
-      - humidity
-      - battery
-
-# Sensores Miflora basado en Lector BLE Blutooth Nativo Raspberry
-#
-#  - platform: miflora
-#    mac: 'C4:7C:8D:67:C1:9E'
-#    name: Orquidea Entrada
-#    force_update: false
-#    median: 1
-#    monitored_conditions:
-#      - moisture
-#      - light
-#      - temperature
-#      - conductivity
-#      - battery
+    rounding: True
+    decimals: 1
+    period: 60
+    log_spikes: False
+    use_median: False
+    active_scan: False
+    hci_interface: 0
+    batt_entities: False
+    report_unknown: False
+    whitelist: False
+    encryptors:
+              'A4:C1:38:6B:AA:C8': 'A7EC07B7EDC9D349CC462CB9744AC756'
+              'A4:C1:38:E8:02:EF': 'A5ED5C2C2D9D3E14C1894ADFEEF46E1C'
+              'A4:C1:38:4B:D6:7C': '506DEC4063FA4A8861199F684078310E'
 
 # Sensores Miflora basado en Lector BLE Blutooth Nativo Raspberry + Componente Comunidad Mitemp-bt
 #

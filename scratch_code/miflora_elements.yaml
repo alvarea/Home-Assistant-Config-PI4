@@ -1,0 +1,53 @@
+## Lovelace Card.
+elements:
+  - entity: sensor.humedad_plant_monitor_pm01
+    style:
+      '--paper-item-icon-color': white
+      left: 20%
+      top: 80%
+    type: state-icon
+  - entity: sensor.humedad_plant_monitor_pm01
+    style:
+      label-badge-background-color: white
+      label-badge-color: grey
+      label-badge-red: green
+      label-badge-text-color: green
+      left: 20%
+      top: 92%
+    type: state-badge
+  - entity: sensor.temperatura_plant_monitor_pm01
+    style:
+      '--paper-item-icon-color': white
+      left: 40%
+      top: 80%
+    type: state-icon
+  - entity: sensor.temperatura_plant_monitor_pm01
+    style:
+      left: 40%
+      top: 92%
+    type: state-badge
+  - entity: sensor.luminosidad_plant_monitor_pm01
+    style:
+      '--paper-item-icon-color': white
+      left: 60%
+      top: 80%
+    type: state-icon
+  - entity: sensor.luminosidad_plant_monitor_pm01
+    style:
+      left: 60%
+      top: 92%
+    type: state-badge
+  - entity: sensor.fertilidad_plant_monitor_pm01
+    style:
+      '--paper-item-icon-color': white
+      left: 80%
+      top: 80%
+    type: state-icon
+  - entity: sensor.fertilidad_plant_monitor_pm01
+    style:
+      left: 80%
+      top: 92%
+    type: state-badge
+image: /local/Ficus_Retusa_Tiger_Bark_Chuhin.jpeg
+type: picture-elements
+
