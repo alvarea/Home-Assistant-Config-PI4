@@ -1069,8 +1069,8 @@
         # en el amanecer +3h'
         before_offset: "+03:00:00"
   action:
-    - service: automation.turn_off
-      entity_id: automation.l07_luces_on_entrada_segun_sensor
+    #- service: automation.turn_off
+    #  entity_id: automation.l07_luces_on_entrada_segun_sensor
     # Luces Entrada ON
     - service: light.turn_on
       entity_id: light.luz_entrada
@@ -1087,8 +1087,8 @@
         - light.luz_entrada
         - light.gateway_light_7811dcb788fa
     #
-    - service: automation.turn_on
-      entity_id: automation.l07_luces_on_entrada_segun_sensor
+    #- service: automation.turn_on
+    #  entity_id: automation.l07_luces_on_entrada_segun_sensor
 
 - id: L08
   alias: 'L08 Luces On Dormitorio Según Sensor'
@@ -1118,8 +1118,8 @@
         below: 5
   action:
     # Regla Off
-    - service: automation.turn_off
-      entity_id: automation.l08_luces_on_dormitorio_segun_sensor
+    #- service: automation.turn_off
+    #  entity_id: automation.l08_luces_on_dormitorio_segun_sensor
     # Luces On
     - service: script.luces_dormitorio_escena_relax
     # Espera de 5'
@@ -1128,8 +1128,8 @@
     - service: light.turn_off
       entity_id: light.dormitorio
     # Regla On
-    - service: automation.turn_on
-      entity_id: automation.l08_luces_on_dormitorio_segun_sensor
+    #- service: automation.turn_on
+    #  entity_id: automation.l08_luces_on_dormitorio_segun_sensor
 
 - id: L09
   alias: 'L09 Luces On Dormitorio Warning'
@@ -1285,13 +1285,13 @@
     - service: light.turn_off
       entity_id: light.esphome_lb1_l01
     # Regla L10 OFF (sensor estudio) para que no se vuelva encender las luces
-    - service: automation.turn_off
-      entity_id: automation.l10_luces_on_estudio_segun_sensor
+    #- service: automation.turn_off
+    #  entity_id: automation.l10_luces_on_estudio_segun_sensor
     # Espera de 2'
     - delay: 00:02
     # Regla On
-    - service: automation.turn_on
-      entity_id: automation.l10_luces_on_estudio_segun_sensor
+    #- service: automation.turn_on
+    #  entity_id: automation.l10_luces_on_estudio_segun_sensor
 
     #- service: switch.turn_off
     #  entity_id:

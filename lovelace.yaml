@@ -95,11 +95,11 @@ views:
                 tap_action:
                   action: call-service
                   service: switch.toggle
-                  service_data:
-                    entity_id: switch.wall_switch_right_158d0002236e75
                 type: entity-button
               - entity: switch.esphome_4ch_relay_1
-                icon: 'mdi:lighthouse'
+                hold_action:
+                  action: none
+                icon: 'mdi:lightbulb-cfl'
                 name: Balizas Cesped
                 tap_action:
                   action: call-service
@@ -107,8 +107,6 @@ views:
                   service_data:
                     entity_id: switch.esphome_4ch_relay_1
                 type: entity-button
-                hold_action:
-                  action: none
               - entity: switch.esphome_bas_sw4
                 icon: 'mdi:lamp'
                 name: Porche Salón
@@ -129,7 +127,7 @@ views:
                 type: entity-button
             type: horizontal-stack
           - cards:
-              - entity: binary_sensor.riego_ch1_status
+              - entity: binary_sensor.riego_ch1_dia_ejecucion
                 hold_action:
                   action: call-service
                   service: script.riego_ch1_timer_cancel
@@ -138,10 +136,8 @@ views:
                 tap_action:
                   action: call-service
                   service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_4ch_sw2_relay_1
                 type: entity-button
-              - entity: binary_sensor.riego_ch2_status
+              - entity: binary_sensor.riego_ch2_dia_ejecucion
                 hold_action:
                   action: call-service
                   service: script.riego_ch2_timer_cancel
@@ -153,7 +149,7 @@ views:
                   service_data:
                     entity_id: switch.esphome_4ch_sw2_relay_2
                 type: entity-button
-              - entity: binary_sensor.riego_ch3_status
+              - entity: binary_sensor.riego_ch3_dia_ejecucion
                 hold_action:
                   action: call-service
                   service: script.riego_ch3_timer_cancel
@@ -165,12 +161,12 @@ views:
                   service_data:
                     entity_id: switch.esphome_4ch_sw2_relay_3
                 type: entity-button
-              - entity: binary_sensor.riego_sw2_status
+              - entity: binary_sensor.riego_sw2_dia_ejecucion
                 hold_action:
                   action: call-service
                   service: script.riego_riego_sw2_cancel
-                icon: 'mdi:waves'
-                name: Tortugas (SW2)
+                icon: 'mdi:sprout'
+                name: Bonsais Z2 (SW2)
                 tap_action:
                   action: call-service
                   service: switch.toggle
@@ -372,10 +368,10 @@ views:
               - sensor.temperature_158d00022b65ff
               - binary_sensor.motion_sensor_158d0001e05661
               - binary_sensor.door_window_sensor_158d000201e2e7
+            entity: light.luz_vitrina
             state_image:
               'off': /local/Home_Room_Salon_BW.jpg
               'on': /local/Home_Room_Salon_RGB.jpg
-            entity: light.luz_vitrina
             title: Salón
             type: picture-glance
           - entities:
@@ -617,10 +613,10 @@ views:
     title: Tracking
   - badges: []
     cards:
-      - type: entities
-        entities:
+      - entities:
           - entity: input_boolean.camara_estudio
         show_header_toggle: false
+        type: entities
       - cards:
           - cards:
               - entity: switch.wall_switch_right_158d0002236e75
@@ -663,8 +659,7 @@ views:
                 type: entity-button
             type: horizontal-stack
         type: vertical-stack
-      - type: picture-entity
-        aspect_ratio: 50%
+      - aspect_ratio: 50%
         camera_image: camera.blink_entrada
         entity: camera.blink_entrada
         hold_action:
@@ -673,6 +668,7 @@ views:
         tap_action:
           action: call-service
           service: script.blink_trigger_cam_entrada
+        type: picture-entity
       - aspect_ratio: 50%
         camera_image: camera.blink_puerta_principal
         entity: camera.blink_puerta_principal
@@ -725,7 +721,7 @@ views:
             icon: 'mdi:ceiling-light'
             name: Porche 1 (Salón)
           - entity: switch.esphome_4ch_relay_1
-            icon: 'mdi:lighthouse'
+            icon: 'mdi:lightbulb-cfl'
             name: Balizas Cesped
           - entity: switch.esphome_4ch_relay_3
           - entity: switch.esphome_4ch_relay_2
@@ -774,10 +770,7 @@ views:
     icon: 'mdi:lightbulb-on'
     path: luces_view
     title: Luces
-  - icon: 'mdi:watering-can'
-    path: jardin_view
-    title: Riego Jardín
-    badges: []
+  - badges: []
     cards:
       - columns: 4
         entities:
@@ -864,9 +857,10 @@ views:
       - cards:
           - entities:
               - entity: switch.esphome_bas_sw2
+                name: Riego Bonsais Zona2
                 secondary_info: last-changed
               - entity: input_boolean.riego_sw2_programador_t1
-                name: Programador Automático
+              - entity: input_boolean.riego_sw2_programador_t2
               - entity: input_select.riego_sw2_programador_dias
               - entity: input_datetime.riego_sw2_start_time
               - entity: input_datetime.riego_sw2_end_time
@@ -878,6 +872,9 @@ views:
             title: Riego Bonsais Olivo
             type: entities
         type: vertical-stack
+    icon: 'mdi:watering-can'
+    path: jardin_view
+    title: Riego Jardín
   - badges: []
     cards:
       - cards:
@@ -2470,3 +2467,4 @@ views:
     icon: 'mdi:settings'
     path: config_view
     title: Configuración
+

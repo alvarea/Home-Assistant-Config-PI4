@@ -676,6 +676,7 @@
         unit_of_measurement: '%'
         icon_template: mdi:fire
 
+  # Sensores Xiaomi BLE Temperatura, utilizando el componente custom
   - platform: mitemp_bt
     rounding: True
     decimals: 1
@@ -691,10 +692,4 @@
               'A4:C1:38:6B:AA:C8': 'A7EC07B7EDC9D349CC462CB9744AC756'
               'A4:C1:38:E8:02:EF': 'A5ED5C2C2D9D3E14C1894ADFEEF46E1C'
               'A4:C1:38:4B:D6:7C': 'DACA7EDCEF444035A7B8C40600A4A99E'
-
-
-# Sensores Miflora basado en Lector BLE Blutooth Nativo Raspberry + Componente Comunidad Mitemp-bt
-#
-#  - platform: mitemp_bt
-#    batt_entities: True
 

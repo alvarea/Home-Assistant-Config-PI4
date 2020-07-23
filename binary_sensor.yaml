@@ -484,7 +484,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Fuente Tortugas on/off'
+        friendly_name: 'Riego Bonsais Zona 2 on/off'
         icon_template: mdi:power
 
       riego_sw2_dia_ejecucion:
@@ -502,6 +502,49 @@
           {% else %}
             false
           {% endif %}
+
+      plant_mp_01_problem:
+        value_template: >-
+          {% if states.plant.mp_01.attributes.problem == 'none' %}
+            false
+          {% else %}
+            true
+          {% endif %}
+        friendly_name: 'Problemas Sensor Bonsai MP1'
+        icon_template: mdi:power
+
+      plant_mp_02_problem:
+        value_template: >-
+          {% if states.plant.mp_02.attributes.problem == 'none' %}
+            false
+          {% else %}
+            true
+          {% endif %}
+        friendly_name: 'Problemas Sensor Bonsai MP2'
+        icon_template: mdi:power
+
+      plant_mp_03_problem:
+        value_template: >-
+          {% if states.plant.mp_03.attributes.problem == 'none' %}
+            false
+          {% else %}
+            true
+          {% endif %}
+        friendly_name: 'Problemas Sensor Bonsai MP3'
+        icon_template: mdi:power
+
+      plant_mp_problem:
+        value_template: >-
+          {% if states.binary_sensor.plant_mp_01_problem.state == 'on'
+             or states.binary_sensor.plant_mp_02_problem.state == 'on'
+             or states.binary_sensor.plant_mp_03_problem.state == 'on'
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: 'Problemas Sensor Bonsais'
+        icon_template: mdi:power
 
       # SAI APC Rack
       ups_status:
