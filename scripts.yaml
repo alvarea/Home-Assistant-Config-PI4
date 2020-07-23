@@ -817,11 +817,11 @@ riego_ch4_timer_cancel:
     - service: switch.turn_off
       entity_id: switch.esphome_4ch_sw2_relay_4
 
-fzen_sw2_timer_cancel:
+riego_sw2_timer_cancel:
   alias: Timer Tortugas SW2 Cancel
   sequence:
     - service: timer.cancel
-      entity_id: timer.fzen_sw2
+      entity_id: timer.riego_sw2
     - service: switch.turn_off
       entity_id: switch.esphome_bas_sw2
 
@@ -958,9 +958,10 @@ sonoff_initialize:
     # SONOFF_BAS_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
       entity_id: switch.esphome_bas_sw0
+
     #
-    # SONOFF_POW_SW2_LAVADORA => ON
     #- service: switch.turn_on
+    # SONOFF_POW_SW2_LAVADORA => ON
     #  entity_id: switch.esphome_pow_sw2
 
 #-----------------------------------------------------------------------------#
@@ -986,12 +987,12 @@ blink_trigger_cam_puerta_ppal:
   sequence:
     - service: blink.trigger_camera
       data:
-        entity_id: camera.blink_puerta_entrada
+        entity_id: camera.blink_puerta_principal
     - delay: 00:00:05
     - service: blink.blink_update
     - service: camera.snapshot
       data:
-        entity_id: camera.blink_puerta_entrada
+        entity_id: camera.blink_puerta_principal
         filename: /share/blink_puerta.jpg
 
 blink_trigger_cam_puerta_garaje:

@@ -1,6 +1,3 @@
-resources:
-  - url: /local/mini-graph-card-bundle.js?v=0.9.4
-    type: module
 title: HOMY Home Assistant
 views:
   - badges: []
@@ -9,7 +6,7 @@ views:
           - entities:
               - entity: alarm_control_panel.ha
                 icon: 'mdi:shield-home'
-              - entity: alarm_control_panel.blink_casa
+              - entity: sensor.time
               - entity: sensor.sun_next_rising
               - entity: sensor.sun_next_setting
               - entity: sensor.uptime
@@ -32,8 +29,8 @@ views:
                   navigation_path: /lovelace/cocina_view
                 type: entity-button
               - entity: binary_sensor.riego_ch3_status
-                icon: 'mdi:tree'
-                name: Jardín
+                icon: 'mdi:water'
+                name: Riego
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace/jardin_view
@@ -49,10 +46,10 @@ views:
                   action: navigate
                   navigation_path: /lovelace/bonsais_view
                 type: entity-button
-              - entity: light.estudio
+              - entity: light.luz_estudio
                 hold_action:
                   action: call-service
-                  entity_id: light.estudio
+                  entity_id: light.luz_estudio
                   service: light.turn_off
                 icon: 'mdi:desktop-mac-dashboard'
                 name: Estudio
@@ -76,30 +73,120 @@ views:
                   action: navigate
                   navigation_path: /lovelace/piscina_view
                 type: entity-button
-              - entity: light.dormitorio
-                icon: 'mdi:bed-empty'
-                name: Dormitorio
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace/dormitorio_view
-                type: entity-button
-              - entity: alarm_control_panel.blink_casa
+              - entity: camera.ipcam_estudio
                 icon: 'mdi:cctv'
                 name: Cámaras
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace/camaras_view
                 type: entity-button
+              - entity: light.luz_dormitorio_mfc
+                icon: 'mdi:bed-empty'
+                name: Dormitorio
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/dormitorio_view
+                type: entity-button
+            type: horizontal-stack
+          - cards:
+              - entity: switch.wall_switch_right_158d0002236e75
+                icon: 'mdi:outdoor-lamp'
+                name: Faroles Exterior
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.wall_switch_right_158d0002236e75
+                type: entity-button
+              - entity: switch.esphome_4ch_relay_1
+                icon: 'mdi:lighthouse'
+                name: Balizas Cesped
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_4ch_relay_1
+                type: entity-button
+                hold_action:
+                  action: none
+              - entity: switch.esphome_bas_sw4
+                icon: 'mdi:lamp'
+                name: Porche Salón
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_bas_sw4
+                type: entity-button
+              - entity: switch.esphome_4ch_relay_3
+                icon: 'mdi:tree'
+                name: Foco Olivo 1
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_4ch_relay_3
+                type: entity-button
+            type: horizontal-stack
+          - cards:
+              - entity: binary_sensor.riego_ch1_status
+                hold_action:
+                  action: call-service
+                  service: script.riego_ch1_timer_cancel
+                icon: 'mdi:sprout'
+                name: Bonsais Top (CH1)
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_4ch_sw2_relay_1
+                type: entity-button
+              - entity: binary_sensor.riego_ch2_status
+                hold_action:
+                  action: call-service
+                  service: script.riego_ch2_timer_cancel
+                icon: 'mdi:flower'
+                name: Plantas Top (CH2)
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_4ch_sw2_relay_2
+                type: entity-button
+              - entity: binary_sensor.riego_ch3_status
+                hold_action:
+                  action: call-service
+                  service: script.riego_ch3_timer_cancel
+                icon: 'mdi:water-pump'
+                name: Fuente Zen (CH3)
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_4ch_sw2_relay_3
+                type: entity-button
+              - entity: binary_sensor.riego_sw2_status
+                hold_action:
+                  action: call-service
+                  service: script.riego_riego_sw2_cancel
+                icon: 'mdi:waves'
+                name: Tortugas (SW2)
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_bas_sw2
+                type: entity-button
             type: horizontal-stack
         type: vertical-stack
       - cards:
           - cards:
               - entities:
-                  - sensor.battery_level
-                  - sensor.connection_type
-                  - sensor.battery_state
-                  - sensor.ssid
-                  - sensor.geocoded_location
+                  - sensor.iphone_aac_battery_level
+                  - sensor.iphone_aac_connection_type
+                  - sensor.iphone_aac_battery_state
+                  - sensor.iphone_aac_ssid
+                  - sensor.iphone_aac_geocoded_location
                 entity: binary_sensor.family_home_aac
                 state_image:
                   'off': /local/AAC_2017_bw.jpeg
@@ -107,11 +194,11 @@ views:
                 type: picture-glance
               - aspect_ratio: 243
                 entities:
-                  - sensor.battery_level_2
-                  - sensor.connection_type_2
-                  - sensor.battery_state_2
-                  - sensor.ssid_2
-                  - sensor.geocoded_location_2
+                  - sensor.iphone_malen_battery_level
+                  - sensor.iphone_malen_connection_type
+                  - sensor.iphone_malen_battery_state
+                  - sensor.iphone_malen_ssid
+                  - sensor.iphone_malen_geocoded_location
                 entity: binary_sensor.family_home_mfc
                 state_image:
                   'off': /local/MFC_2014_bw.jpeg
@@ -121,10 +208,10 @@ views:
           - cards:
               - aspect_ratio: 243
                 entities:
-                  - sensor.battery_level_4
-                  - sensor.connection_type_4
-                  - sensor.battery_state_4
-                  - sensor.ssid_4
+                  - sensor.a2f_battery_level
+                  - sensor.a2f_connection_type
+                  - sensor.a2f_battery_state
+                  - sensor.a2f_ssid
                 entity: binary_sensor.family_home_aaf
                 state_image:
                   'off': /local/AAF_2017_bw.png
@@ -132,10 +219,11 @@ views:
                 type: picture-glance
               - aspect_ratio: 243
                 entities:
-                  - sensor.battery_level_3
-                  - sensor.connection_type_3
-                  - sensor.battery_state_3
-                  - sensor.ssid_3
+                  - sensor.iphone_paf_battery_level
+                  - sensor.iphone_paf_connection_type
+                  - sensor.iphone_paf_battery_state
+                  - sensor.iphone_paf_ssid
+                  - sensor.iphone_paf_geocoded_location
                 entity: binary_sensor.family_home_paf
                 state_image:
                   'off': /local/PAF_2017_bw.png
@@ -257,7 +345,8 @@ views:
               - color: teal
                 entity: sensor.temperature_158d00022b65ff
               - color: orange
-                entity: sensor.temperature_158d00022c6a47
+                entity: sensor.mi_t_a4c1386baac8
+                name: Estudio
             font_size: 75
             line_width: 6
             name: Salón / Estudio
@@ -267,6 +356,8 @@ views:
                 entity: sensor.temperature_158d00025efda4
               - color: gray
                 entity: sensor.temperature_158d0002e97092
+              - color: orange
+                entity: sensor.temperature_158d00022c6a47
             font_size: 75
             line_width: 6
             name: Dormitorios
@@ -281,10 +372,10 @@ views:
               - sensor.temperature_158d00022b65ff
               - binary_sensor.motion_sensor_158d0001e05661
               - binary_sensor.door_window_sensor_158d000201e2e7
-            entity: light.salon
             state_image:
               'off': /local/Home_Room_Salon_BW.jpg
               'on': /local/Home_Room_Salon_RGB.jpg
+            entity: light.luz_vitrina
             title: Salón
             type: picture-glance
           - entities:
@@ -295,7 +386,7 @@ views:
               - binary_sensor.motion_sensor_158d0001e464a6
               - binary_sensor.door_window_sensor_158d00030996fc
               - sensor.ups_status
-            entity: light.estudio
+            entity: light.luz_estudio
             state_image:
               'off': /local/Home_Room_Estudio_BW.jpg
               'on': /local/Home_Room_Estudio_RGB.jpg
@@ -308,7 +399,7 @@ views:
               - sensor.humidity_158d0002d79546
               - binary_sensor.smoke_sensor_158d0001fd321c
               - media_player.fire_tv
-            entity: light.cocina
+            entity: light.luz_cocina
             state_image:
               'off': /local/Home_Room_Kitchen_BW.jpg
               'on': /local/Home_Room_Kitchen_RGB.jpg
@@ -458,11 +549,11 @@ views:
           - entity: device_tracker.aac_iphone_owntrack_2
           - entity: device_tracker.iphone_aac
           - entity: device_tracker.aac_iphone_nmap
-          - entity: sensor.ssid
+          - entity: sensor.iphone_aac_ssid
             name: Red Wifi
           - entity: sensor.baye_probability_aac
           - entity: binary_sensor.baye_home_aac
-          - entity: sensor.geocoded_location
+          - entity: sensor.iphone_aac_geocoded_location
         show_header_toggle: false
         title: Agustín Tracking
         type: entities
@@ -473,15 +564,15 @@ views:
           - entity: binary_sensor.family_home_mfc
             secondary_info: last-changed
           - entity: person.malen
-          - entity: device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2
+          - entity: device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222
           - entity: device_tracker.mfc_iphone_owntrack_2
           - entity: device_tracker.iphone_malen
           - entity: device_tracker.mfc_iphone_nmap
-          - entity: sensor.ssid_2
+          - entity: sensor.iphone_malen_ssid
             name: Red Wifi
           - entity: sensor.baye_probability_mfc
           - entity: binary_sensor.baye_home_mfc
-          - entity: sensor.geocoded_location_2
+          - entity: sensor.iphone_malen_geocoded_location
         show_header_toggle: false
         title: Malen Tracking
         type: entities
@@ -492,15 +583,15 @@ views:
           - entity: binary_sensor.family_home_paf
             secondary_info: last-changed
           - entity: person.paloma
-          - entity: device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2
+          - entity: device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8
           - entity: device_tracker.paf_iphone_owntrack_2
           - entity: device_tracker.iphone_paf
           - entity: device_tracker.paf_iphone_nmap
-          - entity: sensor.ssid_3
+          - entity: sensor.iphone_paf_ssid
             name: Red Wifi
           - entity: sensor.baye_probability_paf
           - entity: binary_sensor.baye_home_paf
-          - entity: sensor.geocoded_location_4
+          - entity: sensor.iphone_paf_geocoded_location
         show_header_toggle: false
         title: Paloma Tracking
         type: entities
@@ -511,10 +602,10 @@ views:
           - entity: binary_sensor.family_home_aaf
             secondary_info: last-changed
           - entity: person.agu
-          - entity: device_tracker.daa04833_9772_4800_bf22_57f406aeb129_2
+          - entity: device_tracker.daa04833_9772_4800_bf22_57f406aeb129
           - entity: device_tracker.a2f
           - entity: device_tracker.aaf_iphone_nmap
-          - entity: sensor.ssid_4
+          - entity: sensor.a2f_ssid
             name: Red Wifi
           - entity: sensor.baye_probability_aaf
           - entity: binary_sensor.baye_home_aaf
@@ -526,6 +617,10 @@ views:
     title: Tracking
   - badges: []
     cards:
+      - type: entities
+        entities:
+          - entity: input_boolean.camara_estudio
+        show_header_toggle: false
       - cards:
           - cards:
               - entity: switch.wall_switch_right_158d0002236e75
@@ -568,33 +663,19 @@ views:
                 type: entity-button
             type: horizontal-stack
         type: vertical-stack
-      - entities:
-          - entity: input_boolean.camara_hall_interior
-          - entity: input_boolean.camara_puerta_exterior
-          - entity: input_boolean.camara_cancela_exterior
-          - entity: input_boolean.camara_estudio
-          - entity: input_boolean.camara_jardin
-        show_header_toggle: false
-        title: Rack Comunicaciones
-        type: entities
-      - card:
-          aspect_ratio: 50%
-          camera_image: camera.blink_entrada
-          entity: camera.blink_entrada
-          hold_action:
-            action: more-info
-          name: ENTRADA
-          tap_action:
-            action: call-service
-            service: script.blink_trigger_cam_entrada
-          type: picture-entity
-        conditions:
-          - entity: input_boolean.camara_hall_interior
-            state: 'on'
-        type: conditional
+      - type: picture-entity
+        aspect_ratio: 50%
+        camera_image: camera.blink_entrada
+        entity: camera.blink_entrada
+        hold_action:
+          action: more-info
+        name: ENTRADA
+        tap_action:
+          action: call-service
+          service: script.blink_trigger_cam_entrada
       - aspect_ratio: 50%
-        camera_image: camera.blink_puerta_entrada
-        entity: camera.blink_puerta_entrada
+        camera_image: camera.blink_puerta_principal
+        entity: camera.blink_puerta_principal
         hold_action:
           action: call-service
           service: script.blvink_trigger_cam_puerta_ppal
@@ -621,16 +702,6 @@ views:
           type: picture-entity
         conditions:
           - entity: input_boolean.camara_estudio
-            state: 'on'
-        type: conditional
-      - card:
-          aspect_ratio: 50%
-          camera_image: camera.ipcam_jardin
-          entity: camera.ipcam_jardin
-          name: Cámara Bonsais
-          type: picture-entity
-        conditions:
-          - entity: input_boolean.camara_jardin
             state: 'on'
         type: conditional
     icon: 'mdi:cctv'
@@ -703,123 +774,32 @@ views:
     icon: 'mdi:lightbulb-on'
     path: luces_view
     title: Luces
-  - badges: []
+  - icon: 'mdi:watering-can'
+    path: jardin_view
+    title: Riego Jardín
+    badges: []
     cards:
-      - cards:
-          - cards:
-              - entity: switch.wall_switch_right_158d0002236e75
-                icon: 'mdi:outdoor-lamp'
-                name: Faroles Luz Exterior
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.wall_switch_right_158d0002236e75
-                type: entity-button
-              - entity: switch.esphome_4ch_relay_1
-                icon: 'mdi:lighthouse'
-                name: Balizas Cesped
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_4ch_relay_1
-                type: entity-button
-            type: horizontal-stack
-          - cards:
-              - entity: switch.esphome_bas_sw4
-                icon: 'mdi:lamp'
-                name: Luces Porche Salón
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_bas_sw4
-                type: entity-button
-              - entity: switch.esphome_4ch_relay_3
-                icon: 'mdi:tree'
-                name: Foco Olivo 1
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_4ch_relay_3
-                type: entity-button
-            type: horizontal-stack
-          - cards:
-              - entity: binary_sensor.riego_ch3_status
-                hold_action:
-                  action: call-service
-                  service: script.riego_ch3_timer_cancel
-                icon: 'mdi:water-pump'
-                name: Fuente Zen (CH3)
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_4ch_sw2_relay_3
-                type: entity-button
-              - entity: binary_sensor.fzen_sw2_status
-                hold_action:
-                  action: call-service
-                  service: script.riego_fzen_sw2_cancel
-                icon: 'mdi:waves'
-                name: Tortugas (SW2)
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_bas_sw2
-                type: entity-button
-            type: horizontal-stack
-          - cards:
-              - entity: binary_sensor.riego_ch1_status
-                hold_action:
-                  action: call-service
-                  service: script.riego_ch1_timer_cancel
-                icon: 'mdi:sprout'
-                name: Bonsais Top (CH1)
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_4ch_sw2_relay_1
-                type: entity-button
-              - entity: binary_sensor.riego_ch2_status
-                hold_action:
-                  action: call-service
-                  service: script.riego_ch2_timer_cancel
-                icon: 'mdi:flower'
-                name: Plantas Entrada (CH2)
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_4ch_sw2_relay_2
-                type: entity-button
-            type: horizontal-stack
-        type: vertical-stack
       - columns: 4
         entities:
           - entity: binary_sensor.riego_ch1_dia_ejecucion
-            icon: 'mdi:tree'
-            name: SHOHIN
+            icon: 'mdi:sprout'
+            name: Bonsais Zona Top
           - entity: binary_sensor.riego_ch2_dia_ejecucion
-            icon: 'mdi:pine-tree'
-            name: CHUHIN
+            icon: 'mdi:flower'
+            name: Plantas Entrada
           - entity: binary_sensor.riego_ch3_dia_ejecucion
             icon: 'mdi:water-pump'
             name: FUENTE ZEN
-          - entity: binary_sensor.fzen_sw2_dia_ejecucion
-            icon: 'mdi:waves'
-            name: TORTUGAS
+          - entity: binary_sensor.riego_sw2_dia_ejecucion
+            icon: 'mdi:sprout'
+            name: Bonsais Zona Olivo
           - entity: input_datetime.riego_ch1_start_time
             name: Hora
           - entity: input_datetime.riego_ch2_start_time
             name: Hora
           - entity: input_datetime.riego_ch3_start_time
             name: Hora
-          - entity: input_datetime.fzen_sw2_start_time
+          - entity: input_datetime.riego_sw2_start_time
             name: Hora
           - entity: sensor.riego_ch1_duracion_planificada
             name: Riego'
@@ -827,7 +807,7 @@ views:
             name: Riego'
           - entity: sensor.riego_ch3_duracion_planificada
             name: Fuente'
-          - entity: sensor.fzen_sw2_duracion_planificada
+          - entity: sensor.riego_sw2_duracion_planificada
             name: Fuente'
         show_icon: true
         show_name: false
@@ -836,6 +816,25 @@ views:
         type: glance
       - cards:
           - entities:
+              - entity: switch.esphome_4ch_sw2_relay_3
+                icon: 'mdi:water'
+                secondary_info: last-changed
+              - entity: input_boolean.riego_ch3_programador
+                name: Programador Automático
+              - entity: input_select.riego_ch3_programador_dias
+              - entity: input_datetime.riego_ch3_start_time
+              - entity: input_datetime.riego_ch3_end_time
+              - entity: sensor.riego_ch3_duracion_planificada
+                name: Duración Programa (Min)
+            show_header_toggle: false
+            title: Fuente Zen
+            type: entities
+        type: vertical-stack
+      - cards:
+          - entities:
+              - entity: switch.esphome_4ch_sw2_relay_1
+                icon: 'mdi:water'
+                secondary_info: last-changed
               - entity: input_boolean.riego_ch1_programador
                 name: Programador Automático
               - entity: input_select.riego_ch1_programador_dias
@@ -847,6 +846,9 @@ views:
             title: Bonsais TOP
             type: entities
           - entities:
+              - entity: switch.esphome_4ch_sw2_relay_2
+                icon: 'mdi:water'
+                secondary_info: last-changed
               - entity: input_boolean.riego_ch2_programador
                 name: Programador Automático
               - entity: binary_sensor.riego_ch2_status
@@ -861,95 +863,269 @@ views:
         type: vertical-stack
       - cards:
           - entities:
-              - entity: switch.esphome_4ch_sw2_relay_3
-                secondary_info: last-changed
-              - entity: input_boolean.riego_ch3_programador
-                name: Programador Automático
-              - entity: input_select.riego_ch3_programador_dias
-              - entity: input_datetime.riego_ch3_start_time
-              - entity: input_datetime.riego_ch3_end_time
-              - entity: sensor.riego_ch1_duracion_planificada
-                name: Duración Programa (Min)
-            show_header_toggle: false
-            title: Fuente Zen
-            type: entities
-          - entities:
               - entity: switch.esphome_bas_sw2
                 secondary_info: last-changed
-              - entity: input_boolean.fzen_sw2_programador
+              - entity: input_boolean.riego_sw2_programador_t1
                 name: Programador Automático
-              - entity: input_select.fzen_sw2_programador_dias
-              - entity: input_datetime.fzen_sw2_start_time
-              - entity: input_datetime.fzen_sw2_end_time
-              - entity: sensor.fzen_sw2_duracion_planificada
-              - entity: input_datetime.fzen_sw2_start_time2
-              - entity: input_datetime.fzen_sw2_end_time2
-              - entity: sensor.fzen_sw2_duracion_planificada2
+              - entity: input_select.riego_sw2_programador_dias
+              - entity: input_datetime.riego_sw2_start_time
+              - entity: input_datetime.riego_sw2_end_time
+              - entity: sensor.riego_sw2_duracion_planificada
+              - entity: input_datetime.riego_sw2_start_time2
+              - entity: input_datetime.riego_sw2_end_time2
+              - entity: sensor.riego_sw2_duracion_planificada2
             show_header_toggle: false
-            title: Fuente Tortuga
+            title: Riego Bonsais Olivo
             type: entities
         type: vertical-stack
-    icon: 'mdi:tree'
-    path: jardin_view
-    title: Riego Jardín
   - badges: []
     cards:
       - cards:
-          - entity: plant.miflora_s1
+          - entity: plant.mp_01
             name: Ficus Retusa Tiger Bark
             type: plant-status
+          - color_thresholds:
+              - color: violet
+                value: 50
+              - color: blue
+                value: 40
+              - color: green
+                value: 30
+              - color: yellow
+                value: 25
+              - color: orange
+                value: 20
+              - color: red
+                value: 15
+              - color: magenta
+                value: 10
+              - color: black
+                value: 0
+            entities:
+              - entity: sensor.humedad_plant_monitor_pm01
+            font_size: 50
+            line_width: 3
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
+          - color_thresholds:
+              - color: purple
+                value: 46
+              - color: magenta
+                value: 44
+              - color: red
+                value: 42
+              - color: vermillion
+                value: 40
+              - color: orange
+                value: 38
+              - color: amber
+                value: 35
+              - color: yellow
+                value: 30
+              - color: chartreuse
+                value: 25
+              - color: green
+                value: 20
+              - color: teal
+                value: 15
+              - color: blue
+                value: 10
+              - color: violet
+                value: 5
+              - color: black
+                value: 0
+            entities:
+              - entity: sensor.temperatura_plant_monitor_pm01
+            font_size: 50
+            line_width: 3
+            points_per_hour: 4
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
+          - cards:
+              - entities:
+                  - entity: sensor.fertilidad_plant_monitor_pm01
+                font_size: 50
+                line_color: blue
+                line_width: 6
+                type: 'custom:mini-graph-card'
+              - entities:
+                  - entity: sensor.luminosidad_plant_monitor_pm01
+                font_size: 50
+                line_color: green
+                line_width: 6
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
         type: vertical-stack
-      - elements:
-          - entity: sensor.miflora_s1_humedad
-            style:
-              '--paper-item-icon-color': white
-              left: 20%
-              top: 85%
-            type: state-icon
-          - entity: sensor.miflora_s1_humedad
-            style:
-              label-badge-background-color: white
-              label-badge-color: grey
-              label-badge-red: green
-              label-badge-text-color: green
-              left: 20%
-              top: 97%
-            type: state-badge
-          - entity: sensor.miflora_s1_temperatura
-            style:
-              '--paper-item-icon-color': white
-              left: 40%
-              top: 85%
-            type: state-icon
-          - entity: sensor.miflora_s1_temperatura
-            style:
-              left: 40%
-              top: 97%
-            type: state-badge
-          - entity: sensor.miflora_s1_luminosidad
-            style:
-              '--paper-item-icon-color': white
-              left: 60%
-              top: 85%
-            type: state-icon
-          - entity: sensor.miflora_s1_luminosidad
-            style:
-              left: 60%
-              top: 97%
-            type: state-badge
-          - entity: sensor.miflora_s1_fertilidad
-            style:
-              '--paper-item-icon-color': white
-              left: 80%
-              top: 85%
-            type: state-icon
-          - entity: sensor.miflora_s1_fertilidad
-            style:
-              left: 80%
-              top: 97%
-            type: state-badge
-        image: /local/fr_01_ficus_retusa_tiger_bark.png
-        type: picture-elements
+      - cards:
+          - entity: plant.mp_02
+            name: Juniperus Proc. Nana
+            type: plant-status
+          - color_thresholds:
+              - color: violet
+                value: 50
+              - color: blue
+                value: 40
+              - color: green
+                value: 30
+              - color: yellow
+                value: 25
+              - color: orange
+                value: 20
+              - color: red
+                value: 15
+              - color: magenta
+                value: 10
+              - color: black
+                value: 0
+            entities:
+              - entity: sensor.humedad_plant_monitor_pm02
+            font_size: 50
+            line_width: 3
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
+          - color_thresholds:
+              - color: purple
+                value: 46
+              - color: magenta
+                value: 44
+              - color: red
+                value: 42
+              - color: vermillion
+                value: 40
+              - color: orange
+                value: 38
+              - color: amber
+                value: 35
+              - color: yellow
+                value: 30
+              - color: chartreuse
+                value: 25
+              - color: green
+                value: 20
+              - color: teal
+                value: 15
+              - color: blue
+                value: 10
+              - color: violet
+                value: 5
+              - color: black
+                value: 0
+            entities:
+              - entity: sensor.temperatura_plant_monitor_pm02
+            font_size: 50
+            line_width: 3
+            points_per_hour: 4
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
+          - cards:
+              - entities:
+                  - entity: sensor.fertilidad_plant_monitor_pm02
+                font_size: 50
+                line_color: blue
+                line_width: 6
+                type: 'custom:mini-graph-card'
+              - entities:
+                  - entity: sensor.luminosidad_plant_monitor_pm02
+                font_size: 50
+                line_color: green
+                line_width: 6
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - entity: plant.mp_03
+            name: Buxus Comun
+            type: plant-status
+          - color_thresholds:
+              - color: violet
+                value: 50
+              - color: blue
+                value: 40
+              - color: green
+                value: 30
+              - color: yellow
+                value: 25
+              - color: orange
+                value: 20
+              - color: red
+                value: 15
+              - color: magenta
+                value: 10
+              - color: black
+                value: 0
+            entities:
+              - entity: sensor.humedad_plant_monitor_pm03
+            font_size: 50
+            line_width: 3
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
+          - color_thresholds:
+              - color: purple
+                value: 46
+              - color: magenta
+                value: 44
+              - color: red
+                value: 42
+              - color: vermillion
+                value: 40
+              - color: orange
+                value: 38
+              - color: amber
+                value: 35
+              - color: yellow
+                value: 30
+              - color: chartreuse
+                value: 25
+              - color: green
+                value: 20
+              - color: teal
+                value: 15
+              - color: blue
+                value: 10
+              - color: violet
+                value: 5
+              - color: black
+                value: 0
+            entities:
+              - entity: sensor.temperatura_plant_monitor_pm03
+            font_size: 50
+            line_width: 3
+            points_per_hour: 4
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
+          - cards:
+              - entities:
+                  - entity: sensor.fertilidad_plant_monitor_pm03
+                font_size: 50
+                line_color: blue
+                line_width: 6
+                type: 'custom:mini-graph-card'
+              - entities:
+                  - entity: sensor.luminosidad_plant_monitor_pm03
+                font_size: 50
+                line_color: green
+                line_width: 6
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+        type: vertical-stack
     icon: 'mdi:sprout'
     path: bonsais_view
     title: Bonsais
@@ -1288,6 +1464,71 @@ views:
     title: Batery Status
   - badges: []
     cards:
+      - cards:
+          - color_thresholds:
+              - color: purple
+                value: 46
+              - color: magenta
+                value: 44
+              - color: red
+                value: 42
+              - color: vermillion
+                value: 40
+              - color: orange
+                value: 38
+              - color: amber
+                value: 35
+              - color: yellow
+                value: 30
+              - color: chartreuse
+                value: 25
+              - color: green
+                value: 20
+              - color: teal
+                value: 15
+              - color: blue
+                value: 10
+              - color: violet
+                value: 5
+              - color: black
+                value: 0
+            entities:
+              - entity: sensor.mi_t_a4c138e802ef
+            font_size: 120
+            line_width: 6
+            points_per_hour: 1
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
+          - cards:
+              - entities:
+                  - entity: sensor.mi_h_a4c138e802ef
+                font_size: 50
+                line_color: blue
+                line_width: 6
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+        type: vertical-stack
+      - entities:
+          - sensor.temperatura_cpu
+          - sensor.load_15m
+          - sensor.processor_use
+          - sensor.memory_use_percent
+          - sensor.memory_use
+          - sensor.memory_free
+        show_header_toggle: false
+        title: PI3 CPU & RAM
+        type: entities
+      - entities:
+          - entity: sensor.version_local
+          - entity: sensor.version_disponible
+          - entity: sensor.uptime
+          - entity: sensor.last_boot
+        show_header_toggle: false
+        title: System Status
+        type: entities
       - entities:
           - entity: sensor.ups_model
           - entity: sensor.ups_status
@@ -1300,24 +1541,6 @@ views:
           - entity: sensor.ups_nominal_output_power
         show_header_toggle: false
         title: SAI Rack Comunicaciones
-        type: entities
-      - entities:
-          - entity: sensor.version_local
-          - entity: sensor.version_disponible
-          - entity: sensor.uptime
-          - entity: sensor.last_boot
-        show_header_toggle: false
-        title: System Status
-        type: entities
-      - entities:
-          - sensor.temperatura_cpu
-          - sensor.load_15m
-          - sensor.processor_use
-          - sensor.memory_use_percent
-          - sensor.memory_use
-          - sensor.memory_free
-        show_header_toggle: false
-        title: PI3 CPU & RAM
         type: entities
       - entities:
           - sensor.disk_use_percent
@@ -1386,8 +1609,6 @@ views:
                 type: 'custom:mini-graph-card'
             type: horizontal-stack
         type: vertical-stack
-      - entity: media_player.fire_tv
-        type: media-control
       - cards:
           - color_thresholds:
               - color: black
@@ -1514,12 +1735,6 @@ views:
                 type: entity-button
             type: horizontal-stack
         type: vertical-stack
-      - entities:
-          - entity: input_boolean.rack_sensor_vibration_disable
-          - entity: input_boolean.camara_estudio
-        show_header_toggle: false
-        title: Rack Comunicaciones
-        type: entities
       - card:
           aspect_ratio: 50%
           camera_image: camera.ipcam_estudio
@@ -1529,15 +1744,15 @@ views:
           - entity: input_boolean.camara_estudio
             state: 'on'
         type: conditional
-      - entity: media_player.fire_tv
-        type: media-control
       - entities:
           - light.luz_estudio
-          - light.esphome_lb1_l01
-          - sensor.temperature_158d00022c6a47
+          - sensor.mi_t_a4c1386baac8
+          - sensor.mi_h_a4c1386baac8
+          - sensor.mi_t_a4c138e802ef
+          - sensor.mi_h_a4c138e802ef
           - binary_sensor.motion_sensor_158d0001e464a6
           - sensor.ups_status
-        entity: light.luces_estudio
+        entity: light.luz_estudio
         state_image:
           'off': /local/Home_Room_Estudio_BW.jpg
           'on': /local/Home_Room_Estudio_RGB.jpg
@@ -1572,15 +1787,23 @@ views:
               - color: black
                 value: 0
             entities:
-              - entity: sensor.temperature_158d00022c6a47
+              - entity: sensor.mi_t_a4c1386baac8
             font_size: 120
-            line_width: 6
+            line_width: 10
             points_per_hour: 1
             show:
               icon: true
               labels: true
               state: true
             type: 'custom:mini-graph-card'
+          - cards:
+              - entities:
+                  - entity: sensor.mi_h_a4c1386baac8
+                font_size: 50
+                line_color: blue
+                line_width: 6
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
           - color_thresholds:
               - color: purple
                 value: 110
@@ -1618,21 +1841,60 @@ views:
               labels: true
               state: true
             type: 'custom:mini-graph-card'
+        type: vertical-stack
+      - cards:
+          - color_thresholds:
+              - color: purple
+                value: 46
+              - color: magenta
+                value: 44
+              - color: red
+                value: 42
+              - color: vermillion
+                value: 40
+              - color: orange
+                value: 38
+              - color: amber
+                value: 35
+              - color: yellow
+                value: 30
+              - color: chartreuse
+                value: 25
+              - color: green
+                value: 20
+              - color: teal
+                value: 15
+              - color: blue
+                value: 10
+              - color: violet
+                value: 5
+              - color: black
+                value: 0
+            entities:
+              - entity: sensor.mi_t_a4c138e802ef
+            font_size: 120
+            line_width: 10
+            points_per_hour: 1
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
           - cards:
               - entities:
-                  - entity: sensor.humidity_158d00022c6a47
+                  - entity: sensor.mi_h_a4c138e802ef
                 font_size: 50
                 line_color: blue
                 line_width: 6
                 type: 'custom:mini-graph-card'
-              - entities:
-                  - entity: sensor.pressure_158d00022c6a47
-                font_size: 50
-                line_color: green
-                line_width: 6
-                type: 'custom:mini-graph-card'
             type: horizontal-stack
         type: vertical-stack
+      - entities:
+          - entity: input_boolean.rack_sensor_vibration_disable
+          - entity: input_boolean.camara_estudio
+        show_header_toggle: false
+        title: Rack Comunicaciones
+        type: entities
     icon: 'mdi:desktop-mac-dashboard'
     path: estudio_view
     title: Estudio
@@ -1761,6 +2023,210 @@ views:
     icon: 'mdi:sofa'
     path: salon_view
     title: Salón
+  - badges: []
+    cards:
+      - cards:
+          - color_thresholds:
+              - color: black
+                value: 0
+              - color: violet
+                value: 5
+              - color: blue
+                value: 10
+              - color: teal
+                value: 15
+              - color: green
+                value: 20
+              - color: chartreuse
+                value: 25
+              - color: yellow
+                value: 30
+              - color: amber
+                value: 35
+              - color: orange
+                value: 38
+              - color: vermillion
+                value: 40
+              - color: red
+                value: 42
+              - color: magenta
+                value: 44
+              - color: purple
+                value: 46
+            entities:
+              - sensor.temperature_158d00022c6a47
+            font_size: 120
+            line_width: 8
+            name: Temperatura Dormitorio AAF
+            points_per_hour: 1
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
+          - color_thresholds:
+              - color: black
+                value: 0
+              - color: violet
+                value: 5
+              - color: blue
+                value: 10
+              - color: teal
+                value: 20
+              - color: green
+                value: 30
+              - color: chartreuse
+                value: 40
+              - color: orange
+                value: 50
+              - color: amber
+                value: 60
+              - color: yellow
+                value: 70
+              - color: red
+                value: 80
+              - color: magenta
+                value: 90
+              - color: purple
+                value: 100
+            entities:
+              - sensor.illumination_158d00022c6a47
+            font_size: 120
+            line_width: 8
+            name: Sensor Luz
+            points_per_hour: 0.5
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
+          - cards:
+              - entities:
+                  - sensor.humidity_158d00022c6a47
+                font_size: 50
+                line_color: blue
+                line_width: 6
+                name: Sensor Humedad
+                type: 'custom:mini-graph-card'
+              - entities:
+                  - sensor.pressure_158d00022c6a47
+                font_size: 50
+                line_color: green
+                line_width: 6
+                name: Sensor P.Atm
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - entities:
+              - input_boolean.calefac_programador_aaf
+              - switch.esphome_bas_sw1
+              - light.esphome_s20_sw3_led
+            show_header_toggle: false
+            title: Dormitorio AAF
+            type: entities
+        type: vertical-stack
+      - cards:
+          - color_thresholds:
+              - color: black
+                value: 0
+              - color: violet
+                value: 5
+              - color: blue
+                value: 10
+              - color: teal
+                value: 15
+              - color: green
+                value: 20
+              - color: chartreuse
+                value: 25
+              - color: yellow
+                value: 30
+              - color: amber
+                value: 35
+              - color: orange
+                value: 38
+              - color: vermillion
+                value: 40
+              - color: red
+                value: 42
+              - color: magenta
+                value: 44
+              - color: purple
+                value: 46
+            entities:
+              - sensor.temperature_158d0002e97092
+            font_size: 120
+            line_width: 8
+            name: Temperatura Dormitorio PAF
+            points_per_hour: 1
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
+          - color_thresholds:
+              - color: black
+                value: 0
+              - color: violet
+                value: 5
+              - color: blue
+                value: 10
+              - color: teal
+                value: 20
+              - color: green
+                value: 30
+              - color: chartreuse
+                value: 40
+              - color: orange
+                value: 50
+              - color: amber
+                value: 60
+              - color: yellow
+                value: 70
+              - color: red
+                value: 80
+              - color: magenta
+                value: 90
+              - color: purple
+                value: 100
+            entities:
+              - sensor.illumination_158d0002e97092
+            font_size: 120
+            line_width: 8
+            name: Sensor Luz
+            points_per_hour: 0.5
+            show:
+              icon: true
+              labels: true
+              state: true
+            type: 'custom:mini-graph-card'
+          - cards:
+              - entities:
+                  - sensor.humidity_158d0002e97092
+                font_size: 50
+                line_color: blue
+                line_width: 6
+                name: Sensor Humedad
+                type: 'custom:mini-graph-card'
+              - entities:
+                  - sensor.pressure_158d0002e97092
+                font_size: 50
+                line_color: green
+                line_width: 6
+                name: Sensor P.Atm
+                type: 'custom:mini-graph-card'
+            type: horizontal-stack
+          - entities:
+              - input_boolean.calefac_programador_paf
+              - switch.esphome_s20_sw3
+              - light.esphome_s20_sw3_led
+            show_header_toggle: false
+            title: Dormitorio PAF
+            type: entities
+        type: vertical-stack
+    icon: 'mdi:hotel'
+    panel: false
+    path: ''
+    title: Dormitorio PAF
   - badges: []
     cards:
       - entities:
@@ -1940,111 +2406,6 @@ views:
     icon: 'mdi:bed-empty'
     path: dormitorio_view
     title: Dormitorio Principal
-  - badges: []
-    cards:
-      - cards:
-          - color_thresholds:
-              - color: black
-                value: 0
-              - color: violet
-                value: 5
-              - color: blue
-                value: 10
-              - color: teal
-                value: 15
-              - color: green
-                value: 20
-              - color: chartreuse
-                value: 25
-              - color: yellow
-                value: 30
-              - color: amber
-                value: 35
-              - color: orange
-                value: 38
-              - color: vermillion
-                value: 40
-              - color: red
-                value: 42
-              - color: magenta
-                value: 44
-              - color: purple
-                value: 46
-            entities:
-              - sensor.temperature_158d0002e97092
-            font_size: 120
-            line_width: 8
-            name: Temperatura Dormitorio
-            points_per_hour: 1
-            show:
-              icon: true
-              labels: true
-              state: true
-            type: 'custom:mini-graph-card'
-          - color_thresholds:
-              - color: black
-                value: 0
-              - color: violet
-                value: 5
-              - color: blue
-                value: 10
-              - color: teal
-                value: 20
-              - color: green
-                value: 30
-              - color: chartreuse
-                value: 40
-              - color: orange
-                value: 50
-              - color: amber
-                value: 60
-              - color: yellow
-                value: 70
-              - color: red
-                value: 80
-              - color: magenta
-                value: 90
-              - color: purple
-                value: 100
-            entities:
-              - sensor.illumination_158d0002e97092
-            font_size: 120
-            line_width: 8
-            name: Sensor Luz
-            points_per_hour: 0.5
-            show:
-              icon: true
-              labels: true
-              state: true
-            type: 'custom:mini-graph-card'
-          - cards:
-              - entities:
-                  - sensor.humidity_158d0002e97092
-                font_size: 50
-                line_color: blue
-                line_width: 6
-                name: Sensor Humedad
-                type: 'custom:mini-graph-card'
-              - entities:
-                  - sensor.pressure_158d0002e97092
-                font_size: 50
-                line_color: green
-                line_width: 6
-                name: Sensor P.Atm
-                type: 'custom:mini-graph-card'
-            type: horizontal-stack
-          - entities:
-              - input_boolean.calefac_programador_paf
-              - switch.esphome_s20_sw3
-              - light.esphome_s20_sw3_led
-            show_header_toggle: false
-            title: Dormitorio PAF
-            type: entities
-        type: vertical-stack
-    icon: 'mdi:hotel'
-    panel: false
-    path: ''
-    title: Dormitorio PAF
   - badges: []
     cards:
       - entities:

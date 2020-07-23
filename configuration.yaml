@@ -161,7 +161,7 @@ timer:
   riego_ch4:
     name: Timer CH4
     icon: mdi:timer
-  fzen_sw2:
+  riego_sw2:
     name: Timer Fuente Frog
     icon: mdi:timer
 
@@ -501,13 +501,12 @@ plant:
       # battery: sensor.miflora_s1_bateria
     min_moisture: 20
     max_moisture: 50
-    min_conductivity: 350
+    min_conductivity: 50
     max_conductivity: 2000
-    min_temperature: 10
-    max_temperature: 32
-    min_brightness: 1000
+    min_temperature: 5
+    max_temperature: 38
+    min_brightness: 2000
     max_brightness: 50000
-    min_battery: 20
   mp_02:
     sensors:
       moisture: sensor.humedad_plant_monitor_pm02
@@ -517,13 +516,12 @@ plant:
       # battery: sensor.miflora_s1_bateria
     min_moisture: 20
     max_moisture: 50
-    min_conductivity: 350
+    min_conductivity: 50
     max_conductivity: 2000
-    min_temperature: 10
-    max_temperature: 32
-    min_brightness: 1000
+    min_temperature: 5
+    max_temperature: 38
+    min_brightness: 2000
     max_brightness: 50000
-    min_battery: 20
   mp_03:
     sensors:
       moisture: sensor.humedad_plant_monitor_pm03
@@ -533,13 +531,12 @@ plant:
       # battery: sensor.miflora_s1_bateria
     min_moisture: 20
     max_moisture: 50
-    min_conductivity: 350
+    min_conductivity: 50
     max_conductivity: 2000
-    min_temperature: 10
-    max_temperature: 32
-    min_brightness: 1000
+    min_temperature: 5
+    max_temperature: 38
+    min_brightness: 2000
     max_brightness: 50000
-    min_battery: 20
 
 #
 #  Sensores Miflorea - Basado en Sensor Bluetooth Nativo Rasperry y Componente mitemp_bt

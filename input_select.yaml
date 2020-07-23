@@ -133,7 +133,7 @@
     icon: mdi:calendar
 
 # Fuente Tortugas fzen
-  fzen_sw2_programador_dias:
+  riego_sw2_programador_dias:
     name: Diario/Semanal
     options:
      - 'Diario'

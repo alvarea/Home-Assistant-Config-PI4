@@ -96,35 +96,39 @@
 #
   # Riego Bonsais Top
   riego_ch1_programador:
-    name: Programador CH1 On/Off
-    initial: off
+    name: Programador CH1
+    initial: on
     icon: mdi:dip-switch
 
   # Riego Plantas entrada
   riego_ch2_programador:
-    name: Programador CH2 On/Off
+    name: Programador CH2
     initial: on
     icon: mdi:dip-switch
 
   # Fuente Zen entrada
   riego_ch3_programador:
-    name: Programador CH3 On/Off
-    initial: off
+    name: Programador CH3
+    initial: on
     icon: mdi:dip-switch
 
-  # Fuente Tortugas
+  # Pendiente sin uso
   riego_ch4_programador:
-    name: Programador CH4 On/Off
+    name: Programador CH4
     initial: off
     icon: mdi:dip-switch
 
-# Fuente Tortugas
-#
-  fzen_sw2_programador:
-    name: Programador Fuente Tortugas On/Off
+  # Riego Bonsais Zona2
+  #
+  riego_sw2_programador_t1:
+    name: Programador Riego Zona2 - Tramo1
     initial: off
     icon: mdi:dip-switch
 
+  riego_sw2_programador_t2:
+    name: Programador Riego Zona2 - Tramo2
+    initial: off
+    icon: mdi:dip-switch
 
 # Programador Diario Luces Jardín
 

@@ -30,13 +30,13 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '21:00'
+    initial: '15:00'
 
   riego_ch1_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '21:10'
+    initial: '15:05'
 
   riego_ch2_start_time:
     name: Hora Inicio Planificado
@@ -48,55 +48,55 @@
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '08:38'
+    initial: '08:34'
 
   riego_ch3_start_time:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '19:00'
+    initial: '20:00'
 
   riego_ch3_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '23:00'
+    initial: '22:00'
 
   riego_ch4_start_time:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '19:00'
+    initial: '21:00'
 
   riego_ch4_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '23:00'
+    initial: '22:00'
 
 #
 # Programador Sonoff SW2 Jardín
 #
-  fzen_sw2_start_time:
+  riego_sw2_start_time:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '00:00'
+    initial: '08:00'
 
-  fzen_sw2_end_time:
+  riego_sw2_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '09:00'
+    initial: '08:05'
 
-  fzen_sw2_start_time2:
+  riego_sw2_start_time2:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '21:00'
+    initial: '16:00'
 
-  fzen_sw2_end_time2:
+  riego_sw2_end_time2:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '23:59'
+    initial: '16:05'

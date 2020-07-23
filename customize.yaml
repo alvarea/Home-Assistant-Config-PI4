@@ -342,8 +342,8 @@ binary_sensor.esphome_4ch_status:
   friendly_name: 4CH.SW1 Cuadro Jardín
 
 switch.esphome_4ch_relay_1:
-  friendly_name: Luz Cesped
-  icon: mdi:track-light
+  friendly_name: Balizas Cesped
+  icon: mdi:lightbulb-cfl
 
 switch.esphome_4ch_relay_2:
   friendly_name: Luz Olivo 3
