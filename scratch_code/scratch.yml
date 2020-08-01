@@ -28,9 +28,9 @@ type: picture
 
 {{states('sensor.time')}}
 
-{{(states.input_datetime.riego_ch1_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}
+{{(states.input_datetime.riego_ch1_start_time_t1.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}
 
-{{input_boolean.riego_ch1_programador}}
+{{input_boolean.riego_ch1_programador_t1}}
 
 
 
@@ -172,7 +172,7 @@ luces_off_escalera_sensor:
 TEMPLATE EDITOR
 ================
 {{
-(states.input_datetime.riego_ch1_end_time.attributes.timestamp -  states.input_datetime.riego_ch1_start_time.attributes.timestamp)
+(states.input_datetime.riego_ch1_end_time.attributes.timestamp -  states.input_datetime.riego_ch1_start_time_t1.attributes.timestamp)
 }}
 
 

@@ -13,7 +13,7 @@ views:
               - entity: sensor.version_local
               - entity: sensor.version_disponible
               - entity: sensor.temperatura_cpu
-              - entity: sensor.processor_use
+              - entity: sensor.temperature_158d00025d9289
               - entity: sensor.ups_status
             show_name: false
             title: Estado Homy
@@ -22,24 +22,20 @@ views:
       - cards:
           - cards:
               - entity: binary_sensor.smoke_sensor_158d0001fd321c
-                icon: 'mdi:fridge'
-                name: Cocina
+                icon: 'mdi:lightbulb-on-outline'
+                name: Luces
                 tap_action:
                   action: navigate
-                  navigation_path: /lovelace/cocina_view
+                  navigation_path: /lovelace/luces_view
                 type: entity-button
               - entity: binary_sensor.riego_ch3_status
-                icon: 'mdi:water'
+                icon: 'mdi:watering-can'
                 name: Riego
                 tap_action:
                   action: navigate
-                  navigation_path: /lovelace/jardin_view
+                  navigation_path: /lovelace/riego_view
                 type: entity-button
-              - entity: switch.wall_switch_right_158d0002236e75
-                hold_action:
-                  action: call-service
-                  entity_id: switch.wall_switch_right_158d0002236e75
-                  service: switch.toggle
+              - entity: binary_sensor.plant_mp_problem
                 icon: 'mdi:sprout'
                 name: Bonsais
                 tap_action:
@@ -90,15 +86,15 @@ views:
             type: horizontal-stack
           - cards:
               - entity: switch.wall_switch_right_158d0002236e75
-                icon: 'mdi:outdoor-lamp'
+                icon: 'mdi:coach-lamp'
                 name: Faroles Exterior
                 tap_action:
                   action: call-service
                   service: switch.toggle
+                  service_data:
+                    entity_id: switch.wall_switch_right_158d0002236e75
                 type: entity-button
               - entity: switch.esphome_4ch_relay_1
-                hold_action:
-                  action: none
                 icon: 'mdi:lightbulb-cfl'
                 name: Balizas Cesped
                 tap_action:
@@ -117,8 +113,8 @@ views:
                     entity_id: switch.esphome_bas_sw4
                 type: entity-button
               - entity: switch.esphome_4ch_relay_3
-                icon: 'mdi:tree'
-                name: Foco Olivo 1
+                icon: 'mdi:track-light'
+                name: Foco Olivo
                 tap_action:
                   action: call-service
                   service: switch.toggle
@@ -130,48 +126,38 @@ views:
               - entity: binary_sensor.riego_ch1_dia_ejecucion
                 hold_action:
                   action: call-service
-                  service: script.riego_ch1_timer_cancel
-                icon: 'mdi:sprout'
-                name: Bonsais Top (CH1)
-                tap_action:
-                  action: call-service
                   service: switch.toggle
+                icon: 'mdi:sprout'
+                name: Bonsais Entrada
                 type: entity-button
+                tap_action:
+                  action: more-info
               - entity: binary_sensor.riego_ch2_dia_ejecucion
                 hold_action:
-                  action: call-service
-                  service: script.riego_ch2_timer_cancel
-                icon: 'mdi:flower'
-                name: Plantas Top (CH2)
-                tap_action:
                   action: call-service
                   service: switch.toggle
                   service_data:
                     entity_id: switch.esphome_4ch_sw2_relay_2
+                icon: 'mdi:flower'
+                name: Plantas Entrada
                 type: entity-button
               - entity: binary_sensor.riego_ch3_dia_ejecucion
                 hold_action:
                   action: call-service
-                  service: script.riego_ch3_timer_cancel
-                icon: 'mdi:water-pump'
-                name: Fuente Zen (CH3)
-                tap_action:
-                  action: call-service
                   service: switch.toggle
                   service_data:
                     entity_id: switch.esphome_4ch_sw2_relay_3
+                name: Fuente Zen Ranas
                 type: entity-button
+                icon: 'mdi:water-pump'
               - entity: binary_sensor.riego_sw2_dia_ejecucion
                 hold_action:
-                  action: call-service
-                  service: script.riego_riego_sw2_cancel
-                icon: 'mdi:sprout'
-                name: Bonsais Z2 (SW2)
-                tap_action:
                   action: call-service
                   service: switch.toggle
                   service_data:
                     entity_id: switch.esphome_bas_sw2
+                icon: 'mdi:sprout'
+                name: Bonsais Zona2
                 type: entity-button
             type: horizontal-stack
         type: vertical-stack
@@ -429,9 +415,9 @@ views:
                 secondary_info: last-changed
               - entity: binary_sensor.water_leak_sensor_158d00045a3376
                 secondary_info: last-changed
-              - entity: automation.t01_family_away
+              - entity: automation.t01_family_away_armado_total
                 name: Nadie en Casa - Armado Total
-              - entity: automation.t02_family_at_home
+              - entity: automation.t02_armado_parcial_midnight
                 name: Todos en Casa - Armado Parcial
             show_header_toggle: false
             title: PANEL CONTROL ALARMA
@@ -560,7 +546,6 @@ views:
           - entity: binary_sensor.family_home_mfc
             secondary_info: last-changed
           - entity: person.malen
-          - entity: device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222
           - entity: device_tracker.mfc_iphone_owntrack_2
           - entity: device_tracker.iphone_malen
           - entity: device_tracker.mfc_iphone_nmap
@@ -611,98 +596,6 @@ views:
     icon: 'mdi:map-marker'
     path: tracking_view
     title: Tracking
-  - badges: []
-    cards:
-      - entities:
-          - entity: input_boolean.camara_estudio
-        show_header_toggle: false
-        type: entities
-      - cards:
-          - cards:
-              - entity: switch.wall_switch_right_158d0002236e75
-                icon: 'mdi:outdoor-lamp'
-                name: Faroles Luz Exterior
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.wall_switch_right_158d0002236e75
-                type: entity-button
-              - entity: switch.esphome_4ch_relay_1
-                icon: 'mdi:lighthouse'
-                name: Balizas Cesped
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_4ch_relay_1
-                type: entity-button
-            type: horizontal-stack
-          - cards:
-              - entity: switch.esphome_bas_sw1
-                icon: 'mdi:track-light'
-                name: Luz Armario Rack
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_bas_sw1
-                type: entity-button
-              - entity: switch.wall_switch_left_158d0002236e75
-                icon: 'mdi:ceiling-light'
-                name: Luz Techo Entrada
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.wall_switch_left_158d0002236e75
-                type: entity-button
-            type: horizontal-stack
-        type: vertical-stack
-      - aspect_ratio: 50%
-        camera_image: camera.blink_entrada
-        entity: camera.blink_entrada
-        hold_action:
-          action: more-info
-        name: ENTRADA
-        tap_action:
-          action: call-service
-          service: script.blink_trigger_cam_entrada
-        type: picture-entity
-      - aspect_ratio: 50%
-        camera_image: camera.blink_puerta_principal
-        entity: camera.blink_puerta_principal
-        hold_action:
-          action: call-service
-          service: script.blvink_trigger_cam_puerta_ppal
-        name: PUERTA ENTRADA
-        tap_action:
-          action: call-service
-          service: script.blink_trigger_cam_puerta_ppal
-        type: picture-entity
-      - aspect_ratio: 50%
-        camera_image: camera.blink_puerta_garaje
-        entity: camera.blink_puerta_garaje
-        hold_action:
-          action: call-service
-          service: scrivpt.blink_trigger_cam_puerta_garaje
-        name: PUERTA GARAJE
-        tap_action:
-          action: call-service
-          service: script.blink_trigger_cam_puerta_garaje
-        type: picture-entity
-      - card:
-          aspect_ratio: 50%
-          camera_image: camera.ipcam_estudio
-          entity: camera.ipcam_estudio
-          type: picture-entity
-        conditions:
-          - entity: input_boolean.camara_estudio
-            state: 'on'
-        type: conditional
-    icon: 'mdi:cctv'
-    path: camaras_view
-    title: Cámaras
   - badges: []
     cards:
       - entities:
@@ -762,14 +655,110 @@ views:
         show_header_toggle: true
         title: Luces Dormitorio Agu
         type: entities
-      - entities:
-          - entity: light.cocina
-        show_header_toggle: true
-        title: Luces Cocina
-        type: entities
     icon: 'mdi:lightbulb-on'
     path: luces_view
     title: Luces
+  - badges: []
+    cards:
+      - entities:
+          - entity: switch.wall_switch_right_158d0002236e75
+            icon: 'mdi:outdoor-lamp'
+            name: Faroles Luz Exterior
+          - entity: switch.esphome_bas_sw1
+            icon: 'mdi:track-light'
+            name: Luz Armario Rack
+        title: Luces Cámaras
+        type: glance
+      - cards:
+          - aspect_ratio: 0%
+            entity: camera.blink_entrada
+            image: /share/blink_entrada.jpg
+            name: Bonsais
+            show_state: false
+            type: picture-entity
+          - aspect_ratio: 0%
+            camera_image: camera.blink_puerta_principal
+            entity: camera.blink_puerta_principal
+            image: /share/blink_entrada.jpg
+            name: Puerta Entrada
+            show_state: false
+            type: picture-entity
+          - aspect_ratio: 0%
+            camera_image: camera.blink_puerta_garaje
+            entity: camera.blink_puerta_garaje
+            image: /share/blink_entrada.jpg
+            name: Puerta Garaje
+            show_state: false
+            type: picture-entity
+          - aspect_ratio: 57%
+            camera_image: camera.ipcam_estudio
+            entity: camera.ipcam_estudio
+            image: >-
+              /api/camera_proxy/camera.ipcam_estudio?token=dfccd57ad579908ab526412564660e179efa5c916a1db5a61a717a4de20d825d
+            name: Estudio
+            show_state: false
+            type: picture-entity
+        type: horizontal-stack
+      - aspect_ratio: 0
+        camera_image: camera.blink_entrada
+        entities:
+          - entity: binary_sensor.blink_entrada_camera_armed
+          - entity: binary_sensor.blink_entrada_motion_detected
+          - entity: sensor.blink_entrada_temperature
+          - entity: sensor.blink_entrada_wifi_signal
+          - entity: binary_sensor.blink_entrada_battery
+        entity: binary_sensor.blink_entrada_camera_armed
+        hold_action:
+          action: call-service
+          service: script.blink_trigger_cam_entrada
+        tap_action:
+          action: more-info
+        title: Bonsais Top
+        type: picture-glance
+      - aspect_ratio: 0%
+        camera_image: camera.blink_puerta_principal
+        entities:
+          - entity: binary_sensor.blink_puerta_principal_camera_armed
+          - entity: binary_sensor.blink_puerta_principal_motion_detected
+          - entity: sensor.blink_puerta_principal_temperature
+          - entity: sensor.blink_puerta_principal_wifi_signal
+          - entity: binary_sensor.blink_puerta_principal_battery
+        entity: binary_sensor.blink_puerta_principal_camera_armed
+        hold_action:
+          action: more-info
+        tap_action:
+          action: call-service
+          service: script.blink_trigger_cam_puerta
+        title: Puerta Principal
+        type: picture-glance
+      - aspect_ratio: 0
+        camera_image: camera.blink_puerta_garaje
+        entities:
+          - entity: binary_sensor.blink_puerta_garaje_camera_armed
+          - entity: binary_sensor.blink_puerta_garaje_motion_detected
+          - entity: sensor.blink_puerta_garaje_temperature
+          - entity: sensor.blink_puerta_garaje_wifi_signal
+          - entity: binary_sensor.blink_puerta_garaje_battery
+        entity: binary_sensor.blink_puerta_garaje_camera_armed
+        hold_action:
+          action: call-service
+          service: script.blink_trigger_garaje
+        tap_action:
+          action: more-info
+        title: Puerta Garaje
+        type: picture-glance
+      - card:
+          aspect_ratio: 55%
+          camera_image: camera.ipcam_estudio
+          entity: camera.ipcam_estudio
+          type: picture-entity
+        conditions:
+          - entity: input_boolean.camara_estudio
+            state: 'on'
+        type: conditional
+    icon: 'mdi:cctv'
+    path: camaras_view
+    title: Cámaras
   - badges: []
     cards:
       - columns: 4
@@ -786,7 +775,7 @@ views:
           - entity: binary_sensor.riego_sw2_dia_ejecucion
             icon: 'mdi:sprout'
             name: Bonsais Zona Olivo
-          - entity: input_datetime.riego_ch1_start_time
+          - entity: input_datetime.riego_ch1_start_time_t1
             name: Hora
           - entity: input_datetime.riego_ch2_start_time
             name: Hora
@@ -808,39 +797,104 @@ views:
         title: Estado Programador
         type: glance
       - cards:
+          - entity: switch.esphome_4ch_sw2_relay_1
+            hold_action:
+              action: call-service
+              service: script.riego_ch1_timer_cancel
+            icon: 'mdi:sprout'
+            name: Bonsais Entrada
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.esphome_4ch_sw2_relay_1
+            type: entity-button
+          - entity: switch.esphome_4ch_sw2_relay_2
+            hold_action:
+              action: call-service
+              service: script.riego_ch2_timer_cancel
+            icon: 'mdi:flower'
+            name: Plantas Entrada
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.esphome_4ch_sw2_relay_2
+            type: entity-button
+          - entity: switch.esphome_4ch_sw2_relay_3
+            hold_action:
+              action: call-service
+              service: script.riego_ch3_timer_cancel
+            icon: 'mdi:water-pump'
+            name: Fuente Zen Ranas
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.esphome_4ch_sw2_relay_3
+            type: entity-button
+          - entity: switch.esphome_bas_sw2
+            hold_action:
+              action: call-service
+              service: script.riego_riego_sw2_cancel
+            icon: 'mdi:sprout'
+            name: Bonsais Zona2
+            tap_action:
+              action: call-service
+              service: switch.toggle
+              service_data:
+                entity_id: switch.esphome_bas_sw2
+            type: entity-button
+        type: horizontal-stack
+      - cards:
           - entities:
-              - entity: switch.esphome_4ch_sw2_relay_3
-                icon: 'mdi:water'
+              - entity: switch.esphome_4ch_sw2_relay_1
+                icon: 'mdi:watering-can'
                 secondary_info: last-changed
-              - entity: input_boolean.riego_ch3_programador
-                name: Programador Automático
-              - entity: input_select.riego_ch3_programador_dias
-              - entity: input_datetime.riego_ch3_start_time
-              - entity: input_datetime.riego_ch3_end_time
-              - entity: sensor.riego_ch3_duracion_planificada
-                name: Duración Programa (Min)
+              - entity: input_boolean.riego_ch1_programador_t1
+                name: Programador Bonsais Top - Tramo1
+              - entity: input_boolean.riego_ch1_programador_t2
+                name: Programador Bonsais Top - Tramo2
+              - entity: input_select.riego_ch1_programador_dias
+              - entity: input_datetime.riego_ch1_start_time_t1
+              - entity: input_datetime.riego_ch1_end_time_t1
+              - entity: sensor.riego_ch1_duracion_planificada
+                name: Duración Riego Bonsais Tramo1 (Min)
+              - entity: input_datetime.riego_ch1_start_time_t2
+              - entity: input_datetime.riego_ch1_end_time_t2
+              - entity: sensor.riego_ch1_duracion_planificada2
+                name: Duración Riego Bonsais Tramo1 (Min)
             show_header_toggle: false
-            title: Fuente Zen
+            title: Bonsais TOP
             type: entities
         type: vertical-stack
       - cards:
           - entities:
-              - entity: switch.esphome_4ch_sw2_relay_1
-                icon: 'mdi:water'
+              - entity: switch.esphome_bas_sw2
+                icon: 'mdi:watering-can'
+                name: Riego Bonsais Zona2
                 secondary_info: last-changed
-              - entity: input_boolean.riego_ch1_programador
-                name: Programador Automático
-              - entity: input_select.riego_ch1_programador_dias
-              - entity: input_datetime.riego_ch1_start_time
-              - entity: input_datetime.riego_ch1_end_time
-              - entity: sensor.riego_ch1_duracion_planificada
-                name: Duración Programa (Min)
+              - entity: input_boolean.riego_sw2_programador_t1
+                name: Programador Zona2 - Tramo1
+              - entity: input_boolean.riego_sw2_programador_t2
+                name: Programador Zona2 - Tramo2
+              - entity: input_select.riego_sw2_programador_dias
+              - entity: input_datetime.riego_sw2_start_time
+              - entity: input_datetime.riego_sw2_end_time
+              - entity: sensor.riego_sw2_duracion_planificada
+                name: Duración Riego Zona2 - Tramo1
+              - entity: input_datetime.riego_sw2_start_time2
+              - entity: input_datetime.riego_sw2_end_time2
+              - entity: sensor.riego_sw2_duracion_planificada2
+                name: Duración Riego Zona2 - Tramo2
             show_header_toggle: false
-            title: Bonsais TOP
+            title: Riego Bonsais Olivo
             type: entities
+        type: vertical-stack
+      - cards:
           - entities:
               - entity: switch.esphome_4ch_sw2_relay_2
-                icon: 'mdi:water'
+                icon: 'mdi:watering-can'
                 secondary_info: last-changed
               - entity: input_boolean.riego_ch2_programador
                 name: Programador Automático
@@ -856,24 +910,22 @@ views:
         type: vertical-stack
       - cards:
           - entities:
-              - entity: switch.esphome_bas_sw2
-                name: Riego Bonsais Zona2
+              - entity: switch.esphome_4ch_sw2_relay_3
+                icon: 'mdi:watering-can'
                 secondary_info: last-changed
-              - entity: input_boolean.riego_sw2_programador_t1
-              - entity: input_boolean.riego_sw2_programador_t2
-              - entity: input_select.riego_sw2_programador_dias
-              - entity: input_datetime.riego_sw2_start_time
-              - entity: input_datetime.riego_sw2_end_time
-              - entity: sensor.riego_sw2_duracion_planificada
-              - entity: input_datetime.riego_sw2_start_time2
-              - entity: input_datetime.riego_sw2_end_time2
-              - entity: sensor.riego_sw2_duracion_planificada2
+              - entity: input_boolean.riego_ch3_programador
+                name: Programador Automático
+              - entity: input_select.riego_ch3_programador_dias
+              - entity: input_datetime.riego_ch3_start_time
+              - entity: input_datetime.riego_ch3_end_time
+              - entity: sensor.riego_ch3_duracion_planificada
+                name: Duración Programa (Min)
             show_header_toggle: false
-            title: Riego Bonsais Olivo
+            title: Fuente Zen
             type: entities
         type: vertical-stack
     icon: 'mdi:watering-can'
-    path: jardin_view
+    path: riego_view
     title: Riego Jardín
   - badges: []
     cards:
@@ -2467,4 +2519,3 @@ views:
     icon: 'mdi:settings'
     path: config_view
     title: Configuración
-

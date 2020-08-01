@@ -640,9 +640,14 @@
       #
       # RIEGO CH1 Duracion Programa Diario-Semanal
       riego_ch1_duracion_planificada:
-        value_template: '{{ "{:}".format((states.input_datetime.riego_ch1_end_time.attributes.timestamp -  states.input_datetime.riego_ch1_start_time.attributes.timestamp)/60)|int }}'
-        friendly_name: 'Duración Programa Planificado (Min)'
+        value_template: '{{ "{:}".format((states.input_datetime.riego_ch1_end_time_t1.attributes.timestamp -  states.input_datetime.riego_ch1_start_time_t1.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Duración Programa Planificado T1 (Min)'
         icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_ch1_duracion_planificada') is not none }}"
+
+      riego_ch1_duracion_planificada2:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_ch1_end_time_t2.attributes.timestamp -  states.input_datetime.riego_ch1_start_time_t2.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Duración Programa Planificado T2 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_ch1_duracion_planificada2') is not none }}"
 
       riego_ch2_duracion_planificada:
         value_template: '{{ "{:}".format((states.input_datetime.riego_ch2_end_time.attributes.timestamp -  states.input_datetime.riego_ch2_start_time.attributes.timestamp)/60)|int }}'

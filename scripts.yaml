@@ -982,7 +982,7 @@ blink_trigger_cam_entrada:
         entity_id: camera.blink_entrada
         filename: /share/blink_entrada.jpg
 
-blink_trigger_cam_puerta_ppal:
+blink_trigger_cam_puerta_principal:
   alias: 'Blink Trigger Camera Puerta'
   sequence:
     - service: blink.trigger_camera

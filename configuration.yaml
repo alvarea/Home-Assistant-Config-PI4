@@ -12,6 +12,10 @@ homeassistant:
   time_zone: Europe/Madrid
   # Customization file
   customize: !include customize.yaml
+  whitelist_external_dirs:
+    - '/share'
+  allowlist_external_dirs:
+    - '/share'
 #  auth_providers:
 #    - type: homeassistant
 #    - type: trusted_networks
@@ -105,11 +109,11 @@ discovery:
     #- esphome
 
 
-# Philips Hue Bridge
-hue:
-  bridges:
-    - host: 192.168.0.20
-      allow_unreachable: true
+# Philips Hue Bridge ==> INTEGRATION
+#hue:
+#  bridges:
+#    - host: 192.168.0.20
+#      allow_unreachable: true
 
 # Dispositivos Apple IOS
 ios:
@@ -150,7 +154,7 @@ timer:
     name: Timer Piscina
     icon: mdi:timer
   riego_ch1:
-    name: Timer CH1
+    name: Timer Bonsais Top
     icon: mdi:timer
   riego_ch2:
     name: Timer CH2
@@ -162,7 +166,7 @@ timer:
     name: Timer CH4
     icon: mdi:timer
   riego_sw2:
-    name: Timer Fuente Frog
+    name: Timer Bonsais Zona2
     icon: mdi:timer
 
 #counter:

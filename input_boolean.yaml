@@ -95,8 +95,14 @@
 # Riego Plantas + Fuentes
 #
   # Riego Bonsais Top
-  riego_ch1_programador:
-    name: Programador CH1
+  riego_ch1_programador_t1:
+    name: Programador CH1 Timer1
+    initial: on
+    icon: mdi:dip-switch
+
+  # Riego Bonsais Top
+  riego_ch1_programador_t2:
+    name: Programador CH1 Timer2
     initial: on
     icon: mdi:dip-switch
 
@@ -122,12 +128,12 @@
   #
   riego_sw2_programador_t1:
     name: Programador Riego Zona2 - Tramo1
-    initial: off
+    initial: on
     icon: mdi:dip-switch
 
   riego_sw2_programador_t2:
     name: Programador Riego Zona2 - Tramo2
-    initial: off
+    initial: on
     icon: mdi:dip-switch
 
 # Programador Diario Luces Jardín

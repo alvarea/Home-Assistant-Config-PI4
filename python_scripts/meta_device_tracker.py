@@ -17,8 +17,8 @@
 
 MFC_Trackers = ['device_tracker.mfc_iphone_nmap',
                 'device_tracker.mfc_iphone_owntrack_2',
-                'device_tracker.iphone_malen',
-                'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2']
+                'device_tracker.iphone_malen' ]
+                # 'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2']
 
 AAC_Trackers = ['device_tracker.aac_iphone_nmap',
                 'device_tracker.aac_iphone_owntrack_2',
