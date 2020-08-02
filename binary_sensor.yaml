@@ -558,89 +558,6 @@
         icon_template: mdi:car-battery
 
       #
-      # NMAP - MOBILE DEVICES
-      # =====================================================================
-      #
-      nmap_iphone_aac:
-        value_template: >-
-          {% if is_state('device_tracker.aac_iphone_nmap','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Iphone 7S+ AAC'
-        icon_template: mdi:cellphone-iphone
-        entity_id: device_tracker.aac_iphone_nmap
-
-      nmap_iphone_mfc:
-        value_template: >-
-          {% if is_state('device_tracker.mfc_iphone_nmap','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Iphone 6S MFC'
-        icon_template: mdi:cellphone-iphone
-        entity_id: device_tracker.mfc_iphone_nmap
-
-
-      nmap_iphone_paf:
-        value_template: >-
-          {% if is_state('device_tracker.paf_iphone_nmap','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Iphone 6S PAF'
-        icon_template: mdi:cellphone-iphone
-        entity_id: device_tracker.paf_iphone_nmap
-
-
-      nmap_iphone_aaf:
-        value_template: >-
-          {% if is_state('device_tracker.aaf_iphone_nmap','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Iphone 6S+ AAF'
-        icon_template: mdi:cellphone-iphone
-        entity_id: device_tracker.aaf_iphone_nmap
-
-      nmap_ipad_air2:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_ipad_air2','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Apple Ipad Air2'
-        icon_template: mdi:tablet-ipad
-        entity_id: device_tracker.nmap_ipad_air2
-
-      ping_amazon_kindle:
-        value_template: >-
-          {% if is_state('device_tracker.ping_amazon_kindle','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Amazon Kindle'
-        icon_template: mdi:tablet-android
-        entity_id: device_tracker.ping_amazon_kindle
-
-      nmap_ipad_mini4:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_ipad_mini4','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Apple Ipad Mini4'
-        icon_template: mdi:tablet-ipad
-        entity_id: device_tracker.nmap_ipad_mini4
-
-      #
       # NMAP - COMPUTER LAPTOP DEVICES
       # =====================================================================
       #
@@ -773,14 +690,14 @@
     #
     # ping_01_router_fibra_movistar:
 
-  - platform: command_line
-    #command: "/home/homeassistant/.homeassistant/ssh_scripts/wan_test.sh"  # hassbian
-    command: "/config/ssh_scripts/wan_test.sh"
-    device_class: connectivity
-    payload_on: "Up"
-    payload_off: "Down"
-    name: 'ping 00 WAN Internet - Google'
-    scan_interval: 300
+#  - platform: command_line
+#    #command: "/home/homeassistant/.homeassistant/ssh_scripts/wan_test.sh"  # hassbian
+#    command: "/config/ssh_scripts/wan_test.sh"
+#    device_class: connectivity
+#    payload_on: "Up"
+#    payload_off: "Down"
+#    name: 'ping 00 WAN Internet - Google'
+#    scan_interval: 300
 
   - platform: ping
     host: 192.168.0.1

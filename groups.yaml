@@ -88,24 +88,49 @@ alarma_grp_sensores_away:
     - binary_sensor.blink_puerta_principal_motion_detected  # Blink Puerta Principal
     - binary_sensor.blink_entrada_motion_detected           # Blink Entrada Interior
 
-luces_casa_grp:
-  name: Luces De Toda La Casa
+luces_estudio_grp:
+  name: Luces Estudio
   entities:
-    - group.luces_exterior_grp
-    - light.luces_interior
-    - light.luces_planta_baja
-    - light.luces_planta_alta
+    - light.luz_estudio                           # Hue Estudio
+    - switch.esphome_bas_sw1                      # Estudio Armario Rack
+    - light.esphome_lb1_l01
+
+luces_planta_baja_grp:
+  name: Luces Planta Baja
+  entities:
+    - light.cocina
+    - light.dormitorio
+    - light.dormitorio_aaf
+    - light.entrada
+    - light.pasillo
+    - light.salon
+
+luces_planta_alta_grp:
+  name: Luces Planta Alta
+  entities:
+    - group.luces_estudio_grp
+
+luces_interior_grp:
+  name: Luces Interior
+  entities:
+    - group.luces_planta_baja_grp
+    - group.luces_planta_alta_grp
 
 luces_exterior_grp:
   name: Luces Exterior
   entities:
     - switch.esphome_bas_sw4                      # Porche 1 Salón
-    - switch.esphome_bas_sw1                      # Porche 2 Piscina
     - switch.wall_switch_right_158d0002236e75     # Luces Exterior Xiaomi Switch Right
     - switch.esphome_4ch_relay_1                  # Balizas Cesped Jardín (CH1)
     - switch.esphome_4ch_relay_3                  # Focos Entrada (Olivo1+Cica)(CH3)
     - switch.esphome_4ch_relay_2                  # Focos Piscina (Olivo3+Yuca)(CH2)
     - switch.esphome_4ch_relay_4                  # Pendiente Disponible
+
+luces_casa_grp:
+  name: Luces De Toda La Casa
+  entities:
+    - group.luces_exterior_grp
+    - light.luces_interior_grp
 
 setup_telegram_grp:
   name: Notificaciones Telegram
