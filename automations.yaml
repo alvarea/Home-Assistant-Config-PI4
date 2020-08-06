@@ -914,11 +914,11 @@
       # offset: "-00:00:00"   # Horario Verano GMT+2
     - platform: sun
       event: sunset
-      #offset: "-00:00:00"
+      offset: "-00:10:00"
   condition:
     condition: numeric_state
     entity_id: sensor.illumination_158d0001e637f6
-    below: 100
+    below: 150
   action:
     # Encendido Luces Exterior y Jardín
     - service: script.luces_exterior_on
@@ -930,7 +930,7 @@
           voice: 'Se ha puesto el sol. Enciendo luces del jardín'
           title: '*ALUMBRADO*'
           message: >
-            >>> EVENTO: Puesta de Sol
+            >>> EVENTO: Puesta de Sol en 10'
 
             >>> LUCES: Alumbrado Exterior On
 
@@ -950,10 +950,10 @@
       entity_id: script.notifica_evento
       data:
         variables:
-          voice: 'Es medianoche. Apago luces del jardín'
+          voice: 'Es casi medianoche. Apago luces del jardín'
           title: '*ALUMBRADO*'
           message: >
-            >>> EVENTO: Medianoche
+            >>> EVENTO: Casi Medianoche
 
             >>> LUCES: Alumbrado Exterior Off
 
@@ -991,6 +991,13 @@
 
             >>> LUCES: Alumbrado Luz Salón On
 
+# 
+# La regla de alumbrado exterior según sensor se simplifica para que se encienda por la noche siempre que esté oscuro.
+# La idea es que por programacion horaria y puesta de sol la regla de encendido en la puesta de sol encienda y mantenga
+# encendida las luces hasta al menos las 23.00. A partir de esa hora se apagan las luces y entraria a funcionar esta regla,
+# de forma que al pasar alguien por la entrada si está oscuro, encienda los faroles exterior.
+# Se elimina la notificación Telegram.
+#
 - id: L05
   alias: 'L05 Luces On Exterior Segun Sensor'
   trigger:
@@ -1003,23 +1010,15 @@
       - condition: state
         entity_id: switch.wall_switch_right_158d0002236e75
         state: 'off'
-      - condition: or  # 'when dark' condition: either after sunset or before sunrise
-        conditions:
-          - condition: sun
-            # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
-            # after_offset: "-00:10:00"  ==> HORARIO VERANO GMT+2
-            after: sunset
-            after_offset: "-00:10:00"
-          - condition: sun
-            # before_offset: "00:15:00"  ==> Horario Invierno GMT+1, en el amanecer +15m / +60m
-            # before_offset: "-00:10:00" ==> Horario Verano GMT+2, el amanecer
-            before: sunrise
-            before_offset: "-00:10:00"
-          #- condition: numeric_state
-          #  entity_id: sensor.illumination_158d0001e637f6
-          #  below: 1
+      - condition: numeric_state
+        entity_id: sensor.illumination_158d0001e637f6
+        below: 10
   action:
-    - service: script.luces_exterior_timer
+    - service: switch.turn_on
+      entity_id: switch.wall_switch_right_158d0002236e75
+    - delay: '00:05:00'
+    - service: switch.turn_off
+      entity_id: switch.wall_switch_right_158d0002236e75
 
 - id: L06
   alias: 'L06 Luces Off Before Sunrise'
@@ -1633,7 +1632,7 @@
 # https://community.home-assistant.io/t/lovelace-irrigation-card-help-needed/67667/2
 #
 - id: S19
-  alias: 'S19 Timer Riego CH1 Start'
+  alias: 'S19 Timer Riego CH1 Start Tramo1'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.riego_ch1_start_time_t1.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1656,7 +1655,7 @@
       entity_id: switch.esphome_4ch_sw2_relay_1
 
 - id: S19b
-  alias: 'S19 Timer Riego CH1 Timer2 Start '
+  alias: 'S19 Timer Riego CH1 Start Tramo2'
   trigger:
     - platform: template
       value_template: "{{ states('sensor.time') == (states.input_datetime.riego_ch1_start_time_t2.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
@@ -1674,7 +1673,7 @@
     - service: timer.start
       data_template:
         entity_id: timer.riego_ch1
-        duration: '{{ states.sensor.riego_ch1_duracion_planificada2.state|int * 60}}'
+        duration: '{{ states.sensor.riego_ch1_duracion_planificada_t2.state|int * 60}}'
     - service: switch.turn_on
       entity_id: switch.esphome_4ch_sw2_relay_1
 
@@ -1797,7 +1796,7 @@
     - service: timer.start
       data_template:
         entity_id: timer.riego_sw2
-        duration: '{{ states.sensor.riego_sw2_duracion_planificada2.state|int * 60 }}'
+        duration: '{{ states.sensor.riego_sw2_duracion_planificada_t2.state|int * 60 }}'
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw2
 

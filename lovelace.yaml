@@ -885,7 +885,7 @@ views:
                 name: Duración Riego Zona2 - Tramo1
               - entity: input_datetime.riego_sw2_start_time2
               - entity: input_datetime.riego_sw2_end_time2
-              - entity: sensor.riego_sw2_duracion_planificada2
+              - entity: sensor.riego_sw2_duracion_planificada_t2
                 name: Duración Riego Zona2 - Tramo2
             show_header_toggle: false
             title: Riego Bonsais Olivo

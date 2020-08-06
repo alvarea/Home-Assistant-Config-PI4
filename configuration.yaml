@@ -375,16 +375,16 @@ cloud:
         - group
         - script
       include_entities:
-        - light.luces_planta_baja
-        - light.luces_planta_alta
-        - light.luces_interior
-        - light.luces_salon
         - light.esphome_lb1_l01
-        - group.luces_exterior_grp
-        - group.luces_casa_grp
         - script.homy_armado_parcial
         - script.homy_armado_total
         - script.homy_desarmado_code
+        - group.luces_estudio_grp
+        - group.luces_planta_baja_grp
+        - group.luces_planta_alta_grp
+        - group.luces_interior_grp
+        - group.luces_exterior_grp
+        - group.luces_casa_grp
       exclude_entities:
         - switch.esphome_bas_sw0
         - switch.esphome_bas_sw1

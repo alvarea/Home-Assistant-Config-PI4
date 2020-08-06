@@ -617,30 +617,6 @@ luces_exterior_on:
     - service: script.luces_jardin_check_4ch_ch3
     - service: script.luces_jardin_check_4ch_ch4
 
-luces_exterior_timer:
-  alias: 'Luces Exterior Timer'
-  sequence:
-    - service: automation.turn_off
-      entity_id: automation.l08_luces_on_exterior_segun_sensor
-    - service: switch.turn_on
-      entity_id: switch.wall_switch_right_158d0002236e75
-    # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_evento
-      data:
-        variables:
-          title: '*LUCES: ON*'
-          message: >
-            >>> EVENTO: Sensor Presencia Exterior Activado
-
-            >>> LUCES: Alumbrado Encendido 5'
-
-    - delay: '00:05:00'
-    - service: switch.turn_off
-      entity_id: switch.wall_switch_right_158d0002236e75
-    - service: automation.turn_on
-      entity_id: automation.l08_luces_on_exterior_segun_sensor
-
 luces_jardin_check_xia_ext:
   alias: 'Luces On Faroles Exterior'
   sequence:
@@ -651,7 +627,7 @@ luces_jardin_check_xia_ext:
     entity_id: switch.wall_switch_right_158d0002236e75
 
 luces_jardin_check_bas_sw2:
-  alias: 'Luces On SonoffBAS SW2'
+  alias: 'Luces On Sonoff BAS SW2'
   sequence:
   - condition: state
     entity_id: input_boolean.jardin_programador_bas_sw2
