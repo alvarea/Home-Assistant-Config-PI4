@@ -86,17 +86,13 @@
   alias: 'HASS Clock Notify'
   trigger:
     - platform: time
-      at: '12:00:00'
-    - platform: time
-      at: '13:45:00'
-    - platform: time
-      at: '14:30:00'
-    - platform: time
-      at: '15:00:00'
-    - platform: time
-      at: '21:30:00'
-    - platform: time
-      at: '23:30:00'
+      at:
+        - '12:00:00'
+        - '13:45:00'
+        - '14:30:00'
+        - '15:00:00'
+        - '21:30:00'
+        - '23:30:00'
   action:
     # Notifica Evento
     - service: notify.alexa_media
@@ -125,30 +121,16 @@
   alias: 'BLINK Camera Update'
   trigger:
     - platform: time
-      at: '08:00:00'
-    - platform: time
-      at: '10:00:00'
-    - platform: time
-      at: '12:00:00'
-    - platform: time
-      at: '14:00:00'
-    - platform: time
-      at: '16:00:00'
-    - platform: time
-      at: '18:00:00'
-    - platform: time
-      at: '20:00:00'
-    - platform: time
-      at: '22:00:00'
-    - platform: time
-      at: '23:59:00'
-    #- platform: time
-    #  hours: "/2"
-    #  minutes: "00"
-    #  seconds: "00"
-  #condition: time
-  #after: '07:30:00'
-  #before: '23:59:00'
+      at:
+        - '08:00:00'
+        - '10:00:00'
+        - '12:00:00'
+        - '14:00:00'
+        - '16:00:00'
+        - '18:00:00'
+        - '20:00:00'
+        - '22:00:00'
+        - '23:59:00'
   action:
     # Actualizacion imagen cámaras última hora.
     - service: script.blink_trigger_cam_entrada
@@ -156,6 +138,7 @@
     - service: script.blink_trigger_cam_puerta_principal
     - delay: 00:00:05
     - service: script.blink_trigger_cam_puerta_garaje
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -914,7 +897,7 @@
       # offset: "-00:00:00"   # Horario Verano GMT+2
     - platform: sun
       event: sunset
-      offset: "-00:10:00"
+      #offset: "-00:10:00"
   condition:
     condition: numeric_state
     entity_id: sensor.illumination_158d0001e637f6
@@ -1007,12 +990,16 @@
   condition:
     condition: and
     conditions:
+      - condition: sun
+        after: sunset
+        after_offset: "+02:00:00"
+        before: sunrise
       - condition: state
         entity_id: switch.wall_switch_right_158d0002236e75
         state: 'off'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e637f6
-        below: 10
+        below: 1
   action:
     - service: switch.turn_on
       entity_id: switch.wall_switch_right_158d0002236e75
@@ -1024,17 +1011,13 @@
   alias: 'L06 Luces Off Before Sunrise'
   trigger:
     - platform: time
-      at: "01:00:00"
-    - platform: time
-      at: "02:00:00"
-    - platform: time
-      at: "03:30:00"
-    - platform: time
-      at: "04:00:00"
-    - platform: time
-      at: "05:00:00"
-    - platform: time
-      at: "06:00:00"
+      at:
+        - "01:00:00"
+        - "02:00:00"
+        - "03:30:00"
+        - "04:00:00"
+        - "05:00:00"
+        - "06:00:00"
   condition:
     condition: or
     conditions:

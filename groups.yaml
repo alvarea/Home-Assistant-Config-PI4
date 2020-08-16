@@ -130,7 +130,7 @@ luces_casa_grp:
   name: Luces De Toda La Casa
   entities:
     - group.luces_exterior_grp
-    - light.luces_interior_grp
+    - group.luces_interior_grp
 
 setup_telegram_grp:
   name: Notificaciones Telegram

@@ -50,11 +50,11 @@
         prob_given_false: 0.4
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2' #MFC
-        prob_given_true: 0.99
-        prob_given_false: 0.1
-        platform: 'state'
-        to_state: 'home'
+      #- entity_id: 'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2' #MFC
+      #  prob_given_true: 0.99
+      #  prob_given_false: 0.1
+      #  platform: 'state'
+      #  to_state: 'home'
 
   - platform: 'bayesian'
     prior: 0.60
