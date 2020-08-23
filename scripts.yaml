@@ -37,7 +37,6 @@
 #     tostate: '{{trigger.to_state.state}}'
 #     ringtone_msg: <nnnnn>
 #
-
 alarma_to_pending:
   alias: "Alarma Disarmed to Pending"
   sequence:
@@ -98,8 +97,6 @@ sirena_xiaomi_play_alarm_disarmed:
             {{ states.input_select.xiaomi_sound_alarm_disarmed.state.split('-')[0] }}
         ringtone_vol: >-
             {{ states('input_number.xiaomi_volume_alarm_disarmed') | int }}
-
-
 
 # SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS DISPARO DE ALARMA
 #
@@ -207,8 +204,8 @@ alarma_boton_panico:
     - service: script.notifica_evento
       data:
         variables:
-          title: '*ALARMA HOMY*'
-          message: >
+          titulo: '*ALARMA HOMY*'
+          mensaje: >
             >>> URGENTE: BOTON PANICO ACTIVADO
 
 alarma_boton_panico_off:
@@ -220,8 +217,8 @@ alarma_boton_panico_off:
     - service: script.notifica_evento
       data:
         variables:
-          title: '*ALARMA HOMY*'
-          message: >
+          titulo: '*ALARMA HOMY*'
+          mensaje: >
             >>> URGENTE: BOTON PANICO DESACTIVADO
 
 #
@@ -281,7 +278,7 @@ updatetracker:
     #- service: logbook.log
     #  data_template:
     #    name: "Meta-tracker: "
-    #    message: >-
+    #    mensaje: >-
     #      {{ states[entityid.split('.')[0]][entityid.split('.')[1]].name }} is {{ tostate }} at {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
 
 reset_meta_tracker:
@@ -309,7 +306,111 @@ reset_meta_alarm_trigger:
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# SCRIPTS GENERICOS DE NOTIFICACIONES                                         #
+# SCRIPTS GENERICOS DE MEDIA_PLAYER ALEXA Y FIRETV                            #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+alexa_media_player_anuncio:
+  alias: 'Alexa Mensaje Voz'
+  sequence:
+    # Ajusta el Volumen Alexa Entrada
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.echo_alexa_entrada
+        volume_level: "{{ volumen_alexa_entrada }}"
+    # Ajusta el Volumen Alexa Dormitorio
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.echo_alexa_dormitorio
+        volume_level: "{{ volumen_alexa_dormitorio }}"
+    # envio mensaje voz
+    - service: notify.alexa_media
+      data_template:
+        target:
+          - media_player.echo_alexa_entrada
+          - media_player.echo_alexa_dormitorio
+        title: "{{ titulo }}"
+        message: "{{ voz }}"
+        data:
+          type: announce
+
+alexa_media_player_sonido:
+  sequence:
+    # Ajusta el Volumen Alexa Entrada
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.echo_alexa_entrada
+        volume_level: "{{ volumen_alexa_entrada }}"
+    # Ajusta el Volumen Alexa Dormitorio
+    - service: media_player.volume_set
+      data:
+        entity_id: media_player.echo_alexa_dormitorio
+        volume_level: "{{ volumen_alexa_dormitorio }}"
+    # Envio Sonido
+    - service: media_player.play_media
+      data_template:
+        entity_id:
+          # media_player.echo_alexa_entrada
+          - media_player.echo_alexa_dormitorio
+        media_content_type: sound
+        media_content_id: "{{ sonido }}"
+
+test_media_player_announce:
+  alias: 'Alexa Mensaje Voz'
+  sequence:
+    # envio mensaje voz
+    - service: notify.alexa_media
+      data_template:
+        target: >
+          {{ states('input_select.alarma_media_player') }}
+        title: "{{ titulo }}"
+        message: "{{ voz }}"
+        data:
+          type: announce
+
+test_media_player_secuencia:
+  alias: 'Alexa Skill'
+  sequence:
+    - service: media_player.play_media
+      data_template:
+        entity_id: >
+          {{ states('input_select.alarma_media_player') }}
+        media_content_type: sequence
+        media_content_id: >
+          {{ states('input_select.alexa_secuencia') }}
+
+test_sonido_alarma_desarmado:
+  sequence:
+    - service: media_player.play_media
+      data_template:
+        entity_id: >
+          {{ states('input_select.alarma_media_player') }}
+        media_content_type: sound
+        media_content_id: >
+          {{ states('input_select.alarma_sonido_desarmado') }}
+
+test_sonido_alarma_armado:
+  sequence:
+    - service: media_player.play_media
+      data_template:
+        entity_id: >
+          {{ states('input_select.alarma_media_player') }}
+        media_content_type: sound
+        media_content_id: >
+          {{ states('input_select.alarma_sonido_armado') }}
+
+test_sonido_alarma_disparado:
+  sequence:
+    - service: media_player.play_media
+      data_template:
+        entity_id: >
+          {{ states('input_select.alarma_media_player') }}
+        media_content_type: sound
+        media_content_id: >
+          {{ states('input_select.alarma_sonido_disparado') }}
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# SCRIPTS GENERICOS DE NOTIFICACIONES: IOS, HOMY, TELEGRAM                    #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 notifica_alarma:
@@ -319,30 +420,19 @@ notifica_alarma:
   - service: input_text.set_value
     entity_id: input_text.mensaje_tit
     data_template:
-      value: "{{ title }}"
+      value: "{{ titulo }}"
 
   # Actualiza el valor de input_text.mensaje_msg con el mensaje recibido.
   - service: input_text.set_value
     entity_id: input_text.mensaje_msg
     data_template:
-      value: "{{ message }}"
+      value: "{{ mensaje }}"
 
-  # Actualiza el valor de input_text.mensaje_voz con el texto voice recibido.
+  # Actualiza el valor de input_text.mensaje_voz con el texto voz recibido.
   - service: input_text.set_value
     entity_id: input_text.mensaje_voz
     data_template:
-      value: "{{ voice }}"
-
-  # Notificación Alexa
-  - service: notify.alexa_media
-    data_template:
-      target: media_player.echo_alexa_entrada
-        #- media_player.echo_alexa_dormitorio
-      title: "{{ title }}"
-      message: "{{ voice }}"
-      data:
-        type: announce
-        #method: all
+      value: "{{ voz }}"
 
   # Notificación Telegram
   - service: notify.telegram_alarm
@@ -355,24 +445,24 @@ notifica_alarma:
   # Notificación IOS
   - service: notify.notifica_grupo_ios
     data_template:
-      title: >
+      titulo: >
         {{ states('input_text.mensaje_tit') }}
-      message: >
+      mensaje: >
         {{ states('input_text.mensaje_msg') }}
 
   # Notificación Persistente App HOMY
   - service: persistent_notification.create
     data_template:
-      title: >
+      titulo: >
         {{ states('input_text.mensaje_tit') }}
-      message: >
+      mensaje: >
         {{ states('input_text.mensaje_msg') }}
 
   # Notificación Telegram
   #- service: notify.telegram_alarm
   #  data:
-  #    title: '*ALARMA*'
-  #    message: Cámaras Seguridad
+  #    titulo: '*ALARMA*'
+  #    mensaje: Cámaras Seguridad
   #    data:
   #      photo:
   #        - url: http://192.168.0.13/snapshot/image0.jpg
@@ -391,30 +481,19 @@ notifica_evento:
   - service: input_text.set_value
     entity_id: input_text.mensaje_tit
     data_template:
-      value: "{{ title }}"
+      value: "{{ titulo }}"
 
   # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
   - service: input_text.set_value
     entity_id: input_text.mensaje_msg
     data_template:
-      value: "{{ message }}"
+      value: "{{ mensaje }}"
 
-  # Actualiza el valor de input_text.mensaje_voz con el texto voice recibido.
+  # Actualiza el valor de input_text.mensaje_voz con el texto voz recibido.
   - service: input_text.set_value
     entity_id: input_text.mensaje_voz
     data_template:
-      value: "{{ voice }}"
-
-  # Notificación Alexa
-  - service: notify.alexa_media
-    data_template:
-      target: media_player.echo_alexa_entrada
-      #  - media_player.echo_alexa_dormitorio
-      title: "{{ title }}"
-      message: "{{ voice }}"
-      data:
-        type: announce
-        #method: all
+      value: "{{ voz }}"
 
   # Notificación Telegram
   - service: notify.telegram_notify
@@ -435,28 +514,27 @@ notifica_evento_plus:
   - service: input_text.set_value
     entity_id: input_text.mensaje_tit
     data_template:
-      value: "{{ title }}"
+      value: "{{ titulo }}"
 
   # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
   - service: input_text.set_value
     entity_id: input_text.mensaje_msg
     data_template:
-      value: "{{ message }}"
+      value: "{{ mensaje }}"
 
-  # Actualiza el valor de input_text.mensaje_voz con el texto voice recibido.
+  # Actualiza el valor de input_text.mensaje_voz con el texto voz recibido.
   - service: input_text.set_value
     entity_id: input_text.mensaje_voz
     data_template:
-      value: "{{ voice }}"
+      value: "{{ voz }}"
 
   # Notificación Alexa
   - service: notify.alexa_media
     data_template:
-      target: media_player.echo_alexa_entrada
-      #target: notify.alexa_media_en_todas_partes
-      #target: media_player.echo_alexa_dormitorio
-      title: "{{ title }}"
-      message: "{{ voice }}"
+      target: >
+        {{ states ('input_select.alarma_media_player') }}
+      titulo: "{{ titulo }}"
+      mensaje: "{{ voz }}"
       data:
         type: announce
         #method: all
@@ -472,56 +550,16 @@ notifica_evento_plus:
   # Notificación IOS Grupo Agustines
   - service: notify.notifica_grupo_agus
     data_template:
-      title: >
+      titulo: >
         {{ states('input_text.mensaje_tit') }}
-      message: >
+      mensaje: >
         {{ states('input_text.mensaje_msg') }}
-
-
-notifica_alexa_entrada:
-  alias: 'Notificacion Alexa Entrada'
-  sequence:
-    - service: notify.alexa_media
-      data_template:
-        target: media_player.echo_alexa_entrada
-        title: >
-          {{ states('input_text.mensaje_tit') }}
-        message: >
-          {{ states('input_text.mensaje_voz') }}
-        data:
-          type: announce
-          #method: all
-
-notifica_alexa_dormitorio:
-  alias: 'Notificacion Alexa Dormitorio'
-  sequence:
-    - service: notify.alexa_media
-      data_template:
-        target: media_player.echo_alexa_dormitorio
-        title: >
-          {{ states('input_text.mensaje_tit') }}
-        message: >
-          {{ states('input_text.mensaje_voz') }}
-        data:
-          type: announce
-          #method: all
-
-
-notifica_alexa_sound:
-  sequence:
-    - service: media_player.play_media
-      data:
-        entity_id: media_player.echo_alexa_entrada
-        media_content_type: sound
-        media_content_id: amzn_sfx_doorbell_chime_01
-
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # CONTROL DE LUCES Y ALUMBRADO                                                #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-
 luces_dormitorio_escena_read:
   alias: 'Luces Dormitorio Escena Lectura'
   sequence:
@@ -857,8 +895,8 @@ jardin_off:
 #      entity_id: script.notifica_evento
 #      data:
 #        variables:
-#          title: '*HOMY: BUENOS DIAS*'
-#          message: >
+#          titulo: '*HOMY: BUENOS DIAS*'
+#          mensaje: >
 #            >>> Nespresso auto-encendida al amanecer.
 #            >>> Por favor, apáguela al terminar.
 #

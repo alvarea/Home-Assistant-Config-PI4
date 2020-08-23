@@ -194,7 +194,7 @@ camera:
     password: !secret IPcam_estudio
   - platform: generic
     still_image_url: !secret still_image_url_cam_jardin
-    stream_source: !secret stream_source_url_cam_jardin
+    #stream_source: !secret stream_source_url_cam_jardin
     name: IPcam Jardín
     username: admin
     password: !secret IPcam_jardin
@@ -290,20 +290,6 @@ notify:
     platform: telegram
     chat_id: !secret telegram_aac
 
-  #- name: pushover_aac
-  #  platform: pushover
-  #  api_key: uovpmpj3cv6ijvyo6dcma2eaeaa8ts
-  #  user_key: aac_ios
-  #- name: telegram_mfc
-  #  platform: telegram
-  #  chat_id: !secret telegram_chat_mfc
-  #- name: telegram_paf
-  #  platform: telegram
-  #  chat_id: !secret telegram_chat_paf
-  #- name: telegram_aaf
-  #  platform: telegram
-  #  chat_id: !secret telegram_chat_aaf
-
 # Notifications via Telegram Bot
 telegram_bot:
   - platform: polling
@@ -385,6 +371,7 @@ cloud:
         - group.luces_interior_grp
         - group.luces_exterior_grp
         - group.luces_casa_grp
+        - group.luces_jardin_grp
       exclude_entities:
         - switch.esphome_bas_sw0
         - switch.esphome_bas_sw1
@@ -420,7 +407,7 @@ cloud:
         name: Luces Toda La Casa
         description: Luces Interior y Exterior
       group.luces_exterior_grp:
-        name: Luces Exterior y Jardín
+        name: Luces Jardín
       switch.wall_switch_left_158d0002236e75:
         display_categories: LIGHT
       switch.wall_switch_right_158d0002236e75:
@@ -473,7 +460,6 @@ person:
 # The component currently only supports the HLS format.
 stream:
 
-
 blink:
   username: !secret blink_usr
   password: !secret blink_pwd
@@ -485,12 +471,6 @@ blink:
   #sensors:
   #  monitored_conditions:
   #    - battery
-
-#
-# Sensores Xiaomi Miflora - C
-#
-#plant:
-
 
 #
 # Sensores Xiaomi Flower Care - Componente Plant - Integracion ESPHOME - ESP32S Hub BLE ESP32S

@@ -36,19 +36,19 @@
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '08:10'
+    initial: '08:04'
 
   riego_ch1_start_time_t2:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '16:00'
+    initial: '20:00'
 
   riego_ch1_end_time_t2:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '16:10'
+    initial: '20:04'
 
   riego_ch2_start_time:
     name: Hora Inicio Planificado
@@ -93,22 +93,22 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '08:00'
+    initial: '08:05'
 
   riego_sw2_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '08:04'
+    initial: '08:09'
 
   riego_sw2_start_time2:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '16:00'
+    initial: '18:05'
 
   riego_sw2_end_time2:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '16:04'
+    initial: '18:09'

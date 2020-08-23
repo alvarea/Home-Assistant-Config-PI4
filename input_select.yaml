@@ -9,6 +9,118 @@
     initial: Telegram
     icon: mdi:bell-ring
 
+  alarma_media_player:
+    name: "Alarma Destino Media Player"
+    options:
+      - "media_player.en_todas_partes"
+      - "media_player.echo_alexa_entrada"
+      - "media_player.echo_alexa_dormitorio"
+      - "media_player.fire_tv_cocina"
+      - "media_player.fire_tv_salon"
+      - "media_player.apple_tv"
+    icon: mdi:amazon-alexa
+    initial: 'media_player.echo_alexa_dormitorio'
+
+# ALARM WARNING BEFORE ARMED : PENDING TIME
+#
+  alarma_sonido_armado:
+    name: "Alarma Sonido Armado"
+    options:
+      - "bell_02"
+      - "buzzers_pistols_01"
+      - "amzn_sfx_church_bell_1x_02"
+      - "amzn_sfx_doorbell_01"
+      - "amzn_sfx_doorbell_chime_01"
+      - "amzn_sfx_doorbell_chime_02"
+      - "air_horn_03"
+      - "boing_01"
+      - "boing_03"
+      - "camera_01"
+      - "squeaky_12"
+      - "clock_01"
+      - "amzn_sfx_trumpet_bugle_04"
+      - "futuristic_10"
+      - "amzn_sfx_scifi_engines_on_02"
+      - "amzn_sfx_scifi_alarm_04"
+      - "amzn_sfx_scifi_sheilds_up_01"
+      - "amzn_sfx_scifi_alarm_01"
+      - "zap_01"
+    initial: 'zap_01'
+
+# ALARM WARNING DISARMED
+#
+  alarma_sonido_desarmado:
+    name: "Alarma Sonido Desarmado"
+    options:
+      - "bell_02"
+      - "buzzers_pistols_01"
+      - "amzn_sfx_church_bell_1x_02"
+      - "amzn_sfx_doorbell_01"
+      - "amzn_sfx_doorbell_chime_01"
+      - "amzn_sfx_doorbell_chime_02"
+      - "air_horn_03"
+      - "boing_01"
+      - "boing_03"
+      - "camera_01"
+      - "squeaky_12"
+      - "clock_01"
+      - "amzn_sfx_trumpet_bugle_04"
+      - "futuristic_10"
+      - "amzn_sfx_scifi_engines_on_02"
+      - "amzn_sfx_scifi_alarm_04"
+      - "amzn_sfx_scifi_sheilds_up_01"
+      - "amzn_sfx_scifi_alarm_01"
+      - "zap_01"
+    icon: mdi:music-note
+    initial: 'zap_01'
+
+# ALARM TRIGGERED
+#
+  alarma_sonido_disparado:
+    name: "Alarma Sonido Disparada"
+    options:
+      - "bell_02"
+      - "buzzers_pistols_01"
+      - "amzn_sfx_church_bell_1x_02"
+      - "amzn_sfx_doorbell_01"
+      - "amzn_sfx_doorbell_chime_01"
+      - "amzn_sfx_doorbell_chime_02"
+      - "air_horn_03"
+      - "boing_01"
+      - "boing_03"
+      - "camera_01"
+      - "squeaky_12"
+      - "clock_01"
+      - "amzn_sfx_trumpet_bugle_04"
+      - "futuristic_10"
+      - "amzn_sfx_scifi_engines_on_02"
+      - "amzn_sfx_scifi_alarm_04"
+      - "amzn_sfx_scifi_sheilds_up_01"
+      - "amzn_sfx_scifi_alarm_01"
+      - "zap_01"
+    icon: mdi:music-note
+    initial: 'zap_01'
+
+  alexa_secuencia:
+    name: "Alexa Secuencia"
+    options:
+      - "Alexa.Weather.Play"
+      - "Alexa.Traffic.Play"
+      - "Alexa.FlashBriefing.Play"
+      - "Alexa.GoodMorning.Play"
+      - "Alexa.GoodNight.Play"
+      - "Alexa.SingASong.Play"
+      - "Alexa.TellStory.Play"
+      - "Alexa.FunFact.Play"
+      - "Alexa.Joke.Play"
+      - "Alexa.Music.PlaySearchPhrase"
+      - "Alexa.Calendar.PlayTomorrow"
+      - "Alexa.Calendar.PlayToday"
+      - "Alexa.Calendar.PlayNext"
+      - "Alexa.CleanUp.Play"
+      - "Alexa.ImHome.Play"
+    initial: 'Alexa.Weather.Play'
+
 # ALARM WARNING BEFORE ARMED : PENDING TIME
 #
   xiaomi_sound_alarm_armed:

@@ -126,6 +126,13 @@ luces_exterior_grp:
     - switch.esphome_4ch_relay_2                  # Focos Piscina (Olivo3+Yuca)(CH2)
     - switch.esphome_4ch_relay_4                  # Pendiente Disponible
 
+luces_jardin_grp:
+  name: Luces Jardín
+  entities:
+    - switch.esphome_bas_sw4                      # Porche 1 Salón
+    - switch.wall_switch_right_158d0002236e75     # Luces Exterior Xiaomi Switch Right
+    - switch.esphome_4ch_relay_1                  # Balizas Cesped Jardín (CH1)
+
 luces_casa_grp:
   name: Luces De Toda La Casa
   entities:
