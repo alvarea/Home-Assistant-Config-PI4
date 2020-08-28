@@ -295,7 +295,7 @@
 
       esphome_pow_sw3_current:
         value_template: >-
-          {% if states('sensor.esphome_pow_sw3_current')|int > 0 %}
+          {% if states('sensor.esphome_pow_sw3_current')|int > 1 %}
             true
           {% else %}
             false
@@ -303,7 +303,7 @@
 
       esphome_pow_sw3_power:
         value_template: >-
-          {% if states('sensor.esphome_pow_sw3_power')|int > 0 %}
+          {% if states('sensor.esphome_pow_sw3_power')|int > 1 %}
             true
           {% else %}
             false
@@ -311,7 +311,7 @@
 
       esphome_pow_sw3_voltage:
         value_template: >-
-          {% if states('sensor.esphome_pow_sw3_voltage')|int > 0 %}
+          {% if states('sensor.esphome_pow_sw3_voltage')|int > 1 %}
             true
           {% else %}
             false

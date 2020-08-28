@@ -37,8 +37,8 @@
 # SWITCH        esphome_4ch_relay_2                 SONOFF              Luz Olivo 3         CH2 - Olivo 3 + Palmera Yuca
 # SWITCH        esphome_4ch_relay_3                 SONOFF              Luz Olivo 1         CH3 - Olivo 1 + Palmera Cica
 # SWITCH        esphome_4ch_relay_4                 SONOFF              Luz Garaje          CH4 - Pendiente
-# SWITCH        esphome_pow_sw1                     SONOFF              Dispo
-# SWITCH        esphome_pow_sw2                     SONOFF              N/A                 NEW
+# SWITCH        esphome_pow_sw1                     SONOFF                                  Disponible
+# SWITCH        esphome_pow_sw2                     SONOFF              N/A                 Lavadora
 # SWITCH        esphome_pow_sw3                     SONOFF              N/A                 Depuradora Piscina
 # SWITCH        esphome_s20_SW1                     SONOFF              Radiador Malen      Radiador Dormitorio Principal (SWITCH33)
 # SWITCH        esphome_s20_SW2                     SONOFF              Radiador Paloma     NEW

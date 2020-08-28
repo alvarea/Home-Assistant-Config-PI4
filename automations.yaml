@@ -1,3 +1,9 @@
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# HOMY - HOME ASSISTANT - ALVAREA 2020                                        #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+# TEMPLATING JINJA2:  https://jinja.palletsprojects.com/en/master/templates
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -97,8 +103,8 @@
     - service: notify.alexa_media
       data_template:
         target: media_player.echo_alexa_entrada
-        titulo: "AVISO HORARIO"
-        mensaje: >
+        title: "AVISO HORARIO"
+        message: >
           {% if now().hour ==12 %}
             "Buenos días. Son las {{ now().hour }}, es la hora de un aperitivo"
           {% elif now().hour ==13 %}
@@ -230,8 +236,7 @@
           voz: 'ATENCION! ¡ALARMA AGUA ARQUETA!. Sensor Agua Arqueta. ¡ATENCION! ¡ALARMA!'
           titulo: '*ATENCION ALARMA AGUA*'
     # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
+    - service: script.notifica_alarma
       data:
         variables:
           titulo: '*ATENCION ALARMA AGUA*'
@@ -248,32 +253,17 @@
       from: 'disarmed'
       to: 'pending'
   action:
-    #- service: script.alarma_to_pending
-    #  data_template:
-    #    fromstate: '{{trigger.from_state.state}}'
-    #    tostate: '{{trigger.to_state.state}}'
-    #    ringtone_msg: 10005
+    - service: script.alarma_to_pending
+      data_template:
+        fromstate: '{{trigger.from_state.state}}'
+        tostate: '{{trigger.to_state.state}}'
+        ringtone_msg: 10005
     # Script Envío Sonido Alexa Alexa
-    # Script Envío Sonido Alexa Alexa
-    - service: script.alexa_media_player_sonido
-      data:
-        variables:
-          volumen_alexa_entrada: >
-            {{ states('input_number.alexa_entrada_volumen_anuncio') }}
-          volumen_alexa_dormitorio: >
-            {{ states('input_number.alexa_dormitorio_volumen_anuncio') }}
-          sonido: >
-            {{ states('input_select.alarma_sonido_armado') }}
-    # Script Envío Anuncio Alexa Alarma
-    - service: script.alexa_media_player_anuncio
-      data:
-        variables:
-          volumen_alexa_entrada: >
-            {{ states('input_number.alexa_entrada_volumen_alarma') }}
-          volumen_alexa_dormitorio: >
-            {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
-          voz: "¡ATENCION!, Sistema Armado. Tiene un minuto para salir. ATENCION!, Alarma Activada. Salga ahora, por favor."
-          titulo: '*ATENCION ALARMA ACTIVADA*'
+    #- service: script.alexa_media_player_anuncio
+    #  data:
+    #    variables:
+    #      voz: "¡ATENCION!, Sistema Armado. Tiene un minuto para salir. ATENCION!, Alarma Activada. Salga ahora, por favor."
+    #      titulo: '*ATENCION ALARMA ACTIVADA*'
 
 #
 # REGLA: ALARMA ARMED A <PENDING>
@@ -290,30 +280,21 @@
       from: 'armed_away'
       to: 'pending'
   action:
-    #- service: script.alarma_to_pending
-    #  data_template:
-    #    fromstate: '{{trigger.from_state.state}}'
-    #    tostate: '{{trigger.to_state.state}}'
-    #    ringtone_msg: 10004
-    - service: script.alexa_media_player_sonido
-      data:
-        variables:
-          volumen_alexa_entrada: >
-            {{ states('input_number.alexa_entrada_volumen_anuncio') }}
-          volumen_alexa_dormitorio: >
-            {{ states('input_number.alexa_dormitorio_volumen_anuncio') }}
-          sonido: >
-            {{ states('input_select.alarma_sonido_armado') }}
+    - service: script.alarma_to_pending
+      data_template:
+        fromstate: '{{trigger.from_state.state}}'
+        tostate: '{{trigger.to_state.state}}'
+        ringtone_msg: 10004
     # Script Envío Anuncio Alexa Alarma
-    - service: script.alexa_media_player_anuncio
-      data:
-        variables:
-          volumen_alexa_entrada: >
-            {{ states('input_number.alexa_entrada_volumen_alarma') }}
-          volumen_alexa_dormitorio: >
-            {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
-          voz: "¡ATENCION!, Sistema Armado. Tiene 45 segundos para desarmar. ATENCION!, Alarma Activada. Desarme ahora, por favor."
-          titulo: '*ATENCION ALARMA ACTIVADA*'
+    #- service: script.alexa_media_player_anuncio
+    #  data:
+    #    variables:
+    #      volumen_alexa_entrada: >
+    #        {{ states('input_number.alexa_entrada_volumen_alarma') }}
+    #      volumen_alexa_dormitorio: >
+    #        {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
+    #      voz: "¡ATENCION!, Sistema Armado. Tiene 45 segundos para desarmar. ATENCION!, Alarma Activada. Desarme ahora, por favor."
+    #      titulo: '*ATENCION ALARMA ACTIVADA*'
 #
 # REGLA: ARMADO AWAY COMPLETADO
 #
@@ -330,14 +311,24 @@
       data_template:
         value: " "
     # Aviso sonoro con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.sirena_xiaomi_play_alarm_armed
+    - service: script.sirena_xiaomi_play_alarm_armed
+
+    # Script Alexa Envío Anuncio Armado Total
+    #- service: script.alexa_media_player_anuncio
+    #  data:
+    #    variables:
+    #      volumen_alexa_entrada: >
+    #        {{ states('input_number.alexa_entrada_volumen_alarma') }}
+    #      volumen_alexa_dormitorio: >
+    #        {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
+    #      voz: "ATENCION!. Armado Total activado."
+    #      titulo: '*SISTEMA ARMADO HOME*'
+
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
         variables:
-          voz: '¡ATENCION! Armado total de la alarma.'
+          voz: '¡ATENCION! Armado Total activado.'
           titulo: '*ALARMA HOMY*'
           mensaje: >
             >>> ESTADO: ARMADO TOTAL (AWAY)
@@ -363,17 +354,27 @@
       data_template:
         value: " "
     # Aviso sonoro con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.sirena_xiaomi_play_alarm_armed
+    - service: script.sirena_xiaomi_play_alarm_armed
+
+    # Script Alexa Envío Anuncio Armado Total
+    #- service: script.alexa_media_player_anuncio
+    #  data:
+    #    variables:
+    #      volumen_alexa_entrada: >
+    #        {{ states('input_number.alexa_entrada_volumen_alarma') }}
+    #      volumen_alexa_dormitorio: >
+    #        {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
+    #      voz: "ATENCION!. Armado Parcial activado."
+    #      titulo: '*SISTEMA ARMADO HOME*'
+
+    #
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          voz: '¡ATENCION! Armado parcial de la alarma.'
-          titulo: '*ALARMA HOMY*'
-          mensaje: >
-            >>> ESTADO: ARMADO PARCIAL (HOME)
+        voz: '¡ATENCION! Armado Parcial activado.'
+        titulo: '*ALARMA HOMY*'
+        mensaje: >
+          >>> ESTADO: ARMADO PARCIAL (HOME)
 
     # ARMADO PANEL ALARMA BLINK
     #- service: alarm_control_panel.alarm_arm_away
@@ -408,14 +409,12 @@
     - service: light.turn_off
       entity_id: light.gateway_light_7811dcb788fa
     # Script Notificación Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          voz: '¡ATENCION! Alarma Desactivada.'
-          titulo: '*ALARMA HOMY*'
-          mensaje: >
-            >>> ESTADO: Alarma Desactivada
+        voz: '¡ATENCION! Alarma Desactivada.'
+        titulo: '*ALARMA HOMY*'
+        mensaje: >
+          >>> ESTADO: Alarma Desactivada
 #
 # REGLA: TRIGGER SENSOR => MODO ARMADO AWAY => PENDING ==> ALARMA TRIGGERED
 #
@@ -478,16 +477,14 @@
       data_template:
         value: "{{ trigger.to_state.attributes.friendly_name }}"
     # Script Notificación Alarma Away
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
+    - service: script.notifica_alarma
       data:
-        variables:
-          voz: 'ATENCION!, ¡ALARMA!.Se ha disparado un sensor de alarma. ¡ATENCION!, ¡ALARMA!.'
-          titulo: '*ALARMA HOMY*'
-          mensaje: >
-            >>> ESTADO: ATENCION ALARMA DISPARADA
+        voz: 'ATENCION!, ¡ALARMA!.Se ha disparado un sensor de alarma. ¡ATENCION!, ¡ALARMA!.'
+        titulo: '*ALARMA HOMY*'
+        mensaje: >
+          >>> ESTADO: ATENCION ALARMA DISPARADA
 
-            >>> SENSOR: {{ trigger.to_state.attributes.friendly_name }}
+          >>> SENSOR: {{ trigger.to_state.attributes.friendly_name }}
     # DISPARA LA ALARMA
     - service: alarm_control_panel.alarm_trigger
       entity_id: alarm_control_panel.ha
@@ -533,16 +530,14 @@
       data_template:
         value: "{{ trigger.to_state.attributes.friendly_name }}"
     # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
+    - service: script.notifica_alarma
       data:
-        variables:
-          voz: 'ATENCION!, ¡ALARMA!.Se ha disparado un sensor de alarma. ¡ATENCION!, ¡ALARMA!.'
-          titulo: '*ALARMA HOMY*'
-          mensaje: >
-            >>> ESTADO: ATENCION ALARMA PERIMETRO DISPARADA
+        voz: 'ATENCION!, ¡ALARMA!.Se ha disparado un sensor de alarma. ¡ATENCION!, ¡ALARMA!.'
+        titulo: '*ALARMA HOMY*'
+        mensaje: >
+          >>> ESTADO: ATENCION ALARMA PERIMETRO DISPARADA
 
-            >>> SENSOR: {{ trigger.to_state.attributes.friendly_name }}
+          >>> SENSOR: {{ trigger.to_state.attributes.friendly_name }}
 
     # DISPARA LA ALARMA
     - service: alarm_control_panel.alarm_trigger
@@ -609,16 +604,13 @@
     #  entity_id: alarm_control_panel.blink_casa
     #
     # Aviso sonoro con Xiaomi GW
-    - service: script.turn_on
-      entity_id: script.sirena_stop_alarm
+    - service: script.sirena_stop_alarm
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          titulo: '*ALARMA HOMY*'
-          mensaje: >
-            >>> ESTADO: Desarmado automático al amanecer.
+        titulo: '*ALARMA HOMY*'
+        mensaje: >
+          >>> ESTADO: Desarmado automático al amanecer.
 
 #
 # REGLA: APAGADO BOTON PANICO
@@ -719,7 +711,7 @@
         - device_tracker.daa04833_9772_4800_bf22_57f406aeb129_2   # AAF
   action:
     - service: script.updatetracker
-      data_template:
+      data:
         entityid: '{{trigger.entity_id}}'
         fromstate: '{{trigger.from_state.state}}'
         tostate: '{{trigger.to_state.state}}'
@@ -798,18 +790,15 @@
       #  state: 'off'
   action:
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          titulo: '*FAMILY HOME*'
-          mensaje: >
-            >>> EN 5' AUTO ARMADO HOME
+        titulo: '*FAMILY HOME*'
+        mensaje: >
+          >>> EN 5' AUTO ARMADO HOME
 
     - delay: '00:05:00'  # antes versión original 15'
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
-
 
 - id: T04
   alias: 'T04 Family Home Telegram'
@@ -821,15 +810,12 @@
       to: 'on'
   action:
     # Script encendido Luz piloto si es de noche
-    - service: script.turn_on
-      entity_id: script.luces_on_family_home
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.luces_on_family_home
+    - service: script.notifica_evento
       data:
-        variables:
-          titulo: '*FAMILY HOME: SI*'
-          mensaje: >
-            >>> EVENTO: Primero en Entrar {{ states('sensor.family_last_tracking') }}
+        titulo: '*FAMILY HOME: SI*'
+        mensaje: >
+          >>> EVENTO: Primero en Entrar {{ states('sensor.family_last_tracking') }}
 
 - id: T05
   alias: 'T05 Family Home How Many Sleep'
@@ -864,15 +850,13 @@
     - service: input_boolean.turn_on
       entity_id: input_boolean.family_sleep_home_mfc
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          titulo: '*FAMILY HOME*'
-          mensaje: >
-            >>> Malen está en casa a las 23:00
+        titulo: '*FAMILY HOME*'
+        mensaje: >
+          >>> Malen está en casa a las 23:00
 
-            >>> Activado el control de Duerme en Casa.
+          >>> Activado el control de Duerme en Casa.
 
 - id: T07
   alias: 'T07 Family AAF - Check Sleep'
@@ -893,15 +877,13 @@
     - service: input_boolean.turn_on
       entity_id: input_boolean.family_sleep_home_aaf
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          titulo: '*FAMILY HOME*'
-          mensaje: >
-            >>> Agu está en casa a las 23:00
+        titulo: '*FAMILY HOME*'
+        mensaje: >
+          >>> Agu está en casa a las 23:00
 
-            >>> Activado el control de Duerme en Casa.
+          >>> Activado el control de Duerme en Casa.
 
 - id: T08
   alias: 'T08 Family PAF - Check Sleep'
@@ -922,15 +904,13 @@
     - service: input_boolean.turn_on
       entity_id: input_boolean.family_sleep_home_paf
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          titulo: '*FAMILY HOME*'
-          mensaje: >
-            >>> Paloma está en casa a las 23:00
+        titulo: '*FAMILY HOME*'
+        mensaje: >
+          >>> Paloma está en casa a las 23:00
 
-            >>> Activado el control de Duerme en Casa.
+          >>> Activado el control de Duerme en Casa.
 
 - id: T09
   alias: 'T09 Family AAC - Check Sleep'
@@ -951,15 +931,13 @@
     - service: input_boolean.turn_on
       entity_id: input_boolean.family_sleep_home_paf
     # Notifica Evento
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          titulo: '*FAMILY HOME*'
-          mensaje: >
-            >>> Agustín está en casa a las 23:00
+        titulo: '*FAMILY HOME*'
+        mensaje: >
+          >>> Agustín está en casa a las 23:00
 
-            >>> Activado el control de Duerme en Casa.
+          >>> Activado el control de Duerme en Casa.
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -974,21 +952,19 @@
       # offset: "-00:00:00"   # Horario Verano GMT+2
     - platform: sun
       event: sunset
-      offset: "-00:10"
+      offset: "-00:05"
   action:
     # Encendido Luces Exterior y Jardín
     - service: script.luces_exterior_on
     # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          voz: 'Se ha puesto el sol. Enciendo luces del jardín'
-          titulo: '*ALUMBRADO*'
-          mensaje: >
-            >>> EVENTO: Puesta de Sol en 10'
+        voz: 'Se va a poner el sol. Enciendo luces del jardín'
+        titulo: '*ALUMBRADO*'
+        mensaje: >
+          >>> EVENTO: Puesta de Sol en 10'
 
-            >>> LUCES: Alumbrado Exterior On
+          >>> LUCES: Alumbrado Exterior On
 
 - id: L02
   alias: 'L02 Luces Off Exterior Medianoche'
@@ -999,16 +975,14 @@
     # Script Luces Exterior Off
     - service: script.luces_exterior_off
     # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          voz: 'Es casi medianoche. Apago luces del jardín'
-          titulo: '*ALUMBRADO*'
-          mensaje: >
-            >>> EVENTO: Casi Medianoche
+        voz: 'Es casi medianoche. Apago luces del jardín'
+        titulo: '*ALUMBRADO*'
+        mensaje: >
+          >>> EVENTO: Casi Medianoche
 
-            >>> LUCES: Alumbrado Exterior Off
+          >>> LUCES: Alumbrado Exterior Off
 
 - id: L04
   alias: 'L04 Luces On Salon Sunset'
@@ -1032,16 +1006,14 @@
     - service: light.turn_on
       entity_id: light.luz_vitrina
     # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          voz: 'Anochece en 15 minutos. Enciendo luz del salón'
-          titulo: '*ALUMBRADO*'
-          mensaje: >
-            >>> EVENTO: Puesta de Sol
+        voz: 'Anochece en 15 minutos. Enciendo luz del salón'
+        titulo: '*ALUMBRADO*'
+        mensaje: >
+          >>> EVENTO: Puesta de Sol
 
-            >>> LUCES: Alumbrado Luz Salón On
+          >>> LUCES: Alumbrado Luz Salón On
 
 # 
 # La regla de alumbrado exterior según sensor se simplifica para que se encienda por la noche, siempre que esté oscuro.
@@ -1060,15 +1032,15 @@
   condition:
     condition: and
     conditions:
-      #- condition: sun
-      #  after: sunset
-      #  before: sunrise
+      - condition: sun
+        after: sunset
+        before: sunrise
       - condition: state
         entity_id: switch.wall_switch_right_158d0002236e75
         state: 'off'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e637f6
-        below: 25
+        below: 1
   action:
     - service: switch.turn_on
       entity_id: switch.wall_switch_right_158d0002236e75
@@ -1402,16 +1374,14 @@
       for: '00:05:00'
   action:
     # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
+    - service: script.notifica_alarma
       data:
-        variables:
-          voz: 'Fallo Eléctrico. Cuadro del Jardín sin corriente eléctrica'
-          titulo: '*AVISO FALLO ELECTRICO*'
-          mensaje: >
-            >>> URGENTE: CUADRO ELECTRICO JARDIN SIN CORRIENTE
+        voz: 'Fallo Eléctrico. Cuadro del Jardín sin corriente eléctrica'
+        titulo: '*AVISO FALLO ELECTRICO*'
+        mensaje: >
+          >>> URGENTE: CUADRO ELECTRICO JARDIN SIN CORRIENTE
 
-            >>> DISPOSITIVO: ESPHOME SONOFF 4CH SW1
+          >>> DISPOSITIVO: ESPHOME SONOFF 4CH SW1
 
 - id: S05
   alias: 'S05 Sonoff POW Status'
@@ -1423,16 +1393,14 @@
       for: '00:05:00'
   action:
     # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
+    - service: script.notifica_alarma
       data:
-        variables:
-          voz: 'Fallo Eléctrico. Cuadro depuradora piscina sin corriente eléctrica'
-          titulo: '*AVISO FALLO ELECTRICO*'
-          mensaje: >
-            >>> URGENTE: CUADRO ELECTRICO DEPURADORA PISCINA SIN CORRIENTE
+        voz: 'Fallo Eléctrico. Cuadro depuradora piscina sin corriente eléctrica'
+        titulo: '*AVISO FALLO ELECTRICO*'
+        mensaje: >
+          >>> URGENTE: CUADRO ELECTRICO DEPURADORA PISCINA SIN CORRIENTE
 
-            >>> DISPOSITIVO: ESPHOME SONOFF POW_SW3
+          >>> DISPOSITIVO: ESPHOME SONOFF POW_SW3
 
 # ESPHOME POW - DEPURADORA PISCINA
 #
@@ -1636,14 +1604,12 @@
       for: '00:00:10'
   action:
     # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
+    - service: script.notifica_alarma
       data:
-        variables:
-          voz: 'Fallo Eléctrico. Cuadro rack estudio sin corriente eléctrica'
-          titulo: '*AVISO FALLO ELECTRICO*'
-          mensaje: >
-            >>> URGENTE: SAI RACK COMUNICACIONES SIN CORRIENTE
+        voz: 'Fallo Eléctrico. Cuadro rack estudio sin corriente eléctrica'
+        titulo: '*AVISO FALLO ELECTRICO*'
+        mensaje: >
+          >>> URGENTE: SAI RACK COMUNICACIONES SIN CORRIENTE
 
 # ESPHOME POW R2 SW2 - LAVADORA
 #
@@ -1870,16 +1836,14 @@
     # Apagado Luces Casa
     - service: script.jardin_off
     # Notifica a Familia
-    - service: script.turn_on
-      entity_id: script.notifica_evento
+    - service: script.notifica_evento
       data:
-        variables:
-          voz: 'Hay elementos de riego del jardín encedidos. Quedan apagados'
-          titulo: '*JARDIN: OFF*'
-          mensaje: >
-            >>> EVENTO: Control Riego/Fuentes encendidas antes del amanecer
+        voz: 'Hay elementos de riego del jardín encedidos. Quedan apagados'
+        titulo: '*JARDIN: OFF*'
+        mensaje: >
+          >>> EVENTO: Control Riego/Fuentes encendidas antes del amanecer
 
-            >>> JARDIN: Apagado total
+          >>> JARDIN: Apagado total
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1900,16 +1864,14 @@
       for: '00:01:00'
   action:
     # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
+    - service: script.notifica_alarma
       data:
-        variables:
-          voz: 'Fallo Conectividad a Internet. Router sin salida a internet'
-          titulo: '*CONEXION INTERNET*'
-          mensaje: >
-            >>> URGENTE: ERROR CONEXION INTERNET
+        voz: 'Fallo Conectividad a Internet. Router sin salida a internet'
+        titulo: '*CONEXION INTERNET*'
+        mensaje: >
+          >>> URGENTE: ERROR CONEXION INTERNET
 
-            >>> DISPOSITIVO: 00 WAN ROUTER FIBRA
+          >>> DISPOSITIVO: 00 WAN ROUTER FIBRA
 
 #
 # ping_05_router_wifi_tplink:
@@ -1924,16 +1886,14 @@
       # for: '00:06:00'
   action:
     # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_alarma
+    - service: script.notifica_alarma
       data:
-        variables:
-          voz: 'Fallo Conectividad. Punto de acceso wifi no accesible'
-          titulo: '*AVISO ERROR CONECTIVIDAD'
-          mensaje: >
-            >>> URGENTE: FALLO DE PING
+        voz: 'Fallo Conectividad. Punto de acceso wifi no accesible'
+        titulo: '*AVISO ERROR CONECTIVIDAD'
+        mensaje: >
+          >>> URGENTE: FALLO DE PING
 
-            >>> DISPOSITIVO: 05 AP WIFI TPLINK
+          >>> DISPOSITIVO: 05 AP WIFI TPLINK
 
 #
 # nmap_sony_ps4:
@@ -1947,16 +1907,14 @@
       to: 'on'
   action:
     # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_evento_plus
+    - service: script.notifica_evento
       data:
-        variables:
-          # voz: 'Consola Sony PS4 encendida'
-          titulo: '*AVISO CONSOLA PS4*'
-          mensaje: >
-            >>> AVISO: ENCENDIDO
+        # voz: 'Consola Sony PS4 encendida'
+        titulo: '*AVISO CONSOLA PS4*'
+        mensaje: >
+          >>> AVISO: ENCENDIDO
 
-            >>> DISPOSITIVO: CONSOLA SONY PS4
+          >>> DISPOSITIVO: CONSOLA SONY PS4
 
 #
 # nmap_sony_ps4:
@@ -1970,13 +1928,11 @@
       to: 'off'
   action:
     # Script Notificación Alarma
-    - service: script.turn_on
-      entity_id: script.notifica_evento_plus
+    - service: script.notifica_evento
       data:
-        variables:
-          # voz: 'Consola Sony PS4 apagada'
-          titulo: '*AVISO CONSOLA PS4*'
-          mensaje: >
-            >>> AVISO: APAGADO
+        # voz: 'Consola Sony PS4 apagada'
+        titulo: '*AVISO CONSOLA PS4*'
+        mensaje: >
+          >>> AVISO: APAGADO
 
-            >>> DISPOSITIVO: CONSOLA SONY PS4
+          >>> DISPOSITIVO: CONSOLA SONY PS4

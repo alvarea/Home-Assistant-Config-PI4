@@ -203,10 +203,9 @@ alarma_boton_panico:
     # Notifica Telegram
     - service: script.notifica_evento
       data:
-        variables:
-          titulo: '*ALARMA HOMY*'
-          mensaje: >
-            >>> URGENTE: BOTON PANICO ACTIVADO
+        titulo: '*ALARMA HOMY*'
+        mensaje: >
+          >>> URGENTE: BOTON PANICO ACTIVADO
 
 alarma_boton_panico_off:
   alias: 'Boton Panico OFF'
@@ -216,10 +215,9 @@ alarma_boton_panico_off:
     # Notifica Telegram
     - service: script.notifica_evento
       data:
-        variables:
-          titulo: '*ALARMA HOMY*'
-          mensaje: >
-            >>> URGENTE: BOTON PANICO DESACTIVADO
+        titulo: '*ALARMA HOMY*'
+        mensaje: >
+          >>> URGENTE: BOTON PANICO DESACTIVADO
 
 #
 # SCRIPTS PARA GESTION ALARMA DESDE ALEXA
@@ -309,50 +307,272 @@ reset_meta_alarm_trigger:
 # SCRIPTS GENERICOS DE MEDIA_PLAYER ALEXA Y FIRETV                            #
 #                                                                             #
 #-----------------------------------------------------------------------------#
+
+#
+# Script genérico y básico para enviar un mensaje de voz a un Alexa Echo
+#
+# Parámetros:
+# alexa:    nombre del dispositivo destino:  "media_player.echo_alexa_entrada"
+# titulo:   titulo del mensaje (de momento solo valido para echo show)
+# voz:      mensaje de voz
+#
 alexa_media_player_anuncio:
   alias: 'Alexa Mensaje Voz'
   sequence:
-    # Ajusta el Volumen Alexa Entrada
-    - service: media_player.volume_set
-      data:
-        entity_id: media_player.echo_alexa_entrada
-        volume_level: "{{ volumen_alexa_entrada }}"
-    # Ajusta el Volumen Alexa Dormitorio
-    - service: media_player.volume_set
-      data:
-        entity_id: media_player.echo_alexa_dormitorio
-        volume_level: "{{ volumen_alexa_dormitorio }}"
     # envio mensaje voz
     - service: notify.alexa_media
       data_template:
-        target:
-          - media_player.echo_alexa_entrada
-          - media_player.echo_alexa_dormitorio
+        target: "{{ alexa }}"
         title: "{{ titulo }}"
         message: "{{ voz }}"
         data:
           type: announce
 
+#
+# Script genérico y básico para enviar un mensaje de voz a un Alexa Echo
+#
+# Parámetros:
+# alexa:    nombre del dispositivo destino:  "media_player.echo_alexa_entrada"
+# sonido:   nombre del sonido a reproducir.  Ver https://github.com/custom-components/alexa_media_player/wiki#examples
+#
 alexa_media_player_sonido:
   sequence:
-    # Ajusta el Volumen Alexa Entrada
-    - service: media_player.volume_set
-      data:
-        entity_id: media_player.echo_alexa_entrada
-        volume_level: "{{ volumen_alexa_entrada }}"
-    # Ajusta el Volumen Alexa Dormitorio
-    - service: media_player.volume_set
-      data:
-        entity_id: media_player.echo_alexa_dormitorio
-        volume_level: "{{ volumen_alexa_dormitorio }}"
     # Envio Sonido
     - service: media_player.play_media
       data_template:
-        entity_id:
-          # media_player.echo_alexa_entrada
-          - media_player.echo_alexa_dormitorio
+        entity_id: "{{ alexa }}"
         media_content_type: sound
         media_content_id: "{{ sonido }}"
+
+#
+# Scripts básicos para restaurar el volumen original que tenía Alexa antes del mensaje
+#
+alexa_entrada_restaura_volumen:
+  sequence:
+    # Restablece el Volumen Anterior al mensaje
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.echo_alexa_entrada
+        volume_level: "{{ states('input_number.alexa_entrada_volumen_anterior')|float }}"
+
+alexa_dormitorio_restaura_volumen:
+  sequence:
+    # Restablece el Volumen Anterior al mensaje
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.echo_alexa_dormitorio
+        volume_level: "{{ states('input_number.alexa_dormitorio_volumen_anterior')|float }}"
+
+#
+# Script completo para enviar un SONIDO a un Alexa DORMITORIO
+#
+# Parámetros:
+# voz:      código del sonido de la libreria de amazon
+#
+alexa_dormitorio_sonido:
+  sequence:
+    # Almacena el Volumen Actual de Alexa Dormitorio
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.alexa_dormitorio_volumen_anterior
+        value: "{{ states.media_player.echo_alexa_dormitorio.attributes.volume_level|float }}"
+
+    # Almacena y Ajusta el Volumen Alexa Dormitorio según tipo mensaje-hora
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.alexa_dormitorio_volumen_nuevo
+        value: >
+          {% if states.alarm_control_panel.ha.state == 'triggered' and now().hour >= 23 and now().hour <= 9 %}
+            {{ states('input_number.alexa_dormitorio_volumen_alarma_noc') }}
+          {% elif states.alarm_control_panel.ha.state == 'triggered' and now().hour >= 10 and now().hour <= 22 %}
+            {{ states('input_number.alexa_dormitorio_volumen_alarma_dia') }}
+          {% elif states.alarm_control_panel.ha.state != 'triggered' and now().hour >= 23 and now().hour <= 9 %}
+            {{ states('input_number.alexa_dormitorio_volumen_anuncio_noc') }}
+          {% elif states.alarm_control_panel.ha.state != 'triggered' and now().hour >= 10 and now().hour <= 22 %}
+            {{ states('input_number.alexa_dormitorio_volumen_anuncio_dia') }}
+          {%endif%}
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.echo_alexa_dormitorio
+        volume_level: "{{ states('input_number.alexa_dormitorio_volumen_nuevo')|float }}"
+
+    # envío sonido
+    - service: media_player.play_media
+      data_template:
+        entity_id: media_player.echo_alexa_dormitorio
+        media_content_type: sound
+        media_content_id: "{{ sonido }}"
+
+#
+# Script completo para enviar un SONIDO a un Alexa DORMITORIO
+#
+# Parámetros:
+# alexa:      nombre del dispositivo de salida:  entrada/dormitorio
+
+alexa_sonido_alarma_armado:
+  sequence:
+    - repeat:
+        count: "2"
+        sequence:
+          - service: media_player.play_media
+            data_template:
+              entity_id: "media_player.echo_alexa_{{ alexa }} "
+              media_content_type: sound
+              media_content_id: "{{ states('input_select.alarma_sonido_armado') }}"
+
+alexa_sonido_alarma_desarmado:
+  sequence:
+    - repeat:
+        count: "2"
+        sequence:
+          - service: media_player.play_media
+            data_template:
+              entity_id: "media_player.echo_alexa_{{ alexa }} "
+              media_content_type: sound
+              media_content_id: "{{ states('input_select.alarma_sonido_desarmado') }}"
+
+# Script completo para enviar un SONIDO a un Alexa ENTRADA
+#
+# Parámetros:
+# voz:      código del sonido de la libreria de amazon
+#
+alexa_entrada_sonido:
+  sequence:
+    # Almacena el Volumen Actual de Alexa Entrada
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.alexa_entrada_volumen_anterior
+        value: "{{ states.media_player.echo_alexa_entrada.attributes.volume_level|float }}"
+
+    # Almacena y Ajusta el Volumen Alexa entrada según tipo mensaje-hora
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.alexa_entrada_volumen_nuevo
+        value: >
+          {% if states.alarm_control_panel.ha.state == 'triggered' and now().hour >= 23 and now().hour <= 9 %}
+            {{ states('input_number.alexa_entrada_volumen_alarma_noc') }}
+          {% elif states.alarm_control_panel.ha.state == 'triggered' and now().hour >= 10 and now().hour <= 22 %}
+            {{ states('input_number.alexa_entrada_volumen_alarma_dia') }}
+          {% elif states.alarm_control_panel.ha.state != 'triggered' and now().hour >= 23 and now().hour <= 9 %}
+            {{ states('input_number.alexa_entrada_volumen_anuncio_noc') }}
+          {% elif states.alarm_control_panel.ha.state != 'triggered' and now().hour >= 10 and now().hour <= 22 %}
+            {{ states('input_number.alexa_entrada_volumen_anuncio_dia') }}
+          {%endif%}
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.echo_alexa_entrada
+        volume_level: "{{ states('input_number.alexa_entrada_volumen_nuevo')|float }}"
+
+    # envío sonido
+    - service: media_player.play_media
+      data_template:
+        entity_id: media_player.echo_alexa_entrada
+        media_content_type: sound
+        media_content_id: "{{ sonido }}"
+
+#
+# Script completo para enviar un mensaje de voz a un Alexa DORMITORIO
+#
+# Parámetros:
+# voz:      mensaje de voz
+#
+alexa_dormitorio_anuncio:
+  sequence:
+    # Almacena el Volumen Actual de Alexa Dormitorio
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.alexa_dormitorio_volumen_anterior
+        value: "{{ states.media_player.echo_alexa_dormitorio.attributes.volume_level|float }}"
+
+    # Almacena y Ajusta el Volumen Alexa Dormitorio según tipo mensaje-hora
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.alexa_dormitorio_volumen_nuevo
+        value: >
+          {% if states.alarm_control_panel.ha.state == 'triggered' and now().hour >= 0 and now().hour <= 9 %}
+            {{ states('input_number.alexa_dormitorio_volumen_alarma_noc')|float }}
+          {% elif states.alarm_control_panel.ha.state == 'triggered' and now().hour >= 10 and now().hour <= 23 %}
+            {{ states('input_number.alexa_dormitorio_volumen_alarma_dia')|float  }}
+          {% elif states.alarm_control_panel.ha.state != 'triggered' and now().hour >= 0 and now().hour <= 9 %}
+            {{ states('input_number.alexa_dormitorio_volumen_anuncio_noc')|float  }}
+          {% elif states.alarm_control_panel.ha.state != 'triggered' and now().hour >= 10 and now().hour <= 23 %}
+            {{ states('input_number.alexa_dormitorio_volumen_anuncio_dia')|float  }}
+          {%endif%}
+
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.echo_alexa_dormitorio
+        volume_level: "{{ states('input_number.alexa_dormitorio_volumen_nuevo')|float }}"
+
+    # envio mensaje voz
+    - service: notify.alexa_media
+      data_template:
+        target: media_player.echo_alexa_dormitorio
+        message: "{{ voz }}"
+        data:
+          type: announce
+
+#
+# Script completo para enviar un mensaje de voz a un Alexa ENTRADA
+#
+# Parámetros:
+# voz:      mensaje de voz
+#
+alexa_entrada_anuncio:
+  sequence:
+    # Almacena el Volumen Actual de Alexa Entrada
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.alexa_entrada_volumen_anterior
+        value: "{{ states.media_player.echo_alexa_entrada.attributes.volume_level|float }}"
+
+    # Almacena y Ajusta el Volumen Alexa entrada según tipo mensaje-hora
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.alexa_entrada_volumen_nuevo
+        value: >
+          {% if states.alarm_control_panel.ha.state == 'triggered' and now().hour >= 0 and now().hour <= 9 %}
+            {{ states('input_number.alexa_entrada_volumen_alarma_noc') }}
+          {% elif states.alarm_control_panel.ha.state == 'triggered' and now().hour >= 10 and now().hour <= 23 %}
+            {{ states('input_number.alexa_entrada_volumen_alarma_dia') }}
+          {% elif states.alarm_control_panel.ha.state != 'triggered' and now().hour >= 0 and now().hour <= 9 %}
+            {{ states('input_number.alexa_entrada_volumen_anuncio_noc') }}
+          {% elif states.alarm_control_panel.ha.state != 'triggered' and now().hour >= 10 and now().hour <= 23 %}
+            {{ states('input_number.alexa_entrada_volumen_anuncio_dia') }}
+          {%endif%}
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.echo_alexa_entrada
+        volume_level: "{{ states('input_number.alexa_entrada_volumen_nuevo')|float }}"
+
+    # envio mensaje voz
+    - service: notify.alexa_media
+      data_template:
+        target: media_player.echo_alexa_entrada
+        message: "{{ voz }}"
+        data:
+          type: announce
+#
+#---------------------------- PRUEBAS ------------------------
+#
+test_alexa_anuncio:
+  mode: restart
+  sequence:
+    - service: script.alexa_dormitorio_anuncio
+      data:
+        voz: 'ATENCION!. Armado Total activado.'
+
+    - delay: 00:00:02
+
+    - service: script.alexa_sonido_alarma_armado
+      data:
+        alexa: 'dormitorio'
+
+    - service: script.alexa_sonido_alarma_desarmado
+      data:
+        alexa: 'dormitorio'
+
+    - service: script.alexa_dormitorio_restaura_volumen
 
 test_media_player_announce:
   alias: 'Alexa Mensaje Voz'
@@ -362,8 +582,8 @@ test_media_player_announce:
       data_template:
         target: >
           {{ states('input_select.alarma_media_player') }}
-        title: "{{ titulo }}"
-        message: "{{ voz }}"
+        message: >
+          {{ states('input_text.mensaje_voz') }}
         data:
           type: announce
 
@@ -503,64 +723,12 @@ notifica_evento:
       message: >
         {{ states('input_text.mensaje_msg') }}
 
-notifica_evento_plus:
-  alias: 'Notifica Evento Plus'
-  sequence:
-  # IF HOME_NOTIFY = OFF CANCEL
-  - condition: template
-    value_template: "{% if not is_state('input_select.home_notify', 'Off') %}true{% endif %}"
-
-  # Actualiza el valor de input_text.mensaje_tit con el título recibido.
-  - service: input_text.set_value
-    entity_id: input_text.mensaje_tit
-    data_template:
-      value: "{{ titulo }}"
-
-  # Actualiza el valor de input_text.mensaje_msg con el cuerpo del mensaje recibido.
-  - service: input_text.set_value
-    entity_id: input_text.mensaje_msg
-    data_template:
-      value: "{{ mensaje }}"
-
-  # Actualiza el valor de input_text.mensaje_voz con el texto voz recibido.
-  - service: input_text.set_value
-    entity_id: input_text.mensaje_voz
-    data_template:
-      value: "{{ voz }}"
-
-  # Notificación Alexa
-  - service: notify.alexa_media
-    data_template:
-      target: >
-        {{ states ('input_select.alarma_media_player') }}
-      titulo: "{{ titulo }}"
-      mensaje: "{{ voz }}"
-      data:
-        type: announce
-        #method: all
-
-  # Notificación Telegram
-  - service: notify.telegram_notify
-    data_template:
-      title: >
-        {{ states('input_text.mensaje_tit') }}
-      message: >
-        {{ states('input_text.mensaje_msg') }}
-
-  # Notificación IOS Grupo Agustines
-  - service: notify.notifica_grupo_agus
-    data_template:
-      titulo: >
-        {{ states('input_text.mensaje_tit') }}
-      mensaje: >
-        {{ states('input_text.mensaje_msg') }}
-
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # CONTROL DE LUCES Y ALUMBRADO                                                #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-luces_dormitorio_escena_read:
+luces_entrada_escena_read:
   alias: 'Luces Dormitorio Escena Lectura'
   sequence:
     # El nombre de la escena es case sensitive
@@ -894,9 +1062,8 @@ jardin_off:
 #    - service: script.turn_on
 #      entity_id: script.notifica_evento
 #      data:
-#        variables:
-#          titulo: '*HOMY: BUENOS DIAS*'
-#          mensaje: >
+#        titulo: '*HOMY: BUENOS DIAS*'
+#        mensaje: >
 #            >>> Nespresso auto-encendida al amanecer.
 #            >>> Por favor, apáguela al terminar.
 #

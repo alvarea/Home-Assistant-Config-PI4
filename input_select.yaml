@@ -45,7 +45,7 @@
       - "amzn_sfx_scifi_sheilds_up_01"
       - "amzn_sfx_scifi_alarm_01"
       - "zap_01"
-    initial: 'zap_01'
+    initial: 'air_horn_03'
 
 # ALARM WARNING DISARMED
 #
@@ -72,7 +72,7 @@
       - "amzn_sfx_scifi_alarm_01"
       - "zap_01"
     icon: mdi:music-note
-    initial: 'zap_01'
+    initial: 'amzn_sfx_scifi_alarm_04'
 
 # ALARM TRIGGERED
 #
