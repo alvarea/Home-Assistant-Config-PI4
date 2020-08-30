@@ -72,7 +72,7 @@
       - "amzn_sfx_scifi_alarm_01"
       - "zap_01"
     icon: mdi:music-note
-    initial: 'amzn_sfx_scifi_alarm_04'
+    initial: 'bell_02'
 
 # ALARM TRIGGERED
 #
@@ -99,7 +99,7 @@
       - "amzn_sfx_scifi_alarm_01"
       - "zap_01"
     icon: mdi:music-note
-    initial: 'zap_01'
+    initial: 'amzn_sfx_scifi_alarm_04'
 
   alexa_secuencia:
     name: "Alexa Secuencia"

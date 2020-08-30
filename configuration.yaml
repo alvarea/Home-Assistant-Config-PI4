@@ -140,7 +140,7 @@ alarm_control_panel:
     # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
     code: !secret alarm_control_code
     code_arm_required: false
-    arming_time: 30
+    arming_time: 45
     delay_time: 60
     trigger_time: 300
     disarmed:

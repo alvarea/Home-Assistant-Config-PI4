@@ -75,51 +75,35 @@
           {% if (now().hour == 10) %} '10'
           {% elif (now().hour == 23) %} '2'
           {% endif %}
-    # Volumen Alexa
-    - service: media_player.volume_set
-      data_template:
-        entity_id:
-          - media_player.echo_alexa_entrada
-          - media_player.echo_alexa_dormitorio
-        volume_level: >-
-          {% if (now().hour == 10) %} '0.6'
-          {% elif (now().hour == 23) %} '0.2'
-          {% elif (now().hour == 00) %} '0.1'
-          {% endif %}
 
 - id: hass_clock_notify
   alias: 'HASS Clock Notify'
   trigger:
     - platform: time
       at:
-        - '12:00:00'
+        - '12:30:00'
         - '13:45:00'
         - '14:30:00'
-        - '15:00:00'
         - '21:30:00'
         - '23:30:00'
   action:
-    # Notifica Evento
-    - service: notify.alexa_media
+    # Script Envío Sonido Alexa Alexa
+    - service: script.alexa_secuencia
       data_template:
-        target: media_player.echo_alexa_entrada
-        title: "AVISO HORARIO"
-        message: >
+        sonido: ''
+        repeticion: 0
+        voz: >
           {% if now().hour ==12 %}
             "Buenos días. Son las {{ now().hour }}, es la hora de un aperitivo"
           {% elif now().hour ==13 %}
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora de preparar la comida"
           {% elif now().hour ==14 %}
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora del almuerzo"
-          {% elif now().hour ==15 %}
-            "Buenas tardes. papi, hijo, es la hora de tomarse la pastilla"
           {% elif now().hour ==21 and now().weekday() != 4 and now().weekday() != 5 %}
             "Buenas noches. Son las {{ now().hour }}, es la hora de preparar la cena"
           {% elif now().hour ==23 and now().weekday() != 4 and now().weekday() != 5 %}
             "Buenas noches. Son las {{ now().hour }} y {{ now().minute }}, es hora de acostarse"
           {% endif %}
-        data:
-          type: announce
 
 - id: hass_blink_update
   alias: 'BLINK Camera Update'
@@ -175,26 +159,14 @@
   action:
     # Micro Aviso Sirena Interior
     - service: script.sirena_alarma_micro_aviso
-    # Script Sonido Alexa Alexa
-    - service: script.alexa_media_player_sonido
-      data:
-        variables:
-          volumen_alexa_entrada: >
-            {{ states('input_number.alexa_entrada_volumen_alarma') }}
-          volumen_alexa_dormitorio: >
-            {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
-          sonido: >
-            {{ states('input_select.alarma_sonido_disparado') }}
-    # Script Anuncio Alexa Alarma
-    - service: script.alexa_media_player_anuncio
-      data:
-        variables:
-          volumen_alexa_entrada: >
-            {{ states('input_number.alexa_entrada_volumen_alarma') }}
-          volumen_alexa_dormitorio: >
-            {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
-          voz: 'ATENCION! ¡ALARMA HUMO COCINA!. Sensor Humo Cocina. ¡ATENCION! ¡ALARMA!'
-          titulo: '*ATENCION ALARMA HUMO*'
+
+    # Script Envío Sonido Alexa Alexa
+    - service: script.alexa_secuencia
+      data_template:
+        sonido: "{{ states('input_select.alarma_sonido_disparado') }}"
+        repeticion: 5
+        voz: 'ATENCION! ¡ALARMA HUMO COCINA!. Sensor Humo Cocina. ¡ATENCION! ¡ALARMA!'
+
     # Script Notificaciones Alarma
     - service: script.notifica_alarma
       data:
@@ -215,26 +187,14 @@
   action:
     # Micro Aviso Sirena Interior
     - service: script.sirena_alarma_micro_aviso
+
     # Script Envío Sonido Alexa Alexa
-    - service: script.alexa_media_player_sonido
-      data:
-        variables:
-          volumen_alexa_entrada: >
-            {{ states('input_number.alexa_entrada_volumen_alarma') }}
-          volumen_alexa_dormitorio: >
-            {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
-          sonido: >
-            {{ states('input_select.alarma_sonido_disparado') }}
-    # Script Envío Anuncio Alexa Alarma
-    - service: script.alexa_media_player_anuncio
-      data:
-        variables:
-          volumen_alexa_entrada: >
-            {{ states('input_number.alexa_entrada_volumen_alarma') }}
-          volumen_alexa_dormitorio: >
-            {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
-          voz: 'ATENCION! ¡ALARMA AGUA ARQUETA!. Sensor Agua Arqueta. ¡ATENCION! ¡ALARMA!'
-          titulo: '*ATENCION ALARMA AGUA*'
+    - service: script.alexa_secuencia
+      data_template:
+        sonido: "{{ states('input_select.alarma_sonido_disparado') }}"
+        repeticion: 5
+        voz: 'ATENCION! ¡ALARMA AGUA ARQUETA!. Sensor Agua Arqueta. ¡ATENCION! ¡ALARMA!'
+
     # Script Notificación Alarma
     - service: script.notifica_alarma
       data:
@@ -243,7 +203,7 @@
           mensaje: >
             >>> URGENTE: SENSOR AGUA ARQUETA BAÑO
 #
-# REGLA: ALARMA DISARMED A <PENDING>
+# REGLA: ALARMA DISARMED A <ARMING>
 #
 - id: A0
   alias: 'A0 Alarma Disarmed to Pending'
@@ -251,19 +211,19 @@
     - platform: state
       entity_id: alarm_control_panel.ha
       from: 'disarmed'
-      to: 'pending'
+      to: 'arming'
   action:
-    - service: script.alarma_to_pending
-      data_template:
-        fromstate: '{{trigger.from_state.state}}'
-        tostate: '{{trigger.to_state.state}}'
-        ringtone_msg: 10005
+    #- service: script.alarma_to_pending
+    #  data_template:
+    #    fromstate: '{{trigger.from_state.state}}'
+    #    tostate: '{{trigger.to_state.state}}'
+    #    ringtone_msg: 10005
+
     # Script Envío Sonido Alexa Alexa
-    #- service: script.alexa_media_player_anuncio
-    #  data:
-    #    variables:
-    #      voz: "¡ATENCION!, Sistema Armado. Tiene un minuto para salir. ATENCION!, Alarma Activada. Salga ahora, por favor."
-    #      titulo: '*ATENCION ALARMA ACTIVADA*'
+    - service: script.alexa_secuencia_alarma_armado
+      data_template:
+        voz: "¡ATENCION!, alarma activada. Tiene un minuto para salir. ATENCION!, alarma activada. Salga ahora, por favor."
+        sonido: "{{ states('input_select.alarma_sonido_desarmado') }}"
 
 #
 # REGLA: ALARMA ARMED A <PENDING>
@@ -280,22 +240,18 @@
       from: 'armed_away'
       to: 'pending'
   action:
-    - service: script.alarma_to_pending
+    #- service: script.alarma_to_pending
+    #  data_template:
+    #    fromstate: '{{trigger.from_state.state}}'
+    #    tostate: '{{trigger.to_state.state}}'
+    #    ringtone_msg: 10004
+
+    # Script Envío Sonido Alexa Alexa
+    - service: script.alexa_secuencia_alarma_desarmado
       data_template:
-        fromstate: '{{trigger.from_state.state}}'
-        tostate: '{{trigger.to_state.state}}'
-        ringtone_msg: 10004
-    # Script Envío Anuncio Alexa Alarma
-    #- service: script.alexa_media_player_anuncio
-    #  data:
-    #    variables:
-    #      volumen_alexa_entrada: >
-    #        {{ states('input_number.alexa_entrada_volumen_alarma') }}
-    #      volumen_alexa_dormitorio: >
-    #        {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
-    #      voz: "¡ATENCION!, Sistema Armado. Tiene 45 segundos para desarmar. ATENCION!, Alarma Activada. Desarme ahora, por favor."
-    #      titulo: '*ATENCION ALARMA ACTIVADA*'
-#
+        voz: "¡ATENCION!, Alarma Disparada. Tiene 45 segundos para desarmar. ¡ATENCION!, Desarme ahora, por favor."
+        sonido: "{{ states('input_select.alarma_sonido_desarmado') }}"
+
 # REGLA: ARMADO AWAY COMPLETADO
 #
 - id: A2
@@ -305,24 +261,20 @@
       entity_id: alarm_control_panel.ha
       to: 'armed_away'
   action:
-    # ALMACENA EL SENSOR DEL TRIGGER
+    # INICIALIZA EL SENSOR DEL TRIGGER
     - service: input_text.set_value
       entity_id: input_text.alarm_trigger
       data_template:
         value: " "
     # Aviso sonoro con Xiaomi GW
-    - service: script.sirena_xiaomi_play_alarm_armed
+    #- service: script.sirena_xiaomi_play_alarm_armed
 
-    # Script Alexa Envío Anuncio Armado Total
-    #- service: script.alexa_media_player_anuncio
-    #  data:
-    #    variables:
-    #      volumen_alexa_entrada: >
-    #        {{ states('input_number.alexa_entrada_volumen_alarma') }}
-    #      volumen_alexa_dormitorio: >
-    #        {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
-    #      voz: "ATENCION!. Armado Total activado."
-    #      titulo: '*SISTEMA ARMADO HOME*'
+    # Script Envío Sonido Alexa Alexa
+    - service: script.alexa_secuencia
+      data_template:
+        voz: "ATENCION!. Armado Total activado."
+        sonido: "{{ states('input_select.alarma_sonido_armado') }}"
+        repeticion: 2
 
     # Notifica Evento
     - service: script.notifica_evento
@@ -354,20 +306,15 @@
       data_template:
         value: " "
     # Aviso sonoro con Xiaomi GW
-    - service: script.sirena_xiaomi_play_alarm_armed
+    #- service: script.sirena_xiaomi_play_alarm_armed
 
-    # Script Alexa Envío Anuncio Armado Total
-    #- service: script.alexa_media_player_anuncio
-    #  data:
-    #    variables:
-    #      volumen_alexa_entrada: >
-    #        {{ states('input_number.alexa_entrada_volumen_alarma') }}
-    #      volumen_alexa_dormitorio: >
-    #        {{ states('input_number.alexa_dormitorio_volumen_alarma') }}
-    #      voz: "ATENCION!. Armado Parcial activado."
-    #      titulo: '*SISTEMA ARMADO HOME*'
+    # Script Envío Sonido Alexa Alexa
+    - service: script.alexa_secuencia
+      data_template:
+        voz: "ATENCION!. Armado parcial activado."
+        sonido: "{{ states('input_select.alarma_sonido_armado') }}"
+        repeticion: 2
 
-    #
     # Notifica Evento
     - service: script.notifica_evento
       data:
@@ -385,7 +332,7 @@
     #        >>> MODO: "{{ trigger.to_state.state }}"
 
 #
-# REGLA: DESARMADO OK => SIRENA OFF, AVISO Y NOTIFICACION
+# REGLA: DESARMADO OK => SIRENA OFF, AVISO Y NOTIFICACION (DISARMED)
 #
 - id: A4
   alias: 'A4 Alarma Disarmed'
@@ -394,22 +341,37 @@
       entity_id: alarm_control_panel.ha
       to: 'disarmed'
   action:
-    # ALMACENA EL SENSOR DEL TRIGGER
-    - service: input_text.set_value
-      entity_id: input_text.alarm_trigger
-      data_template:
-        value: " "
+    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
+    - service: switch.turn_off
+      entity_id: switch.esphome_bas_sw0
+
     # DESARMADO PANEL ALARMA BLINK
     - service: alarm_control_panel.alarm_disarm
       entity_id: alarm_control_panel.blink_casa
+
+    # Resetea el sensor del TRIGGER
+    #- service: input_text.set_value
+    #  entity_id: input_text.alarm_trigger
+    #  data_template:
+    #    value: " "
+
     #
-    # Apagado Sirenas y Aviso sonoro con Xiaomi GW
-    - service: script.sirena_xiaomi_play_alarm_disarmed
+    # Aviso sonoro con Xiaomi GW
+    #- service: script.sirena_xiaomi_play_alarm_disarmed
+
     # Apaga Luz Piloto Gateway
     - service: light.turn_off
       entity_id: light.gateway_light_7811dcb788fa
+
+    # Script Envío Sonido Alexa Alexa
+    - service: script.alexa_secuencia
+      data_template:
+        voz: "ATENCION!. Alarma desactivada."
+        sonido: "{{ states('input_select.alarma_sonido_desarmado') }}"
+        repeticion: 1
+
     # Script Notificación Evento
-    - service: script.notifica_evento
+    - service: script.notifica_alarma
       data:
         voz: '¡ATENCION! Alarma Desactivada.'
         titulo: '*ALARMA HOMY*'
@@ -475,16 +437,15 @@
     - service: input_text.set_value
       entity_id: input_text.alarm_trigger
       data_template:
-        value: "{{ trigger.to_state.attributes.friendly_name }}"
+        #value: "{{ trigger.to_state.attributes.friendly_name }}"
+        value: 'error'
     # Script Notificación Alarma Away
     - service: script.notifica_alarma
-      data:
-        voz: 'ATENCION!, ¡ALARMA!.Se ha disparado un sensor de alarma. ¡ATENCION!, ¡ALARMA!.'
+      data_template:
         titulo: '*ALARMA HOMY*'
         mensaje: >
           >>> ESTADO: ATENCION ALARMA DISPARADA
 
-          >>> SENSOR: {{ trigger.to_state.attributes.friendly_name }}
     # DISPARA LA ALARMA
     - service: alarm_control_panel.alarm_trigger
       entity_id: alarm_control_panel.ha
@@ -528,16 +489,14 @@
     - service: input_text.set_value
       entity_id: input_text.alarm_trigger
       data_template:
-        value: "{{ trigger.to_state.attributes.friendly_name }}"
+        value: 'error'
+        #value: "{{ trigger.to_state.attributes.friendly_name }}"
     # Script Notificación Alarma
     - service: script.notifica_alarma
-      data:
-        voz: 'ATENCION!, ¡ALARMA!.Se ha disparado un sensor de alarma. ¡ATENCION!, ¡ALARMA!.'
+      data_template:
         titulo: '*ALARMA HOMY*'
         mensaje: >
           >>> ESTADO: ATENCION ALARMA PERIMETRO DISPARADA
-
-          >>> SENSOR: {{ trigger.to_state.attributes.friendly_name }}
 
     # DISPARA LA ALARMA
     - service: alarm_control_panel.alarm_trigger
@@ -550,24 +509,32 @@
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
-      from: 'armed_away'
+      #from: 'armed_away'
       to: 'triggered'
   action:
-    # AVISO SIRENAS ALARMA
-    - service: script.sirena_alarma_armed_away
+    # ALEXA SIRENAS ALARMA DISPARADA
+    - service: script.alexa_secuencia_alarma_disparada
+    #
+    # RETRASO DE 5 SEGUNDOS 5"
+    - delay: '00:00:05'
+    #######################################
+    #  SONOFF_SW1_SIRENA INTERIOR ==> ON  #
+    #######################################
+    - service: switch.turn_on
+      entity_id: switch.esphome_bas_sw0
 
 # REGLA: ALARMA ARMED_HOME TRIGGERED ==> SIRENA + NOTIFICACION COMPLETA
 #
-- id: A8
-  alias: 'A8 Alarm Triggered'
-  trigger:
-    - platform: state
-      entity_id: alarm_control_panel.ha
-      from: 'armed_home'
-      to: 'triggered'
-  action:
-    # AVISO SIRENAS ALARMA
-    - service: script.sirena_alarma_armed_home
+#- id: A8
+#  alias: 'A8 Alarm Triggered'
+#  trigger:
+#    - platform: state
+#      entity_id: alarm_control_panel.ha
+#      from: 'armed_home'
+#      to: 'triggered'
+#  action:
+#    # AVISO SIRENAS ALARMA
+#    - service: script.sirena_alarma_armed_home
 
 
 # REGLA: TRIGGER DESARMADO AUTOMATICO AL AMANECER
@@ -812,7 +779,7 @@
     # Script encendido Luz piloto si es de noche
     - service: script.luces_on_family_home
     - service: script.notifica_evento
-      data:
+      data_template:
         titulo: '*FAMILY HOME: SI*'
         mensaje: >
           >>> EVENTO: Primero en Entrar {{ states('sensor.family_last_tracking') }}
@@ -1025,6 +992,7 @@
 #
 - id: L05
   alias: 'L05 Luces On Exterior Segun Sensor'
+  mode: restart
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001e637f6
@@ -1032,15 +1000,15 @@
   condition:
     condition: and
     conditions:
-      - condition: sun
-        after: sunset
-        before: sunrise
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
       - condition: state
         entity_id: switch.wall_switch_right_158d0002236e75
         state: 'off'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e637f6
-        below: 1
+        below: 10
   action:
     - service: switch.turn_on
       entity_id: switch.wall_switch_right_158d0002236e75
@@ -1074,6 +1042,7 @@
 
 - id: L07
   alias: 'L07 Luces On Entrada Según Sensor'
+  mode: restart
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001e55903
@@ -1117,6 +1086,7 @@
 
 - id: L08
   alias: 'L08 Luces On Dormitorio Según Sensor'
+  mode: restart
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0002ea1d0f
@@ -1158,6 +1128,7 @@
 
 - id: L09
   alias: 'L09 Luces On Dormitorio Warning'
+  mode: restart
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0002ea1d0f       # Sensor Dormitorio
@@ -1191,6 +1162,7 @@
 
 - id: L10
   alias: 'L10 Luces On Estudio Según Sensor'
+  mode: restart
   trigger:
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001e464a6
@@ -1395,7 +1367,7 @@
     # Script Notificación Alarma
     - service: script.notifica_alarma
       data:
-        voz: 'Fallo Eléctrico. Cuadro depuradora piscina sin corriente eléctrica'
+        #voz: 'Fallo Eléctrico. Cuadro depuradora piscina sin corriente eléctrica'
         titulo: '*AVISO FALLO ELECTRICO*'
         mensaje: >
           >>> URGENTE: CUADRO ELECTRICO DEPURADORA PISCINA SIN CORRIENTE
@@ -1421,7 +1393,6 @@
   action:
     # Timer Programador Diario Piscina
     - service: script.piscina_timer_start_diario
-
 
 - id: S07
   alias: 'S07 Timer Piscina End'
