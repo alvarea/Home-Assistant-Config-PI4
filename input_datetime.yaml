@@ -107,15 +107,15 @@
     has_time: true
     initial: '09:09'
 
-  # Bonsais Zona Olivo - Tramo2 - Inicio
+  # Bonsais Zona Producción - Tramo2 - Inicio
   riego_sw2_start_time2:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '18:05'
+    initial: '19:00'
 
   riego_sw2_end_time2:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '18:09'
+    initial: '19:03'

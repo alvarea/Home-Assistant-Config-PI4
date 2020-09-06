@@ -742,14 +742,14 @@
     #
     # ping_01_router_fibra_movistar:
 
-#  - platform: command_line
-#    #command: "/home/homeassistant/.homeassistant/ssh_scripts/wan_test.sh"  # hassbian
-#    command: "/config/ssh_scripts/wan_test.sh"
-#    device_class: connectivity
-#    payload_on: "Up"
-#    payload_off: "Down"
-#    name: 'ping 00 WAN Internet - Google'
-#    scan_interval: 300
+  - platform: command_line
+    #command: "/home/homeassistant/.homeassistant/ssh_scripts/wan_test.sh"  # hassbian
+    command: "/config/ssh_scripts/wan_test.sh"
+    device_class: connectivity
+    payload_on: "Up"
+    payload_off: "Down"
+    name: 'ping 00 WAN Internet - Google'
+    scan_interval: 300
 
   - platform: ping
     host: 192.168.0.1
@@ -763,10 +763,10 @@
     name: 'ping 02 NAS Time Capsule'
 
     #ping_04_router_wifi_zte:
-  - platform: ping
-    host: 192.168.0.4
-    count: 2
-    name: 'ping 04 Router WIFI ZTE'
+  #- platform: ping
+  #  host: 192.168.0.4
+  #  count: 2
+  #  name: 'ping 04 Router WIFI ZTE'
 
     #ping_05_router_wifi_tplink:
   - platform: ping

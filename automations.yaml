@@ -57,23 +57,22 @@
   trigger:
     - platform: time
       at:
-        - '10:00:00'
+        - '11:10:00'
         - '23:55:00'
-        - '00:35:00'
   action:
     - service: input_number.set_value
       data_template:
         entity_id: input_number.xiaomi_volume_alarm_armed
         value: >-
-          {% if (now().hour == 10) %} '10'
-          {% elif (now().hour == 23) %} '2'
+          {% if (now().hour == 11) %} 10
+          {% elif (now().hour == 23) %} 2
           {% endif %}
     - service: input_number.set_value
       data_template:
         entity_id: input_number.xiaomi_volume_alarm_disarmed
         value: >-
-          {% if (now().hour == 10) %} '10'
-          {% elif (now().hour == 23) %} '2'
+          {% if (now().hour == 11) %} 10
+          {% elif (now().hour == 23) %} 2
           {% endif %}
 
 - id: hass_clock_notify
@@ -279,13 +278,11 @@
     # Notifica Evento
     - service: script.notifica_evento
       data:
-        variables:
-          voz: '¡ATENCION! Armado Total activado.'
-          titulo: '*ALARMA HOMY*'
-          mensaje: >
-            >>> ESTADO: ARMADO TOTAL (AWAY)
+        titulo: '*ALARMA HOMY*'
+        mensaje: >
+          >>> ESTADO: ARMADO TOTAL (AWAY)
 
-    - delay: 00:01
+    - delay: 00:01:00
     # ARMADO PANEL ALARMA BLINK
     - service: alarm_control_panel.alarm_arm_away
       entity_id: alarm_control_panel.blink_casa
@@ -318,7 +315,6 @@
     # Notifica Evento
     - service: script.notifica_evento
       data:
-        voz: '¡ATENCION! Armado Parcial activado.'
         titulo: '*ALARMA HOMY*'
         mensaje: >
           >>> ESTADO: ARMADO PARCIAL (HOME)
@@ -371,9 +367,8 @@
         repeticion: 1
 
     # Script Notificación Evento
-    - service: script.notifica_alarma
+    - service: script.notifica_evento
       data:
-        voz: '¡ATENCION! Alarma Desactivada.'
         titulo: '*ALARMA HOMY*'
         mensaje: >
           >>> ESTADO: Alarma Desactivada
@@ -437,18 +432,17 @@
     - service: input_text.set_value
       entity_id: input_text.alarm_trigger
       data_template:
-        #value: "{{ trigger.to_state.attributes.friendly_name }}"
-        value: 'error'
+        value: "{{ trigger.to_state.attributes.friendly_name }}"
+    # DISPARA LA ALARMA
+    - service: alarm_control_panel.alarm_trigger
+      entity_id: alarm_control_panel.ha
     # Script Notificación Alarma Away
     - service: script.notifica_alarma
-      data_template:
+      data:
         titulo: '*ALARMA HOMY*'
         mensaje: >
           >>> ESTADO: ATENCION ALARMA DISPARADA
 
-    # DISPARA LA ALARMA
-    - service: alarm_control_panel.alarm_trigger
-      entity_id: alarm_control_panel.ha
 
 #
 # REGLA: TRIGGER SENSOR => MODO ARMADO HOME => PENDING ==> ALARMA TRIGGERED
@@ -489,8 +483,7 @@
     - service: input_text.set_value
       entity_id: input_text.alarm_trigger
       data_template:
-        value: 'error'
-        #value: "{{ trigger.to_state.attributes.friendly_name }}"
+        value: "{{ trigger.to_state.attributes.friendly_name }}"
     # Script Notificación Alarma
     - service: script.notifica_alarma
       data_template:
@@ -514,14 +507,6 @@
   action:
     # ALEXA SIRENAS ALARMA DISPARADA
     - service: script.alexa_secuencia_alarma_disparada
-    #
-    # RETRASO DE 5 SEGUNDOS 5"
-    - delay: '00:00:05'
-    #######################################
-    #  SONOFF_SW1_SIRENA INTERIOR ==> ON  #
-    #######################################
-    - service: switch.turn_on
-      entity_id: switch.esphome_bas_sw0
 
 # REGLA: ALARMA ARMED_HOME TRIGGERED ==> SIRENA + NOTIFICACION COMPLETA
 #
@@ -955,10 +940,10 @@
   alias: 'L04 Luces On Salon Sunset'
   trigger:
     - platform: sun
-      # offset: "-00:30:00"   # Horario Invierno GMT+1
-      # offset: "-00:15:00"   # Horario Verano GMT+2
+      # offset: "-00:35:00"   # Horario Invierno GMT+1
+      # offset: "-00:25:00"   # Horario Verano GMT+2
       event: sunset
-      offset: "-00:15"
+      offset: "-00:25"
   condition:
     condition: and
     conditions:
@@ -975,10 +960,9 @@
     # Notifica a Familia
     - service: script.notifica_evento
       data:
-        voz: 'Anochece en 15 minutos. Enciendo luz del salón'
         titulo: '*ALUMBRADO*'
         mensaje: >
-          >>> EVENTO: Puesta de Sol
+          >>> EVENTO: Puesta de Sol en breve
 
           >>> LUCES: Alumbrado Luz Salón On
 
@@ -1021,7 +1005,6 @@
   trigger:
     - platform: time
       at:
-        - "01:00:00"
         - "02:00:00"
         - "03:30:00"
         - "04:00:00"
@@ -1031,7 +1014,7 @@
     condition: or
     conditions:
       - condition: state
-        entity_id: light.luces_interior
+        entity_id: group.luces_interior_grp # Luces interior
         state: 'on'
       - condition: state
         entity_id: group.luces_exterior_grp # Luces exterior
@@ -1809,7 +1792,6 @@
     # Notifica a Familia
     - service: script.notifica_evento
       data:
-        voz: 'Hay elementos de riego del jardín encedidos. Quedan apagados'
         titulo: '*JARDIN: OFF*'
         mensaje: >
           >>> EVENTO: Control Riego/Fuentes encendidas antes del amanecer
@@ -1880,7 +1862,6 @@
     # Script Notificación Alarma
     - service: script.notifica_evento
       data:
-        # voz: 'Consola Sony PS4 encendida'
         titulo: '*AVISO CONSOLA PS4*'
         mensaje: >
           >>> AVISO: ENCENDIDO
@@ -1901,7 +1882,6 @@
     # Script Notificación Alarma
     - service: script.notifica_evento
       data:
-        # voz: 'Consola Sony PS4 apagada'
         titulo: '*AVISO CONSOLA PS4*'
         mensaje: >
           >>> AVISO: APAGADO

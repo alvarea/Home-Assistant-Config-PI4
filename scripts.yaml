@@ -312,6 +312,7 @@ homy_desarmado_code:
 
 sirena_alarma_triggered:
   alias: "Sirena Alarma Triggered"
+  mode: restart
   sequence:
     # IF Mute Sirenas = ON => True => CANCEL SCRIPT
     - condition: template
@@ -343,6 +344,8 @@ sirena_alarma_triggered:
 # Parámetros:
 #
 alexa_dormitorio_set_volumen:
+  alias: 'Alexa Dormitorio Set Vol'
+  mode: restart
   sequence:
     # Almacena el Volumen Actual de Alexa Dormitorio
     - service: input_number.set_value
@@ -375,6 +378,8 @@ alexa_dormitorio_set_volumen:
 # Parámetros:
 #
 alexa_entrada_set_volumen:
+  alias: 'Alexa Entrada Set Vol'
+  mode: restart
   sequence:
     # Almacena el Volumen Actual de Alexa Entrada
     - service: input_number.set_value
@@ -405,6 +410,8 @@ alexa_entrada_set_volumen:
 # Scripts básicos para restaurar el volumen original que tenía Alexa antes del mensaje
 #
 alexa_entrada_restaura_volumen:
+  alias: 'Alexa Entrada Restaura Vol'
+  mode: restart
   sequence:
     # Restablece el Volumen Anterior al mensaje
     - service: media_player.volume_set
@@ -413,6 +420,8 @@ alexa_entrada_restaura_volumen:
         volume_level: "{{ states('input_number.alexa_entrada_volumen_anterior')|float }}"
 
 alexa_dormitorio_restaura_volumen:
+  alias: 'Alexa Dormitorio Restaura Vol'
+  mode: restart
   sequence:
     # Restablece el Volumen Anterior al mensaje
     - service: media_player.volume_set
@@ -429,6 +438,8 @@ alexa_dormitorio_restaura_volumen:
 # repeticion: numero de repeticiones
 #
 alexa_sonido_alarma:
+  alias: 'Alexa Sonido Alarma'
+  mode: restart
   sequence:
     - repeat:
         count: "{{ repeticion|int }}"
@@ -446,11 +457,15 @@ alexa_sonido_alarma:
 # sonido:     nombre del sonido de Amazon Alexa.
 #
 alexa_sirena_alarma:
+  alias: 'Alex Sirena Alarma'
+  mode: restart
   sequence:
     - repeat:
         while:
-          - condition: template
-            value_template: "{{ states.alarm_control_panel.ha.state == 'triggered' }}"
+          - condition: state
+            entity_id: alarm_control_panel.ha
+            state: 'triggered'
+            # value_template: "{{ states.alarm_control_panel.ha.state == 'triggered' }}"
         sequence:
           - service: media_player.play_media
             data_template:
@@ -459,6 +474,7 @@ alexa_sirena_alarma:
                 - media_player.echo_alexa_dormitorio
               media_content_type: sound
               media_content_id: "{{ sonido }}"
+          - delay: 00:00:03
 
 #
 # Script genérico y básico para enviar un mensaje de voz a un Alexa Echo
@@ -470,6 +486,7 @@ alexa_sirena_alarma:
 #
 alexa_anuncio:
   alias: 'Alexa Mensaje Voz'
+  mode: restart
   sequence:
     # envio mensaje voz
     - service: notify.alexa_media
@@ -487,6 +504,8 @@ alexa_anuncio:
 # sonido:   nombre del sonido a reproducir.  Ver https://github.com/custom-components/alexa_media_player/wiki#examples
 #
 alexa_sonido:
+  alias: 'Alexa Sonido'
+  mode: restart
   sequence:
     # Envio Sonido
     - service: media_player.play_media
@@ -505,6 +524,7 @@ alexa_sonido:
 # repeticion: numero de repeticiones
 #
 alexa_secuencia:
+  alias: 'Alexa Secuencia'
   mode: restart
   sequence:
     - choose:
@@ -548,6 +568,7 @@ alexa_secuencia:
 # repeticion: numero de repeticiones
 #
 alexa_entrada_secuencia:
+  alias: 'Alexa Entrada Secuencia'
   mode: restart
   sequence:
     - service: script.alexa_entrada_set_volumen
@@ -563,6 +584,7 @@ alexa_entrada_secuencia:
     - service: script.alexa_entrada_restaura_volumen
 
 alexa_dormitorio_secuencia:
+  alias: 'Alexa Dormitorio Secuencia'
   mode: restart
   sequence:
     - service: script.alexa_dormitorio_set_volumen
@@ -586,6 +608,8 @@ alexa_dormitorio_secuencia:
 # sonido:     nombre del sonido de Amazon Alexa.
 #
 alexa_secuencia_alarma_armado:
+  alias: 'Alexa Secuencia Alarma Armado'
+  mode: restart
   sequence:
     - choose:
         # Opciones echo_alexa_entrada, echo alexa_dormitorio
@@ -601,14 +625,17 @@ alexa_secuencia_alarma_armado:
                 voz: "{{ voz }}"
             - repeat:
                 while:
-                  - condition: template
-                    value_template: "{{ states.alarm_control_panel.ha.state == 'arming' }}"
+                  - condition: state
+                    entity_id: alarm_control_panel.ha
+                    state: 'arming'
+                    #  value_template: "{{ states.alarm_control_panel.ha.state == 'arming' }}"
                 sequence:
                   - service: media_player.play_media
                     data_template:
                       entity_id: '{{ states.input_select.alarma_media_player.state }}'
                       media_content_type: sound
                       media_content_id: "{{ sonido }}"
+                  - delay: 00:00:03
             - service: script.alexa_dormitorio_restaura_volumen
       default:
         - service: script.alexa_entrada_set_volumen
@@ -618,15 +645,18 @@ alexa_secuencia_alarma_armado:
             voz: "{{ voz }}"
         - repeat:
             while:
-              - condition: template
-                value_template: "{{ states.alarm_control_panel.ha.state == 'arming' }}"
+              - condition: state
+                entity_id: alarm_control_panel.ha
+                state: 'arming'
+                #  value_template: "{{ states.alarm_control_panel.ha.state == 'arming' }}"
             sequence:
               - service: media_player.play_media
                 data_template:
                   entity_id: '{{ states.input_select.alarma_media_player.state }}'
                   media_content_type: sound
                   media_content_id: "{{ sonido }}"
-        - service: script.alexa_entrada_restaura_volumen
+              - delay: 00:00:03
+    - service: script.alexa_entrada_restaura_volumen
 
 # Script completo para enviar un sonido de cuenta atrás durante el proceso de DESARMADO
 # Alexa estará tocando el sonido desarmado mientras el estado de alarma sea PENDING
@@ -636,6 +666,8 @@ alexa_secuencia_alarma_armado:
 # sonido:     nombre del sonido de Amazon Alexa.
 #
 alexa_secuencia_alarma_desarmado:
+  alias: 'Alexa Secuencia Alarma Desrmado'
+  mode: restart
   sequence:
     - choose:
         # Opciones echo_alexa_entrada, echo alexa_dormitorio
@@ -651,14 +683,17 @@ alexa_secuencia_alarma_desarmado:
                 voz: "{{ voz }}"
             - repeat:
                 while:
-                  - condition: template
-                    value_template: "{{ states.alarm_control_panel.ha.state == 'pending' }}"
+                  - condition: state
+                    entity_id: alarm_control_panel.ha
+                    state: 'pending'
+                    #value_template: "{{ states.alarm_control_panel.ha.state == 'pending' }}"
                 sequence:
                   - service: media_player.play_media
                     data_template:
                       entity_id: '{{ states.input_select.alarma_media_player.state }}'
                       media_content_type: sound
                       media_content_id: "{{ sonido }}"
+                  - delay: 00:00:03
             - service: script.alexa_dormitorio_restaura_volumen
       default:
         - service: script.alexa_entrada_set_volumen
@@ -668,14 +703,17 @@ alexa_secuencia_alarma_desarmado:
             voz: "{{ voz }}"
         - repeat:
             while:
-              - condition: template
-                value_template: "{{ states.alarm_control_panel.ha.state == 'pending' }}"
+              - condition: state
+                entity_id: alarm_control_panel.ha
+                state: 'pending'
+                #value_template: "{{ states.alarm_control_panel.ha.state == 'pending' }}"
             sequence:
               - service: media_player.play_media
                 data_template:
                   entity_id: '{{ states.input_select.alarma_media_player.state }}'
                   media_content_type: sound
                   media_content_id: "{{ sonido }}"
+              - delay: 00:00:03
         - service: script.alexa_entrada_restaura_volumen
 
 #
@@ -687,13 +725,31 @@ alexa_secuencia_alarma_desarmado:
 # sonido:     nombre del sonido de Amazon Alexa.
 #
 alexa_secuencia_alarma_disparada:
+  alias: 'Alexa Secuencia Alarma Disparada'
+  mode: restart
   sequence:
     - service: script.alexa_entrada_set_volumen
     - service: script.alexa_dormitorio_set_volumen
+    - service: media_player.play_media
+      data_template:
+        entity_id:
+          - media_player.echo_alexa_entrada
+          - media_player.echo_alexa_dormitorio
+        media_content_type: sound
+        media_content_id: "{{ states('input_select.alarma_sonido_disparado') }}"
+    # RETRASO DE 5 SEGUNDOS 5"
+    - delay: 00:00:03
+    #######################################
+    # SONOFF_SW1_SIRENA INTERIOR ==> ON
+    #######################################
+    - service: switch.turn_on
+      entity_id: switch.esphome_bas_sw0
     - repeat:
         while:
-          - condition: template
-            value_template: "{{ states.alarm_control_panel.ha.state == 'triggered' }}"
+          - condition: state
+            entity_id: alarm_control_panel.ha
+            state: 'triggered'
+            #value_template: "{{ states.alarm_control_panel.ha.state == 'triggered' }}"
         sequence:
           - service: media_player.play_media
             data_template:
@@ -702,6 +758,12 @@ alexa_secuencia_alarma_disparada:
                 - media_player.echo_alexa_dormitorio
               media_content_type: sound
               media_content_id: "{{ states('input_select.alarma_sonido_disparado') }}"
+          - delay: 00:00:03
+    #######################################
+    # SONOFF_SW1_SIRENA INTERIOR ==> ON
+    #######################################
+    - service: switch.turn_off
+      entity_id: switch.esphome_bas_sw0
     - service: script.alexa_entrada_restaura_volumen
     - service: script.alexa_dormitorio_restaura_volumen
 
@@ -709,14 +771,32 @@ alexa_secuencia_alarma_disparada:
 #---------------------------- PRUEBAS ------------------------
 #
 test_alexa_secuencia_armado:
+  alias: 'Test Alexa Secuencia Alarma Armado'
+  mode: restart
   sequence:
-    - service: script.alexa_entrada_secuencia
+    - service: light.turn_on
+      entity_id: light.luz_vitrina
+    - service: script.alexa_dormitorio_secuencia
       data_template:
-        voz: 'ATENCION!. Armado Total activado.'
+        voz: 'ATENCION!. Luz Vitrina Entendida'
         sonido: "{{ states('input_select.alarma_sonido_armado') }}"
-        repeticion: 2
+        repeticion: 1
+    - repeat:
+        while:
+          - condition: state
+            entity_id: light.luz_vitrina
+            state: 'on'
+        sequence:
+          - service: media_player.play_media
+            data_template:
+              entity_id: '{{ states.input_select.alarma_media_player.state }}'
+              media_content_type: sound
+              media_content_id: "{{ states('input_select.alarma_sonido_armado') }}"
+          - delay: 00:00:03
 
 test_alexa_secuencia_desarmado:
+  alias: 'Test Alexa Secuencia Alarma Desrmado'
+  mode: restart
   sequence:
     - service: script.alexa_entrada_secuencia
       data_template:
@@ -746,8 +826,6 @@ test_alexa_anuncio:
         sonido: "{{ states('input_select.alarma_sonido_disparado') }}"
 
     - service: script.alexa_dormitorio_restaura_volumen
-
-
 
 test_media_player_announce:
   alias: 'Alexa Mensaje Voz'
@@ -830,21 +908,22 @@ notifica_alarma:
         {{ states('input_text.mensaje_tit') }}
       message: >
         {{ states('input_text.mensaje_msg') }}
+        {{ states('input_text.alarm_trigger') }}
 
-  # Notificación IOS
+    # Notificación IOS
   - service: notify.notifica_grupo_ios
     data_template:
-      titulo: >
+      title: >
         {{ states('input_text.mensaje_tit') }}
-      mensaje: >
+      message: >
         {{ states('input_text.mensaje_msg') }}
 
   # Notificación Persistente App HOMY
   - service: persistent_notification.create
     data_template:
-      titulo: >
+      title: >
         {{ states('input_text.mensaje_tit') }}
-      mensaje: >
+      message: >
         {{ states('input_text.mensaje_msg') }}
 
   # Notificación Telegram
@@ -1254,7 +1333,7 @@ jardin_off:
 lavadora_switch_off:
   alias: Lavadora Switch Off
   sequence:
-    - delay: '00:00:05'
+    - delay: 00:00:05
 
     - condition: template
       value_template: '{{ as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_warning.last_changed) - as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed) < 300 }}'

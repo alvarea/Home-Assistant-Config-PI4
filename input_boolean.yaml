@@ -133,7 +133,7 @@
   # Riego Bonsais Zona2 - Tramo2
   riego_sw2_programador_t2:
     name: Programador Riego Zona2 - Tramo2
-    initial: off
+    initial: on
     icon: mdi:dip-switch
 
 # Programador Diario Luces Jardín
