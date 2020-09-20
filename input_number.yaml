@@ -43,7 +43,7 @@
   alexa_entrada_volumen_anterior:
     name: Anterior Alexa Entrada
     mode: slider
-    initial: 0.5
+    initial: 0.1
     min: 0
     max: 1
     step: 0.1
@@ -53,7 +53,7 @@
   alexa_dormitorio_volumen_anterior:
     name: Anterior Alexa Dormitorio
     mode: slider
-    initial: 0.5
+    initial: 0.1
     min: 0
     max: 1
     step: 0.1
@@ -63,7 +63,7 @@
   alexa_entrada_volumen_nuevo:
     name: Nuevo Alexa Entrada
     mode: slider
-    initial: 0.5
+    initial: 0.1
     min: 0
     max: 1
     step: 0.1
@@ -73,7 +73,7 @@
   alexa_dormitorio_volumen_nuevo:
     name: Nuevo Alexa Dormitorio
     mode: slider
-    initial: 0.5
+    initial: 0.1
     min: 0
     max: 1
     step: 0.1
@@ -83,7 +83,7 @@
   alexa_entrada_volumen_anuncio_dia:
     name: Anuncios Día Entrada
     mode: slider
-    initial: 0.6
+    initial: 0.4
     min: 0
     max: 1
     step: 0.1
@@ -103,7 +103,7 @@
   alexa_entrada_volumen_anuncio_noc:
     name: Anuncio Noche Entrada
     mode: slider
-    initial: 0.2
+    initial: 0.1
     min: 0
     max: 1
     step: 0.1
@@ -123,7 +123,7 @@
   alexa_dormitorio_volumen_anuncio_dia:
     name: Anuncio Día Dormitorio
     mode: slider
-    initial: 0.5
+    initial: 0.4
     min: 0
     max: 1
     step: 0.1
@@ -133,7 +133,7 @@
   alexa_dormitorio_volumen_alarma_dia:
     name: Alarma Día Dormitorio
     mode: slider
-    initial: 0.8
+    initial: 0.9
     min: 0
     max: 1
     step: 0.1

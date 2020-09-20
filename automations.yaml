@@ -89,11 +89,11 @@
     # Script Envío Sonido Alexa Alexa
     - service: script.alexa_secuencia
       data_template:
-        sonido: ''
-        repeticion: 0
+        sonido: 'clock_01'
+        repeticion: 1
         voz: >
           {% if now().hour ==12 %}
-            "Buenos días. Son las {{ now().hour }}, es la hora de un aperitivo"
+            "Buenos días. Son las {{ now().hour }} y {{ now().minute }}, es la hora de un aperitivo"
           {% elif now().hour ==13 %}
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora de preparar la comida"
           {% elif now().hour ==14 %}
@@ -282,10 +282,10 @@
         mensaje: >
           >>> ESTADO: ARMADO TOTAL (AWAY)
 
-    - delay: 00:01:00
+    #- delay: 00:01:00
     # ARMADO PANEL ALARMA BLINK
-    - service: alarm_control_panel.alarm_arm_away
-      entity_id: alarm_control_panel.blink_casa
+    #- service: alarm_control_panel.alarm_arm_away
+    #  entity_id: alarm_control_panel.blink_casa
 
 #
 # REGLA: ARMADO HOME COMPLETADO
@@ -319,9 +319,6 @@
         mensaje: >
           >>> ESTADO: ARMADO PARCIAL (HOME)
 
-    # ARMADO PANEL ALARMA BLINK
-    #- service: alarm_control_panel.alarm_arm_away
-    #  entity_id: alarm_control_panel.blink_casa
 
     # Revisar
     # https://community.home-assistant.io/t/automation-with-is-state-trigger-to-state-on-not-working/54691/2
@@ -551,9 +548,6 @@
       entity_id: alarm_control_panel.ha
       data:
         code: !secret alarm_control_code
-    # Blink se desarma sola al dispararse el evento disarmed
-    #- service: alarm_control_panel.alarm_disarm
-    #  entity_id: alarm_control_panel.blink_casa
     #
     # Aviso sonoro con Xiaomi GW
     - service: script.sirena_stop_alarm
@@ -1795,7 +1789,48 @@
         titulo: '*JARDIN: OFF*'
         mensaje: >
           >>> EVENTO: Control Riego/Fuentes encendidas antes del amanecer
+          >>> JARDIN: Apagado total
 
+
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# REGLAS DE CONTROL DE PING DEVICES BINARY SENSOR                             #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+- id: S28
+  alias: 'S28 Control Jardin Before Sunrise'
+  trigger:
+    - platform: time
+      at: "00:00:00"
+    - platform: time
+      at: "01:00:00"
+    - platform: time
+      at: "02:00:00"
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: switch.esphome_4ch_sw2_relay_1
+        state: 'on'
+      - condition: state
+        entity_id: switch.esphome_4ch_sw2_relay_2
+        state: 'on'
+      - condition: state
+        entity_id: switch.esphome_4ch_sw2_relay_3
+        state: 'on'
+      - condition: state
+        entity_id: switch.esphome_pow_sw3
+        state: 'on'
+  action:
+    # Apagado Luces Casa
+    - service: script.jardin_off
+    # Notifica a Familia
+    - service: script.notifica_evento
+      data:
+        titulo: '*JARDIN: OFF*'
+        mensaje: >
+          >>> EVENTO: Control Riego/Fuentes encendidas antes del amanecer
           >>> JARDIN: Apagado total
 
 #-----------------------------------------------------------------------------#

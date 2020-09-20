@@ -544,6 +544,7 @@ alexa_secuencia:
                 alexa: 'dormitorio'
                 sonido: "{{ sonido }}"
                 repeticion: "{{ repeticion }}"
+            - delay: 00:00:05
             - service: script.alexa_dormitorio_restaura_volumen
       default:
         # SALIDA ALEXA ENTRADA
@@ -557,6 +558,7 @@ alexa_secuencia:
             alexa: 'entrada'
             sonido: "{{ sonido }}"
             repeticion: "{{ repeticion }}"
+        - delay: 00:00:05
         - service: script.alexa_entrada_restaura_volumen
 
 #
@@ -581,6 +583,7 @@ alexa_entrada_secuencia:
         alexa: 'entrada'
         sonido: "{{ sonido }}"
         repeticion: "{{ repeticion }}"
+    - delay: 00:00:05
     - service: script.alexa_entrada_restaura_volumen
 
 alexa_dormitorio_secuencia:
@@ -597,6 +600,7 @@ alexa_dormitorio_secuencia:
         alexa: 'dormitorio'
         sonido: "{{ sonido }}"
         repeticion: "{{ repeticion }}"
+    - delay: 00:00:05
     - service: script.alexa_dormitorio_restaura_volumen
 
 #
@@ -636,6 +640,7 @@ alexa_secuencia_alarma_armado:
                       media_content_type: sound
                       media_content_id: "{{ sonido }}"
                   - delay: 00:00:03
+            - delay: 00:00:05
             - service: script.alexa_dormitorio_restaura_volumen
       default:
         - service: script.alexa_entrada_set_volumen
@@ -656,6 +661,7 @@ alexa_secuencia_alarma_armado:
                   media_content_type: sound
                   media_content_id: "{{ sonido }}"
               - delay: 00:00:03
+    - delay: 00:00:05
     - service: script.alexa_entrada_restaura_volumen
 
 # Script completo para enviar un sonido de cuenta atrás durante el proceso de DESARMADO
@@ -694,6 +700,7 @@ alexa_secuencia_alarma_desarmado:
                       media_content_type: sound
                       media_content_id: "{{ sonido }}"
                   - delay: 00:00:03
+            - delay: 00:00:05
             - service: script.alexa_dormitorio_restaura_volumen
       default:
         - service: script.alexa_entrada_set_volumen
@@ -714,8 +721,8 @@ alexa_secuencia_alarma_desarmado:
                   media_content_type: sound
                   media_content_id: "{{ sonido }}"
               - delay: 00:00:03
+        - delay: 00:00:05
         - service: script.alexa_entrada_restaura_volumen
-
 #
 # Script completo para enviar un sonido de cuenta atrás durante el proceso de armado o desarmado
 # Alexa estará tocando el sonido desarmado mientras el estado de alarma sea TRIGGERED
@@ -764,6 +771,7 @@ alexa_secuencia_alarma_disparada:
     #######################################
     - service: switch.turn_off
       entity_id: switch.esphome_bas_sw0
+    - delay: 00:00:05
     - service: script.alexa_entrada_restaura_volumen
     - service: script.alexa_dormitorio_restaura_volumen
 
