@@ -1045,7 +1045,7 @@ luces_off:
       value_template: "{% if is_state('group.luces_casa_grp', 'on') %}true{% endif %}"
     # Apagado Luces Interior Casa
     - service: light.turn_off
-      entity_id: light.luces_interior
+      entity_id: group.luces_interior_grp
     # Apagado Luces Exterior
     - service: switch.turn_off
       entity_id: group.luces_exterior_grp

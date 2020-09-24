@@ -112,10 +112,10 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '20:00'
+    initial: '20:05'
 
   riego_sw2_end_time2:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '20:04'
+    initial: '20:09'

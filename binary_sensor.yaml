@@ -186,9 +186,9 @@
           {% endif %}
         friendly_name: '¿Todos?' #'Todos en Casa'
         icon_template: mdi:home-map-marker
-        entity_id:
-          - sensor.family_home
-          - sensor.family_sleep_home
+        #entity_id:
+        #  - sensor.family_home
+        #  - sensor.family_sleep_home
       # Alguien en Casa:  IF sensor.family_home > 0 THEN TRUE
       family_any_home:
         value_template: >-
@@ -199,8 +199,8 @@
           {% endif %}
         friendly_name: '¿Alguien?' #'Alguien en Casa'
         icon_template: mdi:home
-        entity_id:
-          - sensor.family_home
+        #entity_id:
+        #  - sensor.family_home
 
       # Alarma SONOFF_SW1 SIRENA INTERIOR
       esphome_bas_sw0:
@@ -622,7 +622,7 @@
           {% endif %}
         friendly_name: 'Apple Macbook Pro AAC LAN'
         icon_template: mdi:laptop-mac
-        entity_id: device_tracker.nmap_macbook_pro_aac_lan
+        #entity_id: device_tracker.nmap_macbook_pro_aac_lan
 
       nmap_macbook_pro_aac_wifi:
         value_template: >-
@@ -633,7 +633,7 @@
           {% endif %}
         friendly_name: 'Apple Macbook Pro AAC Wifi'
         icon_template: mdi:laptop-mac
-        entity_id: device_tracker.nmap_macbook_pro_aac_wifi
+        #entity_id: device_tracker.nmap_macbook_pro_aac_wifi
 
       nmap_macbook_pro_mfc_lan:
         value_template: >-
@@ -644,7 +644,7 @@
           {% endif %}
         friendly_name: 'Apple Macbook Pro MFC LAN'
         icon_template: mdi:laptop-mac
-        entity_id: device_tracker.nmap_macbook_pro_mfc_lan
+        #entity_id: device_tracker.nmap_macbook_pro_mfc_lan
 
       nmap_macbook_pro_mfc_wifi:
         value_template: >-
@@ -655,7 +655,7 @@
           {% endif %}
         friendly_name: 'Apple Macbook Pro MFC Wifi'
         icon_template: mdi:laptop-mac
-        entity_id: device_tracker.nmap_macbook_pro_mfc_wifi
+        #entity_id: device_tracker.nmap_macbook_pro_mfc_wifi
 
       nmap_asus_zenbook_wifi:
         value_template: >-
@@ -666,7 +666,7 @@
           {% endif %}
         friendly_name: 'Asus Zenbook AAF'
         icon_template: mdi:laptop
-        entity_id: device_tracker.nmap_asus_zenbook_wifi
+        #entity_id: device_tracker.nmap_asus_zenbook_wifi
 
       nmap_macbook_air_paf:
         value_template: >-
@@ -677,7 +677,7 @@
           {% endif %}
         friendly_name: 'Macbook Air PAF'
         icon_template: mdi:laptop-mac
-        entity_id: device_tracker.nmap_macbook_air_paf
+        #entity_id: device_tracker.nmap_macbook_air_paf
 
       nmap_elitebook_hk:
         value_template: >-
@@ -689,7 +689,7 @@
           {% endif %}
         friendly_name: 'Elitebook Heineken'
         icon_template: mdi:laptop
-        entity_id: device_tracker.nmap_elitebook_hk_wifi
+        #entity_id: device_tracker.nmap_elitebook_hk_wifi
 
       nmap_acer_notebook:
         value_template: >-
@@ -700,7 +700,7 @@
           {% endif %}
         friendly_name: 'Netbook Acer Aspire'
         icon_template: mdi:laptop
-        entity_id: device_tracker.nmap_acer_notebook
+        #entity_id: device_tracker.nmap_acer_notebook
 
       nmap_alexa_entrada:
         value_template: >-
@@ -711,7 +711,7 @@
           {% endif %}
         friendly_name: 'Alexa Entrada'
         icon_template: mdi:amazon-alexa
-        entity_id: device_tracker.nmap_alexa_entrada
+        #entity_id: device_tracker.nmap_alexa_entrada
 
       nmap_alexa_dormitorio:
         value_template: >-
@@ -722,7 +722,7 @@
           {% endif %}
         friendly_name: 'Alexa Dormitorio'
         icon_template: mdi:amazon-alexa
-        entity_id: device_tracker.nmap_alexa_dormitorio
+        #entity_id: device_tracker.nmap_alexa_dormitorio
 
       nmap_sony_ps4_lan_wifi:
         value_template: >-
@@ -734,7 +734,7 @@
           {% endif %}
         friendly_name: 'Sony PS4'
         icon_template: mdi:gamepad-variant
-        entity_id: device_tracker.nmap_sony_ps4
+        #entity_id: device_tracker.nmap_sony_ps4
 
     #
     # PING - 01 - 09 - NETWORK DEVICES

@@ -664,12 +664,12 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# TRACKING FAMILY AT HOME: Control Home/Away                                  #
+# FAMILY TRACKING AT HOME: Control Home/Away                                  #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-- id: T01
-  alias: 'T01 Family Away Armado Total'
+- id: F01
+  alias: 'F01 Family Away Armado Total'
   trigger:
     # Ya no hay nadie en casa
     platform: state
@@ -684,8 +684,8 @@
     # Script Luces Apagado Total
     - service: script.luces_off
 
-- id: T02
-  alias: 'T02 Armado Parcial Midnight'
+- id: F02
+  alias: 'F02 Armado Parcial Midnight'
   trigger:
     - platform: time
       at: '00:30:00'
@@ -702,8 +702,8 @@
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
 
-- id: T03
-  alias: 'T03 Family Home Armado Home'
+- id: F03
+  alias: 'F03 Family Home Armado Home'
   trigger:
     # Versión original: Están todos en casa y Agu ha llegado
     - platform: state
@@ -746,8 +746,8 @@
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
 
-- id: T04
-  alias: 'T04 Family Home Telegram'
+- id: F04
+  alias: 'F04 Family Home Telegram'
   trigger:
     # Hay alguien en casa
     - platform: state
@@ -763,8 +763,8 @@
         mensaje: >
           >>> EVENTO: Primero en Entrar {{ states('sensor.family_last_tracking') }}
 
-- id: T05
-  alias: 'T05 Family Home How Many Sleep'
+- id: F05
+  alias: 'F05 Family Home How Many Sleep'
   trigger:
     # Hay alguien en casa
     - platform: state
@@ -777,8 +777,8 @@
     # Llamada al contador de personas que actualiza sensor.family_home
     - service: python_script.countpeople
 
-- id: T06
-  alias: 'T06 Family MFC - Check Sleep'
+- id: F06
+  alias: 'F06 Family MFC - Check Sleep'
   trigger:
     - platform: time
       at: '23:00:00'
@@ -804,8 +804,8 @@
 
           >>> Activado el control de Duerme en Casa.
 
-- id: T07
-  alias: 'T07 Family AAF - Check Sleep'
+- id: F07
+  alias: 'F07 Family AAF - Check Sleep'
   trigger:
     - platform: time
       at: '23:00:00'
@@ -831,8 +831,8 @@
 
           >>> Activado el control de Duerme en Casa.
 
-- id: T08
-  alias: 'T08 Family PAF - Check Sleep'
+- id: F08
+  alias: 'F08 Family PAF - Check Sleep'
   trigger:
     - platform: time
       at: '23:00:00'
@@ -858,8 +858,8 @@
 
           >>> Activado el control de Duerme en Casa.
 
-- id: T09
-  alias: 'T09 Family AAC - Check Sleep'
+- id: F09
+  alias: 'F09 Family AAC - Check Sleep'
   trigger:
     - platform: time
       at: '23:00:00'
@@ -1004,6 +1004,7 @@
         - "04:00:00"
         - "05:00:00"
         - "06:00:00"
+        - "07:00:00"
   condition:
     condition: or
     conditions:
@@ -1169,27 +1170,6 @@
         white_value: 200
         rgb_color: [254, 126, 0]
         brightness: 255
-
-- id: L11
-  alias: 'L11 Luces Estudio Off'
-  trigger:
-    - platform: time_pattern
-      minutes: '/60'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: light.luz_estudio
-        state: 'on'
-      # antes del amanecer
-      - condition: sun
-        after: sunrise
-      - condition: numeric_state
-        entity_id: sensor.illumination_158d0001e464a6
-        above: 5
-  action:
-    # Apagado Luces Casa
-    - service: script.luces_off
 
 
 #-----------------------------------------------------------------------------#
@@ -1792,47 +1772,6 @@
           >>> JARDIN: Apagado total
 
 
-
-#-----------------------------------------------------------------------------#
-#                                                                             #
-# REGLAS DE CONTROL DE PING DEVICES BINARY SENSOR                             #
-#                                                                             #
-#-----------------------------------------------------------------------------#
-- id: S28
-  alias: 'S28 Control Jardin Before Sunrise'
-  trigger:
-    - platform: time
-      at: "00:00:00"
-    - platform: time
-      at: "01:00:00"
-    - platform: time
-      at: "02:00:00"
-  condition:
-    condition: or
-    conditions:
-      - condition: state
-        entity_id: switch.esphome_4ch_sw2_relay_1
-        state: 'on'
-      - condition: state
-        entity_id: switch.esphome_4ch_sw2_relay_2
-        state: 'on'
-      - condition: state
-        entity_id: switch.esphome_4ch_sw2_relay_3
-        state: 'on'
-      - condition: state
-        entity_id: switch.esphome_pow_sw3
-        state: 'on'
-  action:
-    # Apagado Luces Casa
-    - service: script.jardin_off
-    # Notifica a Familia
-    - service: script.notifica_evento
-      data:
-        titulo: '*JARDIN: OFF*'
-        mensaje: >
-          >>> EVENTO: Control Riego/Fuentes encendidas antes del amanecer
-          >>> JARDIN: Apagado total
-
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # REGLAS DE CONTROL DE PING DEVICES BINARY SENSOR                             #
@@ -1922,3 +1861,25 @@
           >>> AVISO: APAGADO
 
           >>> DISPOSITIVO: CONSOLA SONY PS4
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# REGLAS DE AUTOMATIZACION CON TAGS NFC                                       #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+- id: T01
+  alias: 'Tag Test'
+  trigger:
+    - platform: event
+      event_type: tag_scanned
+      event_data:
+        device_id: 2AEA90A7-D981-4BFC-93E2-7FFF4A8B4178
+        tag_id:
+          - 4b1e83aa-aa0b-4f65-82c4-1ffb7926702e
+          - 6e6b6c52-631e-42ea-b576-59d024e4a698
+  action:
+    - service: light.toggle
+      entity_id: light.luz_estudio
+      data:
+        brightness: 255
+        rgb_color: [254, 200, 145]
