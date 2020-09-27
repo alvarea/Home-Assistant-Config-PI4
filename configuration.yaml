@@ -125,11 +125,11 @@ ios:
 #   STATUS      DURACION TRANSICION               DESCRIPCION
 #   ========    =============================     ==================================================
 #   DISARMED    Permanante                        Estado inicial de alarma desarmada
-#   ARMING     <ARMING_TIME>                      Estado transición a ARMED durante <arming_time> Segundos
-#   ARMED_AWAY  Permanante                        Estado de alarma ARMED HOME / ARMED AWAY
+#   ARMING      <ARMING_TIME>                     Estado transición a ARMED durante <arming_time> Segundos
+#   ARMED_X     Permanante                        Estado de alarma ARMED HOME / ARMED AWAY
 #   PENDING     <DELAY_TIME>                      Estado transición a TRIGGERED durante <delay_time> Segundos
 #   TRIGGERED   <TRIGGER_TIME>                    Estado de alarma TRIGGERED durante <trigger_time> segundos
-#   ARMED_AWAY  Permanante                        Estado anterior de alarma armada
+#   ARMED_X     Permanante                        Estado anterior de alarma armada
 #
 alarm_control_panel:
   - platform: manual
@@ -140,7 +140,7 @@ alarm_control_panel:
     # Trigger: The time in seconds of the trigger time in which the alarm is firing. Default is 120 seconds
     code: !secret alarm_control_code
     code_arm_required: false
-    arming_time: 45
+    arming_time: 60
     delay_time: 60
     trigger_time: 300
     disarmed:

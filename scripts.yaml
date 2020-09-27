@@ -767,7 +767,7 @@ alexa_secuencia_alarma_disparada:
               media_content_id: "{{ states('input_select.alarma_sonido_disparado') }}"
           - delay: 00:00:03
     #######################################
-    # SONOFF_SW1_SIRENA INTERIOR ==> ON
+    # SONOFF_SW1_SIRENA INTERIOR ==> OFF
     #######################################
     - service: switch.turn_off
       entity_id: switch.esphome_bas_sw0

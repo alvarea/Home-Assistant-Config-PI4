@@ -245,10 +245,17 @@
     #    tostate: '{{trigger.to_state.state}}'
     #    ringtone_msg: 10004
 
+    # Script Notifica Evento Alarma Disparada
+    - service: script.notifica_evento
+      data_template:
+        titulo: '*ALARMA HOMY*'
+        mensaje: >
+          >>> ESTADO: ATENCION AVISO PREVIO SALTO ALARMA
+
     # Script Envío Sonido Alexa Alexa
     - service: script.alexa_secuencia_alarma_desarmado
       data_template:
-        voz: "¡ATENCION!, Alarma Disparada. Tiene 45 segundos para desarmar. ¡ATENCION!, Desarme ahora, por favor."
+        voz: "¡ATENCION!, Alarma Disparada. Tiene un minuto para desarmar. ¡ATENCION!, Desarme ahora, por favor."
         sonido: "{{ states('input_select.alarma_sonido_desarmado') }}"
 
 # REGLA: ARMADO AWAY COMPLETADO
@@ -430,16 +437,11 @@
       entity_id: input_text.alarm_trigger
       data_template:
         value: "{{ trigger.to_state.attributes.friendly_name }}"
-    # DISPARA LA ALARMA
+    #
+    # DISPARA LA ALARMA, que pasa a estado PENDING durante 60'
+    # Si no se desactiva, pasa a triggered y se envían notificaciones y Sirena
     - service: alarm_control_panel.alarm_trigger
       entity_id: alarm_control_panel.ha
-    # Script Notificación Alarma Away
-    - service: script.notifica_alarma
-      data:
-        titulo: '*ALARMA HOMY*'
-        mensaje: >
-          >>> ESTADO: ATENCION ALARMA DISPARADA
-
 
 #
 # REGLA: TRIGGER SENSOR => MODO ARMADO HOME => PENDING ==> ALARMA TRIGGERED
@@ -481,16 +483,12 @@
       entity_id: input_text.alarm_trigger
       data_template:
         value: "{{ trigger.to_state.attributes.friendly_name }}"
-    # Script Notificación Alarma
-    - service: script.notifica_alarma
-      data_template:
-        titulo: '*ALARMA HOMY*'
-        mensaje: >
-          >>> ESTADO: ATENCION ALARMA PERIMETRO DISPARADA
 
-    # DISPARA LA ALARMA
+    # DISPARA LA ALARMA, que pasa a estado PENDING durante 60'
+    # Si no se desactiva, pasa a triggered y se envían notificaciones y Sirena
     - service: alarm_control_panel.alarm_trigger
       entity_id: alarm_control_panel.ha
+
 
 # REGLA: ALARMA ARMED_AWAY TRIGGERED ==> SIRENA + NOTIFICACION COMPLETA
 #
@@ -499,25 +497,17 @@
   trigger:
     - platform: state
       entity_id: alarm_control_panel.ha
-      #from: 'armed_away'
       to: 'triggered'
   action:
+    # Script Notificación Alarma
+    - service: script.notifica_alarma
+      data_template:
+        titulo: '*ALARMA HOMY*'
+        mensaje: >
+          >>> ESTADO: ATENCION ALARMA DISPARADA
+
     # ALEXA SIRENAS ALARMA DISPARADA
     - service: script.alexa_secuencia_alarma_disparada
-
-# REGLA: ALARMA ARMED_HOME TRIGGERED ==> SIRENA + NOTIFICACION COMPLETA
-#
-#- id: A8
-#  alias: 'A8 Alarm Triggered'
-#  trigger:
-#    - platform: state
-#      entity_id: alarm_control_panel.ha
-#      from: 'armed_home'
-#      to: 'triggered'
-#  action:
-#    # AVISO SIRENAS ALARMA
-#    - service: script.sirena_alarma_armed_home
-
 
 # REGLA: TRIGGER DESARMADO AUTOMATICO AL AMANECER
 #
