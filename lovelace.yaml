@@ -18,8 +18,6 @@ views:
             show_name: false
             title: Estado Homy
             type: glance
-        type: vertical-stack
-      - cards:
           - cards:
               - entity: group.luces_casa_grp
                 icon: 'mdi:lightbulb-on-outline'
@@ -2490,6 +2488,18 @@ views:
         show_header_toggle: false
         title: Rack Comunicaciones
         type: entities
+      - type: entities
+        entities:
+          - device_tracker.macbook_aac
+          - binary_sensor.macbook_aac_active
+          - binary_sensor.macbook_aac_airpods_aac
+          - sensor.macbook_aac_bssid
+          - binary_sensor.macbook_aac_camara_facetime_hd_integrada
+          - sensor.macbook_aac_geocoded_location
+          - sensor.macbook_aac_last_update_trigger
+          - binary_sensor.macbook_aac_macbook_pro_microfono
+          - sensor.macbook_aac_ssid
+          - sensor.macbook_aac_storage
     icon: 'mdi:desktop-mac-dashboard'
     path: estudio_view
     title: Estudio
@@ -3001,7 +3011,10 @@ views:
     icon: 'mdi:bed-empty'
     path: dormitorio_view
     title: Dormitorio Principal
-  - badges: []
+  - icon: 'mdi:cog'
+    path: config_view
+    title: Configuración
+    badges: []
     cards:
       - entities:
           - entity: input_boolean.family_home_aac
@@ -3061,6 +3074,159 @@ views:
         show_header_toggle: false
         title: Automations On/Off
         type: entities
-    icon: 'mdi:settings'
-    path: config_view
-    title: Configuración
+  - title: Trash
+    path: trash
+    icon: 'mdi:delete'
+    badges: []
+    cards:
+      - cards:
+          - cards:
+              - entity: group.luces_casa_grp
+                icon: 'mdi:lightbulb-on-outline'
+                name: Luces
+                show_state: true
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/luces_view
+                type: entity-button
+              - entity: binary_sensor.riego_ch3_status
+                hold_action:
+                  action: none
+                icon: 'mdi:watering-can'
+                name: Riego
+                show_state: true
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/riego_view
+                type: entity-button
+              - entity: binary_sensor.plant_mp_problem
+                icon: 'mdi:sprout'
+                name: Bonsais
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/bonsais_view
+                type: entity-button
+              - entity: camera.ipcam_estudio
+                icon: 'mdi:cctv'
+                name: Cámaras
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/camaras_view
+                type: entity-button
+            type: horizontal-stack
+          - cards:
+              - entity: binary_sensor.piscina_status
+                icon: 'mdi:swim'
+                name: Piscina
+                show_state: true
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/piscina_view
+                type: entity-button
+              - entity: binary_sensor.esphome_pow_sw2_lavadora_lavando
+                icon: 'mdi:washing-machine'
+                name: Lavadora
+                show_state: true
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/cocina_view
+                type: entity-button
+              - entity: light.luz_dormitorio_mfc
+                icon: 'mdi:bed-empty'
+                name: Dormitorio
+                show_state: true
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/dormitorio_view
+                type: entity-button
+              - entity: light.luz_estudio
+                icon: 'mdi:desktop-mac-dashboard'
+                name: Estudio
+                show_state: true
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace/estudio_view
+                type: entity-button
+            type: horizontal-stack
+          - cards:
+              - entity: switch.wall_switch_right_158d0002236e75
+                icon: 'mdi:coach-lamp'
+                name: Faroles Exterior
+                show_state: true
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.wall_switch_right_158d0002236e75
+                type: entity-button
+              - entity: switch.esphome_4ch_relay_1
+                icon: 'mdi:lightbulb-cfl'
+                name: Balizas Cesped
+                show_state: true
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_4ch_relay_1
+                type: entity-button
+              - entity: switch.esphome_bas_sw4
+                icon: 'mdi:lamp'
+                name: Porche Salón
+                show_state: true
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_bas_sw4
+                type: entity-button
+              - entity: switch.esphome_4ch_relay_3
+                icon: 'mdi:track-light'
+                name: Foco Olivo
+                show_state: true
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_4ch_relay_3
+                type: entity-button
+            type: horizontal-stack
+          - cards:
+              - entity: binary_sensor.riego_ch1_dia_ejecucion
+                hold_action:
+                  action: call-service
+                  service: switch.toggle
+                icon: 'mdi:sprout'
+                name: Bonsais Entrada
+                tap_action:
+                  action: more-info
+                type: entity-button
+              - entity: binary_sensor.riego_ch2_dia_ejecucion
+                hold_action:
+                  action: call-service
+                  service: switch.toggle
+                icon: 'mdi:flower'
+                name: Plantas Entrada
+                show_state: false
+                tap_action:
+                  action: more-info
+                type: entity-button
+              - entity: binary_sensor.riego_ch3_dia_ejecucion
+                hold_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_4ch_sw2_relay_3
+                icon: 'mdi:water-pump'
+                name: Fuente Zen Ranas
+                type: entity-button
+              - entity: binary_sensor.riego_sw2_dia_ejecucion
+                hold_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data:
+                    entity_id: switch.esphome_bas_sw2
+                icon: 'mdi:sprout'
+                name: Bonsais Zona2
+                type: entity-button
+            type: horizontal-stack
+        type: vertical-stack

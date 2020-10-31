@@ -700,13 +700,15 @@
       entity_id: binary_sensor.family_all_home
       from: 'off'
       to: 'on'
-    - platform: numeric_state
-      entity_id: sensor.baye_probability_aaf
-      above: 90
+    #- platform: numeric_state
+    #  entity_id: sensor.baye_probability_aaf
+    #  above: 90
   condition:
     condition: and
     conditions:
       # Versión original: Están todos en casa y Agu ha llegado
+      - condition: sun
+        before: sunrise
       - condition: state
         entity_id: alarm_control_panel.ha
         state: disarmed
@@ -715,24 +717,19 @@
       - condition: state
         entity_id: binary_sensor.family_all_home
         state: 'on'
-      - condition: numeric_state
-        entity_id: sensor.baye_probability_aaf
-        above: 90
+      #- condition: numeric_state
+      #  entity_id: sensor.baye_probability_aaf
+      #  above: 90
       # antes del amanecer
-      - condition: sun
-        before: sunrise
-      #- condition: state
-      #  entity_id: group.alarma_grp_sensores_home
-      #  state: 'off'
   action:
     # Notifica Evento
     - service: script.notifica_evento
       data:
         titulo: '*FAMILY HOME*'
         mensaje: >
-          >>> EN 5' AUTO ARMADO HOME
+          >>> EN 30' AUTO ARMADO HOME
 
-    - delay: '00:05:00'  # antes versión original 15'
+    - delay: '00:30:00'
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
 
@@ -1873,3 +1870,62 @@
       data:
         brightness: 255
         rgb_color: [254, 200, 145]
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# REGLAS DE AUTOMATIZACION ACCIONES IOS                                       #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+- id: I01
+  alias: 'IOS Action Luz Salon'
+  initial_state: true
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: 'luz_salon'
+  action:
+    - service: light.toggle
+      entity_id: light.salon
+
+- id: I02
+  alias: 'IOS Action Luz Estudio'
+  initial_state: true
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: 'luz_estudio'
+  action:
+    - service: light.toggle
+      entity_id: light.estudio
+
+- id: I03
+  alias: 'IOS Action Alarma Off'
+  initial_state: true
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: 'alarma_off'
+  action:
+    # Desarmado de Alarmas
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: alarm_control_panel.ha
+      data:
+        code: !secret alarm_control_code
+
+- id: I04
+  alias: 'IOS Action Alarma Away'
+  initial_state: true
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: 'alarma_armado_total'
+  action:
+    # Desarmado de Alarmas
+    - service: alarm_control_panel.arm_away
+      entity_id: alarm_control_panel.ha
+      data:
+        code: !secret alarm_control_code
