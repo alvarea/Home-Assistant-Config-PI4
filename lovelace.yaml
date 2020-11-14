@@ -220,6 +220,24 @@ views:
                 type: picture-glance
             type: horizontal-stack
           - cards:
+              - entity: sensor.iphone_aac_battery_level
+                name: AAC iPhone
+                show_state: true
+                type: entity-button
+              - entity: sensor.iphone_malen_battery_level
+                name: MFC iPhone
+                show_state: true
+                type: entity-button
+              - entity: sensor.a2f_battery_level
+                show_state: true
+                type: entity-button
+                name: AAF iPhone
+              - entity: sensor.iphone_paf_battery_level
+                name: PAF iPhone
+                show_state: true
+                type: entity-button
+            type: horizontal-stack
+          - cards:
               - entity: binary_sensor.family_any_home
                 name: Alguien?
                 show_state: true
@@ -234,24 +252,6 @@ views:
                 type: entity-button
               - entity: sensor.family_sleep_home
                 name: Duermen?
-                show_state: true
-                type: entity-button
-            type: horizontal-stack
-          - cards:
-              - entity: input_boolean.family_sleep_home_aac
-                name: AAC duerme casa?
-                show_state: true
-                type: entity-button
-              - entity: input_boolean.family_sleep_home_mfc
-                name: MFC duerme casa?
-                show_state: true
-                type: entity-button
-              - entity: input_boolean.family_sleep_home_aaf
-                name: AAF duerme casa?
-                show_state: true
-                type: entity-button
-              - entity: input_boolean.family_sleep_home_paf
-                name: PAF duerme casa?
                 show_state: true
                 type: entity-button
             type: horizontal-stack
@@ -1774,6 +1774,7 @@ views:
         show_name: true
         show_state: true
         state_color: true
+        title: MacBook Pro AAC
     icon: 'mdi:lan'
     title: Network Tracker
   - badges: []
@@ -3230,3 +3231,4 @@ views:
                 type: entity-button
             type: horizontal-stack
         type: vertical-stack
+

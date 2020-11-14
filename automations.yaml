@@ -1,13 +1,13 @@
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# HOMY - HOME ASSISTANT - ALVAREA 2020                                        #
+# HOMY - HOME ASSISTANT - ALVAREA 2020                                        #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 # TEMPLATING JINJA2:  https://jinja.palletsprojects.com/en/master/templates
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# ARRANQUE/PARADA DEL SISTEMA                                                 #
+# ARRANQUE/PARADA DEL SISTEMA                                                 #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 - id: hass_startup_automation
@@ -49,7 +49,7 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# TAREAS DIARIAS DEL SISTEMA                                                  #
+# TAREAS DIARIAS DEL SISTEMA                                                  #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 - id: hass_daily_automations
@@ -1368,8 +1368,9 @@
       data_template:
         time: '{{ states.sensor.piscina_diario_endtime.state }}'
 
-# ESPHOME S20 - SW1 Radiador Dormitorio Principal
+# ESPHOME S20 - SW1 Smart Pluh Dormitorio Principal
 #
+
 - id: S09
   alias: 'S09 Sonoff S20 SW1 Toggle'
   trigger:
@@ -1397,9 +1398,9 @@
   trigger:
     - platform: sun
       # offset: "+03:30:00"   # Horario Invierno GMT+1  => 18:30 + 3:30 = 22:00
-      # offset: "+00:30:00"   # Horario Invierno GMT+2  => 21:30 + 0:30 = 22:00
+      # offset: "+00:30:00"   # Horario Verano GMT+2  => 21:30 + 0:30 = 22:00
       event: sunset
-      offset: "+00:30:00"
+      offset: "+03:30:00"
     #- platform: sun  # solo para calefacción
     #  event: sunrise
     #  offset: "-02:00:00"
@@ -1425,9 +1426,9 @@
   trigger:
     - platform: sun
       # offset: "+03:30:00"   # Horario Invierno GMT+1  => 18:30 + 3:30 = 22:00
-      # offset: "+00:30:00"   # Horario Invierno GMT+2  => 21:30 + 0:30 = 22:00
+      # offset: "+00:30:00"   # Horario Verano GMT+2  => 21:30 + 0:30 = 22:00
       event: sunset
-      offset: "+00:30:00"
+      offset: "+03:30:00"
     #- platform: sun  # solo para calefacción
     #  event: sunrise
     #  offset: "-02:00:00"
@@ -1456,7 +1457,6 @@
     #  at: '01:00:00'
     - platform: sun
       event: sunrise
-      # offset: "-00:15:00" # Solo Invierno Calefacción
   condition:
     condition: or
     conditions:
@@ -1558,6 +1558,16 @@
       to: 'on'
   action:
     - service: script.lavadora_switch_off
+    - service: script.alexa_secuencia
+      data_template:
+        sonido: 'clock_01'
+        repeticion: 1
+        voz: >
+          {% if states.weather.dark_skynow.state | string == 'rainy' %}
+            "Hola, el lavado ha terminado, pero hay previsión de lluvia. Deberías usar la secadora"
+          {% else %}
+            "Hola, el lavado ha terminado y el tiempo es bueno. Puedes tender la ropa"
+          {% endif %}
 
 # ESPHOME 4CH-R2 SW2 RIEGO BONSAIS Relay1 - Relay4
 #
@@ -1830,7 +1840,7 @@
           >>> DISPOSITIVO: CONSOLA SONY PS4
 
 #
-# nmap_sony_ps4:
+# nmap_sony_ps4:
 #
 - id: P04
   alias: 'P04_sony_ps4_off'
@@ -1851,7 +1861,7 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# REGLAS DE AUTOMATIZACION CON TAGS NFC                                       #
+# REGLAS DE AUTOMATIZACION CON TAGS NFC                                       #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 - id: T01
@@ -1873,7 +1883,7 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# REGLAS DE AUTOMATIZACION ACCIONES IOS                                       #
+# REGLAS DE AUTOMATIZACION ACCIONES IOS                                       #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 - id: I01
@@ -1898,7 +1908,7 @@
         actionName: 'luz_estudio'
   action:
     - service: light.toggle
-      entity_id: light.estudio
+      entity_id: group.luces_estudio_grp
 
 - id: I03
   alias: 'IOS Action Alarma Off'

@@ -15,13 +15,13 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '18:00'
+    initial: '20:00'
 
   piscina_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '22:00'
+    initial: '21:00'
 
 #
 # Programador 4CH SW2 Jardín
@@ -37,7 +37,7 @@
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '09:04'
+    initial: '09:03'
 
   # Bonsais Top - Tramo2 - Inicio
   riego_ch1_start_time_t2:

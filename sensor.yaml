@@ -765,8 +765,59 @@
         value_template: "{{ states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.Density|int if states.binary_sensor.smoke_sensor_158d0001fd321c is not none }}"
         unit_of_measurement: '%'
         icon_template: mdi:fire
+      #
+      # Sensores Timezone
+      # {{utcnow() }}
+      # {{now() }}
+      # {{ utcnow().astimezone() }}
+      # {{ now().astimezone() }}
+      # {{ utcnow().tzinfo }}
+      # {{ now().tzinfo }}
+      # {{ now().astimezone().tzinfo }}
+      #
+      now_tzinfo:
+        friendly_name: 'Time Zone Info'
+        value_template: "{{ now().tzinfo }}"
+        icon_template: mdi:map-clock
 
-  # Sensores Xiaomi BLE Temperatura, utilizando el componente custom
+      now_astimezone:
+        friendly_name: 'Time Zone Actual'
+        value_template: "{{ now().astimezone().tzinfo }}"
+        icon_template: mdi:map-clock-outline
+
+      now_astimezone_time:
+        friendly_name: 'Time Zone Hora'
+        value_template: "{{ now().astimezone() }}"
+        icon_template: mdi:clock-time-eight
+
+      # offset: "+03:30:00"   # Horario Invierno CET = UTC+1  => 18:30 + 3:30 = 22:00
+      # offset: "+00:30:00"   # Horario Verano   DST = UTC+2  => 21:30 + 0:30 = 22:00
+      sun_offset:
+        friendly_name: 'Offset Puesta Sol Estación'
+        icon_template: mdi:weather-sunset
+        value_template: '{% if now().astimezone().tzinfo | string == "CET" %} "+03:30:00"
+                         {% else %} "+00:30:00" }}
+                         {% endif %}'
+
+      sun_season:
+        friendly_name: 'Offset Puesta Sol Estación'
+        value_template: "{{ sensor.season }}"
+        icon_template: >
+          '{% if is_state("sensor.season", "autumn") %}
+            mdi:leaf
+          {% elif is_state("sensor.season", "winter") %}
+            mdi:snowflake
+          {% elif is_state("sensor.season", "spring") %}
+            mdi:flower
+          {% elif is_state("sensor.season", "summer") %}
+            mdi:sunglasses
+          {% else %}
+            mdi:cloud
+          {% endif %}'
+
+  - platform: season
+
+# Sensores Xiaomi BLE Temperatura, utilizando el componente custom
   - platform: mitemp_bt
     rounding: True
     decimals: 1
@@ -782,4 +833,3 @@
               'A4:C1:38:6B:AA:C8': 'A7EC07B7EDC9D349CC462CB9744AC756'
               'A4:C1:38:E8:02:EF': 'A5ED5C2C2D9D3E14C1894ADFEEF46E1C'
               'A4:C1:38:4B:D6:7C': 'DACA7EDCEF444035A7B8C40600A4A99E'
-

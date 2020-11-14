@@ -127,7 +127,7 @@
   # Riego Bonsais Zona2 - Tramo1
   riego_sw2_programador_t1:
     name: Programador Riego Zona2 - Tramo1
-    initial: on
+    initial: off
     icon: mdi:dip-switch
 
   # Riego Bonsais Zona2 - Tramo2
