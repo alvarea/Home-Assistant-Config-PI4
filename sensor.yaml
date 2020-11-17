@@ -194,7 +194,7 @@
                         {% elif states.binary_sensor.motion_sensor_158d0001e55903.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       # Batería Sensor Xiaomi Entrada EXTERIOR. binary_sensor.motion_sensor_158d0001e637f6
       bateria_presencia_entrada_ext:
@@ -222,7 +222,7 @@
                         {% elif states.binary_sensor.motion_sensor_158d0001e637f6.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       bateria_puerta_entrada:
         # binary_sensor.door_window_sensor_158d00022b393c
@@ -250,7 +250,7 @@
                         {% elif states.binary_sensor.door_window_sensor_158d00022b393c.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       bateria_detector_incendios:
         #  binary_sensor.smoke_sensor_158d0001fd321c
@@ -278,7 +278,7 @@
                         {% elif states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       bateria_puerta_salon:
         #  binary_sensor.door_window_sensor_158d000201e2e7
@@ -306,7 +306,7 @@
                         {% elif states.binary_sensor.door_window_sensor_158d000201e2e7.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       bateria_temperatura_salon:
         #  sensor.temperature_158d00022b65ff
@@ -334,7 +334,7 @@
                         {% elif states.sensor.temperature_158d00022b65ff.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       bateria_temperatura_estudio:
         #  sensor.temperature_158d00022c6a47
@@ -362,7 +362,7 @@
                         {% elif states.sensor.temperature_158d00022c6a47.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       bateria_ventana_paf:
         #  binary_sensor.door_window_sensor_158d00045d69a6
@@ -390,7 +390,7 @@
                         {% elif states.binary_sensor.door_window_sensor_158d00045d69a6.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       bateria_ventana_mfc:
         #  binary_sensor.door_window_sensor_158d00020b7c27
@@ -418,7 +418,7 @@
                         {% elif states.binary_sensor.door_window_sensor_158d00020b7c27.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       bateria_ventana_aaf:
         #  binary_sensor.door_window_sensor_158d00020910b1
@@ -446,7 +446,7 @@
                         {% elif states.binary_sensor.door_window_sensor_158d00020910b1.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       bateria_ventana_salita:
         #  binary_sensor.door_window_sensor_158d00020457e0
@@ -474,7 +474,7 @@
                         {% elif states.binary_sensor.door_window_sensor_158d00020457e0.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
 
       bateria_presencia_salon:
@@ -503,7 +503,7 @@
                         {% elif states.binary_sensor.motion_sensor_158d0001e05661.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       bateria_presencia_estudio:
         # binary_sensor.motion_sensor_158d0001e464a6:
@@ -531,7 +531,7 @@
                         {% elif states.binary_sensor.motion_sensor_158d0001e464a6.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
       bateria_magic_cube:
         # binary_sensor.cube_158d00024a4a62:
@@ -559,7 +559,7 @@
                         {% elif states.binary_sensor.cube_158d00024a4a62.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
 
       bateria_vibracion_estudio:
@@ -588,7 +588,7 @@
                         {% elif states.binary_sensor.vibration_158d0002b15e3b.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
 
       bateria_vibracion_puerta_salon:
@@ -617,7 +617,7 @@
                         {% elif states.binary_sensor.vibration_158d0002a4eacc.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
 
       bateria_sensor_agua:
@@ -646,7 +646,7 @@
                         {% elif states.binary_sensor.water_leak_sensor_158d00045a3376.attributes.battery_level >= 10 %}
                            mdi:battery-10
                         {% else %}
-                           battery-outline
+                           mdi:battery-outline
                         {% endif %}'
 
       # Sol Próximo Aterdecer
@@ -816,20 +816,3 @@
           {% endif %}'
 
   - platform: season
-
-# Sensores Xiaomi BLE Temperatura, utilizando el componente custom
-  - platform: mitemp_bt
-    rounding: True
-    decimals: 1
-    period: 60
-    log_spikes: False
-    use_median: False
-    active_scan: False
-    hci_interface: 0
-    batt_entities: False
-    report_unknown: False
-    whitelist: False
-    encryptors:
-              'A4:C1:38:6B:AA:C8': 'A7EC07B7EDC9D349CC462CB9744AC756'
-              'A4:C1:38:E8:02:EF': 'A5ED5C2C2D9D3E14C1894ADFEEF46E1C'
-              'A4:C1:38:4B:D6:7C': 'DACA7EDCEF444035A7B8C40600A4A99E'

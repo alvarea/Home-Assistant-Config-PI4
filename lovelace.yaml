@@ -2144,6 +2144,13 @@ views:
         show_header_toggle: false
         title: PI3 Almacenamiento
         type: entities
+      - type: entities
+        entities:
+          - entity: sensor.season
+          - entity: sensor.now_astimezone
+          - entity: sensor.now_tzinfo
+          - entity: sensor.now_astimezone_time
+          - entity: sensor.sun_offset
     icon: 'mdi:server'
     path: system_view
     title: System Status

@@ -80,7 +80,7 @@
   trigger:
     - platform: time
       at:
-        - '12:30:00'
+        - '13:00:00'
         - '13:45:00'
         - '14:30:00'
         - '21:30:00'
@@ -92,11 +92,11 @@
         sonido: 'clock_01'
         repeticion: 1
         voz: >
-          {% if now().hour ==12 %}
+          {% if now().hour == 13 and now().minute == 00 %}
             "Buenos días. Son las {{ now().hour }} y {{ now().minute }}, es la hora de un aperitivo"
-          {% elif now().hour ==13 %}
+          {% elif now().hour ==1 and now().minute == 45 %}
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora de preparar la comida"
-          {% elif now().hour ==14 %}
+          {% elif now().hour == 14 and now().minute == 30 %}
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora del almuerzo"
           {% elif now().hour ==21 and now().weekday() != 4 and now().weekday() != 5 %}
             "Buenas noches. Son las {{ now().hour }}, es la hora de preparar la cena"
@@ -540,7 +540,7 @@
         code: !secret alarm_control_code
     #
     # Aviso sonoro con Xiaomi GW
-    - service: script.sirena_stop_alarm
+    - service: script.sirena_stop_alarma
     # Notifica Evento
     - service: script.notifica_evento
       data:
