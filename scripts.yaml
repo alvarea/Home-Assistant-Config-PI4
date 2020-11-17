@@ -230,14 +230,14 @@ sirena_alarma_micro_aviso:
     - service: switch.turn_off
       entity_id: switch.esphome_bas_sw0
 
-# SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS PULSAR EL DOBLE BOTON PANICO
+# SCRIPT PARA ENCENDER SIRENAS INTERIOR TRAS PULSAR EL DOBLE BOTON PANICO DESDE APP HOMY IOS
 #
 # La secuencia requerida es:
 # 1. Activar la "llave del botón pánico" con el interruptor: input_boolean.panic_button
 # 2. Pulsar el botón de ESTE script publicado en el frontend: script.alarma_boton_panico
 # 3. Pulsar el botón del script de apagado para cancelar sirenas: script.boton_panico
 #
-# Las sirenas se activan en este orden:
+# Las sirenas se activan en este orden:
 # 1. Sirena interior Xiaomi con el tono configurado para Alarma
 # 2. Retraso de 5 segundos
 # 3. Sirena interior pasillo mediante switch.esphome_bas_sw0
@@ -306,7 +306,7 @@ homy_desarmado_code:
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# SCRIPTS PARA ENCENDER SIRENAS INTERIOR TRAS DISPARO DE ALARMA               #
+# SCRIPTS PARA ENCENDER SIRENAS INTERIOR TRAS DISPARO DE ALARMA               #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
@@ -318,13 +318,14 @@ sirena_alarma_triggered:
     - condition: template
       value_template: "{% if is_state('input_boolean.mute_sonido_sirenas', 'off') %}true{% endif %}"
 
-    - service: xiaomi_aqara.play_ringtone
-      data_template:
-        gw_mac: !secret xiaomi_mac
-        ringtone_id: >-
-            {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
-        ringtone_vol: >-
-            {{ states('input_number.xiaomi_volume_alarm') | int}}
+    #- service: xiaomi_aqara.play_ringtone
+    #  data_template:
+    #    gw_mac: !secret xiaomi_mac
+    #    ringtone_id: >-
+    #        {{ states.input_select.xiaomi_sound_alarm.state.split('-')[0] }}
+    #    ringtone_vol: >-
+    #        {{ states('input_number.xiaomi_volume_alarm') | int}}
+
     # Retraso 5"
     - delay: '00:00:05'
     #######################################
@@ -744,13 +745,15 @@ alexa_secuencia_alarma_disparada:
           - media_player.echo_alexa_dormitorio
         media_content_type: sound
         media_content_id: "{{ states('input_select.alarma_sonido_disparado') }}"
-    # RETRASO DE 5 SEGUNDOS 5"
+    # RETRASO DE 3 SEGUNDOS "
     - delay: 00:00:03
     #######################################
     # SONOFF_SW1_SIRENA INTERIOR ==> ON
     #######################################
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw0
+    #
+    # Bucle sirena Alexa mientras la alarma esté disparada.
     - repeat:
         while:
           - condition: state

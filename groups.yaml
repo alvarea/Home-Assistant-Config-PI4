@@ -91,9 +91,9 @@ alarma_grp_sensores_away:
 luces_estudio_grp:
   name: Luces Estudio
   entities:
-    - light.luz_estudio                           # Hue Estudio
-    - switch.esphome_bas_sw1                      # Estudio Armario Rack
+    - light.luz_estudio                                     # Hue Estudio
     - light.esphome_lb1_l01
+    # - switch.esphome_bas_sw1                              # Estudio Armario Rack
 
 luces_planta_baja_grp:
   name: Luces Planta Baja

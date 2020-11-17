@@ -93,13 +93,13 @@
         repeticion: 1
         voz: >
           {% if now().hour == 13 and now().minute == 00 %}
-            "Buenos días. Son las {{ now().hour }} y {{ now().minute }}, es la hora de un aperitivo"
-          {% elif now().hour ==1 and now().minute == 45 %}
+            "Buenos días. Son las {{ now().hour }}, es la hora de un aperitivo"
+          {% elif now().hour == 13 and now().minute == 45 %}
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora de preparar la comida"
           {% elif now().hour == 14 and now().minute == 30 %}
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora del almuerzo"
           {% elif now().hour ==21 and now().weekday() != 4 and now().weekday() != 5 %}
-            "Buenas noches. Son las {{ now().hour }}, es la hora de preparar la cena"
+            "Buenas noches. Son las {{ now().hour }} y {{ now().minute }}, es la hora de preparar la cena"
           {% elif now().hour ==23 and now().weekday() != 4 and now().weekday() != 5 %}
             "Buenas noches. Son las {{ now().hour }} y {{ now().minute }}, es hora de acostarse"
           {% endif %}
@@ -535,8 +535,8 @@
         value: " "
     # Desarmado de Alarmas
     - service: alarm_control_panel.alarm_disarm
-      entity_id: alarm_control_panel.ha
       data:
+        entity_id: alarm_control_panel.ha
         code: !secret alarm_control_code
     #
     # Aviso sonoro con Xiaomi GW
@@ -1864,22 +1864,75 @@
 # REGLAS DE AUTOMATIZACION CON TAGS NFC                                       #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-- id: T01
-  alias: 'Tag Test'
+- id: T00
+  alias: 'NFC Home Blue Tag - Armado Away'
   trigger:
-    - platform: event
-      event_type: tag_scanned
-      event_data:
-        device_id: 2AEA90A7-D981-4BFC-93E2-7FFF4A8B4178
-        tag_id:
-          - 4b1e83aa-aa0b-4f65-82c4-1ffb7926702e
-          - 6e6b6c52-631e-42ea-b576-59d024e4a698
+    - platform: tag
+      tag_id: 2C-CA-F0-22
   action:
-    - service: light.toggle
-      entity_id: light.luz_estudio
+    - service: alarm_control_panel.alarm_arm_away
       data:
-        brightness: 255
-        rgb_color: [254, 200, 145]
+        entity_id: alarm_control_panel.ha
+        code: !secret alarm_control_code
+
+- id: T01
+  alias: 'NFC AAC Tag Alarma Desarmado'
+  trigger:
+    - platform: tag
+      tag_id: 04-50-B6-01-25-3B-03 # AAC Green Taf
+  action:
+    # Desarmado de Alarma
+    - service: alarm_control_panel.alarm_disarm
+      data:
+        entity_id: alarm_control_panel.ha
+        code: !secret alarm_control_code
+
+- id: T02
+  alias: 'NFC MFC Tag Alarma Desarmado'
+  trigger:
+    - platform: tag
+      tag_id: 04-50-4F-01-B5-1D-03 # Malen Red Tag
+  action:
+    # Desarmado de Alarma
+    - service: alarm_control_panel.alarm_disarm
+      data:
+        entity_id: alarm_control_panel.ha
+        code: !secret alarm_control_code
+
+- id: T03
+  alias: 'NFC AAF Tag Alarma Desarmado'
+  trigger:
+    - platform: tag
+      tag_id: 04-50-9A-01-7D-1D-03 # AAF Red Tag
+  action:
+    # Desarmado de Alarma
+    - service: alarm_control_panel.alarm_disarm
+      data:
+        entity_id: alarm_control_panel.ha
+        code: !secret alarm_control_code
+
+- id: T04
+  alias: 'NFC PAF Tag Alarma Desarmado'
+  trigger:
+    - platform: tag
+      tag_id: 04-50-B3-01-0D-3B-03 # PAF Red Tag
+  action:
+    # Desarmado de Alarma
+    - service: alarm_control_panel.alarm_disarm
+      data:
+        entity_id: alarm_control_panel.ha
+        code: !secret alarm_control_code
+
+- id: T05
+  alias: 'NFC Tag Credit Card Botón Pánico'
+  trigger:
+    - platform: tag
+      tag_id: 79-D5-0A-8F # Tag Credit Card
+  action:
+    # BOTON DEL PANICO: Secuencia Alexa ALARMA
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.panic_button
+    - service: script.alarma_boton_panico
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1921,9 +1974,10 @@
   action:
     # Desarmado de Alarmas
     - service: alarm_control_panel.alarm_disarm
-      entity_id: alarm_control_panel.ha
       data:
+        entity_id: alarm_control_panel.ha
         code: !secret alarm_control_code
+
 
 - id: I04
   alias: 'IOS Action Alarma Away'
@@ -1935,7 +1989,7 @@
         actionName: 'alarma_armado_total'
   action:
     # Desarmado de Alarmas
-    - service: alarm_control_panel.arm_away
-      entity_id: alarm_control_panel.ha
+    - service: alarm_control_panel.alarm_arm_away
       data:
+        entity_id: alarm_control_panel.ha
         code: !secret alarm_control_code
