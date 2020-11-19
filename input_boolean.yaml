@@ -109,7 +109,7 @@
   # Riego Plantas entrada
   riego_ch2_programador:
     name: Programador CH2
-    initial: on
+    initial: off
     icon: mdi:dip-switch
 
   # Fuente Zen entrada

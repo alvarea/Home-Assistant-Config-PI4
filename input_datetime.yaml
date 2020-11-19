@@ -57,13 +57,13 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '08:30'
+    initial: '08:58'
 
   riego_ch2_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '08:34'
+    initial: '09:00'
 
   # Fuente Zen - Inicio
   riego_ch3_start_time:

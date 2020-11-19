@@ -1099,7 +1099,7 @@
       entity_id: binary_sensor.motion_sensor_158d0002ea1d0f       # Sensor Dormitorio
       to: 'on'
     - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c  # Puerta Entrada
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c  # Puerta Entrada
       to: 'on'
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001e637f6       # Sensor Exterior
@@ -1141,9 +1141,10 @@
         below: 5
       # 'when dark' condition: either after sunset or before sunrise
       - condition: sun
-        # before_offset: "00:60:00"  ==> Horario Invierno GMT+1, en el amanecer +60m
-        # before_offset: "00:30:00" ==> Horario Verano GMT+2, el amanecer +30m
+        # before_offset: "+00:60:00"  ==> Horario Invierno GMT+1, en el amanecer +60m
+        # before_offset: "+00:30:00" ==> Horario Verano GMT+2, el amanecer +30m
         before: sunrise
+        before_offset: "+00:60:00" # Horario Invierno GMT+1, en el amanecer +60m
   action:
     # Luces On
     - service: light.turn_on

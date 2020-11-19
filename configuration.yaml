@@ -16,6 +16,7 @@ homeassistant:
     - '/share'
   allowlist_external_dirs:
     - '/share'
+  legacy_templates: true
 #  auth_providers:
 #    - type: homeassistant
 #    - type: trusted_networks
