@@ -57,32 +57,10 @@ default_config:
 #   updater
 #   zeroconf
 
-# Enables the frontend
-#frontend:
-
-# Enables configuration UI
-#config:
-
-# Enables support for tracking state changes over time
-#history:
-
-# View all events in a logbook
-#logbook:
-
-# Track the sun
-#sun:
-
-# Enable System Health View
-#system_health:
-
-# Enables a map showing the location of tracked devices
-#map:
-
 #shopping_list:
 
 # Enable Python Scripts
 python_script:
-
 
 # HTTP - SSL
 # base_url: https://alvareahomy.duckdns.org
@@ -249,8 +227,8 @@ device_tracker:
     home_interval: 10
     #consider_home: 0:10:00
     #interval_seconds: 60
-    #track_new_devices: yes
-    scan_options: -Pn --host-timeout 5s
+    track_new_devices: no
+    #scan_options: -Pn --host-timeout 5s
     exclude:
       - !secret device_tracker_host1
 
@@ -451,6 +429,8 @@ weather:
   - platform: darksky
     api_key: !secret weather_apikey
     mode: daily
+    latitude: !secret latitude_home
+    longitude: !secret longitude_home
 
 apcupsd:
   host: 127.0.0.1
@@ -525,25 +505,29 @@ plant:
     max_brightness: 50000
 
 
-# Sensores Xiaomi BLE Temperatura, utilizando el componente custom HACS: ble_monitor
-ble_monitor:
-  rounding: True
-  decimals: 1
-  period: 60
-  log_spikes: False
-  use_median: False
-  active_scan: False
-  hci_interface: 0
-  batt_entities: False
-  report_unknown: False
-  discovery: False
-  devices:
-    - mac: 'A4:C1:38:6B:AA:C8'
-      encryption_key: 'A7EC07B7EDC9D349CC462CB9744AC756'
-    - mac: 'A4:C1:38:E8:02:EF'
-      encryption_key: 'A5ED5C2C2D9D3E14C1894ADFEEF46E1C'
-    - mac: 'A4:C1:38:4B:D6:7C'
-      encryption_key: 'DACA7EDCEF444035A7B8C40600A4A99E'
+#
+# DEPRECATED
+#
+# Sensores Xiaomi BLE Temperatura, utilizando el componente custom HACS: ble_monitor ==> DEPRECATED
+# Paso a componente ESPHOME_ESP32_Hub2_BLE
+#ble_monitor:
+#  rounding: True
+#  decimals: 1
+#  period: 60
+#  log_spikes: False
+#  use_median: False
+#  active_scan: False
+#  hci_interface: 0
+#  batt_entities: False
+#  report_unknown: False
+#  discovery: False
+#  devices:
+#    - mac: 'A4:C1:38:6B:AA:C8'  # Estudio
+#      encryption_key: 'A7EC07B7EDC9D349CC462CB9744AC756'
+#    - mac: 'A4:C1:38:E8:02:EF'  # Rack Armario
+#      encryption_key: 'A5ED5C2C2D9D3E14C1894ADFEEF46E1C'
+#    - mac: 'A4:C1:38:4B:D6:7C'  # Exterior
+#      encryption_key: 'DACA7EDCEF444035A7B8C40600A4A99E'
 
 # Old Configuration mi_temp custom component before migration to 0.81 ==> ble_monitor:
 #- sensor:
@@ -590,7 +574,6 @@ ble_monitor:
 #   - platform: braviatv
 #     host: 192.168.0.15
 #     name: TV Sony Estudio
-
 
 #TO DO
 #

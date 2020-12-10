@@ -16,23 +16,23 @@
 #
 
 MFC_Trackers = ['device_tracker.mfc_iphone_nmap',
-                'device_tracker.mfc_iphone_owntrack_2',
+                'device_tracker.mfc_iphone_owntrack',
                 'device_tracker.iphone_malen' ]
                 # 'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2']
 
 AAC_Trackers = ['device_tracker.aac_iphone_nmap',
-                'device_tracker.aac_iphone_owntrack_2',
+                'device_tracker.aac_iphone_owntrack',
                 'device_tracker.iphone_aac',
-                'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496_2']
+                'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496']
 
 PAF_Trackers = ['device_tracker.paf_iphone_nmap',
-                'device_tracker.paf_iphone_owntrack_2',
+                'device_tracker.paf_iphone_owntrack',
                 'device_tracker.iphone_paf',
-                'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2']
+                'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8']
 
 AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
                 'device_tracker.a2f',
-                'device_tracker.daa04833_9772_4800_bf22_57f406aeb1292_']   # New AAF
+                'device_tracker.daa04833_9772_4800_bf22_57f406aeb129']
 
 # Get the entity that triggered the automation
 triggeredEntity = data.get('entity_id')

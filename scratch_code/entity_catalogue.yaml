@@ -88,6 +88,10 @@ DORMITORIO PAF      binary_sensor.door_window_sensor_158d00045d69a6     SENSOR V
 DORMITORIO PAF      sensor.humidity_158d0002e97092                      SENSOR HUMEDAD        ZONA INTERIOR
 DORMITORIO PAF      sensor.pressure_158d0002e97092                      SENSOR PREXION.ATM    ZONA INTERIOR
 DORMITORIO PAF      sensor.temperature_158d0002e97092                   SENSOR TEMPERATURA    ZONA INTERIOR
+DORMITORIO PAF      binary_sensor.water_leak_sensor_158d00045a3376      SENSOR AGUA           ZONA INTERIOR
+DORMITORIO AAF      sensor.temperature_158d00022c6a47                   SENSOR TEMPERATURA    ZONA INTERIOR
+DORMITORIO AAF      sensor.humidity_158d00022c6a47                      SENSOR HUMEDAD        ZONA INTERIOR
+DORMITORIO AAF      sensor.pressure_158d00022c6a47                      SENSOR PREXION.ATM    ZONA INTERIOR
 DORMITORIO PLANCHA  binary_sensor.door_window_sensor_158d00020457e0     SENSOR VENTANA        ZONA DORMITORIO
 ENTRADA             binary_sensor.door_window_sensor_158d00022b393c     SENSOR PUERTA         PUERTA PRINCIPAL
 ENTRADA             binary_sensor.motion_sensor_158d0001e55903          SENSOR MOVIMIENTO     ZONA INTERIOR
@@ -97,19 +101,20 @@ ESTUDIO             binary_sensor.cube_158d00024a4a62                   INTERRUP
 ESTUDIO             binary_sensor.door_window_sensor_158d00030996fc     SENSOR VENTANA        ZONA INTERIOR
 ESTUDIO             binary_sensor.motion_sensor_158d0001e464a6          SENSOR MOVIMIENTO     ZONA INTERIOR
 ESTUDIO             binary_sensor.vibration_158d0002b15e3b              SENSOR VIBRACION      RACK COMUNICACIONES
-ESTUDIO             sensor.humidity_158d00022c6a47                      SENSOR HUMEDAD        ZONA INTERIOR
 ESTUDIO             sensor.illumination_158d0001e464a6                  SENSOR LUZ            ZONA INTERIOR
-ESTUDIO             sensor.pressure_158d00022c6a47                      SENSOR PREXION.ATM    ZONA INTERIOR
-ESTUDIO             sensor.temperature_158d00022c6a47                   SENSOR TEMPERATURA    ZONA INTERIOR
 EXTERIOR            binary_sensor.motion_sensor_158d0001e637f6          SENSOR MOVIMIENTO     ZONA EXTERIOR PUERTA
-EXTERIOR            sensor.humidity_158d00025d9289                      SENSOR HUMEDAD        ZONA INTERIOR
 EXTERIOR            sensor.illumination_158d0001e637f6                  SENSOR LUZ            ZONA EXTERIOR
-EXTERIOR            sensor.pressure_158d00025d9289                      SENSOR PREXION.ATM    ZONA EXTERIOR
-EXTERIOR            sensor.temperature_158d00025d9289                   SENSOR TEMPERATURA    ZONA EXTERIOR
+EXTERIOR JARDIN     sensor.pressure_158d00025d9289                      SENSOR PREXION.ATM    ZONA EXTERIOR
+EXTERIOR JARDIN     sensor.temperature_158d00025d9289                   SENSOR TEMPERATURA    ZONA EXTERIOR
+EXTERIOR JARDIN     sensor.humidity_158d00025d9289                      SENSOR HUMEDAD        ZONA INTERIOR
 SALON               binary_sensor.door_window_sensor_158d000201e2e7     SENSOR PUERTA         PUERTA JARDIN
 SALON               binary_sensor.motion_sensor_158d0001e05661          SENSOR MOVIMIENTO     ZONA INTERIOR
 SALON               binary_sensor.vibration_158d0002a4eacc              SENSOR VIBRACION      PUERTA JARDIN SALON
-SALON               sensor.humidity_158d00022b65ff                      SENSOR HUMEDAD        ZONA INTERIOR
 SALON               sensor.illumination_158d0001e05661                  SENSOR LUZ            ZONA INTERIOR
+SALON               sensor.temperature_158d00022b65ff                   SENSOR TEMPERATURA    ZONA INTERIOR
 SALON               sensor.pressure_158d00022b65ff                      SENSOR PREXION.ATM    ZONA INTERIOR
-DORMITORIO PAF      binary_sensor.water_leak_sensor_158d00045a3376      SENSOR AGUA           ZONA INTERIOR
+SALON               sensor.humidity_158d00022b65ff                      SENSOR HUMEDAD        ZONA INTERIOR
+ESTUDIO             sensor.temperatura_estudio_ly02                     SENSOR TEMPERATURA    ZONA INTERIOR
+ESTUDIO             sensor.humedad_estudio_ly02                         SENSOR HUMEDAD        ZONA INTERIOR
+ESTUDIO             sensor.temperatura_rack_ly03                        SENSOR TEMPERATURA    ZONA INTERIOR
+ESTUDIO             sensor.humedad_rack_ly03                            SENSOR HUMEDAD        ZONA INTERIOR

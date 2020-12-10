@@ -95,6 +95,13 @@ luces_estudio_grp:
     - light.esphome_lb1_l01
     # - switch.esphome_bas_sw1                              # Estudio Armario Rack
 
+luces_entrada_grp:
+  name: Luces Entrada
+  entities:
+    - light.entrada
+    - light.pasillo
+    - switch.wall_switch_left_158d0002236e75
+
 luces_planta_baja_grp:
   name: Luces Planta Baja
   entities:

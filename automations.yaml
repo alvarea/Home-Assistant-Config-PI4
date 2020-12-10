@@ -84,7 +84,6 @@
         - '13:45:00'
         - '14:30:00'
         - '21:30:00'
-        - '23:30:00'
   action:
     # Script Envío Sonido Alexa Alexa
     - service: script.alexa_secuencia
@@ -100,8 +99,6 @@
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora del almuerzo"
           {% elif now().hour ==21 and now().weekday() != 4 and now().weekday() != 5 %}
             "Buenas noches. Son las {{ now().hour }} y {{ now().minute }}, es la hora de preparar la cena"
-          {% elif now().hour ==23 and now().weekday() != 4 and now().weekday() != 5 %}
-            "Buenas noches. Son las {{ now().hour }} y {{ now().minute }}, es hora de acostarse"
           {% endif %}
 
 - id: hass_blink_update
@@ -128,7 +125,7 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# ALARMA: Armado y Control de la Alarma                                       #
+# ALARMA: Armado y Control de la Alarma                                       #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
@@ -359,7 +356,7 @@
     # Aviso sonoro con Xiaomi GW
     #- service: script.sirena_xiaomi_play_alarm_disarmed
 
-    # Apaga Luz Piloto Gateway
+    # Apaga Luz Piloto Gateway
     - service: light.turn_off
       entity_id: light.gateway_light_7811dcb788fa
 
@@ -587,23 +584,24 @@
 #-----------------------------------------------------------------------------#
 #
 #MFC_Trackers = ['device_tracker.mfc_iphone_nmap',
-#                'device_tracker.mfc_iphone_owntrack_2',
-#                'device_tracker.iphone_malen',
-#                'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2']
+#                'device_tracker.mfc_iphone_owntrack',
+#                'device_tracker.iphone_malen' ]
+#                # 'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2']
 #
 #AAC_Trackers = ['device_tracker.aac_iphone_nmap',
-#                'device_tracker.aac_iphone_owntrack_2',
+#                'device_tracker.aac_iphone_owntrack',
 #                'device_tracker.iphone_aac',
-#                'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496_2']
+#                'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496']
 #
 #PAF_Trackers = ['device_tracker.paf_iphone_nmap',
-#                'device_tracker.paf_iphone_owntrack_2',
+#                'device_tracker.paf_iphone_owntrack',
 #                'device_tracker.iphone_paf',
-#                'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2' #PAF
+#                'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8']
 #
 #AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
 #                'device_tracker.a2f',
-#                'device_tracker.daa04833_9772_4800_bf22_57f406aeb129_2']
+#                'device_tracker.daa04833_9772_4800_bf22_57f406aeb129']
+
 
 - id: U1
   alias: "Update Device Meta Tracker"
@@ -616,16 +614,16 @@
         - device_tracker.mfc_iphone_nmap        # NMAP
         - device_tracker.paf_iphone_nmap        # NMAP
         - device_tracker.aaf_iphone_nmap        # NMAP
-        - device_tracker.aac_iphone_owntrack_2  # OWNTRACK
-        - device_tracker.mfc_iphone_owntrack_2  # OWNTRACK
-        - device_tracker.paf_iphone_owntrack_2  # OWNTRACK
+        - device_tracker.aac_iphone_owntrack    # OWNTRACK
+        - device_tracker.mfc_iphone_owntrack    # OWNTRACK
+        - device_tracker.paf_iphone_owntrack    # OWNTRACK
       to: 'not_home'
       for: '00:07:00'
     - platform: state
       entity_id:
-        - device_tracker.aac_iphone_owntrack_2  # OWNTRACK
-        - device_tracker.mfc_iphone_owntrack_2  # OWNTRACK
-        - device_tracker.paf_iphone_owntrack_2  # OWNTRACK
+        - device_tracker.aac_iphone_owntrack    # OWNTRACK
+        - device_tracker.mfc_iphone_owntrack    # OWNTRACK
+        - device_tracker.paf_iphone_owntrack    # OWNTRACK
       to: 'home'
     - platform: state
       entity_id:
@@ -641,10 +639,10 @@
         - device_tracker.iphone_malen                             # IOSAPP
         - device_tracker.iphone_mfc                               # IOSAPP
         - device_tracker.a2f                                      # IOSAPP
-        #- device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2  # MFC
-        - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496_2   # AAC
-        - device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2   # PAF
-        - device_tracker.daa04833_9772_4800_bf22_57f406aeb129_2   # AAF
+        #- device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222    # MFC
+        - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496     # AAC
+        - device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8     # PAF
+        - device_tracker.daa04833_9772_4800_bf22_57f406aeb129     # AAF
   action:
     - service: script.updatetracker
       data:
@@ -1068,14 +1066,10 @@
         after: '18:00:00'
         before: '23:59:59'
       - condition: sun
-        # after_offset: "-01:00:00"  ==> HORARIO INVIERNO GMT+1
-        # after_offset: "-00:30:00"  ==> HORARIO VERANO GMT+2
-        after: sunset
-        after_offset: "-00:30:00"
-      # si el sensor de luz está es < 1 lumx
-      - condition: numeric_state
-        entity_id: sensor.illumination_158d0002ea1d0f
-        below: 5
+        # before_offset: "+02:00:00"  ==> Horario Invierno GMT+1, en el amanecer -2h
+        # before_offset: "+00:30:00" ==> Horario Verano GMT+2, el amanecer -30m
+        before: sunrise
+        before_offset: "+01:00:00" # Horario Invierno GMT+1, en el amanecer +60m
   action:
     # Regla Off
     #- service: automation.turn_off
@@ -1133,18 +1127,23 @@
       entity_id: binary_sensor.motion_sensor_158d0001e464a6
       to: 'on'
   condition:
-    condition: and
+    condition: or
     conditions:
+      # https://www.home-assistant.io/docs/scripts/conditions/
+      #
       # si el sensor de luz está es < 3 lumx
-      - condition: numeric_state
-        entity_id: sensor.illumination_158d0001e464a6
-        below: 5
+      #- condition: numeric_state
+      #  entity_id: sensor.illumination_158d0001e464a6
+      #  below: 2
       # 'when dark' condition: either after sunset or before sunrise
       - condition: sun
-        # before_offset: "+00:60:00"  ==> Horario Invierno GMT+1, en el amanecer +60m
-        # before_offset: "+00:30:00" ==> Horario Verano GMT+2, el amanecer +30m
+        after: sunset
+        after_offset: "+01:00:00"
+      - condition: sun
+        # before_offset: "+02:00:00"  ==> Horario Invierno GMT+1, en el amanecer -2h
+        # before_offset: "+00:30:00" ==> Horario Verano GMT+2, el amanecer -30m
         before: sunrise
-        before_offset: "+00:60:00" # Horario Invierno GMT+1, en el amanecer +60m
+        before_offset: "+01:00:00" # Horario Invierno GMT+1, en el amanecer +60m
   action:
     # Luces On
     - service: light.turn_on
@@ -1158,7 +1157,6 @@
         white_value: 200
         rgb_color: [254, 126, 0]
         brightness: 255
-
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1559,16 +1557,16 @@
       to: 'on'
   action:
     - service: script.lavadora_switch_off
-    - service: script.alexa_secuencia
-      data_template:
-        sonido: 'clock_01'
-        repeticion: 1
-        voz: >
-          {% if states.weather.dark_skynow.state | string == 'rainy' %}
-            "Hola, el lavado ha terminado, pero hay previsión de lluvia. Deberías usar la secadora"
-          {% else %}
-            "Hola, el lavado ha terminado y el tiempo es bueno. Puedes tender la ropa"
-          {% endif %}
+    #- service: script.alexa_secuencia
+    #  data_template:
+    #    sonido: 'clock_01'
+    #    repeticion: 1
+    #    voz: >
+    #      {% if states.weather.dark_skynow.state | string == 'rainy' %}
+    #        "Hola, el lavado ha terminado, pero hay previsión de lluvia. Deberías usar la secadora"
+    #      {% else %}
+    #        "Hola, el lavado ha terminado y el tiempo es bueno. Puedes tender la ropa"
+    #      {% endif %}
 
 # ESPHOME 4CH-R2 SW2 RIEGO BONSAIS Relay1 - Relay4
 #
