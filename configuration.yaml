@@ -180,12 +180,6 @@ camera:
 
 #ffmpeg:
 
-#apple_tv:
-#  - host: !secret apple_tv_host
-#    login_id: !secret apple_tv_loginid
-#    name: Apple TV
-#    credentials: !secret apple_tv_credentials
-
 # Mediaplayer FireTV
 #media_player:
 #  - platform: androidtv
@@ -376,6 +370,8 @@ cloud:
         - light.pasillo
         - light.salon
         - light.dormitorio_aaf
+        - light.dormitorio_paf
+
     entity_config:
       script.homy_armado_parcial:
         name: Armado Parcial
@@ -504,6 +500,9 @@ plant:
     min_brightness: 2000
     max_brightness: 50000
 
+sonoff:
+  username: !secret sonoff_ewelink_user
+  password: !secret sonoff_ewelink_pwd
 
 #
 # DEPRECATED
