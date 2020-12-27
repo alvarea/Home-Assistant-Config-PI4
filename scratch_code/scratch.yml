@@ -1,8 +1,42 @@
+#
+# ==================================================
+# COMPONENTES ESPHOME SONOFF - FIRMWARE ESPHOMEYAML
+# ==================================================
+#
+# SERIE SONOFF BASIC
+#
+switch.esphome_bas_sw0:
+  friendly_name: Sirena Alarma
+  icon: mdi:alarm-snooze
+binary_sensor.esphome_bas_sw0_status:
+  friendly_name: BAS.SW0 Sirena Alarma
+light.esphome_bas_sw0_led:
+  friendly_name: LED Sirena
 
-image: /local/Bonsai_locker_aufrechte_Form.svg.png
-show_name: false
-show_state: false
-type: picture
+switch.esphome_bas_sw1:
+  friendly_name: Luz Rack Estudio
+  icon: mdi:ceiling-light
+binary_sensor.esphome_bas_sw1_status:
+  friendly_name: BAS.SW1 Luz Rack Estudio
+light.esphome_bas_sw1_led:
+  friendly_name: LED Luz Rack Estudio
+
+switch.esphome_bas_sw2:
+  friendly_name: Fuente Tortugas
+  icon: mdi:waves
+binary_sensor.esphome_bas_sw2_status:
+  friendly_name: BAS.SW2 Fuente Tortugas
+light.esphome_bas_sw2_led:
+  friendly_name: LED BAS_SW2 Fuente Tortugas
+
+switch.esphome_bas_sw4:
+  friendly_name: Porche 1
+  icon: mdi:floor-lamp
+binary_sensor.esphome_bas_sw4_status:
+  friendly_name: BAS.SW4 Porche 1
+light.esphome_bas_sw4_led:
+  friendly_name: LED Porche 1
+
 
 
 

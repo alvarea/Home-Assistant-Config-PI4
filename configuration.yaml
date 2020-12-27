@@ -173,7 +173,7 @@ camera:
     password: !secret IPcam_estudio
   - platform: generic
     still_image_url: !secret still_image_url_cam_jardin
-    #stream_source: !secret stream_source_url_cam_jardin
+    ##stream_source: !secret stream_source_url_cam_jardin
     name: IPcam Jardín
     username: admin
     password: !secret IPcam_jardin
@@ -336,6 +336,7 @@ cloud:
         - script
       include_entities:
         - light.esphome_lb1_l01
+        - light.sonoff_mini_sw1
         - script.homy_armado_parcial
         - script.homy_armado_total
         - script.homy_desarmado_code
@@ -343,7 +344,6 @@ cloud:
         - group.luces_planta_baja_grp
         - group.luces_planta_alta_grp
         - group.luces_interior_grp
-        - group.luces_exterior_grp
         - group.luces_casa_grp
         - group.luces_jardin_grp
       exclude_entities:
@@ -352,7 +352,7 @@ cloud:
         - switch.esphome_bas_sw2
         - switch.esphome_bas_sw3
         - switch.esphome_bas_sw4
-        - switch.esphome_pow_sw
+        - switch.esphome_pow_sw1
         - switch.esphome_pow_sw2
         - light.luz_cilindro
         - light.luz_cueva_agu
@@ -371,7 +371,6 @@ cloud:
         - light.salon
         - light.dormitorio_aaf
         - light.dormitorio_paf
-
     entity_config:
       script.homy_armado_parcial:
         name: Armado Parcial
@@ -382,12 +381,14 @@ cloud:
       group.luces_toda_la_casa_grp:
         name: Luces Toda La Casa
         description: Luces Interior y Exterior
-      group.luces_exterior_grp:
+      group.luces_jardin_grp:
         name: Luces Jardín
-      switch.wall_switch_left_158d0002236e75:
+      light.sonoff_mini_sw1:
         display_categories: LIGHT
-      switch.wall_switch_right_158d0002236e75:
+        name: Luces Exterior
+      switch.esphome_pow_sw1:
         display_categories: LIGHT
+        name: Arbol Navidad
       switch.esphome_4ch_relay_1:
         display_categories: LIGHT
       switch.esphome_4ch_relay_2:
@@ -503,6 +504,13 @@ plant:
 sonoff:
   username: !secret sonoff_ewelink_user
   password: !secret sonoff_ewelink_pwd
+  devices:
+    1000b4adc4:
+      device_class: light
+      name: Luz Exterior
+    1000b5aa49:
+      device_class: light
+      name: Luz Escritorio
 
 #
 # DEPRECATED

@@ -945,8 +945,8 @@
 
           >>> LUCES: Alumbrado Luz Salón On
 
-# 
-# La regla de alumbrado exterior según sensor se simplifica para que se encienda por la noche, siempre que esté oscuro.
+#
+# La regla de alumbrado exterior según sensor se simplifica para que se encienda por la noche, siempre que esté oscuro.
 # La idea es que por programacion horaria y puesta de sol la regla de encendido en la puesta de sol encienda y mantenga
 # encendida las luces hasta al menos las 23.55.
 # A partir de esa hora se apagan las luces y entraria a funcionar esta regla,
@@ -967,17 +967,17 @@
         entity_id: sun.sun
         state: 'below_horizon'
       - condition: state
-        entity_id: switch.wall_switch_right_158d0002236e75
+        entity_id: light.sonoff_mini_sw1
         state: 'off'
       - condition: numeric_state
         entity_id: sensor.illumination_158d0001e637f6
         below: 10
   action:
-    - service: switch.turn_on
-      entity_id: switch.wall_switch_right_158d0002236e75
+    - service: light.turn_on
+      entity_id: light.sonoff_mini_sw1
     - delay: '00:05:00'
-    - service: switch.turn_off
-      entity_id: switch.wall_switch_right_158d0002236e75
+    - service: light.turn_off
+      entity_id: light.sonoff_mini_sw1
 
 - id: L06
   alias: 'L06 Luces Off Before Sunrise'
@@ -997,7 +997,7 @@
         entity_id: group.luces_interior_grp # Luces interior
         state: 'on'
       - condition: state
-        entity_id: group.luces_exterior_grp # Luces exterior
+        entity_id: group.luces_jardin_grp # Luces exterior
         state: 'on'
   action:
     # Apagado Luces Casa
@@ -1157,10 +1157,12 @@
         white_value: 200
         rgb_color: [254, 126, 0]
         brightness: 255
+    - service: light.turn_on
+      entity_id: light.sonoff_mini_sw2
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# REGLAS MAGIC CUBE                                                           #
+# REGLAS MAGIC CUBE                                                           #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 #
@@ -1168,40 +1170,24 @@
 # free_fall and rotate.
 # The component stores the last action as the attribute last_action.
 #
-- id: L12
-  alias: 'L12 Cube Tap Twice Light Toggle'
-  trigger:
-    platform: event
-    event_type: xiaomi_aqara.cube_action
-    event_data:
-      entity_id: binary_sensor.cube_158d00024a4a62
-      action_type: tap_twice
-  action:
-    - service: light.toggle
-      entity_id:
-        - light.estudio
-        - light.esphome_lb1_l01
-    #- service: switch.toggle
-    #  entity_id:
-    #    - switch.esphome_bas_sw2
 
-- id: L13_cube_flip90_light_on
-  alias: 'L13 Cube Flip90 Light on'
+- id: L12
+  alias: 'L12 Cube FreeFall Light Estudio On'
+  mode: restart
   trigger:
     platform: event
     event_type: xiaomi_aqara.cube_action
     event_data:
       entity_id: binary_sensor.cube_158d00024a4a62
-      action_type: flip90
+      action_type: free_fall
   action:
+    - service: light.turn_on
+      entity_id: light.sonoff_mini_sw2
     - service: light.turn_on
       entity_id: light.luz_estudio
       data:
         brightness: 175
         rgb_color: [254, 200, 145]
-    #- service: switch.turn_on
-    #  entity_id:
-    #    - switch.esphome_bas_sw2
     - service: light.turn_on
       entity_id: light.esphome_lb1_l01
       data:
@@ -1209,8 +1195,9 @@
         rgb_color: [254, 126, 0]
         brightness: 255
 
-- id: L14_cube_shake_light_off
-  alias: 'L14 Cube Shake Light off'
+- id: L13
+  alias: 'L13 Cube Shake Light off'
+  mode: restart
   trigger:
     platform: event
     event_type: xiaomi_aqara.cube_action
@@ -1223,19 +1210,38 @@
       data:
         transition: 30
     - service: light.turn_off
-      entity_id: light.esphome_lb1_l01
-    # Regla L10 OFF (sensor estudio) para que no se vuelva encender las luces
-    #- service: automation.turn_off
-    #  entity_id: automation.l10_luces_on_estudio_segun_sensor
-    # Espera de 2'
-    - delay: 00:02
-    # Regla On
-    #- service: automation.turn_on
-    #  entity_id: automation.l10_luces_on_estudio_segun_sensor
+      entity_id:
+        - light.esphome_lb1_l01
+        - light.sonoff_mini_sw2
 
-    #- service: switch.turn_off
-    #  entity_id:
-    #    - switch.esphome_bas_sw2
+- id: L14
+  alias: 'L14 Cube Flip90 Light Desk Toggle'
+  mode: restart
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00024a4a62
+      action_type: flip90
+  action:
+    - service: light.toggle
+      entity_id: light.sonoff_mini_sw2
+    - delay: 3
+
+- id: L15
+  alias: 'L15 Cube Rotate Light Rack'
+  mode: restart
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00024a4a62
+      action_type: rotate
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_bas_sw1
+    - delay: 3
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1400,9 +1406,9 @@
       # offset: "+00:30:00"   # Horario Verano GMT+2  => 21:30 + 0:30 = 22:00
       event: sunset
       offset: "+03:30:00"
-    #- platform: sun  # solo para calefacción
-    #  event: sunrise
-    #  offset: "-02:00:00"
+    - platform: sun  # solo para calefacción
+      event: sunrise
+      offset: "-02:00:00"
   condition:
     condition: and
     conditions:
@@ -1428,9 +1434,9 @@
       # offset: "+00:30:00"   # Horario Verano GMT+2  => 21:30 + 0:30 = 22:00
       event: sunset
       offset: "+03:30:00"
-    #- platform: sun  # solo para calefacción
-    #  event: sunrise
-    #  offset: "-02:00:00"
+    - platform: sun  # solo para calefacción
+      event: sunrise
+      offset: "-02:00:00"
   condition:
     condition: and
     conditions:
@@ -1447,7 +1453,6 @@
   action:
     - service: switch.turn_on
       entity_id: switch.esphome_s20_sw3
-
 
 - id: S12
   alias: 'S12 Switch Dormitorios Off'

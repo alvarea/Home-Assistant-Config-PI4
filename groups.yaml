@@ -93,6 +93,7 @@ luces_estudio_grp:
   entities:
     - light.luz_estudio                                     # Hue Estudio
     - light.esphome_lb1_l01
+    - light.sonoff_mini_sw2                                 # Luz Escritorio
     # - switch.esphome_bas_sw1                              # Estudio Armario Rack
 
 luces_entrada_grp:
@@ -123,28 +124,22 @@ luces_interior_grp:
     - group.luces_planta_baja_grp
     - group.luces_planta_alta_grp
 
-luces_exterior_grp:
-  name: Luces Exterior
+luces_jardin_grp:
+  name: Luces Jardín
   entities:
+    - light.sonoff_mini_sw1                       # Luces Exterior Xiaomi Switch Right
     - switch.esphome_bas_sw4                      # Porche 1 Salón
-    - switch.wall_switch_right_158d0002236e75     # Luces Exterior Xiaomi Switch Right
     - switch.esphome_4ch_relay_1                  # Balizas Cesped Jardín (CH1)
     - switch.esphome_4ch_relay_3                  # Focos Entrada (Olivo1+Cica)(CH3)
     - switch.esphome_4ch_relay_2                  # Focos Piscina (Olivo3+Yuca)(CH2)
     - switch.esphome_4ch_relay_4                  # Pendiente Disponible
 
-luces_jardin_grp:
-  name: Luces Jardín
-  entities:
-    - switch.esphome_bas_sw4                      # Porche 1 Salón
-    - switch.wall_switch_right_158d0002236e75     # Luces Exterior Xiaomi Switch Right
-    - switch.esphome_4ch_relay_1                  # Balizas Cesped Jardín (CH1)
 
 luces_casa_grp:
   name: Luces De Toda La Casa
   entities:
-    - group.luces_exterior_grp
     - group.luces_interior_grp
+    - group.luces_jardin_grp
 
 setup_telegram_grp:
   name: Notificaciones Telegram

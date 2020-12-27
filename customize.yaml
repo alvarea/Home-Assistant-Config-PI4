@@ -134,7 +134,7 @@ sensor.illumination_158d0001e55903:
 switch.wall_switch_left_158d0002236e75:
   friendly_name: Luz Techo Entrada
   icon: mdi:ceiling-light
-switch.wall_switch_right_158d0002236e75:
+switch.sonoff_mini_sw1:
   friendly_name: Luz Exterior
   icon: mdi:track-light
 
@@ -295,46 +295,6 @@ script.piscina_timer_cancel:
   friendly_name: Timer Piscina - STOP
   icon: mdi:power-off
 
-
-#
-# ==================================================
-# COMPONENTES ESPHOME SONOFF - FIRMWARE ESPHOMEYAML
-# ==================================================
-#
-# SERIE SONOFF BASIC
-#
-switch.esphome_bas_sw0:
-  friendly_name: Sirena Alarma
-  icon: mdi:alarm-snooze
-binary_sensor.esphome_bas_sw0_status:
-  friendly_name: BAS.SW0 Sirena Alarma
-light.esphome_bas_sw0_led:
-  friendly_name: LED Sirena
-
-switch.esphome_bas_sw1:
-  friendly_name: Pendiente_SW1
-  icon: mdi:ceiling-light
-binary_sensor.esphome_bas_sw1_status:
-  friendly_name: BAS.SW1 Pendiente_SW1
-light.esphome_bas_sw1_led:
-  friendly_name: LED Pendiente_SW1
-
-switch.esphome_bas_sw2:
-  friendly_name: Fuente Tortugas
-  icon: mdi:waves
-binary_sensor.esphome_bas_sw2_status:
-  friendly_name: BAS.SW2 Fuente Tortugas
-light.esphome_bas_sw2_led:
-  friendly_name: LED BAS_SW2 Fuente Tortugas
-
-switch.esphome_bas_sw4:
-  friendly_name: Porche 1
-  icon: mdi:floor-lamp
-binary_sensor.esphome_bas_sw4_status:
-  friendly_name: BAS.SW4 Porche 1
-light.esphome_bas_sw4_led:
-  friendly_name: LED Porche 1
-
 #
 # SERIE SONOFF 4CH
 #
@@ -400,15 +360,6 @@ binary_sensor.esphome_s20_sw3_status:
 
 light.esphome_s20_sw3_led:
   friendly_name: Led Dormitorio PAF
-
-#
-# SERIE SONOFF POW
-#
-switch.esphome_pow_sw3:
-  friendly_name: Depuradora Piscina
-  icon: mdi:swim  # dip-switch
-binary_sensor.esphome_pow_sw3_status:
-  friendly_name: POW.SW1 Cuadro Piscina
 
 #
 # SERIE SONOFF POW-R2

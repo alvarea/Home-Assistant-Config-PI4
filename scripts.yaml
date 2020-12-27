@@ -1,7 +1,7 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# SCRIPTS DEVICE TRACKER                                                      #
+# SCRIPTS DEVICE TRACKER                                                      #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 updatetracker:
@@ -1039,7 +1039,7 @@ luces_on_family_home:
     - service: light.turn_on
       entity_id: light.luz_entrada
 
-# Apagado Luces Toda La Casa
+# Apagado Luces Toda La Casa
 luces_off:
   alias: 'Luces Off'
   sequence:
@@ -1051,7 +1051,7 @@ luces_off:
       entity_id: group.luces_interior_grp
     # Apagado Luces Exterior
     - service: switch.turn_off
-      entity_id: group.luces_exterior_grp
+      entity_id: group.luces_jardin_grp
 
 # Apagado Luces Exterior Casa
 luces_exterior_off:
@@ -1059,11 +1059,11 @@ luces_exterior_off:
   sequence:
     # When a condition does not return true, the script will finish
     - condition: template
-      value_template: "{% if is_state('group.luces_exterior_grp', 'on') %}true{% endif %}"
+      value_template: "{% if is_state('group.luces_jardin_grp', 'on') %}true{% endif %}"
 
     # Apagado Luces Exterior
     - service: switch.turn_off
-      entity_id: group.luces_exterior_grp
+      entity_id: group.luces_jardin_grp
 
 luces_exterior_on:
   alias: 'Luces Exterior y Jardín On'
@@ -1082,8 +1082,8 @@ luces_jardin_check_xia_ext:
   - condition: state
     entity_id: input_boolean.jardin_programador_xia_ext
     state: 'on'
-  - service: switch.turn_on
-    entity_id: switch.wall_switch_right_158d0002236e75
+  - service: light.turn_on
+    entity_id: light.sonoff_mini_sw1
 
 luces_jardin_check_bas_sw2:
   alias: 'Luces On Sonoff BAS SW2'
@@ -1278,7 +1278,7 @@ riego_sw2_timer_cancel:
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# SCRIPTS DE INTERRUPTORES SONOFF                                             #
+# SCRIPTS DE INTERRUPTORES SONOFF                                             #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
@@ -1382,7 +1382,7 @@ lavadora_switch_off:
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# SCRIPTS DE ARRANQUE DEL SISTEMA                                             #
+# SCRIPTS DE ARRANQUE DEL SISTEMA                                             #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 sonoff_initialize:
@@ -1400,7 +1400,7 @@ sonoff_initialize:
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# SISTEMA DE CAMARAS BLINK                                                    #
+# SISTEMA DE CAMARAS BLINK                                                    #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 blink_trigger_cam_entrada:
