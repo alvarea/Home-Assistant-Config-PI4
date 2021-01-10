@@ -18,7 +18,7 @@
 MFC_Trackers = ['device_tracker.mfc_iphone_nmap',
                 'device_tracker.mfc_iphone_owntrack',
                 'device_tracker.iphone_malen' ]
-                # 'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2']
+                'device_tracker.b6cd9e1f_4100_4cac_88d0_f4d6c044a4e6']
 
 AAC_Trackers = ['device_tracker.aac_iphone_nmap',
                 'device_tracker.aac_iphone_owntrack',
@@ -32,7 +32,7 @@ PAF_Trackers = ['device_tracker.paf_iphone_nmap',
 
 AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
                 'device_tracker.a2f',
-                'device_tracker.daa04833_9772_4800_bf22_57f406aeb129']
+                'device_tracker.0b495ff5_94fc_4773_9644_f71df3c328ac']
 
 # Get the entity that triggered the automation
 triggeredEntity = data.get('entity_id')

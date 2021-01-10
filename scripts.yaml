@@ -978,7 +978,7 @@ notifica_evento:
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# CONTROL DE LUCES Y ALUMBRADO                                                #
+# CONTROL DE LUCES Y ALUMBRADO                                                #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 luces_entrada_escena_read:
@@ -1050,10 +1050,9 @@ luces_off:
     - service: light.turn_off
       entity_id: group.luces_interior_grp
     # Apagado Luces Exterior
-    - service: switch.turn_off
-      entity_id: group.luces_jardin_grp
+    - service: script.luces_exterior_off
 
-# Apagado Luces Exterior Casa
+# Apagado Luces Exterior Casa
 luces_exterior_off:
   alias: 'Luces Exterior Off'
   sequence:
@@ -1061,9 +1060,14 @@ luces_exterior_off:
     - condition: template
       value_template: "{% if is_state('group.luces_jardin_grp', 'on') %}true{% endif %}"
 
-    # Apagado Luces Exterior
+    # Apagado Luces Exterior - Switch
     - service: switch.turn_off
       entity_id: group.luces_jardin_grp
+
+    # Apagado Luces Exterior - Light
+    - service: light.turn_off
+      entity_id: group.luces_jardin_grp
+
 
 luces_exterior_on:
   alias: 'Luces Exterior y Jardín On'
@@ -1141,7 +1145,7 @@ luces_jardin_check_4ch_ch4:
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# SCRIPTS DE DEPURADORA PISCINA                                               #
+# SCRIPTS DE DEPURADORA PISCINA                                               #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 

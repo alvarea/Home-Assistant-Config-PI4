@@ -127,7 +127,7 @@ luces_interior_grp:
 luces_jardin_grp:
   name: Luces Jardín
   entities:
-    - light.sonoff_mini_sw1                       # Luces Exterior Xiaomi Switch Right
+    - light.sonoff_mini_sw1                       # Luces Exterior
     - switch.esphome_bas_sw4                      # Porche 1 Salón
     - switch.esphome_4ch_relay_1                  # Balizas Cesped Jardín (CH1)
     - switch.esphome_4ch_relay_3                  # Focos Entrada (Olivo1+Cica)(CH3)
