@@ -1,3 +1,22 @@
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# SCRIPTS PARA APAGADO Y ENCENDIDO GENERAL DE LA CASA                         #
+#                                                                             #
+#-----------------------------------------------------------------------------#
+home_switch_off:
+  alias: 'Home Total Switch Off'
+  sequence:
+    # APAGADO LUCES LIGHT
+    - service: light.turn_off
+      entity_id: group.luces_interior_grp
+
+    # APAGADO LUCES JARDIN EXCEPTO FAROLES EXTERIOR (TODAS TIPO SWITCH)
+    - service: switch.turn_off
+      entity_id: group.luces_jardin_grp
+
+    # APAGADO LUCES JARDIN EXCEPTO FAROLES EXTERIOR (TODAS TIPO SWITCH)
+    - service: switch.turn_off
+      entity_id: group.switch_calefaccion_grp
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -18,11 +37,6 @@ updatetracker:
       data_template:
         value: >-
           {{ states[entityid.split('.')[0]][entityid.split('.')[1]].name }}, {{ tostate }}, {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
-    #- service: logbook.log
-    #  data_template:
-    #    name: "Meta-tracker: "
-    #    mensaje: >-
-    #      {{ states[entityid.split('.')[0]][entityid.split('.')[1]].name }} is {{ tostate }} at {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
 
 reset_meta_tracker:
   alias: 'Reset Meta-Tracker'
@@ -47,45 +61,7 @@ reset_meta_alarm_trigger:
       data_template:
         entity_id: sensor.alarm_last_trigger
 
-#-----------------------------------------------------------------------------#
-#                                                                             #
-# ALARMA y SIRENAS XIAOMI HUB                                                 #
-#                                                                             #
-#-----------------------------------------------------------------------------#
-# 10004: Ringtone Sistema_Armado_Desarme:
-#
-# "sistema armado
-# 15 seg para desarmar
-# desarme ahora por favor
-# sistema armado, quedan 3 segundos
-# desarme ahora por favor"
-#
-#{ "gw_mac" : "78:11:DC:B7:88:FA",
-#"ringtone_id" : "10004",
-#"ringtone_vol" : "50"
-#}
-#
-# 10005: Ringtone Sistema_Armandose_SalgaAhora:
-#
-# "sistema armado
-# 15 seg para salir
-# salga ahora por favor
-# sistema armado, quedan 3 segundos
-# salga ahora por favor"
-#
 
-#
-# SCRIPT PARA NOTIFICACION MENSAJES SONOROS PERSONALIZADOS:
-#
-# 10004: Ringtone Sistema_Armado_Desarme:
-# 10005: Ringtone Sistema_Armandose_SalgaAhora:
-#
-# PARÁMETROS ENTRADA:
-#   data_template:
-#     fromstate: '{{trigger.from_state.state}}'
-#     tostate: '{{trigger.to_state.state}}'
-#     ringtone_msg: <nnnnn>
-#
 alarma_to_pending:
   alias: "Alarma Disarmed to Pending"
   sequence:
@@ -178,7 +154,7 @@ sirena_v0_alarma_armed_away:
       entity_id: switch.esphome_bas_sw0
 
 # SCRIPT PARA ENCENDER SOLO SIRENA XIAOMI TRAS DISPARO
-# DE ALARMA ARMED HOME O SENSOR DE HUMO
+# DE ALARMA ARMED HOME O SENSOR DE HUMO
 #
 sirena_v0_alarma_armed_home:
   alias: "Sirena Alarma Armed Home"
@@ -270,7 +246,7 @@ alarma_boton_panico_off:
           >>> URGENTE: BOTON PANICO DESACTIVADO
 
 #
-# SCRIPTS PARA GESTION ALARMA DESDE ALEXA
+# SCRIPTS PARA GESTION ALARMA DESDE ALEXA
 #
 homy_armado_parcial:
   alias: 'Homy Armado Parcial'
@@ -336,7 +312,7 @@ sirena_alarma_triggered:
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# SCRIPTS GENERICOS DE MEDIA_PLAYER ALEXA Y FIRETV                            #
+# SCRIPTS GENERICOS DE MEDIA_PLAYER ALEXA Y FIRETV                            #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 

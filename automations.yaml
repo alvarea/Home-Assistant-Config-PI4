@@ -97,7 +97,7 @@
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora de preparar la comida"
           {% elif now().hour == 14 and now().minute == 30 %}
             "Buenas tardes. Son las {{ now().hour }} y {{ now().minute }}, es la hora del almuerzo"
-          {% elif now().hour ==21 and now().weekday() != 4 and now().weekday() != 5 %}
+          {% elif now().hour ==21 %}
             "Buenas noches. Son las {{ now().hour }} y {{ now().minute }}, es la hora de preparar la cena"
           {% endif %}
 
@@ -285,6 +285,10 @@
         titulo: '*ALARMA HOMY*'
         mensaje: >
           >>> ESTADO: ARMADO TOTAL (AWAY)
+          >>> ACCION: Apagado Total Casa
+
+    # Llamada a Script Apagado Casa
+    - service: script.home_switch_off
 
     #- delay: 00:01:00
     # ARMADO PANEL ALARMA BLINK
@@ -601,8 +605,6 @@
 #AAF_Trackers = ['device_tracker.aaf_iphone_nmap',
 #                'device_tracker.a2f',
 #                'device_tracker.0b495ff5_94fc_4773_9644_f71df3c328ac']
-
-
 - id: U1
   alias: "Update Device Meta Tracker"
   initial_state: 'on'
@@ -1457,10 +1459,11 @@
 - id: S12
   alias: 'S12 Switch Dormitorios Off'
   trigger:
-    #- platform: time # Solo Invierno Calefacción
-    #  at: '01:00:00'
+    - platform: time # Solo Invierno Calefacción
+      at: '01:00:00'
     - platform: sun
       event: sunrise
+      offset: "-00:30:00"
   condition:
     condition: or
     conditions:

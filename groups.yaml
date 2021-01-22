@@ -134,12 +134,18 @@ luces_jardin_grp:
     - switch.esphome_4ch_relay_2                  # Focos Piscina (Olivo3+Yuca)(CH2)
     - switch.esphome_4ch_relay_4                  # Pendiente Disponible
 
-
 luces_casa_grp:
   name: Luces De Toda La Casa
   entities:
     - group.luces_interior_grp
     - group.luces_jardin_grp
+
+switch_calefaccion_grp:
+  name: Calefacción de Toda La Casa
+  entities:
+    - switch.esphome_s20_sw1                      # Dormitorio M&D
+    # - switch.esphome_s20_sw2                      # Dormitorio AAF
+    - switch.esphome_s20_sw3                      # Dormitorio PAF
 
 setup_telegram_grp:
   name: Notificaciones Telegram

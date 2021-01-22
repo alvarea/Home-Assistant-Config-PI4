@@ -14,6 +14,7 @@
     options:
       - "media_player.en_todas_partes"
       - "media_player.echo_alexa_entrada"
+      - "media_player.echo_alexa_estudio"
       - "media_player.echo_alexa_dormitorio"
       - "media_player.fire_tv_cocina"
       - "media_player.fire_tv_salon"
@@ -197,7 +198,7 @@
      - 'Sábado'
      - 'Domingo'
      - 'Weekend'
-    initial: Diario
+    initial: Weekend
     icon: mdi:calendar
 
 # Riego Bonsais

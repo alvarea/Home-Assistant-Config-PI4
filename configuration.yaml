@@ -511,7 +511,15 @@ sonoff:
     1000b5aa49:
       device_class: light
       name: Luz Escritorio
-
+    1001057e5c:
+      device_class: light
+      name: Switch SW3
+    100104fe64:
+      device_class: light
+      name: Switch SW4
+    1000f83c56:
+      device_class: light
+      name: Switch BAS SW3
 #
 # DEPRECATED
 #
