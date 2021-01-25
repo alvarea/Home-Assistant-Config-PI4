@@ -26,6 +26,27 @@ sensor.family_sleep_home:
   friendly_name: ¿Duermen? # en Casa?
   icon: mdi:sleep
 
+# GRUPOS DE LUCES / INTERRUPTORES
+group.luces_estudio_grp:
+  icon: mdi:television-ambient-light
+group.luces_entrada_grp:
+  icon: mdi:lightbulb-multiple
+
+group.luces_jardin_grp:
+  icon: mdi:theme-light-dark
+group.luces_focos_arboles_grp:
+  icon: mdi:track-light
+
+group.luces_planta_baja_grp:
+  icon: mdi:lightbulb-group-outline
+group.luces_planta_alta_grp:
+  icon: mdi:lightbulb-group
+
+group.luces_interior_grp:
+  icon: mdi:home-lightbulb-outline
+group.luces_casa_grp:
+  icon: mdi:home-lightbulb
+
 # SENSORES BAYESIAN TRACKING FAMILY HOME
 #
 binary_sensor.family_home_mfc:
