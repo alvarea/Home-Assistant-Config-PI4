@@ -198,7 +198,7 @@
      - 'Sábado'
      - 'Domingo'
      - 'Weekend'
-    initial: Weekend
+    initial: Diario
     icon: mdi:calendar
 
 # Riego Bonsais

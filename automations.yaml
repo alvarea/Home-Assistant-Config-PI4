@@ -22,13 +22,7 @@
       data:
         entity_id:
           - group.all_automations
-    #
-    # Llamada al script para inicializar meta-trackers
-    - service: script.reset_meta_tracker
-    #
-    # Llamada al script para inicializar meta-alarm_trigger
-    #- service: script.reset_meta_alarm_trigger
-    #
+
     # Llamada al script de inicialización de interruptores Sonoff
     - service: script.sonoff_initialize
     #
@@ -1063,15 +1057,15 @@
       - condition: state
         entity_id: light.dormitorio
         state: 'off'
-      # entre las 18:00 y las 23:59 máximo.
-      - condition: time
-        after: '18:00:00'
-        before: '23:59:59'
+      # 'when dark' condition: either after sunset or before sunrise
+      - condition: sun
+        after: sunset
+        after_offset: "+01:00:00"
       - condition: sun
         # before_offset: "+02:00:00"  ==> Horario Invierno GMT+1, en el amanecer -2h
         # before_offset: "+00:30:00" ==> Horario Verano GMT+2, el amanecer -30m
         before: sunrise
-        before_offset: "+01:00:00" # Horario Invierno GMT+1, en el amanecer +60m
+        before_offset: "+02:00:00"
   action:
     # Regla Off
     #- service: automation.turn_off
@@ -1408,9 +1402,9 @@
       # offset: "+00:30:00"   # Horario Verano GMT+2  => 21:30 + 0:30 = 22:00
       event: sunset
       offset: "+03:30:00"
-    - platform: sun  # solo para calefacción
-      event: sunrise
-      offset: "-02:00:00"
+    #- platform: sun  # solo para calefacción
+    #  event: sunrise
+    #  offset: "-02:00:00"
   condition:
     condition: and
     conditions:

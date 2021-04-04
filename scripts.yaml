@@ -18,50 +18,6 @@ home_switch_off:
     - service: switch.turn_off
       entity_id: group.switch_calefaccion_grp
 
-#-----------------------------------------------------------------------------#
-#                                                                             #
-# SCRIPTS DEVICE TRACKER                                                      #
-#                                                                             #
-#-----------------------------------------------------------------------------#
-updatetracker:
-  alias: 'Update Meta-Tracker'
-  sequence:
-    - service: python_script.meta_device_tracker
-      data_template:
-        entity_id: '{{entityid}}'
-    - condition: template
-      value_template: '{{fromstate != tostate}}'
-    - service: python_script.countpeople
-    - service: input_text.set_value
-      entity_id: input_text.family_last_tracking
-      data_template:
-        value: >-
-          {{ states[entityid.split('.')[0]][entityid.split('.')[1]].name }}, {{ tostate }}, {{ as_timestamp(now()) | timestamp_custom('%I:%M:%S %p', true) }}.
-
-reset_meta_tracker:
-  alias: 'Reset Meta-Tracker'
-  sequence:
-    - service: python_script.meta_device_tracker
-      data_template:
-        entity_id: device_tracker.iphone_aac #AAC
-    - service: python_script.meta_device_tracker
-      data_template:
-        entity_id: device_tracker.iphone_malen #MFC
-    - service: python_script.meta_device_tracker
-      data_template:
-        entity_id: device_tracker.iphone_paf #PAF
-    - service: python_script.meta_device_tracker
-      data_template:
-        entity_id: device_tracker.a2f #AAF
-
-reset_meta_alarm_trigger:
-  alias: 'Reset Meta-Alarm-Trigger'
-  sequence:
-    - service: python_script.meta_alarm_trigger
-      data_template:
-        entity_id: sensor.alarm_last_trigger
-
-
 alarma_to_pending:
   alias: "Alarma Disarmed to Pending"
   sequence:
