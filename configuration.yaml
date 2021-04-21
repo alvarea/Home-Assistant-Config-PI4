@@ -403,6 +403,20 @@ cloud:
         display_categories: LIGHT
       light.esphome_lb1_l01:
         display_categories: LIGHT
+      script.luces_dormitorio_lectura:
+        name: Luces Dormitorio Lectura
+      script.luces_dormitorio_relax:
+        name: Luces Dormitorio Relax
+      script.luces_dormitorio_tenue:
+        name: Luces Dormitorio Tenue
+      script.luces_dormitorio_noche:
+        name: Luces Dormitorio Noche
+      script.luces_salon_relax:
+        name: Luces Salon Relax
+      script.luces_salon_luminosa:
+        name: Luces Salon Luminosa
+      script.luces_salon_wpt:
+        name: Luces Salon WPT
 
 recorder:
   # purge_interval: 1

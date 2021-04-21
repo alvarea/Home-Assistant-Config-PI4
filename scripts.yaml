@@ -913,16 +913,16 @@ notifica_evento:
 # CONTROL DE LUCES Y ALUMBRADO                                                #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-luces_entrada_escena_read:
+luces_dormitorio_lectura:
   alias: 'Luces Dormitorio Escena Lectura'
   sequence:
     # El nombre de la escena es case sensitive
     - service: hue.hue_activate_scene
       data:
         group_name: "Dormitorio"
-        scene_name: "Read"
+        scene_name: "Lectura"
 
-luces_dormitorio_escena_relax:
+luces_dormitorio_relax:
   alias: 'Luces Dormitorio Escena Relax'
   sequence:
     - service: hue.hue_activate_scene
@@ -930,21 +930,51 @@ luces_dormitorio_escena_relax:
         group_name: "Dormitorio"
         scene_name: "Relax"
 
-luces_dormitorio_escena_dimmed:
+luces_dormitorio_tenue:
   alias: 'Luces Dormitorio Escena Tenue'
   sequence:
     - service: hue.hue_activate_scene
       data:
         group_name: "Dormitorio"
-        scene_name: "Dimmed"
+        scene_name: "Tenue"
 
-luces_dormitorio_escena_nightlight:
+luces_dormitorio_noche:
   alias: 'Luces Dormitorio Escena Noche'
   sequence:
     - service: hue.hue_activate_scene
       data:
         group_name: "Dormitorio"
-        scene_name: "Nightlight"
+        scene_name: "Noche"
+
+luces_salon_relax:
+  alias: 'Luces Salon Escena Relax'
+  sequence:
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Salon"
+        scene_name: "Relax"
+
+luces_salon_luminosa:
+  alias: 'Luces Salon Escena Luminosa'
+  sequence:
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Salon"
+        scene_name: "Luminosa"
+
+luces_salon_wpt:
+  alias: 'Luces Salon Escena WPT'
+  sequence:
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Salon"
+        scene_name: "WPT"
+
+luces_salon_off:
+  alias: 'Luces Salon Off'
+  sequence:
+    - service: light.turn_off
+      entity_id: light.salon
 
 luz_on_armed_home:
   alias: 'Luces On Entrada si Sensor'
@@ -999,7 +1029,6 @@ luces_exterior_off:
     # Apagado Luces Exterior - Light
     - service: light.turn_off
       entity_id: group.luces_jardin_grp
-
 
 luces_exterior_on:
   alias: 'Luces Exterior y Jardín On'
