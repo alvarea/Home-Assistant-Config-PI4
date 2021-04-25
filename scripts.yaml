@@ -914,7 +914,7 @@ notifica_evento:
 #                                                                             #
 #-----------------------------------------------------------------------------#
 luces_dormitorio_lectura:
-  alias: 'Luces Dormitorio Escena Lectura'
+  alias: 'Luces Dormitorio Lectura'
   sequence:
     # El nombre de la escena es case sensitive
     - service: hue.hue_activate_scene
@@ -923,7 +923,7 @@ luces_dormitorio_lectura:
         scene_name: "Lectura"
 
 luces_dormitorio_relax:
-  alias: 'Luces Dormitorio Escena Relax'
+  alias: 'Luces Dormitorio Relax'
   sequence:
     - service: hue.hue_activate_scene
       data:
@@ -931,7 +931,7 @@ luces_dormitorio_relax:
         scene_name: "Relax"
 
 luces_dormitorio_tenue:
-  alias: 'Luces Dormitorio Escena Tenue'
+  alias: 'Luces Dormitorio Tenue'
   sequence:
     - service: hue.hue_activate_scene
       data:
@@ -939,7 +939,7 @@ luces_dormitorio_tenue:
         scene_name: "Tenue"
 
 luces_dormitorio_noche:
-  alias: 'Luces Dormitorio Escena Noche'
+  alias: 'Luces Dormitorio Noche'
   sequence:
     - service: hue.hue_activate_scene
       data:
@@ -947,27 +947,27 @@ luces_dormitorio_noche:
         scene_name: "Noche"
 
 luces_salon_relax:
-  alias: 'Luces Salon Escena Relax'
+  alias: 'Luces Salon Relax'
   sequence:
     - service: hue.hue_activate_scene
       data:
-        group_name: "Salon"
+        group_name: "Salón"
         scene_name: "Relax"
 
-luces_salon_luminosa:
-  alias: 'Luces Salon Escena Luminosa'
+luces_salon_top:
+  alias: 'Luces Salon Top'
   sequence:
     - service: hue.hue_activate_scene
       data:
-        group_name: "Salon"
-        scene_name: "Luminosa"
+        group_name: "Salón"
+        scene_name: "Top"
 
 luces_salon_wpt:
-  alias: 'Luces Salon Escena WPT'
+  alias: 'Luces Salon WPT'
   sequence:
     - service: hue.hue_activate_scene
       data:
-        group_name: "Salon"
+        group_name: "Salón"
         scene_name: "WPT"
 
 luces_salon_off:
@@ -975,6 +975,22 @@ luces_salon_off:
   sequence:
     - service: light.turn_off
       entity_id: light.salon
+
+luces_estudio_relax:
+  alias: 'Luces Estudio Relax'
+  sequence:
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Estudio"
+        scene_name: "Relax"
+
+luces_estudio_top:
+  alias: 'Luces Estudio Top'
+  sequence:
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Estudio"
+        scene_name: "Top"
 
 luz_on_armed_home:
   alias: 'Luces On Entrada si Sensor'

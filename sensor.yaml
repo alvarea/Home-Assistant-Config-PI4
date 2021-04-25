@@ -77,25 +77,25 @@
         icon_template: "{{ 'mdi:home-map-marker' if states('input_text.family_last_tracking') is not none }}"
 
       # Meta tracker AAC, MFC, PAF, AAF
-      meta_track_aac:
-        value_template: "{{ states('device_tracker.meta_aac') if states('device_tracker.meta_aac') is not none }}"
-        friendly_name: 'AAC'
-        entity_picture_template: "{{ states.device_tracker.meta_aac.attributes.entity_picture if states('device_tracker.meta_aac') is not none }}"
+      # meta_track_aac:
+      #  value_template: "{{ states('device_tracker.meta_aac') if states('device_tracker.meta_aac') is not none }}"
+      #  friendly_name: 'AAC'
+      #  entity_picture_template: "{{ states.device_tracker.meta_aac.attributes.entity_picture if states('device_tracker.meta_aac') is not none }}"
 
-      meta_track_mfc:
-        value_template: "{{ states('device_tracker.meta_mfc') if states('device_tracker.meta_mfc') is not none }}"
-        friendly_name: 'MFC'
-        entity_picture_template: "{{ states.device_tracker.meta_mfc.attributes.entity_picture if states('device_tracker.meta_mfc') is not none }}"
+      # meta_track_mfc:
+      #  value_template: "{{ states('device_tracker.meta_mfc') if states('device_tracker.meta_mfc') is not none }}"
+      #  friendly_name: 'MFC'
+      #  entity_picture_template: "{{ states.device_tracker.meta_mfc.attributes.entity_picture if states('device_tracker.meta_mfc') is not none }}"
 
-      meta_track_paf:
-        value_template: "{{ states('device_tracker.meta_paf') if states('device_tracker.meta_paf') is not none }}"
-        friendly_name: 'PAF'
-        entity_picture_template: "{{ states.device_tracker.meta_paf.attributes.entity_picture if states('device_tracker.meta_paf') is not none }}"
+      # meta_track_paf:
+      #  value_template: "{{ states('device_tracker.meta_paf') if states('device_tracker.meta_paf') is not none }}"
+      #  friendly_name: 'PAF'
+      #  entity_picture_template: "{{ states.device_tracker.meta_paf.attributes.entity_picture if states('device_tracker.meta_paf') is not none }}"
 
-      meta_track_aaf:
-        friendly_name: 'AAF'
-        entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('device_tracker.meta_aaf') is not none }}"
-        value_template: "{{ states('device_tracker.meta_aaf') if is_state('sensor.family_home_aaf','on') and states('device_tracker.meta_aaf') is not none }}"
+      # meta_track_aaf:
+      #  friendly_name: 'AAF'
+      #  entity_picture_template: "{{ states.device_tracker.meta_aaf.attributes.entity_picture if states('device_tracker.meta_aaf') is not none }}"
+      #  value_template: "{{ states('device_tracker.meta_aaf') if is_state('sensor.family_home_aaf','on') and states('device_tracker.meta_aaf') is not none }}"
 
       # Sensores read-only de configuración on/off Tracking Family Home AAC, MFC, PAF, AAF
       # input_boolean.family_home_mfc,input_boolean.family_home_aac,input_boolean.family_home_paf,input_boolean.family_home_aaf

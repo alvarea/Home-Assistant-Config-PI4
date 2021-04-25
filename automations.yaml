@@ -876,7 +876,7 @@
 # A partir de esa hora se apagan las luces y entraria a funcionar esta regla,
 # de forma que al pasar alguien por la entrada si está oscuro, encienda los faroles exterior.
 # Se elimina la notificación Telegram.
-#
+  #
 - id: L05
   alias: 'L05 Luces On Exterior Segun Sensor'
   mode: restart

@@ -404,20 +404,23 @@ cloud:
       light.esphome_lb1_l01:
         display_categories: LIGHT
       script.luces_dormitorio_lectura:
-        name: Luces Dormitorio Lectura
+        name: Dormitorio Lectura
       script.luces_dormitorio_relax:
-        name: Luces Dormitorio Relax
+        name: Dormitorio Relax
       script.luces_dormitorio_tenue:
-        name: Luces Dormitorio Tenue
+        name: Dormitorio Tenue
       script.luces_dormitorio_noche:
-        name: Luces Dormitorio Noche
+        name: Dormitorio Noche
       script.luces_salon_relax:
-        name: Luces Salon Relax
+        name: Salon Relax
       script.luces_salon_luminosa:
-        name: Luces Salon Luminosa
+        name: Salon Top
       script.luces_salon_wpt:
-        name: Luces Salon WPT
-
+        name: Salon Azul
+      script.luces_estudio_Top:
+        name: Estudio Top
+      script.luces_estudio_relax:
+        name: Estudio Relax
 recorder:
   # purge_interval: 1
   purge_keep_days: 30
