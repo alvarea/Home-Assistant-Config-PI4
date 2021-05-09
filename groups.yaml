@@ -64,13 +64,12 @@ alarma_sensor_jardin_grp:
 alarma_grp_sensores_home:
   name: Grupo Sensores Home
   entities:
-    #- binary_sensor.door_window_sensor_158d000201dddb      # Ventana PAF ESTROPEADO - RIP
     - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Principal
     - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Trasera Jardín
     - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
     - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
     - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
-    - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
+    #- binary_sensor.door_window_sensor_158d00030996fc      # Ventana Estudio ==> SOLO ARMADO AWAY
     - binary_sensor.door_window_sensor_158d00045d69a6       # Ventana PAF
     - binary_sensor.vibration_158d0002b15e3b                # Rack Comunicaciones
     - binary_sensor.vibration_158d0002a4eacc                # Puerta atras salon
@@ -92,6 +91,7 @@ luces_estudio_grp:
   name: Luces Estudio
   entities:
     - light.luz_estudio                                     # Hue Estudio
+    - light.luz_escalera                                    # Hue Estudio
     - light.esphome_lb1_l01
     - light.sonoff_mini_sw2                                 # Luz Escritorio
     # - switch.esphome_bas_sw1                              # Estudio Armario Rack

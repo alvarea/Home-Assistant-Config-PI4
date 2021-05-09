@@ -449,13 +449,11 @@
       entity_id:
         - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
         - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
-        - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
+        #- binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
         - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
         - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
         - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
         - binary_sensor.door_window_sensor_158d00045d69a6       # Ventana PAF
-        #- binary_sensor.blink_puerta_garaje_motion_detected     # Blink Puerta Garaje
-        #- binary_sensor.blink_puerta_principal_motion_detected  # Blink Puerta Principal
       to: 'on'
     # Los sensores vibración solo saltan por trigger = event
     - platform: event
@@ -702,6 +700,8 @@
         state: 'off'
   action:
     # Llamada al contador de personas que actualiza sensor.family_home
+    - service: python_script.countpeople
+
     - service: input_boolean.turn_on
       entity_id: input_boolean.family_sleep_home_mfc
     # Notifica Evento
@@ -729,6 +729,8 @@
         state: 'off'
   action:
     # Llamada al contador de personas que actualiza sensor.family_home
+    - service: python_script.countpeople
+
     - service: input_boolean.turn_on
       entity_id: input_boolean.family_sleep_home_aaf
     # Notifica Evento
@@ -756,6 +758,8 @@
         state: 'off'
   action:
     # Llamada al contador de personas que actualiza sensor.family_home
+    - service: python_script.countpeople
+
     - service: input_boolean.turn_on
       entity_id: input_boolean.family_sleep_home_paf
     # Notifica Evento
@@ -783,6 +787,8 @@
         state: 'off'
   action:
     # Llamada al contador de personas que actualiza sensor.family_home
+    - service: python_script.countpeople
+
     - service: input_boolean.turn_on
       entity_id: input_boolean.family_sleep_home_paf
     # Notifica Evento
@@ -794,9 +800,22 @@
 
           >>> Activado el control de Duerme en Casa.
 
+- id: F10
+  alias: 'F09 Family Any Change - Actualiza Contador'
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.family_home_aac
+        - binary_sensor.family_home_mfc
+        - binary_sensor.family_home_paf
+        - binary_sensor.family_home_aaf
+  action:
+    # Llamada al contador de personas que actualiza sensor.family_home
+    - service: python_script.countpeople
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# REGLAS DE CONTROL DE LUCES Y ALUMBRADO                                      #
+# REGLAS DE CONTROL DE LUCES Y ALUMBRADO                                      #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 - id: L01
@@ -1700,7 +1719,7 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# REGLAS DE CONTROL DE PING DEVICES BINARY SENSOR                             #
+#REGLAS DE CONTROL DE PING DEVICES BINARY SENSOR                             #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
@@ -1727,7 +1746,7 @@
           >>> DISPOSITIVO: 00 WAN ROUTER FIBRA
 
 #
-# ping_05_router_wifi_tplink:
+#ping_05_router_wifi_tplink:
 #
 - id: P02
   alias: 'P02_ping_ap_wifi_tplink'
@@ -1749,7 +1768,7 @@
           >>> DISPOSITIVO: 05 AP WIFI TPLINK
 
 #
-# nmap_sony_ps4:
+#nmap_sony_ps4:
 #
 - id: P03
   alias: 'P03_sony_ps4_on'

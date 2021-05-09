@@ -315,24 +315,24 @@
         friendly_name: 'Offset Puesta Sol Estación'
         icon_template: mdi:weather-sunset
         value_template: '{% if now().astimezone().tzinfo | string == "CET" %} "+03:30:00"
-                         {% else %} "+00:30:00" }}
+                         {% else %} "+00:30:00"
                          {% endif %}'
 
-      sun_season:
-        friendly_name: 'Offset Puesta Sol Estación'
-        value_template: "{{ sensor.season }}"
-        icon_template: >
-          '{% if is_state("sensor.season", "autumn") %}
-            mdi:leaf
-          {% elif is_state("sensor.season", "winter") %}
-            mdi:snowflake
-          {% elif is_state("sensor.season", "spring") %}
-            mdi:flower
-          {% elif is_state("sensor.season", "summer") %}
-            mdi:sunglasses
-          {% else %}
-            mdi:cloud
-          {% endif %}'
+      #sun_season:
+      #  friendly_name: 'Offset Puesta Sol Estación'
+      # value_template: "{{ sensor.season }}"
+      #   icon_template: >
+      #    '{% if is_state("sensor.season", "autumn") %}
+      #      mdi:leaf
+      #    {% elif is_state("sensor.season", "winter") %}
+      #      mdi:snowflake
+      #    {% elif is_state("sensor.season", "spring") %}
+      #      mdi:flower
+      #    {% elif is_state("sensor.season", "summer") %}
+      #      mdi:sunglasses
+      #    {% else %}
+      #      mdi:cloud
+      #    {% endif %}'
 
       temp_interior:
         friendly_name: 'Temperatura Interior Media'
