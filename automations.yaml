@@ -1089,19 +1089,24 @@
         before_offset: "+01:00:00" # Horario Invierno GMT+1, en el amanecer +60m
   action:
     # Luces On
-    - service: light.turn_on
-      entity_id: light.luz_estudio
+    - service: hue.hue_activate_scene
       data:
-        brightness: 175
-        rgb_color: [254, 200, 145]
-    - service: light.turn_on
-      entity_id: light.esphome_lb1_l01
-      data:
-        white_value: 200
-        rgb_color: [254, 126, 0]
-        brightness: 255
-    - service: light.turn_on
-      entity_id: light.sonoff_mini_sw2
+        group_name: "Estudio"
+        scene_name: "Top"
+    # Encendido indivicual
+    # - service: light.turn_on
+    #   entity_id: light.luz_estudio
+    #   data:
+    #     brightness: 175
+    #     rgb_color: [254, 200, 145]
+    # - service: light.turn_on
+    #   entity_id: light.esphome_lb1_l01
+    #   data:
+    #     white_value: 200
+    #     rgb_color: [254, 126, 0]
+    #     brightness: 255
+    # - service: light.turn_on
+    #   entity_id: light.sonoff_mini_sw2
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1124,21 +1129,8 @@
       entity_id: binary_sensor.cube_158d00024a4a62
       action_type: free_fall
   action:
-    - service: light.turn_on
-      entity_id: light.sonoff_mini_sw2
-    - service: light.turn_on
-      entity_id: light.luz_estudio
-      data:
-        brightness: 175
-        rgb_color: [254, 200, 145]
-    - service: light.turn_on
-      entity_id: light.esphome_lb1_l01
-      data:
-        white_value: 200
-        rgb_color: [254, 126, 0]
-        brightness: 255
+    - service: script.luces_estudio_top
 
-- id: L13
   alias: 'L13 Cube Shake Light off'
   mode: restart
   trigger:
@@ -1148,14 +1140,7 @@
       entity_id: binary_sensor.cube_158d00024a4a62
       action_type: shake_air
   action:
-    - service: light.turn_off
-      entity_id: light.luz_estudio
-      data:
-        transition: 30
-    - service: light.turn_off
-      entity_id:
-        - light.esphome_lb1_l01
-        - light.sonoff_mini_sw2
+    - service: script.luces_estudio_off
 
 - id: L14
   alias: 'L14 Cube Flip90 Light Desk Toggle'
@@ -1179,11 +1164,11 @@
     event_type: xiaomi_aqara.cube_action
     event_data:
       entity_id: binary_sensor.cube_158d00024a4a62
-      action_type: rotate
+      action_type: move
   action:
     - service: switch.toggle
       entity_id: switch.esphome_bas_sw1
-    - delay: 3
+
 
 
 #-----------------------------------------------------------------------------#
@@ -1909,7 +1894,8 @@
         actionName: 'luz_estudio'
   action:
     - service: light.toggle
-      entity_id: group.luces_estudio_grp
+      target:
+        area_id: c87f1d973bb247848d28bbe4be4c0a95   # Área Estudio
 
 - id: I03
   alias: 'IOS Action Alarma Off'

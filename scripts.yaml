@@ -991,6 +991,16 @@ luces_estudio_top:
       data:
         group_name: "Estudio"
         scene_name: "Top"
+    - service: light.turn_on
+      target:
+        entity_id: light.esphome_lb1_l01
+
+luces_estudio_off:
+  alias: 'Luces Estudio Off'
+  sequence:
+    - service: light.turn_off
+      target:
+        area_id: c87f1d973bb247848d28bbe4be4c0a95   # Área Estudio
 
 luz_on_armed_home:
   alias: 'Luces On Entrada si Sensor'
@@ -1263,7 +1273,7 @@ riego_sw2_timer_cancel:
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-# Apagado SW Sonoff Jardín
+#Apagado SW Sonoff Jardín
 jardin_off:
   alias: 'Jardin Off'
   sequence:
