@@ -1131,6 +1131,7 @@
   action:
     - service: script.luces_estudio_top
 
+- id: L13
   alias: 'L13 Cube Shake Light off'
   mode: restart
   trigger:
