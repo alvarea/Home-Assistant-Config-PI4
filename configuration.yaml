@@ -446,10 +446,10 @@ weather:
     latitude: !secret latitude_home
     longitude: !secret longitude_home
 
-apcupsd:
-  host: 127.0.0.1
-  port: 3551
-  mode: netserver
+#apcupsd:
+#  host: 127.0.0.1
+#  port: 3551
+#  mode: netserver
 
 person:
 
@@ -538,6 +538,8 @@ sonoff:
     1000f83c56:
       device_class: light
       name: Switch BAS SW3
+    10011a769f:
+      name: Switch S20 SW2
 #
 # DEPRECATED
 #
