@@ -90,9 +90,12 @@ alarma_grp_sensores_away:
 luces_estudio_grp:
   name: Luces Estudio
   entities:
-    - light.luz_estudio                                     # Hue Estudio
-    - light.luz_escalera                                    # Hue Estudio
-    - light.esphome_lb1_l01
+    - light.luz_estudio_alta                                # Hue Estudio
+    - light.luz_estudio_media                               # Hue Estudio
+    - light.luz_estudio_baja                                # Hue Estudio
+    - light.luz_estudio_techo                               # Hue Estudio
+    - light.luz_escalera
+    - light.esphome_lb1_l01                                 # Lampara Repisa Escalera
     - light.sonoff_mini_sw2                                 # Luz Escritorio
     # - switch.esphome_bas_sw1                              # Estudio Armario Rack
 

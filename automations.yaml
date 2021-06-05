@@ -1089,24 +1089,13 @@
         before_offset: "+01:00:00" # Horario Invierno GMT+1, en el amanecer +60m
   action:
     # Luces On
-    - service: hue.hue_activate_scene
-      data:
-        group_name: "Estudio"
-        scene_name: "Top"
-    # Encendido indivicual
-    # - service: light.turn_on
-    #   entity_id: light.luz_estudio
-    #   data:
-    #     brightness: 175
-    #     rgb_color: [254, 200, 145]
-    # - service: light.turn_on
-    #   entity_id: light.esphome_lb1_l01
-    #   data:
-    #     white_value: 200
-    #     rgb_color: [254, 126, 0]
-    #     brightness: 255
-    # - service: light.turn_on
-    #   entity_id: light.sonoff_mini_sw2
+    - service: light.toggle
+      target:
+        area_id: c87f1d973bb247848d28bbe4be4c0a95   # Área Estudio
+    #- service: hue.hue_activate_scene
+    #  data:
+    #    group_name: "Estudio"
+    #    scene_name: "Azul"
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1129,7 +1118,11 @@
       entity_id: binary_sensor.cube_158d00024a4a62
       action_type: free_fall
   action:
-    - service: script.luces_estudio_top
+    #- service: script.luces_estudio_top
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Estudio"
+        scene_name: "Azul"
 
 - id: L13
   alias: 'L13 Cube Shake Light off'
@@ -1170,11 +1163,9 @@
     - service: switch.toggle
       entity_id: switch.esphome_bas_sw1
 
-
-
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# REGLAS DE CONTROL DE SMART SWITCH ESPHOME                                   #
+# REGLAS DE CONTROL DE SMART SWITCH ESPHOME                                   #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
@@ -1418,7 +1409,7 @@
     #  at: '01:00:00'
     - platform: sun
       event: sunrise
-      offset: "-00:30:00"
+      offset: "+01:00:00"   # En verano 07:00 + 01h => 08:00 apagado
   condition:
     condition: or
     conditions:
