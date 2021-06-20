@@ -990,7 +990,7 @@
     #- service: automation.turn_on
     #  entity_id: automation.l07_luces_on_entrada_segun_sensor
 
-- id: L08
+- id: L08 #ALVAREA
   alias: 'L08 Luces On Dormitorio Según Sensor'
   mode: restart
   trigger:
@@ -998,12 +998,8 @@
       entity_id: binary_sensor.motion_sensor_158d0002ea1d0f
       to: 'on'
   condition:
-    condition: and
+    condition: or
     conditions:
-      # siempre que la luz no esté ya encendida
-      - condition: state
-        entity_id: light.dormitorio
-        state: 'off'
       # 'when dark' condition: either after sunset or before sunrise
       - condition: sun
         after: sunset
@@ -1012,21 +1008,17 @@
         # before_offset: "+02:00:00"  ==> Horario Invierno GMT+1, en el amanecer -2h
         # before_offset: "+00:30:00" ==> Horario Verano GMT+2, el amanecer -30m
         before: sunrise
-        before_offset: "+02:00:00"
+        before_offset: "+02:00:00" # Horario Invierno GMT+1, en el amanecer +60m
   action:
-    # Regla Off
-    #- service: automation.turn_off
-    #  entity_id: automation.l08_luces_on_dormitorio_segun_sensor
-    # Luces On
-    - service: script.luces_dormitorio_relax
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Dormitorio"
+        scene_name: "Relax"
     # Espera de 5'
-    - delay: '00:05:00'
+    - delay: '00:10:00'
     # Luces Off
     - service: light.turn_off
       entity_id: light.dormitorio
-    # Regla On
-    #- service: automation.turn_on
-    #  entity_id: automation.l08_luces_on_dormitorio_segun_sensor
 
 - id: L09
   alias: 'L09 Luces On Dormitorio Warning'

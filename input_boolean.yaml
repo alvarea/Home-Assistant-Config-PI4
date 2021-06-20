@@ -115,7 +115,7 @@
   # Fuente Zen entrada
   riego_ch3_programador:
     name: Programador CH3
-    initial: off
+    initial: on
     icon: mdi:dip-switch
 
   # Pendiente sin uso
