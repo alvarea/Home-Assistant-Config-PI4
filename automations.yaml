@@ -51,7 +51,7 @@
   trigger:
     - platform: time
       at:
-        - '11:10:00'
+        - '10:00:00'
         - '23:55:00'
   action:
     - service: input_number.set_value
@@ -986,11 +986,8 @@
       entity_id:
         - light.luz_entrada
         - light.gateway_light_7811dcb788fa
-    #
-    #- service: automation.turn_on
-    #  entity_id: automation.l07_luces_on_entrada_segun_sensor
 
-- id: L08 #ALVAREA
+- id: L08
   alias: 'L08 Luces On Dormitorio Según Sensor'
   mode: restart
   trigger:
@@ -998,17 +995,21 @@
       entity_id: binary_sensor.motion_sensor_158d0002ea1d0f
       to: 'on'
   condition:
-    condition: or
+    condition: and
     conditions:
-      # 'when dark' condition: either after sunset or before sunrise
+      - condition: time
+        before: '23:30:00'
       - condition: sun
         after: sunset
-        after_offset: "+01:00:00"
-      - condition: sun
-        # before_offset: "+02:00:00"  ==> Horario Invierno GMT+1, en el amanecer -2h
-        # before_offset: "+00:30:00" ==> Horario Verano GMT+2, el amanecer -30m
-        before: sunrise
-        before_offset: "+02:00:00" # Horario Invierno GMT+1, en el amanecer +60m
+        after_offset: "+00:30:00"
+      - condition: state
+        entity_id: light.dormitorio
+        state: 'off'
+      #- condition: sun
+      #  # before_offset: "+02:00:00"  ==> Horario Invierno GMT+1, en el amanecer -2h
+      #  # before_offset: "+00:30:00" ==> Horario Verano GMT+2, el amanecer -30m
+      #  before: sunrise
+      #  before_offset: "+02:00:00" # Horario Invierno GMT+1, en el amanecer +60m
   action:
     - service: hue.hue_activate_scene
       data:
