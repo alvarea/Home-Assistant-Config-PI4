@@ -339,12 +339,6 @@
             false
           {% endif %}
 
-#{{ states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed
-#}}
-
-#{{ as_timestamp(states.binary_sensor.esphome_pow_sw2_lavadora_lavando.last_changed) | default(0)| int | timestamp_custom("%Hh %Mm", false)
-#}}
-
       # JARDIN - DEPURADORA PISCINA
       piscina_status:
         value_template: >-
@@ -735,6 +729,19 @@
         friendly_name: 'Sony PS4'
         icon_template: mdi:gamepad-variant
         #entity_id: device_tracker.nmap_sony_ps4
+
+      # MELCLOUD A/C Estudio
+      # hvac_modes: off, heat, dry, cool, fan_only, heat_cool
+      melcloud_estudio_estate:
+        value_template: >-
+          {% if is_state('dclimate.estudio','off') %}
+            false
+          {% else %}
+            true
+          {% endif %}
+        friendly_name: 'AC/Estudio'
+        icon_template: mdi:air-conditioner
+
 
     #
     # PING - 01 - 09 - NETWORK DEVICES

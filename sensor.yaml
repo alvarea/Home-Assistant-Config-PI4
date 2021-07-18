@@ -350,4 +350,38 @@
           / 6) | round(1)
           }}
 
+      # hvac_modes: off, heat, dry, cool, fan_only, heat_cool
+      melcloud_estudio_state:
+        friendly_name: 'AC/Estudio'
+        icon_template: mdi:air-conditioner
+        value_template: "{{states('climate.estudio') }}"
+
+      # fan-speed-1,-2,-3, fan-off, fan-alert, fan-auto
+      melcloud_estudio_fan_mode:
+        friendly_name: 'Fan Mode (1-4-auto)'
+        icon_template: mdi:fan
+        value_template: "{{state_attr('climate.estudio','fan_mode') }}"
+
+      # swing-mode y vane_v (vertical) controla el movimiento de aspas.  Vane_H no se usa.
+      # Modo Frio, 26º, fan auto, vane horizontal entre 15:00 - 16:00
+      #   - [ ] Vane V: 1_up
+      #   - [ ] Swing Mode: 1_up
+      # Modo Frio, 26º, fan auto, vane horizontal a las 16:00
+      #   - [ ] Vane V: 2
+      #   - [ ] Swing Mode: 2
+      # Modo Frio, 26º, fan auto, vane horizontal entre 16:00 - 17:00
+      #   - [ ] Vane V: 3
+      #   - [ ] Swing Mode: 3
+      # Modo Frio, 26º, fan auto, vane horizontal a las  17:00
+      #   - [ ] Vane V: 4
+      #   - [ ] Swing Mode: 4
+      # Modo Frio, 26º, fan auto, vane hacia abajo a las 17:30
+      #   - [ ] Vane V: 5_down
+      #   - [ ] Swing Mode: 5_down
+
+      melcloud_estudio_swing_mode:
+        friendly_name: 'Swing Mode (1-5-swing)'
+        icon_template: mdi:sync
+        value_template: "{{state_attr('climate.estudio','swing_mode') }}"
+
   - platform: season

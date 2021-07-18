@@ -1394,18 +1394,18 @@ sonoff_initialize:
 # SISTEMA DE CAMARAS BLINK                                                    #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-blink_trigger_cam_entrada:
+blink_trigger_cam_hall:
   alias: 'Blink Trigger Camera Entrada'
   sequence:
     - service: blink.trigger_camera
       data:
-        entity_id: camera.blink_entrada
-    - delay: 00:00:05
+        entity_id: camera.blink_hall
+    - delay: 00:00:03
     - service: blink.blink_update
     - service: camera.snapshot
       data:
-        entity_id: camera.blink_entrada
-        filename: /share/blink_entrada.jpg
+        entity_id: camera.blink_hall
+        filename: /share/blink_hall.jpg
 
 blink_trigger_cam_puerta_principal:
   alias: 'Blink Trigger Camera Puerta'
@@ -1413,7 +1413,7 @@ blink_trigger_cam_puerta_principal:
     - service: blink.trigger_camera
       data:
         entity_id: camera.blink_puerta_principal
-    - delay: 00:00:05
+    - delay: 00:00:03
     - service: blink.blink_update
     - service: camera.snapshot
       data:
@@ -1426,11 +1426,24 @@ blink_trigger_cam_puerta_garaje:
     - service: blink.trigger_camera
       data:
         entity_id: camera.blink_puerta_garaje
-    - delay: 00:00:05
+    - delay: 00:00:03
     - service: blink.blink_update
     - service: camera.snapshot
       data:
         entity_id: camera.blink_puerta_garaje
         filename: /share/blink_garaje.jpg
+
+blink_trigger_cam_piscina:
+  alias: 'Blink Trigger Camera Piscina'
+  sequence:
+    - service: blink.trigger_camera
+      data:
+        entity_id: camera.blink_piscina
+    - delay: 00:00:03
+    - service: blink.blink_update
+    - service: camera.snapshot
+      data:
+        entity_id: camera.blink_piscina
+        filename: /share/blink_piscina.jpg
 
 

@@ -94,6 +94,8 @@ luces_estudio_grp:
     - light.luz_estudio_media                               # Hue Estudio
     - light.luz_estudio_baja                                # Hue Estudio
     - light.luz_estudio_techo                               # Hue Estudio
+    - light.luz_estudio_izquierda                           # Hue Estudio
+    - light.luz_estudio_centro                              # Hue Estudio
     - light.luz_escalera
     - light.esphome_lb1_l01                                 # Lampara Repisa Escalera
     - light.sonoff_mini_sw2                                 # Luz Escritorio
