@@ -734,7 +734,7 @@
       # hvac_modes: off, heat, dry, cool, fan_only, heat_cool
       melcloud_estudio_estate:
         value_template: >-
-          {% if is_state('dclimate.estudio','off') %}
+          {% if is_state('climate.estudio','off') %}
             false
           {% else %}
             true

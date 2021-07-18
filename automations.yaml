@@ -112,11 +112,9 @@
   action:
     # Actualizacion imagen cámaras última hora.
     - service: script.blink_trigger_cam_entrada
-    - delay: 00:00:05
     - service: script.blink_trigger_cam_puerta_principal
-    - delay: 00:00:05
     - service: script.blink_trigger_cam_puerta_garaje
-
+    - service: script.blink_trigger_cam_piscina
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # ALARMA: Armado y Control de la Alarma                                       #
