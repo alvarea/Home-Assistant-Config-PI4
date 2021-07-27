@@ -98,23 +98,15 @@
 - id: hass_blink_update
   alias: 'BLINK Camera Update'
   trigger:
-    - platform: time
-      at:
-        - '08:00:00'
-        - '10:00:00'
-        - '12:00:00'
-        - '14:00:00'
-        - '16:00:00'
-        - '18:00:00'
-        - '20:00:00'
-        - '22:00:00'
-        - '00:00:00'
+    - platform: time_pattern
+      hours: "/1"
   action:
     # Actualizacion imagen cámaras última hora.
-    - service: script.blink_trigger_cam_entrada
+    - service: script.blink_trigger_cam_hall
     - service: script.blink_trigger_cam_puerta_principal
     - service: script.blink_trigger_cam_puerta_garaje
     - service: script.blink_trigger_cam_piscina
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # ALARMA: Armado y Control de la Alarma                                       #
@@ -1353,10 +1345,10 @@
     conditions:
       # Hay alguien en casa
       - condition: state
-        entity_id: input_boolean.calefac_programador_mfc
+        entity_id: input_boolean.calefac_programador_paf
         state: 'on'
       - condition: state
-        entity_id: input_boolean.family_sleep_home_mfc
+        entity_id: input_boolean.family_sleep_home_paf
         state: 'on'
       - condition: state
         entity_id: binary_sensor.family_any_home
@@ -1409,6 +1401,9 @@
         state: 'on'
       - condition: state
         entity_id: switch.esphome_s20_sw3
+        state: 'on'
+      - condition: state
+        entity_id: switch.sonoff_s20_sw2
         state: 'on'
   action:
     - service: switch.turn_off

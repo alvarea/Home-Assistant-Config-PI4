@@ -1395,7 +1395,7 @@ sonoff_initialize:
 #                                                                             #
 #-----------------------------------------------------------------------------#
 blink_trigger_cam_hall:
-  alias: 'Blink Trigger Camera Entrada'
+  alias: 'Blink Trigger Camera Hall'
   sequence:
     - service: blink.trigger_camera
       data:
