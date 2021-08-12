@@ -1243,7 +1243,7 @@ riego_ch4_timer_cancel:
     - service: switch.turn_off
       entity_id: switch.esphome_4ch_sw2_relay_4
 
-riego_sw2_timer_cancel:
+riego_bonsais_timer_cancel:
   alias: Timer Tortugas SW2 Cancel
   sequence:
     - service: timer.cancel

@@ -144,8 +144,11 @@ timer:
   riego_ch4:
     name: Timer CH4
     icon: mdi:timer
-  riego_sw2:
-    name: Timer Bonsais Zona2
+  riego_bonsais:
+    name: Timer Bonsais Producción
+    icon: mdi:timer
+  riego_tomates:
+    name: Timer Tomatera
     icon: mdi:timer
 
 #counter:

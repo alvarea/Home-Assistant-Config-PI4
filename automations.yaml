@@ -439,7 +439,7 @@
       entity_id:
         - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
         - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
-        #- binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
+        #- binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio Izq.
         - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
         - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
         - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
@@ -1632,17 +1632,17 @@
   alias: 'S25 Timer Riego Zona2_t1 Start'
   trigger:
     - platform: template
-      value_template: "{{ states('sensor.time') == (states.input_datetime.riego_sw2_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+      value_template: "{{ states('sensor.time') == (states.input_datetime.riego_bonsais_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
   condition:
     condition: state
-    entity_id: binary_sensor.riego_sw2_dia_ejecucion_t1  # Sensor del programador on/off
+    entity_id: binary_sensor.riego_bonsais_dia_ejecucion_t1  # Sensor del programador on/off
     state: 'on'
   action:
     # Timer Programador Automático
     - service: timer.start
       data_template:
         entity_id: timer.riego_sw2
-        duration: '{{ states.sensor.riego_sw2_duracion_planificada.state|int * 60 }}'
+        duration: '{{ states.sensor.riego_bonsais_duracion_planificada.state|int * 60 }}'
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw2
 
@@ -1650,17 +1650,17 @@
   alias: 'S26 Timer Riego Zona2_T2 SW2 Start'
   trigger:
     - platform: template
-      value_template: "{{ states('sensor.time') == (states.input_datetime.riego_sw2_start_time2.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+      value_template: "{{ states('sensor.time') == (states.input_datetime.riego_bonsais_start_time2.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
   condition:
     condition: state
-    entity_id: binary_sensor.riego_sw2_dia_ejecucion_t2  # Sensor del programador on/off
+    entity_id: binary_sensor.riego_bonsais_dia_ejecucion_t2  # Sensor del programador on/off
     state: 'on'
   action:
     # Timer Programador Automático
     - service: timer.start
       data_template:
         entity_id: timer.riego_sw2
-        duration: '{{ states.sensor.riego_sw2_duracion_planificada_t2.state|int * 60 }}'
+        duration: '{{ states.sensor.riego_bonsais_duracion_planificada_t2.state|int * 60 }}'
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw2
 
@@ -1672,7 +1672,7 @@
       event_data:
         entity_id: timer.riego_sw2
   action:
-    - service: script.riego_sw2_timer_cancel
+    - service: script.riego_bonsais_timer_cancel
 
 - id: S28
   alias: 'S28 Control Jardin Before Sunrise'

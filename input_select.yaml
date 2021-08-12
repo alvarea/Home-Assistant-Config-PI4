@@ -245,8 +245,19 @@
     initial: Diario
     icon: mdi:calendar
 
-# Fuente Tortugas fzen
-  riego_sw2_programador_dias:
+# Riego Bonsais
+  riego_bonsais_programador_dias:
+    name: Diario/Semanal
+    options:
+     - 'Diario'
+     - 'Sábado'
+     - 'Domingo'
+     - 'Weekend'
+    initial: Diario
+    icon: mdi:calendar
+
+# Riego Tomates
+  riego_tomates_programador_dias:
     name: Diario/Semanal
     options:
      - 'Diario'

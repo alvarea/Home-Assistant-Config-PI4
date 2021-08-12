@@ -125,16 +125,29 @@
     icon: mdi:dip-switch
 
   # Riego Bonsais Zona2 - Tramo1
-  riego_sw2_programador_t1:
+  riego_bonsais_programador_t1:
     name: Programador Riego Zona2 - Tramo1
     initial: on
     icon: mdi:dip-switch
 
   # Riego Bonsais Zona2 - Tramo2
-  riego_sw2_programador_t2:
+  riego_bonsais_programador_t2:
     name: Programador Riego Zona2 - Tramo2
     initial: on
     icon: mdi:dip-switch
+
+  # Riego Bonsais Zona2 - Tramo1
+  riego_tomates_programador_t1:
+    name: Programador Riego Zona2 - Tramo1
+    initial: on
+    icon: mdi:dip-switch
+
+  # Riego Bonsais Zona2 - Tramo2
+  riego_tomates_programador_t2:
+    name: Programador Riego Zona2 - Tramo2
+    initial: on
+    icon: mdi:dip-switch
+
 
 # Programador Diario Luces Jardín
 

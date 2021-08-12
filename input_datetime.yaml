@@ -32,39 +32,39 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '15:30'
+    initial: '09:45'
 
   riego_ch1_end_time_t1:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '15:33'
+    initial: '09:50'
 
   # Bonsais Top - Tramo2 - Inicio
   riego_ch1_start_time_t2:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '23:30'
+    initial: '15:30'
 
   riego_ch1_end_time_t2:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '23:33'
+    initial: '15:33'
 
   # Plantas Entrada - Inicio
   riego_ch2_start_time:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '09:00'
+    initial: '08:30'
 
   riego_ch2_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '09:04'
+    initial: '08:34'
 
   # Fuente Zen - Inicio
   riego_ch3_start_time:
@@ -95,28 +95,57 @@
 #
 # Programador Sonoff SW2 Jardín
 #
-  # Bonsais Zona Olivo - Tramo1 - Inicio
-  riego_sw2_start_time:
+  # Bonsais Produccion - Tramo1
+  riego_bonsais_start_time:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '10:00'
+    initial: '09:00'
 
-  riego_sw2_end_time:
+  riego_bonsais_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '10:04'
+    initial: '09:05'
 
-  # Bonsais Zona Producción - Tramo2 - Inicio
-  riego_sw2_start_time2:
+  # Bonsais Producción - Tramo2
+  riego_bonsais_start_time2:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '23:00'
+    initial: '18:00'
 
-  riego_sw2_end_time2:
+  riego_bonsais_end_time2:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '23:05'
+    initial: '18:05'
+
+#
+# Programador Sonoff POW SW1 Tomatera
+#
+  # Tomatera - Tramo1
+  riego_tomates_start_time:
+    name: Hora Inicio Planificado
+    has_date: false
+    has_time: true
+    initial: '09:06'
+
+  riego_tomates_end_time:
+    name: Hora Final Planificado
+    has_date: false
+    has_time: true
+    initial: '09:16'
+
+  # Tomatera - Tramo2
+  riego_tomates_start_time2:
+    name: Hora Inicio Planificado
+    has_date: false
+    has_time: true
+    initial: '18:06'
+
+  riego_tomates_end_time2:
+    name: Hora Final Planificado
+    has_date: false
+    has_time: true
+    initial: '18:16'
