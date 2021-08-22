@@ -439,7 +439,7 @@
       entity_id:
         - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
         - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
-        #- binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio Izq.
+        #- binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
         - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
         - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
         - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
@@ -834,7 +834,7 @@
   alias: 'L02 Luces Off Exterior Medianoche'
   trigger:
     - platform: time
-      at: '23:55:00'
+      at: '00:15:00'
   action:
     # Script Luces Exterior Off
     - service: script.luces_exterior_off
@@ -1641,7 +1641,7 @@
     # Timer Programador Automático
     - service: timer.start
       data_template:
-        entity_id: timer.riego_sw2
+        entity_id: timer.riego_bonsais
         duration: '{{ states.sensor.riego_bonsais_duracion_planificada.state|int * 60 }}'
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw2
@@ -1659,7 +1659,7 @@
     # Timer Programador Automático
     - service: timer.start
       data_template:
-        entity_id: timer.riego_sw2
+        entity_id: timer.riego_bonsais
         duration: '{{ states.sensor.riego_bonsais_duracion_planificada_t2.state|int * 60 }}'
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw2
@@ -1670,9 +1670,9 @@
     - platform: event
       event_type: timer.finished
       event_data:
-        entity_id: timer.riego_sw2
+        entity_id: timer.riego_bonsais
   action:
-    - service: script.riego_bonsais_timer_cancel
+    - service: script.riego_sw2_timer_cancel
 
 - id: S28
   alias: 'S28 Control Jardin Before Sunrise'
@@ -1708,6 +1708,52 @@
         mensaje: >
           >>> EVENTO: Control Riego/Fuentes encendidas antes del amanecer
           >>> JARDIN: Apagado total
+
+- id: S29
+  alias: 'S29 Timer Riego Tomates_t1 Start'
+  trigger:
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states.input_datetime.riego_tomates_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  condition:
+    condition: state
+    entity_id: binary_sensor.riego_tomates_dia_ejecucion_t1  # Sensor del programador on/off
+    state: 'on'
+  action:
+    # Timer Programador Automático
+    - service: timer.start
+      data_template:
+        entity_id: timer.riego_tomates
+        duration: '{{ states.sensor.riego_tomates_duracion_planificada.state|int * 60 }}'
+    - service: switch.turn_on
+      entity_id: switch.esphome_pow_sw1
+      
+- id: S30
+  alias: 'S30 Timer Riego Tomates_T2 Start'
+  trigger:
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states.input_datetime.riego_tomates_start_time2.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  condition:
+    condition: state
+    entity_id: binary_sensor.riego_tomates_dia_ejecucion_t2  # Sensor del programador on/off
+    state: 'on'
+  action:
+    # Timer Programador Automático
+    - service: timer.start
+      data_template:
+        entity_id: timer.riego_tomates
+        duration: '{{ states.sensor.riego_tomates_duracion_planificada_t2.state|int * 60 }}'
+    - service: switch.turn_on
+      entity_id: switch.esphome_pow_sw1
+
+- id: S31
+  alias: 'S31 Timer Riego Tomates_T2 End'
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.riego_tomates
+  action:
+    - service: script.riego_tomates_timer_cancel
 
 
 #-----------------------------------------------------------------------------#

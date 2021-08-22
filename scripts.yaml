@@ -1243,13 +1243,21 @@ riego_ch4_timer_cancel:
     - service: switch.turn_off
       entity_id: switch.esphome_4ch_sw2_relay_4
 
-riego_bonsais_timer_cancel:
-  alias: Timer Tortugas SW2 Cancel
+riego_sw2_timer_cancel:
+  alias: Timer Bonsais SW2 Cancel
   sequence:
     - service: timer.cancel
-      entity_id: timer.riego_sw2
+      entity_id: timer.riego_bonsais
     - service: switch.turn_off
       entity_id: switch.esphome_bas_sw2
+
+riego_tomates_timer_cancel:
+  alias: Timer Tomatera Cancel
+  sequence:
+    - service: timer.cancel
+      entity_id: timer.riego_tomates
+    - service: switch.turn_off
+      entity_id: switch.esphome_pow_sw1
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1395,7 +1403,7 @@ sonoff_initialize:
 #                                                                             #
 #-----------------------------------------------------------------------------#
 blink_trigger_cam_hall:
-  alias: 'Blink Trigger Camera Hall'
+  alias: 'Blink Trigger Camera Entrada'
   sequence:
     - service: blink.trigger_camera
       data:
