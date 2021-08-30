@@ -543,6 +543,16 @@ sonoff:
       name: Switch BAS SW3
     10011a769f:
       name: Switch S20 SW2
+
+# iCloud Calendar Integration - CALDAV
+calendar:
+  - platform: caldav
+    username: !secret icloud_usr
+    password: !secret icloud_pwd
+    url: !secret icloud_url
+    calendars:
+      - Family
+
 #
 # DEPRECATED
 #

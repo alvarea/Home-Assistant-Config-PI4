@@ -73,7 +73,7 @@
 
       # Uptime : nº horas desde último reinicio
       ha_uptime:
-        value_template: "{{ ((as_timestamp(now()) - as_timestamp(states('sensor.uptime'))) / 3600) }}"
+        value_template: "{{ ((as_timestamp(now()) - as_timestamp(states('sensor.uptime'))) / 3600) | int}}"
         friendly_name: 'HOMY Uptime'
         icon_template: mdi:map-clock-outline
 
