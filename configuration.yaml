@@ -223,7 +223,7 @@ device_tracker:
     hosts: !secret device_tracker_range1
     home_interval: 10
     consider_home: 0:10:00
-    interval_seconds: 60
+    interval_seconds: 90
     track_new_devices: no
     #scan_options: -Pn --host-timeout 5s
     exclude:
@@ -232,16 +232,6 @@ device_tracker:
   - platform: ping
     hosts:
       ping_57_amazon_kindle: 192.168.0.57
-
-# GEOFENCY: Platform & Device Tracker ==> changed on v.0.83.2
-#geofency:
-
-# OWNTRACKS: Device tracker integration using Nabu Cloud
-#owntracks:
-  #max_gps_accuracy: 300
-  #waypoints: false
-  #mqtt_topic: "owntracks/#"
-  #events_only: true
 
 # NOTIFICACIONES
 notify:

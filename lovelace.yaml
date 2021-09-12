@@ -459,6 +459,11 @@ views:
                 show_state: true
             type: horizontal-stack
         type: vertical-stack
+      - type: calendar
+        entities:
+          - calendar.family
+        initial_view: listWeek
+        title: MENU SEMANAL
     icon: mdi:home-assistant
     path: default_view
     title: Home View
@@ -2838,6 +2843,27 @@ views:
                 type: custom:mini-graph-card
             type: horizontal-stack
         type: vertical-stack
+      - type: custom:atomic-calendar-revive
+        entities:
+          - entity: calendar.family
+            titleColor: red
+            whitelist: menu, almuerzo, cena, padel
+        showWeekDay: true
+        showMonth: true
+        showCurrentEventLine: true
+        firstDayOfWeek: 1
+        maxDaysToShow: 7
+        calShowDescription: true
+        showLastCalendarWeek: true
+        disableCalEventLink: false
+        defaultMode: Event
+        showProgressBar: false
+        showNoEventsForToday: true
+        showEventIcon: true
+        showFullDayProgress: false
+        noEventText: Pendiente
+        hiddenEventText: Privado
+        disableCalLink: false
     icon: mdi:fridge
     path: cocina_view
     title: Cocina
