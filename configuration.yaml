@@ -541,7 +541,21 @@ calendar:
     password: !secret icloud_pwd
     url: !secret icloud_url
     calendars:
-      - Family
+    custom_calendars:
+      - name: Universidad_AAF
+        calendar: Family
+        search: "Universidad AAF"
+      - name: Universidad_PAF
+        calendar: Family
+        search: "Universidad PAF"
+      - name: Almuerzo
+        calendar: Family
+        search: "Almuerzo"
+      - name: Cena
+        calendar: Family
+        search: "Cena"
+
+
 
 #
 # DEPRECATED
