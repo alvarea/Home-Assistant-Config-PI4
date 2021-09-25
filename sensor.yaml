@@ -415,3 +415,33 @@
         value_template: "{{state_attr('climate.estudio','swing_mode') }}"
 
   - platform: season
+
+  - platform: darksky
+    api_key: !secret weather_apikey
+    latitude: !secret latitude_home
+    longitude: !secret longitude_home
+    language: es
+    forecast:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    monitored_conditions:
+      - icon
+      - summary
+      - nearest_storm_distance
+      - nearest_storm_bearing
+      - humidity
+      - temperature
+      - temperature_high
+      - temperature_low
+      - apparent_temperature
+      - apparent_temperature_high
+      - apparent_temperature_low
+      - wind_speed
+      - wind_bearing
+      - precip_type
+      - precip_intensity
+      - precip_probability
+      - precip_accumulation

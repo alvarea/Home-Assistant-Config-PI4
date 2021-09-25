@@ -228,6 +228,7 @@ device_tracker:
     #scan_options: -Pn --host-timeout 5s
     exclude:
       - !secret device_tracker_host1
+      - !secret device_tracker_host2
 
   - platform: ping
     hosts:
@@ -438,6 +439,7 @@ weather:
     mode: daily
     latitude: !secret latitude_home
     longitude: !secret longitude_home
+
 
 #apcupsd:
 #  host: 127.0.0.1

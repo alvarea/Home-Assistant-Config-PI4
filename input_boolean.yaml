@@ -94,7 +94,13 @@
 
 # Riego Plantas + Fuentes
 #
-  # Riego Bonsais Top
+  # RIEGO INTERRUPTOR General conectado con Previsión del Tiempo
+  riego_interruptor_global:
+    name: Riego Interruptor General
+    initial: on
+    icon: mdi:weather-pouring
+
+# Riego Bonsais Top
   riego_ch1_programador_t1:
     name: Programador CH1 Timer1
     initial: on

@@ -2,10 +2,10 @@
 # BINARY_SENSOR
 #
   # NMAP ==> prob_given_true: 0.8 - prob_given_false: 0.2
-  #   - device_tracker.aac_iphone_nmap
-  #   - device_tracker.mfc_iphone_nmap
-  #   - device_tracker.paf_iphone_nmap
-  #   - device_tracker.aaf_iphone_nmap
+  #   - device_tracker.apple_94_ac_c4_iphone_aac
+  #   - device_tracker.apple_87_31_3b_iphone_mfc
+  #   - device_tracker.apple_46_ef_30_iphone_paf
+  #   - device_tracker.apple_89_98_36_iphone_aaf
 
   # IOS APP ==> prob_given_true: 0.99 - prob_given_false: 0.10
   #   - device_tracker.iphone_aac
@@ -35,7 +35,7 @@
     name: 'baye_home_mfc'
     probability_threshold: 0.95
     observations:
-      - entity_id: 'device_tracker.mfc_iphone_nmap'
+      - entity_id: 'device_tracker.apple_87_31_3b_iphone_mfc'
         prob_given_true: 0.8
         prob_given_false: 0.2
         platform: 'state'
@@ -61,7 +61,7 @@
     name: 'baye_home_aac'
     probability_threshold: 0.95
     observations:
-      - entity_id: 'device_tracker.aac_iphone_nmap'
+      - entity_id: 'device_tracker.apple_94_ac_c4_iphone_aac'
         prob_given_true: 0.8
         prob_given_false: 0.2
         platform: 'state'
@@ -87,7 +87,7 @@
     name: 'baye_home_paf'
     probability_threshold: 0.95  # temporalmente estuvo a 0.98
     observations:
-      - entity_id: 'device_tracker.paf_iphone_nmap'
+      - entity_id: 'device_tracker.apple_46_ef_30_iphone_paf'
         prob_given_true: 0.8
         prob_given_false: 0.2
         platform: 'state'
@@ -123,7 +123,7 @@
         prob_given_false: 0.2
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.aaf_iphone_nmap'
+      - entity_id: 'device_tracker.apple_89_98_36_iphone_aaf'
         prob_given_true: 0.8
         prob_given_false: 0.2
         platform: 'state'
@@ -413,7 +413,9 @@
         friendly_name: '¿Próxima Ejecución Hoy? (CH1)'
         icon_template: mdi:calendar-check
         value_template: >-
-          {% if is_state('binary_sensor.riego_ch1_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_ch1_dia_ejecucion_t2','on') %}
+          {% if is_state('input_boolean.riego_interruptor_global','on')
+                and (is_state('binary_sensor.riego_ch1_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_ch1_dia_ejecucion_t2','on'))
+          %}
             true
           {% else %}
             false
@@ -429,8 +431,8 @@
         friendly_name: 'Riego CH2 on/off'
         icon_template: mdi:power
 
-      riego_ch2_dia_ejecucion:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH2)'
+      riego_ch2_dia_ejecucion_t0:
+        friendly_name: '¿Próxima Ejecución Hoy? (CH2) Precheck'
         icon_template: mdi:calendar-check
         value_template: >-
           {% if is_state('input_select.riego_ch2_programador_dias','Diario') and is_state('input_boolean.riego_ch2_programador','on') %}
@@ -440,6 +442,18 @@
           {% elif is_state('input_select.riego_ch2_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_ch2_programador','on') %}
             true
           {% elif is_state('input_select.riego_ch2_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_ch2_programador','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      riego_ch2_dia_ejecucion:
+        friendly_name: '¿Próxima Ejecución Hoy? (CH2)'
+        icon_template: mdi:calendar-check
+        value_template: >-
+          {% if is_state('input_boolean.riego_interruptor_global','on')
+                and is_state('binary_sensor.riego_ch2_dia_ejecucion_t0','on')
+          %}
             true
           {% else %}
             false
@@ -455,8 +469,8 @@
         friendly_name: 'Riego CH3 on/off'
         icon_template: mdi:power
 
-      riego_ch3_dia_ejecucion:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH3)'
+      riego_ch3_dia_ejecucion_t0:
+        friendly_name: '¿Próxima Ejecución Hoy? (CH3) Precheck'
         icon_template: mdi:calendar-check
         value_template: >-
           {% if is_state('input_select.riego_ch3_programador_dias','Diario') and is_state('input_boolean.riego_ch3_programador','on') %}
@@ -466,6 +480,18 @@
           {% elif is_state('input_select.riego_ch3_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_ch3_programador','on') %}
             true
           {% elif is_state('input_select.riego_ch3_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_ch3_programador','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      riego_ch3_dia_ejecucion:
+        friendly_name: '¿Próxima Ejecución Hoy? (CH3)'
+        icon_template: mdi:calendar-check
+        value_template: >-
+          {% if is_state('input_boolean.riego_interruptor_global','on')
+                and is_state('binary_sensor.riego_ch3_dia_ejecucion_t0','on')
+          %}
             true
           {% else %}
             false
@@ -545,7 +571,9 @@
         friendly_name: '¿Próxima Ejecución Hoy?'
         icon_template: mdi:calendar-check
         value_template: >-
-          {% if is_state('binary_sensor.riego_bonsais_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_bonsais_dia_ejecucion_t2','on') %}
+          {% if is_state('input_boolean.riego_interruptor_global','on')
+                and (is_state('binary_sensor.riego_bonsais_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_bonsais_dia_ejecucion_t2','on'))
+          %}
             true
           {% else %}
             false
@@ -599,7 +627,9 @@
         friendly_name: '¿Próxima Ejecución Hoy?'
         icon_template: mdi:calendar-check
         value_template: >-
-          {% if is_state('binary_sensor.riego_tomates_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_tomates_dia_ejecucion_t2','on') %}
+          {% if is_state('input_boolean.riego_interruptor_global','on')
+                and (is_state('binary_sensor.riego_tomates_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_tomates_dia_ejecucion_t2','on'))
+          %}
             true
           {% else %}
             false
@@ -864,8 +894,8 @@
     # PING - HOME & HUB DEVICES
     # =====================================================================
     #
-    # ping_xiaomi_gateway:
-    # ping_philips_hue:
+    # ping_xiaomi_gateway
+    # ping_philips_hue
 
   - platform: ping
     host: 192.168.0.20
