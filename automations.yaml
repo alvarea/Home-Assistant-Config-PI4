@@ -1495,8 +1495,8 @@
     - service: light.toggle
       entity_id: light.esphome_pow_sw2_led
 
-- id: S18
-  alias: 'S18 Sonoff POW Lavadora Warning off'
+- id: S17b
+  alias: 'S17b Sonoff POW Lavadora Warning off'
   trigger:
     - platform: state
       entity_id: binary_sensor.esphome_pow_sw2_lavadora_warning
@@ -1515,11 +1515,39 @@
     #        "Hola, el lavado ha terminado y el tiempo es bueno. Puedes tender la ropa"
     #      {% endif %}
 
-# ESPHOME 4CH-R2 SW2 RIEGO BONSAIS Relay1 - Relay4
+#
+# ESPHOME 4CH-R2 SW2 RIEGO BONSAIS
 #
 # https://community.home-assistant.io/t/timer-execute-and-action-from-lovelace-ui/123512
 # https://community.home-assistant.io/t/lovelace-irrigation-card-help-needed/67667/2
 #
+
+#
+# Regla Diaria, a las 08.00 y a las 15:00
+# Control del Interruptor General de Riego en base a Previsión Tiempo
+# SENSOR:  input_boolean.riego_interruptor_global
+#
+- id: S18
+  alias: 'S18 Control Interruptor General Riego'
+  trigger:
+    - platform: time
+      at:
+        - '08:00:00'
+        - '15:00:00'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.riego_interruptor_global  # Interruptor General Riego segun Forecast Tiempo
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.riego_automatico_hoy  # Sensor ML en base a prevision de lluvias
+        state: 'off'
+  action:
+    service: input_boolean.turn_off
+    target:
+      entity_id: input_boolean.riego_interruptor_global
+
 
 # ESPHOME 4CH-R2 SW2 RIEGO : Relay1 BONSAIS TOP
 #

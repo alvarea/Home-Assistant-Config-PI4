@@ -367,6 +367,37 @@
           {% endif %}
 
       # JARDIN RIEGO BONSAIS - CH1 - CH4
+      # ALVAREA
+      riego_prevision_lluvia_hoy:
+        # rain, snow, sleet
+        friendly_name: 'Previsión Lluvia Hoy'
+        icon_template: mdi:weather-pouring
+        value_template: >-
+          {% if (is_state('weather.dark_sky','rain') or
+                 is_state('weather.dark_sky','snow') or
+                 is_state('weather.dark_sky','sleet')
+                )
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      riego_automatico_hoy:
+        # SEASON: 'autumn','winter','spring','summer'
+        # states('sensor.humedad_entrada_ly03')|int >= 50
+        # states('sensor.temperatura_entrada_ly03')|int >= 35
+        friendly_name: '¿ML Riego Automatico Hoy?'
+        icon_template: mdi:watering-can
+        value_template: >-
+          {% if states('sensor.season') in ('autumn','winter','spring')
+                and is_state('binary_sensor.riego_prevision_lluvia_hoy','on')
+          %}
+            false
+          {% else %}
+            true
+          {% endif %}
+
       riego_ch1_status:
         value_template: >-
           {% if is_state('switch.esphome_4ch_sw2_relay_1','on') %}

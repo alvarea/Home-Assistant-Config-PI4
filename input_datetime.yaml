@@ -38,7 +38,7 @@
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '09:50'
+    initial: '09:48'
 
   # Bonsais Top - Tramo2 - Inicio
   riego_ch1_start_time_t2:
@@ -64,7 +64,7 @@
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '08:34'
+    initial: '08:33'
 
   # Fuente Zen - Inicio
   riego_ch3_start_time:
@@ -135,7 +135,7 @@
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '09:16'
+    initial: '09:11'
 
   # Tomatera - Tramo2
   riego_tomates_start_time2:
@@ -148,4 +148,4 @@
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '18:16'
+    initial: '18:11'
