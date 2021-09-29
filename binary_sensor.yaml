@@ -388,7 +388,7 @@
         # states('sensor.humedad_entrada_ly03')|int >= 50
         # states('sensor.temperatura_entrada_ly03')|int >= 35
         friendly_name: '¿ML Riego Automatico Hoy?'
-        icon_template: mdi:watering-can
+        icon_template: mdi:head-snowflake-outline
         value_template: >-
           {% if states('sensor.season') in ('autumn','winter','spring')
                 and is_state('binary_sensor.riego_prevision_lluvia_hoy','on')

@@ -1397,7 +1397,7 @@
     #  at: '01:00:00'
     - platform: sun
       event: sunrise
-      offset: "+01:00:00"   # En verano 07:00 + 01h => 08:00 apagado
+      #offset: "+01:00:00"   # En verano 07:00 + 01h => 08:00 apagado
   condition:
     condition: or
     conditions:
@@ -1529,25 +1529,30 @@
 #
 - id: S18
   alias: 'S18 Control Interruptor General Riego'
+  mode: restart
   trigger:
     - platform: time
       at:
         - '08:00:00'
         - '15:00:00'
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: input_boolean.riego_interruptor_global  # Interruptor General Riego segun Forecast Tiempo
-        state: 'on'
-      - condition: state
-        entity_id: binary_sensor.riego_automatico_hoy  # Sensor ML en base a prevision de lluvias
-        state: 'off'
   action:
-    service: input_boolean.turn_off
-    target:
-      entity_id: input_boolean.riego_interruptor_global
-
+    - choose:
+        # IF Riego On AND Hoy No Se Riega => Apaga Riego
+        - conditions:
+          - condition: template
+            value_template: "{{ is_state('input_boolean.riego_interruptor_global','on') and is_state('binary_sensor.riego_automatico_hoy','off') }}"
+          sequence:
+            - service: input_boolean.turn_off
+              target:
+                entity_id: input_boolean.riego_interruptor_global
+        # ELIF Riego Off AND Hoy  Se Riega => Enciende Riego
+        - conditions:
+          - condition: template
+            value_template: "{{ is_state('input_boolean.riego_interruptor_global','off') and is_state('binary_sensor.riego_automatico_hoy','on') }}"
+          sequence:
+            - service: input_boolean.turn_on
+              target:
+                entity_id: input_boolean.riego_interruptor_global
 
 # ESPHOME 4CH-R2 SW2 RIEGO : Relay1 BONSAIS TOP
 #
