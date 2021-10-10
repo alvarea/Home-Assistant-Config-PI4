@@ -130,28 +130,28 @@
     initial: off
     icon: mdi:dip-switch
 
-  # Riego Bonsais Zona2 - Tramo1
+  # Riego Bonsais Producción - Tramo1
   riego_bonsais_programador_t1:
     name: Programador Riego Zona2 - Tramo1
     initial: on
     icon: mdi:dip-switch
 
-  # Riego Bonsais Zona2 - Tramo2
+  # Riego Bonsais Producción - Tramo2
   riego_bonsais_programador_t2:
     name: Programador Riego Zona2 - Tramo2
     initial: on
     icon: mdi:dip-switch
 
-  # Riego Bonsais Zona2 - Tramo1
+  # Riego Tomatera - Tramo1
   riego_tomates_programador_t1:
     name: Programador Riego Zona2 - Tramo1
-    initial: on
+    initial: off
     icon: mdi:dip-switch
 
-  # Riego Bonsais Zona2 - Tramo2
+  # Riego Tomatera - Tramo2
   riego_tomates_programador_t2:
     name: Programador Riego Zona2 - Tramo2
-    initial: on
+    initial: off
     icon: mdi:dip-switch
 
 

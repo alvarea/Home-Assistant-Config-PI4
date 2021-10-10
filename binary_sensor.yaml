@@ -368,14 +368,20 @@
 
       # JARDIN RIEGO BONSAIS - CH1 - CH4
       # ALVAREA
+      riego_prevision_tiempo_dia0:
+        # rain, snow, sleet
+        friendly_name: 'Previsión Tiempo Hoy'
+        icon_template: mdi:weather
+        value_template: state('sensor.dark_sky_icon')
+
       riego_prevision_lluvia_hoy:
         # rain, snow, sleet
         friendly_name: 'Previsión Lluvia Hoy'
         icon_template: mdi:weather-pouring
         value_template: >-
-          {% if (is_state('weather.dark_sky','rain') or
-                 is_state('weather.dark_sky','snow') or
-                 is_state('weather.dark_sky','sleet')
+          {% if (is_state('sensor.dark_sky_icon','rain') or
+                 is_state('sensor.dark_sky_icon','snow') or
+                 is_state('sensor.dark_sky_icon','sleet')
                 )
           %}
             true
