@@ -38,6 +38,10 @@ views:
                 entity: alarm_control_panel.blink_casa
                 name: Blink
             type: horizontal-stack
+          - type: entity
+            entity: weather.dark_sky
+            name: Previsión del Tiempo
+            icon: mdi:weather-pouring
           - type: custom:weather-card
             entity: weather.dark_sky
             number_of_forecasts: '5'
@@ -417,53 +421,48 @@ views:
                 type: entity-button
             type: horizontal-stack
           - cards:
-              - entity: binary_sensor.riego_ch1_dia_ejecucion
-                hold_action:
-                  action: call-service
-                  service: switch.toggle
-                icon: mdi:tree
-                name: Bonsais Top
-                tap_action:
-                  action: more-info
-                type: entity-button
-                show_state: true
-              - entity: binary_sensor.riego_ch2_dia_ejecucion
-                hold_action:
-                  action: call-service
-                  service: switch.toggle
-                icon: mdi:flower
-                name: Plantas Entrada
+              - hold_action:
+                  action: none
                 show_state: true
                 tap_action:
                   action: more-info
                 type: entity-button
-              - entity: binary_sensor.riego_ch3_dia_ejecucion
+                entity: binary_sensor.riego_prevision_lluvia_hoy
+              - hold_action:
+                  action: none
+                type: entity-button
+                show_state: true
+                entity: binary_sensor.riego_automatico_hoy
+                icon: mdi:head-snowflake-outline
+              - entity: input_boolean.riego_interruptor_global
                 hold_action:
                   action: call-service
                   service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_4ch_sw2_relay_3
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                icon: mdi:watering-can
+              - entity: binary_sensor.riego_algun_sector_activo
+                hold_action:
+                  action: none
                 icon: mdi:water-pump
-                name: Fuente Ranas
+                name: Regando Ahora?
                 type: entity-button
                 show_state: true
-              - entity: binary_sensor.riego_bonsais_dia_ejecucion
-                hold_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_bas_sw2
-                icon: mdi:tree-outline
-                name: Bonsais Producción
-                type: entity-button
-                show_state: true
+                tap_action:
+                  action: more-info
             type: horizontal-stack
         type: vertical-stack
       - type: calendar
         entities:
-          - calendar.family
+          - calendar.family_almuerzo
+          - calendar.family_cena
+          - calendar.family_universidad_aaf
+          - calendar.family_universidad_paf
+          - calendar.family_eventos
         initial_view: listWeek
-        title: MENU SEMANAL
+        title: CALENDARIO FAMILY
     icon: mdi:home-assistant
     path: default_view
     title: Home View
@@ -479,6 +478,7 @@ views:
           - type: entity
             entity: binary_sensor.esphome_bas_sw0
             name: Sirena Alarma
+            state_color: true
           - entity: alarm_control_panel.blink_casa
             name: BLINK ALARM
             type: alarm-panel
@@ -502,6 +502,7 @@ views:
                 name: Todos en Casa - Armado Parcial
             show_header_toggle: false
             title: PANEL CONTROL ALARMA
+            state_color: true
             type: entities
         type: vertical-stack
       - cards:
@@ -517,6 +518,7 @@ views:
               - entity: script.alarma_boton_panico
             show_header_toggle: false
             title: Botón Pánico / Sirena
+            state_color: true
             type: entities
         type: vertical-stack
       - entities:
@@ -542,6 +544,7 @@ views:
             secondary_info: last-changed
         show_header_toggle: false
         title: Sensores Perimetral
+        state_color: true
         type: entities
       - entities:
           - entity: binary_sensor.motion_sensor_158d0001e637f6
@@ -554,6 +557,7 @@ views:
             secondary_info: last-changed
         show_header_toggle: false
         title: Sensores Presencia Exterior
+        state_color: true
         type: entities
       - entities:
           - entity: binary_sensor.motion_sensor_158d0001e55903
@@ -573,6 +577,7 @@ views:
             secondary_info: last-changed
         show_header_toggle: false
         title: Sensores Presencia Interior
+        state_color: true
         type: entities
       - entities:
           - entity: binary_sensor.esphome_4ch_status
@@ -585,6 +590,7 @@ views:
             secondary_info: last-changed
         show_header_toggle: false
         title: Sensores Cuadro Eléctrico
+        state_color: true
         type: entities
       - entities:
           - entity: sensor.illumination_158d0001e464a6
@@ -599,6 +605,7 @@ views:
             secondary_info: last-changed
         show_header_toggle: false
         title: Sensores Luminosidad
+        state_color: true
         type: entities
       - entities:
           - entity: binary_sensor.blink_puerta_garaje_motion_detected
@@ -611,6 +618,7 @@ views:
             secondary_info: last-changed
         show_header_toggle: false
         title: Sensores Presencia Cámaras Blink
+        state_color: true
         type: entities
       - entities:
           - entity: binary_sensor.blink_puerta_garaje_camera_armed
@@ -626,6 +634,7 @@ views:
             name: Blink Piscina
         show_header_toggle: false
         title: Armado Cámaras Blink
+        state_color: true
         type: entities
   - badges: []
     cards:
@@ -638,7 +647,7 @@ views:
           - entity: device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496
           - entity: device_tracker.aac_iphone_owntrack
           - entity: device_tracker.iphone_aac
-          - entity: device_tracker.aac_iphone_nmap
+          - entity: device_tracker.apple_94_ac_c4_iphone_aac
           - entity: sensor.iphone_aac_ssid
             name: Red Wifi
           - entity: sensor.baye_probability_aac
@@ -646,7 +655,20 @@ views:
           - entity: sensor.iphone_aac_geocoded_location
         show_header_toggle: false
         title: Agustín Tracking
+        state_color: true
         type: entities
+        footer:
+          type: graph
+          entity: sensor.iphone_aac_steps
+          hours_to_show: 24
+          detail: 2
+        header:
+          type: picture
+          image: '/local/AAC_header_col.jpg '
+          tap_action:
+            action: none
+          hold_action:
+            action: none
       - entities:
           - entity: person.malen
             secondary_info: last-changed
@@ -658,7 +680,7 @@ views:
             secondary_info: last-changed
           - entity: device_tracker.iphone_malen
             secondary_info: last-changed
-          - entity: device_tracker.mfc_iphone_nmap
+          - entity: device_tracker.apple_87_31_3b_iphone_mfc
           - entity: sensor.iphone_malen_ssid
             name: Red Wifi
           - entity: sensor.baye_probability_mfc
@@ -666,7 +688,20 @@ views:
           - entity: sensor.iphone_malen_geocoded_location
         show_header_toggle: false
         title: Malen Tracking
+        state_color: true
         type: entities
+        header:
+          type: picture
+          image: /local/MFC_header_col.jpg
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+        footer:
+          type: graph
+          entity: sensor.iphone_malen_steps
+          hours_to_show: 24
+          detail: 2
       - entities:
           - entity: person.paloma
             secondary_info: last-changed
@@ -679,7 +714,7 @@ views:
             secondary_info: last-changed
           - entity: device_tracker.iphone_paf
             secondary_info: last-changed
-          - entity: device_tracker.paf_iphone_nmap
+          - entity: device_tracker.apple_46_ef_30_iphone_paf
           - entity: sensor.iphone_paf_ssid
             name: Red Wifi
           - entity: sensor.baye_probability_paf
@@ -687,7 +722,20 @@ views:
           - entity: sensor.iphone_paf_geocoded_location
         show_header_toggle: false
         title: Paloma Tracking
+        state_color: true
         type: entities
+        header:
+          type: picture
+          image: /local/PAF_header_col.jpg
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+        footer:
+          type: graph
+          entity: sensor.iphone_paf_storage
+          hours_to_show: 24
+          detail: 2
       - entities:
           - entity: person.agu
             secondary_info: last-changed
@@ -697,7 +745,8 @@ views:
           - entity: device_tracker.0b495ff5_94fc_4773_9644_f71df3c328ac
           - entity: device_tracker.a2f
             secondary_info: last-changed
-          - entity: device_tracker.aaf_iphone_nmap
+          - entity: sensor.a2f_steps
+          - entity: device_tracker.apple_89_98_36_iphone_aaf
           - entity: sensor.a2f_ssid
             name: Red Wifi
           - entity: sensor.baye_probability_aaf
@@ -705,7 +754,20 @@ views:
           - entity: sensor.a2f_geocoded_location
         show_header_toggle: false
         title: Agu Tracking
+        state_color: true
         type: entities
+        header:
+          type: picture
+          image: /local/AAF_header_col.jpg
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+        footer:
+          type: graph
+          entity: sensor.a2f_steps
+          hours_to_show: 24
+          detail: 2
     icon: mdi:map-marker
     path: tracking_view
     title: Tracking
@@ -817,8 +879,8 @@ views:
             icon: mdi:home-lightbulb
         show_header_toggle: false
         title: Luces De Toda La Casa
-        type: entities
         state_color: true
+        type: entities
       - entities:
           - entity: light.luz_cilindro
           - entity: light.luz_vitrina
@@ -826,7 +888,19 @@ views:
           - entity: light.luz_tv
         show_header_toggle: true
         title: Salon
+        state_color: true
         type: entities
+        header:
+          type: picture
+          image: /local/Home_Room_Salon_header.jpg
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+        footer:
+          type: graph
+          entity: sensor.temperature_158d00022b65ff
+          hours_to_show: 24
       - entities:
           - entity: light.luz_estudio_alta
           - entity: light.luz_estudio_media
@@ -834,15 +908,42 @@ views:
           - entity: light.luz_estudio_izquierda
           - entity: light.luz_estudio_centro
           - entity: light.luz_estudio_techo
-          - entity: light.esphome_lb1_l01
-            name: Luz Repisa Escalera
-          - entity: switch.esphome_bas_sw1
-            icon: mdi:lightbulb-multiple
-            name: Luz Rack Armario
-          - entity: light.sonoff_mini_sw2
         show_header_toggle: true
         title: Estudio
+        state_color: true
         type: entities
+        header:
+          type: picture
+          image: /local/Home_Room_Estudio_header.jpg
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+        footer:
+          type: graph
+          entity: sensor.temperatura_estudio_ly02
+          hours_to_show: 24
+      - entities:
+          - entity: light.luz_entrada
+          - entity: light.luz_pasillo
+          - entity: light.luz_dormitorio_mfc
+          - entity: light.luz_dormitorio_aac
+          - entity: light.luz_cueva_agu
+        show_header_toggle: true
+        title: Zona Interior
+        state_color: true
+        type: entities
+        header:
+          type: picture
+          image: /local/Home_Room_Dormitorio_RGB.jpg
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+        footer:
+          type: graph
+          entity: sensor.temp_interior
+          hours_to_show: 24
       - entities:
           - entity: light.sonoff_mini_sw1
           - entity: switch.esphome_4ch_relay_1
@@ -856,26 +957,138 @@ views:
           - entity: switch.esphome_4ch_relay_4
         show_header_toggle: true
         title: Exterior
-        type: entities
-      - entities:
-          - entity: light.luz_entrada
-          - entity: light.luz_pasillo
-          - entity: light.gateway_light_7811dcb788fa
-        show_header_toggle: true
-        title: Entrada
-        type: entities
-      - entities:
-          - entity: light.luz_dormitorio_mfc
-          - entity: light.luz_dormitorio_aac
-          - entity: light.luz_cueva_agu
-        show_header_toggle: true
-        title: Dormitorios
+        state_color: true
         type: entities
     icon: mdi:lightbulb-on
     path: luces_view
     title: Luces
   - badges: []
     cards:
+      - type: vertical-stack
+        cards:
+          - type: button
+            tap_action:
+              action: toggle
+            entity: input_boolean.riego_interruptor_global
+            icon: mdi:watering-can
+          - type: entity
+            entity: binary_sensor.riego_automatico_hoy
+            icon: mdi:head-snowflake-outline
+            state_color: true
+          - type: entity
+            entity: binary_sensor.riego_prevision_lluvia_hoy
+            state_color: true
+          - type: entity
+            entity: weather.dark_sky
+            name: Previsión Dark Sky
+            icon: mdi:weather-cloudy
+            state_color: true
+          - cards:
+              - entity: sensor.dark_sky_icon
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: Hoy
+                show_name: true
+              - entity: sensor.dark_sky_icon_1d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                name: Mañana
+                show_state: true
+                show_icon: false
+              - entity: sensor.dark_sky_icon_2d
+                hold_action:
+                  action: none
+                name: Día+2
+                tap_action:
+                  action: more-info
+                type: entity-button
+                icon: mdi:leaf
+                show_state: true
+                show_icon: false
+              - entity: sensor.dark_sky_icon_3d
+                hold_action:
+                  action: none
+                name: Día+3
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+            type: horizontal-stack
+          - type: entity
+            entity: sensor.season
+            name: Estación
+            state_color: true
+          - cards:
+              - entity: binary_sensor.riego_ch1_status
+                hold_action:
+                  action: none
+                icon: mdi:sprout
+                name: Bonsais Top
+                tap_action:
+                  action: more-info
+                type: entity-button
+              - entity: binary_sensor.riego_ch2_status
+                hold_action:
+                  action: none
+                icon: mdi:flower
+                name: Plantas Entrada
+                tap_action:
+                  action: more-info
+                type: entity-button
+              - entity: binary_sensor.riego_tomates_status
+                hold_action:
+                  action: none
+                name: Tomateras
+                tap_action:
+                  action: more-info
+                type: entity-button
+                icon: mdi:leaf
+              - entity: binary_sensor.riego_bonsais_status
+                hold_action:
+                  action: none
+                icon: mdi:sprout
+                name: Bonsais Produccion
+                tap_action:
+                  action: more-info
+                type: entity-button
+            type: horizontal-stack
+          - type: entity
+            entity: binary_sensor.riego_algun_sector_activo
+            name: ¿Regando Ahora?
+            icon: mdi:water-pump
+            state_color: true
+          - type: glance
+            columns: 4
+            entities:
+              - entity: binary_sensor.riego_ch1_dia_ejecucion
+                icon: mdi:sprout
+                name: Bonsais Zona Top
+              - entity: binary_sensor.riego_ch2_dia_ejecucion
+                icon: mdi:flower
+                name: Plantas Entrada
+              - entity: binary_sensor.riego_tomates_dia_ejecucion
+                icon: mdi:leaf
+                name: Fuente ZEN
+              - entity: binary_sensor.riego_bonsais_dia_ejecucion
+                icon: mdi:sprout
+                name: Bonsais Produccion
+              - entity: sensor.riego_ch1_duracion_planificada_total
+              - entity: sensor.riego_ch2_duracion_planificada
+              - entity: sensor.riego_tomates_duracion_planificada
+              - entity: sensor.riego_bonsais_duracion_planificada_total
+            show_icon: true
+            show_name: false
+            show_state: true
+            title: Minutos Riego Programados
       - cards:
           - entities:
               - entity: switch.esphome_4ch_sw2_relay_1
@@ -897,6 +1110,7 @@ views:
                 name: Duración Riego Tramo2
             show_header_toggle: false
             title: Bonsais TOP
+            state_color: true
             type: entities
         type: vertical-stack
       - cards:
@@ -921,6 +1135,7 @@ views:
                 name: Duración Riego Tramo2
             show_header_toggle: false
             title: Bonsais Producción
+            state_color: true
             type: entities
         type: vertical-stack
       - cards:
@@ -945,95 +1160,18 @@ views:
                 name: Duración Riego Tramo2
             show_header_toggle: false
             title: Tomateras
+            state_color: true
             type: entities
         type: vertical-stack
-      - type: vertical-stack
-        cards:
-          - cards:
-              - entity: switch.esphome_4ch_sw2_relay_1
-                hold_action:
-                  action: call-service
-                  service: script.riego_ch1_timer_cancel
-                icon: mdi:sprout
-                name: Bonsais Entrada
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_4ch_sw2_relay_1
-                type: entity-button
-              - entity: switch.esphome_4ch_sw2_relay_2
-                hold_action:
-                  action: call-service
-                  service: script.riego_ch2_timer_cancel
-                icon: mdi:flower
-                name: Plantas Entrada
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_4ch_sw2_relay_2
-                type: entity-button
-              - entity: switch.esphome_4ch_sw2_relay_3
-                hold_action:
-                  action: call-service
-                  service: script.riego_ch3_timer_cancel
-                icon: mdi:water-pump
-                name: Fuente Zen
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_4ch_sw2_relay_3
-                type: entity-button
-              - entity: switch.esphome_bas_sw2
-                hold_action:
-                  action: call-service
-                  service: script.riego_riego_sw2_cancel
-                icon: mdi:sprout
-                name: Bonsais Zona2
-                tap_action:
-                  action: call-service
-                  service: switch.toggle
-                  service_data:
-                    entity_id: switch.esphome_bas_sw2
-                type: entity-button
-            type: horizontal-stack
-          - type: glance
-            columns: 4
-            entities:
-              - entity: binary_sensor.riego_ch1_dia_ejecucion
-                icon: mdi:sprout
-                name: Bonsais Zona Top
-              - entity: binary_sensor.riego_ch2_dia_ejecucion
-                icon: mdi:flower
-                name: Plantas Entrada
-              - entity: binary_sensor.riego_ch3_dia_ejecucion
-                icon: mdi:water-pump
-                name: FUENTE ZEN
-              - entity: binary_sensor.riego_bonsais_dia_ejecucion
-                icon: mdi:sprout
-                name: Bonsais Produccion
-              - entity: sensor.riego_ch1_duracion_planificada_total
-                name: Riego'
-              - entity: sensor.riego_ch2_duracion_planificada
-                name: Riego'
-              - entity: sensor.riego_ch3_duracion_planificada
-                name: Fuente'
-              - entity: sensor.riego_bonsais_duracion_planificada_total
-                name: Fuente'
-            show_icon: true
-            show_name: false
-            show_state: true
-            title: Estado Programador
       - cards:
           - entities:
               - entity: switch.esphome_4ch_sw2_relay_2
                 icon: mdi:watering-can
                 secondary_info: last-changed
+              - entity: timer.riego_ch2
+                name: Timer Plantas Entrada
               - entity: input_boolean.riego_ch2_programador
                 name: Programador Automático
-              - entity: binary_sensor.riego_ch2_status
               - entity: input_select.riego_ch2_programador_dias
               - entity: input_datetime.riego_ch2_start_time
               - entity: input_datetime.riego_ch2_end_time
@@ -1041,6 +1179,7 @@ views:
                 name: Duración Programa (Min)
             show_header_toggle: false
             title: Plantas Entrada
+            state_color: true
             type: entities
         type: vertical-stack
       - cards:
@@ -1048,6 +1187,8 @@ views:
               - entity: switch.esphome_4ch_sw2_relay_3
                 icon: mdi:watering-can
                 secondary_info: last-changed
+              - entity: timer.riego_ch3
+                name: Timer Fuente Zen
               - entity: input_boolean.riego_ch3_programador
                 name: Programador Automático
               - entity: input_select.riego_ch3_programador_dias
@@ -1057,6 +1198,7 @@ views:
                 name: Duración Programa (Min)
             show_header_toggle: false
             title: Fuente Zen
+            state_color: true
             type: entities
         type: vertical-stack
     icon: mdi:watering-can
@@ -1824,6 +1966,24 @@ views:
     icon: mdi:thermometer-lines
     path: temperatura
     title: Temperatura
+  - title: Energía
+    path: energia
+    icon: mdi:transmission-tower
+    badges: []
+    cards:
+      - type: sensor
+        entity: sensor.pvpc
+        graph: line
+        name: Coste Energía
+      - type: statistics-graph
+        entities:
+          - sensor.pvpc
+        days_to_show: 30
+        stat_types:
+          - mean
+          - min
+          - max
+        chart_type: line
   - badges: []
     cards:
       - aspect_ratio: 75%
@@ -2414,6 +2574,7 @@ views:
               - light.esphome_s20_sw3_led
             show_header_toggle: false
             title: Dormitorio PAF
+            state_color: true
             type: entities
         type: vertical-stack
       - cards:
@@ -2512,6 +2673,7 @@ views:
               - entity: switch.sonoff_s20_sw2
             show_header_toggle: false
             title: Dormitorio AAF
+            state_color: true
             type: entities
         type: vertical-stack
   - badges: []
@@ -2536,6 +2698,7 @@ views:
               - entity: light.luz_dormitorio_aac
             show_header_toggle: false
             title: Sensores Dormitorio
+            state_color: true
             type: entities
           - cards:
               - entity: light.dormitorio
@@ -2689,6 +2852,7 @@ views:
           - light.esphome_s20_sw1_led
         show_header_toggle: false
         title: Smart Switch (s20_sw1)
+        state_color: true
         type: entities
     icon: mdi:bed-empty
     path: dormitorio_view
@@ -2728,11 +2892,13 @@ views:
                 name: Warning Aviso Lavadora (W<2.5)
                 secondary_info: last-changed
             show_header_toggle: false
+            state_color: true
             type: entities
           - entities:
               - entity: sensor.esphome_pow_sw2_voltage
               - entity: sensor.esphome_pow_sw2_current
               - entity: sensor.esphome_pow_sw2_power
+            state_color: true
             type: glance
           - cards:
               - entities:
@@ -2905,6 +3071,7 @@ views:
               - entity: binary_sensor.esphome_pow_sw3_piscina_warning
                 name: Warning Aviso Piscina (W<2.5)
                 secondary_info: last-changed
+            state_color: true
             type: entities
           - entities:
               - entity: sensor.esphome_pow_sw3_voltage
@@ -2935,6 +3102,7 @@ views:
           - sensor.piscina_duracion_planificada
         show_header_toggle: false
         title: Programa Automático
+        state_color: true
         type: entities
       - entities:
           - input_number.piscina_manual_minutos
@@ -2944,6 +3112,7 @@ views:
           - script.piscina_timer_cancel
         show_header_toggle: false
         title: Control Manual
+        state_color: true
         type: entities
     icon: mdi:swim
     path: piscina_view
@@ -2967,28 +3136,6 @@ views:
         entity: switch.esphome_s20_sw1
         name: Ventilador Rack
         icon: mdi:fan
-      - cards:
-          - entities:
-              - entity: sensor.temperatura_rack_ly03
-            font_size: 120
-            line_width: 6
-            points_per_hour: 1
-            name: Temperatura Rack
-            show:
-              icon: true
-              labels: true
-              state: true
-            type: custom:mini-graph-card
-          - cards:
-              - entities:
-                  - entity: sensor.humedad_rack_ly03
-                font_size: 50
-                name: Humedad Rack
-                line_color: blue
-                line_width: 6
-                type: custom:mini-graph-card
-            type: horizontal-stack
-        type: vertical-stack
       - entities:
           - sensor.temperatura_cpu
           - sensor.load_15m
@@ -2998,6 +3145,7 @@ views:
           - sensor.memory_free
         show_header_toggle: false
         title: PI3 CPU & RAM
+        state_color: true
         type: entities
       - entities:
           - entity: sensor.version_local
@@ -3017,17 +3165,10 @@ views:
         type: entities
       - type: entities
         entities:
-          - entity: sensor.season
           - entity: sensor.now_astimezone
           - entity: sensor.now_tzinfo
           - entity: sensor.now_astimezone_time
           - entity: sensor.sun_offset
-      - type: glance
-        entities:
-          - entity: sensor.uptime
-        show_name: false
-        show_icon: false
-        show_state: true
     icon: mdi:server
     path: system_view
     title: System Status
@@ -3045,6 +3186,7 @@ views:
               - binary_sensor.ping_09_switch_estudio
             show_header_toggle: false
             title: Network Devices (ping)
+            state_color: true
             type: entities
         type: vertical-stack
       - type: glance
@@ -3076,6 +3218,7 @@ views:
           - binary_sensor.xiaomi_aqara_gateway
         show_header_toggle: false
         title: HOME Domotic & Hub (ping)
+        state_color: true
         type: entities
       - cards:
           - entities:
@@ -3093,6 +3236,7 @@ views:
               - entity: binary_sensor.esphome_s20_sw3_status
             show_header_toggle: false
             title: IOT ESPHOME Devices
+            state_color: true
             type: entities
         type: vertical-stack
       - cards:
@@ -3106,9 +3250,11 @@ views:
               - entity: binary_sensor.nmap_acer_notebook
             show_header_toggle: false
             title: Computers Devices (nmap)
+            state_color: true
             type: entities
         type: vertical-stack
       - type: entities
+        state_color: true
         entities:
           - device_tracker.macbook_aac
           - binary_sensor.macbook_aac_active
@@ -3126,6 +3272,7 @@ views:
     cards:
       - show_header_toggle: false
         title: Sensores Alarmas
+        state_color: true
         type: entities
         entities:
           - type: custom:battery-entity-row
@@ -3227,11 +3374,11 @@ views:
         title: Sensores Xiaomi Temperatura
         entities:
           - type: custom:battery-entity-row
-            entity: sensor.temperatura_exterior_ly01
+            entity: sensor.temperatura_entrada_ly03
             attribute: battery_percent
             unit: '%'
             icon: mdi:battery-alert
-            name: Temperatura Exterior
+            name: Temperatura Entrada
             secondary_info: last-changed
             warning: 40
             critical: 20
@@ -3273,16 +3420,6 @@ views:
             icon: mdi:battery-alert
             secondary_info: last-changed
             name: Temperatura Estudio
-            warning: 40
-            critical: 20
-            charging: true
-          - type: custom:battery-entity-row
-            entity: sensor.temperatura_rack_ly03
-            attribute: battery_percent
-            unit: '%'
-            icon: mdi:battery-alert
-            secondary_info: last-changed
-            name: Temperatura Rack
             warning: 40
             critical: 20
             charging: true
@@ -3460,6 +3597,7 @@ views:
           - entity: automation.t04_family_home_telegram
         show_header_toggle: false
         title: Tracking Family Home
+        state_color: true
         type: entities
       - entities:
           - entity: input_boolean.mute_sonido_sirenas
@@ -3483,6 +3621,7 @@ views:
           - entity: input_boolean.jardin_programador_4ch_ch4
         show_header_toggle: false
         title: Luces Jardín Setup
+        state_color: true
         type: entities
       - entities:
           - entity: automation.l01_luces_on_exterior_sunset
@@ -3498,6 +3637,7 @@ views:
           - entity: automation.p02_ping_ap_wifi_tplink
         show_header_toggle: false
         title: Reglas Luces
+        state_color: true
         type: entities
       - entities:
           - entity: automation.s04_sonoff_4ch_status
@@ -3506,6 +3646,7 @@ views:
           - entity: automation.p04_sony_ps4_off
         show_header_toggle: false
         title: Automations On/Off
+        state_color: true
         type: entities
       - type: button
         tap_action:
@@ -3568,62 +3709,6 @@ views:
               'on': /local/Home_Room_Kitchen_RGB.jpg
             title: Cocina
             type: picture-glance
-        type: vertical-stack
-      - cards:
-          - entity: weather.dark_sky
-            name: El Tiempo
-            type: weather-forecast
-          - color_thresholds:
-              - color: purple
-                value: 46
-              - color: magenta
-                value: 44
-              - color: red
-                value: 42
-              - color: vermillion
-                value: 40
-              - color: orange
-                value: 38
-              - color: amber
-                value: 35
-              - color: yellow
-                value: 30
-              - color: chartreuse
-                value: 25
-              - color: green
-                value: 20
-              - color: teal
-                value: 15
-              - color: blue
-                value: 10
-              - color: violet
-                value: 5
-              - color: black
-                value: 0
-            entities:
-              - entity: sensor.temperature_158d00025d9289
-            font_size: 120
-            line_width: 10
-            points_per_hour: 1
-            show:
-              icon: true
-              labels: true
-              state: true
-            type: custom:mini-graph-card
-          - entities:
-              - entity: sensor.temperature_158d00022b65ff
-              - entity: sensor.mi_t_a4c1386baac8
-                name: Estudio
-              - entity: sensor.temperature_158d00025efda4
-                name: Dorm.MFC
-              - entity: sensor.temperature_158d00022c6a47
-                name: Dorm.AAF
-              - entity: sensor.temperature_158d0002e97092
-                name: Dorm.PAF
-            font_size: 75
-            line_width: 6
-            name: Temperatura Interior
-            type: custom:mini-graph-card
         type: vertical-stack
       - type: grid
         cards:

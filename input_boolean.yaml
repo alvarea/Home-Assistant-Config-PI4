@@ -103,13 +103,13 @@
 # Riego Bonsais Top
   riego_ch1_programador_t1:
     name: Programador CH1 Timer1
-    initial: on
+    initial: off
     icon: mdi:dip-switch
 
   # Riego Bonsais Top - Tramo2
   riego_ch1_programador_t2:
     name: Programador CH1 Timer2
-    initial: on
+    initial: off
     icon: mdi:dip-switch
 
   # Riego Plantas entrada

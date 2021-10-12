@@ -365,9 +365,19 @@
           {% else %}
             false
           {% endif %}
-
+      #
       # JARDIN RIEGO BONSAIS - CH1 - CH4
-      # ALVAREA
+      #
+      riego_control_bomba_status:
+        value_template: >-
+          {% if is_state('switch.esphome_4ch_relay_4','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        friendly_name: 'Control Bomba Riego'
+        icon_template: mdi:sprinkler-variant
+
       riego_prevision_tiempo_dia0:
         # rain, snow, sleet
         friendly_name: 'Previsión Tiempo Hoy'
