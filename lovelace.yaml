@@ -443,11 +443,9 @@ views:
                 type: entity-button
                 show_state: true
                 icon: mdi:watering-can
-              - entity: binary_sensor.riego_algun_sector_activo
+              - entity: binary_sensor.riego_control_bomba_status
                 hold_action:
                   action: none
-                icon: mdi:water-pump
-                name: Regando Ahora?
                 type: entity-button
                 show_state: true
                 tap_action:
@@ -743,15 +741,14 @@ views:
           - entity: binary_sensor.family_home_aaf
             secondary_info: last-changed
           - entity: device_tracker.0b495ff5_94fc_4773_9644_f71df3c328ac
+          - entity: sensor.a2f_steps
           - entity: device_tracker.a2f
             secondary_info: last-changed
-          - entity: sensor.a2f_steps
           - entity: device_tracker.apple_89_98_36_iphone_aaf
           - entity: sensor.a2f_ssid
             name: Red Wifi
           - entity: sensor.baye_probability_aaf
           - entity: binary_sensor.baye_home_aaf
-          - entity: sensor.a2f_geocoded_location
         show_header_toggle: false
         title: Agu Tracking
         state_color: true
@@ -899,7 +896,7 @@ views:
             action: none
         footer:
           type: graph
-          entity: sensor.temperature_158d00022b65ff
+          entity: sensor.illumination_158d0001e05661
           hours_to_show: 24
       - entities:
           - entity: light.luz_estudio_alta
@@ -921,7 +918,7 @@ views:
             action: none
         footer:
           type: graph
-          entity: sensor.temperatura_estudio_ly02
+          entity: sensor.illumination_158d0001e464a6
           hours_to_show: 24
       - entities:
           - entity: light.luz_entrada
@@ -942,7 +939,7 @@ views:
             action: none
         footer:
           type: graph
-          entity: sensor.temp_interior
+          entity: sensor.illumination_158d0002ea1d0f
           hours_to_show: 24
       - entities:
           - entity: light.sonoff_mini_sw1
@@ -954,7 +951,6 @@ views:
             name: Porche 1 (Salón)
           - entity: switch.esphome_4ch_relay_3
           - entity: switch.esphome_4ch_relay_2
-          - entity: switch.esphome_4ch_relay_4
         show_header_toggle: true
         title: Exterior
         state_color: true
@@ -971,6 +967,50 @@ views:
               action: toggle
             entity: input_boolean.riego_interruptor_global
             icon: mdi:watering-can
+            name: Interruptor General
+            show_state: true
+          - cards:
+              - entity: binary_sensor.riego_control_bomba_status
+                hold_action:
+                  action: call-service
+                  service: switch.toggle
+                  service_data: {}
+                  target:
+                    entity_id: switch.esphome_4ch_relay_4
+                tap_action:
+                  action: more-info
+                type: entity-button
+              - entity: binary_sensor.riego_ch1_dia_ejecucion
+                hold_action:
+                  action: none
+                icon: mdi:sprout
+                name: Bonsais Top
+                tap_action:
+                  action: more-info
+                type: entity-button
+              - entity: binary_sensor.riego_ch2_dia_ejecucion
+                hold_action:
+                  action: none
+                icon: mdi:flower
+                name: Plantas Entrada
+                tap_action:
+                  action: more-info
+                type: entity-button
+              - entity: binary_sensor.riego_tomates_dia_ejecucion
+                hold_action:
+                  action: none
+                name: Tomateras
+                tap_action:
+                  action: more-info
+                type: entity-button
+                icon: mdi:leaf
+              - entity: binary_sensor.riego_bonsais_dia_ejecucion
+                icon: mdi:sprout
+                name: Bonsais Produccion
+                tap_action:
+                  action: more-info
+                type: entity-button
+            type: horizontal-stack
           - type: entity
             entity: binary_sensor.riego_automatico_hoy
             icon: mdi:head-snowflake-outline
@@ -1027,40 +1067,6 @@ views:
             entity: sensor.season
             name: Estación
             state_color: true
-          - cards:
-              - entity: binary_sensor.riego_ch1_status
-                hold_action:
-                  action: none
-                icon: mdi:sprout
-                name: Bonsais Top
-                tap_action:
-                  action: more-info
-                type: entity-button
-              - entity: binary_sensor.riego_ch2_status
-                hold_action:
-                  action: none
-                icon: mdi:flower
-                name: Plantas Entrada
-                tap_action:
-                  action: more-info
-                type: entity-button
-              - entity: binary_sensor.riego_tomates_status
-                hold_action:
-                  action: none
-                name: Tomateras
-                tap_action:
-                  action: more-info
-                type: entity-button
-                icon: mdi:leaf
-              - entity: binary_sensor.riego_bonsais_status
-                hold_action:
-                  action: none
-                icon: mdi:sprout
-                name: Bonsais Produccion
-                tap_action:
-                  action: more-info
-                type: entity-button
-            type: horizontal-stack
           - type: entity
             entity: binary_sensor.riego_algun_sector_activo
             name: ¿Regando Ahora?
@@ -1069,16 +1075,16 @@ views:
           - type: glance
             columns: 4
             entities:
-              - entity: binary_sensor.riego_ch1_dia_ejecucion
+              - entity: binary_sensor.riego_ch1_status
                 icon: mdi:sprout
                 name: Bonsais Zona Top
-              - entity: binary_sensor.riego_ch2_dia_ejecucion
+              - entity: binary_sensor.riego_ch2_status
                 icon: mdi:flower
                 name: Plantas Entrada
-              - entity: binary_sensor.riego_tomates_dia_ejecucion
+              - entity: binary_sensor.riego_tomates_status
                 icon: mdi:leaf
-                name: Fuente ZEN
-              - entity: binary_sensor.riego_bonsais_dia_ejecucion
+                name: Tomates
+              - entity: binary_sensor.riego_bonsais_status
                 icon: mdi:sprout
                 name: Bonsais Produccion
               - entity: sensor.riego_ch1_duracion_planificada_total
@@ -1088,7 +1094,7 @@ views:
             show_icon: true
             show_name: false
             show_state: true
-            title: Minutos Riego Programados
+            title: Riego Activo/Duracion Programa
       - cards:
           - entities:
               - entity: switch.esphome_4ch_sw2_relay_1
@@ -2456,7 +2462,6 @@ views:
         type: vertical-stack
       - entities:
           - light.luz_lectura
-          - light.luz_sofa
           - light.luz_tv
           - light.luz_vitrina
           - light.luz_cilindro
@@ -3224,6 +3229,7 @@ views:
           - entities:
               - entity: binary_sensor.esphome_bas_sw0_status
               - entity: binary_sensor.esphome_bas_sw1_status
+                name: BAS SW1 Disponible
               - entity: binary_sensor.esphome_bas_sw2_status
               - entity: binary_sensor.esphome_bas_sw4_status
                 name: BAS.SW4 Porche 1 Salón

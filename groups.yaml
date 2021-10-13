@@ -137,14 +137,12 @@ luces_jardin_grp:
     - switch.esphome_4ch_relay_1                  # Balizas Cesped Jardín (CH1)
     - switch.esphome_4ch_relay_3                  # Focos Entrada (Olivo1+Cica)(CH3)
     - switch.esphome_4ch_relay_2                  # Focos Piscina (Olivo3+Yuca)(CH2)
-    - switch.esphome_4ch_relay_4                  # Pendiente Disponible
 
 luces_focos_arboles_grp:
   name: Focos Árboles
   entities:
     - switch.esphome_4ch_relay_2                  # Focos Piscina (Olivo3+Yuca)(CH2)
     - switch.esphome_4ch_relay_3                  # Focos Olivo1 (Olivo1+Cica)(CH3)
-    - switch.esphome_4ch_relay_4                  # Focos Cica (CH4)
 
 luces_casa_grp:
   name: Luces De Toda La Casa

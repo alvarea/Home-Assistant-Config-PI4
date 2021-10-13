@@ -17,19 +17,14 @@
   latitude: 37.3783
   longitude: -5.9763
   icon: mdi:school
-- name: Fac.ETSI
-  latitude: 37.411094
-  longitude: -6.000681
+  radius: 200
+- name: Fac.ETSII
+  latitude: 37.3593
+  longitude: -5.9867
   icon: mdi:school
-- name: CES Cartuja
-  latitude: 37.4085582
-  longitude: -6.0030675
-  icon: mdi:chair-school
+  radius: 500
 - name: Club Sato
   latitude: 37.3585411
   longitude: -6.0501132
   icon: mdi:tennis
-#- name: C.Abuela
-#  latitude: 37.3748
-#  longitude: -6.0530
-#  icon: mdi:home-account
+  radius: 100
