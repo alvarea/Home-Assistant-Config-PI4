@@ -100,6 +100,14 @@
   trigger:
     - platform: time_pattern
       hours: "/1"
+  condition:
+    condition: and
+    conditions:
+      - condition: sun
+        after: sunrise
+        after_offset: "-01:00:00"
+        before: sunset
+        before_offset: "04:00:00"
   action:
     # Actualizacion imagen cámaras última hora.
     - service: script.blink_trigger_cam_hall
@@ -1573,50 +1581,88 @@
 #
 # SENSOR:  input_boolean.riego_interruptor_global
 #
+# PLAN DE RIEGOS ESTACION OTOÑO
+#
+#     CANAL   SECTOR    HORA    MINUTOS
+#     A       1         8:30    5
+#     B       2         9:30    4
+#     C       3         23:30   8
+#
 - id: S18b
   alias: 'S18b Control Bomba Riego'
   mode: restart
   trigger:
-    - platform: state
-      entity_id: input_boolean.riego_interruptor_global
+    - platform: time
+      at:
+        - '07:00:00'
+        - '00:00:00'
   action:
-    # Apaga/Enciende el controlador de la bomba de riego en función del interruptor
+    # Apaga la bomba de riego por las noches y la enciende a primera hora en función del estado del interruptor global
     - choose:
-        # IF el interruptor general riego se enciende => enciende controlador bomba
+        # IF el interruptor general riego está encendido => enciende controlador bomba antes del riego de la mañana
         - conditions:
           - condition: template
-            value_template: "{{ is_state('input_boolean.riego_interruptor_global','on') and is_state('binary_sensor.riego_control_bomba_status','off') }}"
+            value_template: "{{ now().hour == 0 and is_state('input_boolean.riego_interruptor_global','on') }}"
           sequence:
-            - service: switch.turn_on
+            - service: switch.turn_off
               target:
                 entity_id: switch.esphome_4ch_relay_4
         # ELIF el interruptor general riego se apaga y el controlador bomba riego encendido => Apaga controlador bomba
         - conditions:
           - condition: template
-            value_template: "{{ is_state('input_boolean.riego_interruptor_global','off') and is_state('binary_sensor.riego_control_bomba_status','on') }}"
+            value_template: "{{ now().hour == 8 and is_state('input_boolean.riego_interruptor_global','on') and is_state('binary_sensor.riego_control_bomba_status','off') }}"
           sequence:
-            - service: switch.turn_off
+            - service: switch.turn_on
               target:
                 entity_id: switch.esphome_4ch_relay_4
 
-- id: S18c
-  alias: 'S18c Reset Controlador Bomba Riego'
-  mode: restart
-  trigger:
-    - platform: time
-      at: '06:00:00'
-  condition:
-    - condition: template
-      value_template: "{{ is_state('switch.esphome_4ch_relay_4','on') }}"
-  action:
-    - service: switch.turn_off
-      target:
-        entity_id: switch.esphome_4ch_relay_4
-    - delay: '00:00:15'
-    - service: switch.turn_on
-      target:
-        entity_id: switch.esphome_4ch_relay_4
-
+# Regla Original Control Bomba Riego basado en el interruptor global
+#
+#- id: S18b
+#  alias: 'S18b Control Bomba Riego'
+#  mode: restart
+#  trigger:
+#    - platform: state
+#      entity_id: input_boolean.riego_interruptor_global
+#  action:
+#    # Apaga/Enciende el controlador de la bomba de riego en función del interruptor
+#    - choose:
+#        # IF el interruptor general riego se enciende => enciende controlador bomba
+#        - conditions:
+#          - condition: template
+#            value_template: "{{ is_state('input_boolean.riego_interruptor_global','on') and is_state('binary_sensor.riego_control_bomba_status','off') }}"
+#          sequence:
+#            - service: switch.turn_on
+#             target:
+#                entity_id: switch.esphome_4ch_relay_4
+#        # ELIF el interruptor general riego se apaga y el controlador bomba riego encendido => Apaga controlador bomba
+#        - conditions:
+#          - condition: template
+#            value_template: "{{ is_state('input_boolean.riego_interruptor_global','off') and is_state('binary_sensor.riego_control_bomba_status','on') }}"
+#          sequence:
+#            - service: switch.turn_off
+#              target:
+#                entity_id: switch.esphome_4ch_relay_4
+#
+#
+#- id: S18c
+#  alias: 'S18c Reset Controlador Bomba Riego'
+#  mode: restart
+#  trigger:
+#    - platform: time
+#      at: '06:00:00'
+#  condition:
+#    - condition: template
+#      value_template: "{{ is_state('switch.esphome_4ch_relay_4','on') }}"
+#  action:
+#    - service: switch.turn_off
+#      target:
+#        entity_id: switch.esphome_4ch_relay_4
+#    - delay: '00:00:15'
+#    - service: switch.turn_on
+#      target:
+#        entity_id: switch.esphome_4ch_relay_4
+#
 
 # ESPHOME 4CH-R2 SW2 RIEGO : Relay1 BONSAIS TOP
 #

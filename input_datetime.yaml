@@ -106,20 +106,20 @@
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '09:05'
+    initial: '09:03'
 
   # Bonsais Producción - Tramo2
   riego_bonsais_start_time2:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '18:00'
+    initial: '22:00'
 
   riego_bonsais_end_time2:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '18:05'
+    initial: '22:03'
 
 #
 # Programador Sonoff POW SW1 Tomatera

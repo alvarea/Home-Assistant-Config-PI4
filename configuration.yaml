@@ -544,22 +544,21 @@ calendar:
     url: !secret icloud_url
     calendars:
     custom_calendars:
-      - name: Universidad_AAF
+      - name: Universidad
         calendar: Family
-        search: "Universidad AAF"
-      - name: Universidad_PAF
-        calendar: Family
-        search: "Universidad PAF"
+        search: "Universidad:"
       - name: Almuerzo
         calendar: Family
-        search: "Almuerzo"
+        search: "Almuerzo:"
       - name: Cena
         calendar: Family
-        search: "Cena"
+        search: "Cena:"
       - name: Eventos
         calendar: Family
-        search: "Evento"
-
+        search: "Evento:"
+      - name: Festivos
+        calendar: "Festivos España"
+        search: "*"
 
 #
 # DEPRECATED
