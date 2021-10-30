@@ -18,10 +18,10 @@
     event: start
   action:
     # Para todas las reglas durante el arranque del sistema
-    - service: automation.turn_off
-      data:
-        entity_id:
-          - group.all_automations
+    #- service: automation.turn_off
+    #  data:
+    #    entity_id:
+    #      - group.all_automations
 
     # Llamada al script de inicialización de interruptores Sonoff
     - service: script.sonoff_initialize
@@ -30,16 +30,12 @@
     - service: python_script.countpeople
     #
     # 30" espera y arranca reglas
-    - delay: 30
-    - service: automation.turn_on
-      data:
-        entity_id:
-          - group.all_automations
-
-    # 30" y actualiza certificado
     #- delay: 30
-    #- service: homeassistant.update_entity
-    #  entity_id: sensor.ssl_certificate_expiry
+    #- service: automation.turn_on
+    #  data:
+    #    entity_id:
+    #      - group.all_automations
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -381,7 +377,7 @@
       # - group.alarma_grp_sensores_home
       # - group.alarma_grp_sensores_away
       # Grupo Sensores Perimetrales
-        - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
+        - binary_sensor.door_window_sensor_puerta_entrada       # Puerta Entrada
         - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
         - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
         - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
@@ -445,9 +441,9 @@
     - platform: state
       #entity_id: group.alarma_grp_sensores_home
       entity_id:
-        - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
+        - binary_sensor.door_window_sensor_puerta_entrada       # Puerta Entrada
         - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
-        #- binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
+        #- binary_sensor.door_window_sensor_158d00030996fc      # Ventana Estudio
         - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
         - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
         - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
@@ -954,7 +950,7 @@
       entity_id: binary_sensor.motion_sensor_158d0001e55903
       to: 'on'
     - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c
+      entity_id: binary_sensor.door_window_sensor_puerta_entrada
       to: 'on'
   condition:
     condition: or  # 'when dark' condition: either after sunset or before sunrise
@@ -1029,7 +1025,7 @@
       entity_id: binary_sensor.motion_sensor_158d0002ea1d0f       # Sensor Dormitorio
       to: 'on'
     - platform: state
-      entity_id: binary_sensor.door_window_sensor_158d00022b393c  # Puerta Entrada
+      entity_id: binary_sensor.door_window_sensor_puerta_entrada  # Puerta Entrada
       to: 'on'
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001e637f6       # Sensor Exterior
@@ -1079,7 +1075,7 @@
         # before_offset: "+02:00:00"  ==> Horario Invierno GMT+1, en el amanecer -2h
         # before_offset: "+00:30:00" ==> Horario Verano GMT+2, el amanecer -30m
         before: sunrise
-        before_offset: "+01:00:00" # Horario Invierno GMT+1, en el amanecer +60m
+        before_offset: "+00:30:00" # Horario Invierno GMT+1, en el amanecer +60m
   action:
     # Luces On
     #- service: light.toggle
@@ -1543,7 +1539,7 @@
   # - binary_sensor.riego_tomates_status
   # - binary_sensor.riego_bonsais_status
 #
-# Regla Diaria, a las 08.00 y a las 15:00
+# Regla Diaria cada 8 horas
 # Control del Interruptor General de Riego en base a Previsión Tiempo
 # SENSOR:  input_boolean.riego_interruptor_global
 #
@@ -1551,6 +1547,8 @@
   alias: 'S18 Control Interruptor General Riego'
   mode: restart
   trigger:
+    - platform: homeassistant
+      event: start
     - platform: time
       at:
         - '00:00:00'
@@ -1592,14 +1590,16 @@
   alias: 'S18b Control Bomba Riego'
   mode: restart
   trigger:
+    - platform: homeassistant
+      event: start
     - platform: time
       at:
-        - '07:00:00'
+        - '08:00:00'
         - '00:00:00'
   action:
     # Apaga la bomba de riego por las noches y la enciende a primera hora en función del estado del interruptor global
     - choose:
-        # IF el interruptor general riego está encendido => enciende controlador bomba antes del riego de la mañana
+        # IF el interruptor general riego está encendido => a las 00:00 apaga la bomba de riego
         - conditions:
           - condition: template
             value_template: "{{ now().hour == 0 and is_state('input_boolean.riego_interruptor_global','on') }}"
@@ -1607,7 +1607,7 @@
             - service: switch.turn_off
               target:
                 entity_id: switch.esphome_4ch_relay_4
-        # ELIF el interruptor general riego se apaga y el controlador bomba riego encendido => Apaga controlador bomba
+        # ELIF
         - conditions:
           - condition: template
             value_template: "{{ now().hour == 8 and is_state('input_boolean.riego_interruptor_global','on') and is_state('binary_sensor.riego_control_bomba_status','off') }}"

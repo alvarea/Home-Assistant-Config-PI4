@@ -399,11 +399,27 @@
             false
           {% endif %}
 
+      riego_prevision_lluvia_1d:
+        # rain, snow, sleet
+        friendly_name: 'Previsión Lluvia Mañana'
+        icon_template: mdi:weather-pouring
+        value_template: >-
+          {% if (is_state('sensor.dark_sky_icon_1d','rain') or
+                 is_state('sensor.dark_sky_icon_1d','snow') or
+                 is_state('sensor.dark_sky_icon_1d','sleet')
+                )
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
       riego_automatico_hoy:
+        # ML : ¿ACTIVAR RIEGO HOY?
         # SEASON: 'autumn','winter','spring','summer'
         # states('sensor.humedad_entrada_ly03')|int >= 50
         # states('sensor.temperatura_entrada_ly03')|int >= 35
-        friendly_name: '¿ML Riego Automatico Hoy?'
+        friendly_name: '¿ML Activar Riego Hoy?'
         icon_template: mdi:head-snowflake-outline
         value_template: >-
           {% if states('sensor.season') in ('autumn','winter','spring')
@@ -413,6 +429,18 @@
           {% else %}
             true
           {% endif %}
+
+
+      riego_interruptor_global:
+        friendly_name: 'Riego Interruptor General'
+        icon_template: mdi:weather-pouring
+        value_template: >-
+          {% if is_state('input_boolean.riego_interruptor_global','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
 
       riego_algun_sector_activo:
         friendly_name: 'Riego Algun Sector Activo?'
@@ -474,7 +502,7 @@
 
       riego_ch1_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy? (CH1)'
-        icon_template: mdi:calendar-check
+        icon_template: mdi:tree
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
                 and (is_state('binary_sensor.riego_ch1_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_ch1_dia_ejecucion_t2','on'))
@@ -514,7 +542,7 @@
 
       riego_ch2_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy? (CH2)'
-        icon_template: mdi:calendar-check
+        icon_template: mdi:sprout
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
                 and is_state('binary_sensor.riego_ch2_dia_ejecucion_t0','on')
@@ -638,7 +666,7 @@
 
       riego_bonsais_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy?'
-        icon_template: mdi:calendar-check
+        icon_template: mdi:pine-tree
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
                 and (is_state('binary_sensor.riego_bonsais_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_bonsais_dia_ejecucion_t2','on'))
@@ -694,7 +722,7 @@
 
       riego_tomates_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy?'
-        icon_template: mdi:calendar-check
+        icon_template: mdi:sprout
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
                 and (is_state('binary_sensor.riego_tomates_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_tomates_dia_ejecucion_t2','on'))
@@ -859,7 +887,7 @@
             false
           {% endif %}
         friendly_name: 'Alexa Entrada'
-        icon_template: mdi:amazon-alexa
+        icon_template: mdi:speaker-wireless
         #entity_id: device_tracker.nmap_alexa_entrada
 
       nmap_alexa_dormitorio:
@@ -870,7 +898,7 @@
             false
           {% endif %}
         friendly_name: 'Alexa Dormitorio'
-        icon_template: mdi:amazon-alexa
+        icon_template: mdi:speaker-wireless
         #entity_id: device_tracker.nmap_alexa_dormitorio
 
       nmap_sony_ps4_lan_wifi:

@@ -15,8 +15,8 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '18:00'    # Verano
-    #initial: '20:00'   # Invierno
+    #initial: '18:00'    # Verano
+    initial: '20:00'   # Invierno
 
   piscina_end_time:
     name: Hora Final Planificado

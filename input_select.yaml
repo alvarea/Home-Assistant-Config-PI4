@@ -19,7 +19,7 @@
       - "media_player.fire_tv_cocina"
       - "media_player.fire_tv_salon"
       - "media_player.apple_tv"
-    icon: mdi:amazon-alexa
+    icon: mdi:speaker-wireless
     initial: 'media_player.echo_alexa_entrada'
 
 # ALARM WARNING BEFORE ARMED : PENDING TIME

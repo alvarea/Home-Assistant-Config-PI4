@@ -13,7 +13,7 @@
 # JSON: {"entity_id" : "alarm_control_panel.ha" }
 
 Zona_Entrada = ['binary_sensor.motion_sensor_158d0001e55903',       # Sensor Presencia Entrada
-                'binary_sensor.door_window_sensor_158d00022b393c'   # Sensor Puerta Entrada
+                'binary_sensor.door_window_sensor_puerta_entrada'   # Sensor Puerta Entrada
 ]
 
 Zona_Salon = ['binary_sensor.motion_sensor_158d0001e05661',         # Sensor Presencia Salón

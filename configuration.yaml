@@ -426,11 +426,9 @@ recorder:
       - media_player
       - camera
       - automation
-      - climate
       - group
       - script
       - sun
-      - weather
       - zone
 
 weather:
@@ -542,22 +540,24 @@ calendar:
     username: !secret icloud_usr
     password: !secret icloud_pwd
     url: !secret icloud_url
-    calendars:
     custom_calendars:
-      - name: Universidad
-        calendar: Family
-        search: "Universidad:"
+      - name: Universidad AAF
+        calendar: Universidad
+        search: "AAF"
+      - name: Universidad PAF
+        calendar: Universidad
+        search: "PAF"
       - name: Almuerzo
         calendar: Family
-        search: "Almuerzo:"
+        search: "Almuerzo"
       - name: Cena
         calendar: Family
-        search: "Cena:"
+        search: "Cena"
       - name: Eventos
         calendar: Family
-        search: "Evento:"
+        search: "Evento"
       - name: Festivos
-        calendar: "Festivos España"
+        calendar: "Festivos"
         search: "*"
 
 #

@@ -385,10 +385,9 @@ views:
                 type: entity-button
             type: horizontal-stack
           - cards:
-              - entity: binary_sensor.riego_ch3_status
+              - entity: binary_sensor.riego_algun_sector_activo
                 hold_action:
                   action: none
-                icon: mdi:watering-can
                 name: Riego
                 show_state: true
                 tap_action:
@@ -454,10 +453,10 @@ views:
         type: vertical-stack
       - type: calendar
         entities:
+          - calendar.universidad_universidad_aaf
+          - calendar.universidad_universidad_paf
           - calendar.family_almuerzo
           - calendar.family_cena
-          - calendar.family_universidad_aaf
-          - calendar.family_universidad_paf
           - calendar.family_eventos
         initial_view: listWeek
         title: CALENDARIO FAMILY
@@ -520,7 +519,7 @@ views:
             type: entities
         type: vertical-stack
       - entities:
-          - entity: binary_sensor.door_window_sensor_158d00022b393c
+          - entity: binary_sensor.door_window_sensor_puerta_entrada
             secondary_info: last-changed
           - entity: binary_sensor.door_window_sensor_158d000201e2e7
             secondary_info: last-changed
@@ -655,11 +654,6 @@ views:
         title: Agustín Tracking
         state_color: true
         type: entities
-        footer:
-          type: graph
-          entity: sensor.iphone_aac_steps
-          hours_to_show: 24
-          detail: 2
         header:
           type: picture
           image: '/local/AAC_header_col.jpg '
@@ -695,11 +689,6 @@ views:
             action: none
           hold_action:
             action: none
-        footer:
-          type: graph
-          entity: sensor.iphone_malen_steps
-          hours_to_show: 24
-          detail: 2
       - entities:
           - entity: person.paloma
             secondary_info: last-changed
@@ -729,11 +718,6 @@ views:
             action: none
           hold_action:
             action: none
-        footer:
-          type: graph
-          entity: sensor.iphone_paf_storage
-          hours_to_show: 24
-          detail: 2
       - entities:
           - entity: person.agu
             secondary_info: last-changed
@@ -760,11 +744,6 @@ views:
             action: none
           hold_action:
             action: none
-        footer:
-          type: graph
-          entity: sensor.a2f_steps
-          hours_to_show: 24
-          detail: 2
     icon: mdi:map-marker
     path: tracking_view
     title: Tracking
@@ -962,15 +941,18 @@ views:
     cards:
       - type: vertical-stack
         cards:
-          - type: button
+          - type: picture-entity
+            image: '/local/AAC_header_col.jpg '
             tap_action:
+              action: more-info
+            hold_action:
               action: toggle
             entity: input_boolean.riego_interruptor_global
-            icon: mdi:watering-can
-            name: Interruptor General
+            name: Interruptor General Riego
             show_state: true
           - cards:
               - entity: binary_sensor.riego_control_bomba_status
+                name: Bomba Riego
                 hold_action:
                   action: call-service
                   service: switch.toggle
@@ -983,7 +965,7 @@ views:
               - entity: binary_sensor.riego_ch1_dia_ejecucion
                 hold_action:
                   action: none
-                icon: mdi:sprout
+                icon: mdi:tree
                 name: Bonsais Top
                 tap_action:
                   action: more-info
@@ -1003,20 +985,27 @@ views:
                 tap_action:
                   action: more-info
                 type: entity-button
-                icon: mdi:leaf
-              - entity: binary_sensor.riego_bonsais_dia_ejecucion
                 icon: mdi:sprout
-                name: Bonsais Produccion
+              - entity: binary_sensor.riego_bonsais_dia_ejecucion
+                icon: mdi:pine-tree
+                name: Bonsais Prod
                 tap_action:
                   action: more-info
                 type: entity-button
             type: horizontal-stack
+          - type: entity
+            entity: binary_sensor.riego_interruptor_global
+            state_color: true
+            icon: mdi:water-pump
           - type: entity
             entity: binary_sensor.riego_automatico_hoy
             icon: mdi:head-snowflake-outline
             state_color: true
           - type: entity
             entity: binary_sensor.riego_prevision_lluvia_hoy
+            state_color: true
+          - type: entity
+            entity: binary_sensor.riego_prevision_lluvia_1d
             state_color: true
           - type: entity
             entity: weather.dark_sky
@@ -1054,6 +1043,46 @@ views:
                 show_state: true
                 show_icon: false
               - entity: sensor.dark_sky_icon_3d
+                hold_action:
+                  action: none
+                name: Día+3
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.dark_sky_humidity
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: Hoy
+                show_name: true
+              - entity: sensor.dark_sky_humidity_1d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                name: Mañana
+                show_state: true
+                show_icon: false
+              - entity: sensor.dark_sky_humidity_2d
+                hold_action:
+                  action: none
+                name: Día+2
+                tap_action:
+                  action: more-info
+                type: entity-button
+                icon: mdi:leaf
+                show_state: true
+                show_icon: false
+              - entity: sensor.dark_sky_humidity_3d
                 hold_action:
                   action: none
                 name: Día+3
@@ -1210,7 +1239,10 @@ views:
     icon: mdi:watering-can
     path: riego_view
     title: Riego Jardín
-  - badges: []
+  - icon: mdi:tree
+    path: bonsais_view
+    title: Bonsais
+    badges: []
     cards:
       - cards:
           - entity: plant.mp_01
@@ -1464,9 +1496,6 @@ views:
                 type: custom:mini-graph-card
             type: horizontal-stack
         type: vertical-stack
-    icon: mdi:sprout
-    path: bonsais_view
-    title: Bonsais
   - badges: []
     cards:
       - cards:
@@ -1999,15 +2028,18 @@ views:
           https://embed.windy.com/embed2.html?lat=39.572&lon=-1.582&zoom=5&level=surface&overlay=rain&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=41.650&detailLon=-0.880&metricWind=default&metricTemp=default&radarRange=-1"1
       - entity: camera.weather_satelite
         type: picture-entity
-      - aspect_ratio: 75%
-        title: Previsón Temperatura
-        type: iframe
-        url: >-
-          https://embed.windy.com/embed2.html?lat=36.280&lon=-5.142&zoom=6&level=surface&overlay=temp&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=37.353&detailLon=-5.911&metricWind=default&metricTemp=default&radarRange=-1
+      - type: custom:weather-card
+        entity: weather.aemet_daily
+        number_of_forecasts: '5'
+        name: AEMET
+      - type: custom:weather-card
+        entity: weather.dark_sky
+        number_of_forecasts: '5'
+        name: Dark Sky
     icon: mdi:weather-partly-cloudy
     path: tiempo_view
     title: El Tiempo
-  - icon: mdi:amazon-alexa
+  - icon: mdi:speaker-wireless
     path: alexa
     title: Alexa Media Player
     badges: []
@@ -3014,27 +3046,6 @@ views:
                 type: custom:mini-graph-card
             type: horizontal-stack
         type: vertical-stack
-      - type: custom:atomic-calendar-revive
-        entities:
-          - entity: calendar.family
-            titleColor: red
-            whitelist: menu, almuerzo, cena, padel
-        showWeekDay: true
-        showMonth: true
-        showCurrentEventLine: true
-        firstDayOfWeek: 1
-        maxDaysToShow: 7
-        calShowDescription: true
-        showLastCalendarWeek: true
-        disableCalEventLink: false
-        defaultMode: Event
-        showProgressBar: false
-        showNoEventsForToday: true
-        showEventIcon: true
-        showFullDayProgress: false
-        noEventText: Pendiente
-        hiddenEventText: Privado
-        disableCalLink: false
     icon: mdi:fridge
     path: cocina_view
     title: Cocina
@@ -3313,7 +3324,7 @@ views:
         type: entities
         entities:
           - type: custom:battery-entity-row
-            entity: binary_sensor.door_window_sensor_158d00022b393c
+            entity: binary_sensor.door_window_sensor_puerta_entrada
             attribute: battery_percent
             unit: '%'
             icon: mdi:battery-alert
@@ -3705,7 +3716,7 @@ views:
             title: Estudio
             type: picture-glance
           - entities:
-              - binary_sensor.door_window_sensor_158d00022b393c
+              - binary_sensor.door_window_sensor_puerta_entrada
               - sensor.temperature_158d0002d79546
               - sensor.humidity_158d0002d79546
               - binary_sensor.smoke_sensor_158d0001fd321c
@@ -3894,3 +3905,8 @@ views:
                 type: entity-button
             type: horizontal-stack
         type: vertical-stack
+      - aspect_ratio: 75%
+        title: Previsón Temperatura
+        type: iframe
+        url: >-
+          https://embed.windy.com/embed2.html?lat=36.280&lon=-5.142&zoom=6&level=surface&overlay=temp&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=37.353&detailLon=-5.911&metricWind=default&metricTemp=default&radarRange=-1
