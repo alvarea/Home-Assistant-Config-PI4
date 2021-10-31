@@ -375,7 +375,7 @@
             + states.sensor.temperature_158d00022c6a47.state|float
             + states.sensor.temperature_158d0002e97092.state|float
             + states.sensor.temperature_158d00025efda4.state|float)
-            / 5)|float
+            / 5)|float|round(1)
           }}
 
       # hvac_modes: off, heat, dry, cool, fan_only, heat_cool

@@ -418,18 +418,12 @@ cloud:
 recorder:
   # purge_interval: 1
   purge_keep_days: 30
-  exclude:
+  include:
     domains:
       - input_boolean
-      - input_text
-      - input_select
-      - media_player
-      - camera
-      - automation
-      - group
-      - script
-      - sun
-      - zone
+      - sensor
+      - binary_sensor
+      - switch
 
 weather:
   - platform: darksky
