@@ -366,7 +366,7 @@
             false
           {% endif %}
       #
-      # JARDIN RIEGO BONSAIS - CH1 - CH4
+      # AEMET - JARDIN RIEGO - CH1 - CH4
       #
       riego_control_bomba_status:
         value_template: >-
@@ -378,61 +378,100 @@
         friendly_name: 'Control Bomba Riego'
         icon_template: mdi:sprinkler-variant
 
-      riego_prevision_tiempo_dia0:
-        # rain, snow, sleet
-        friendly_name: 'Previsión Tiempo Hoy'
-        icon_template: mdi:weather
-        value_template: states('sensor.dark_sky_icon')
+      # aemet_prevision_tiempo_dia0:
+      #  # rain, snow, sleet
+      #  friendly_name: 'Previsión Tiempo Hoy'
+      #  icon_template: mdi:weather
+      #  value_template: states('sensor.dark_sky_icon')
 
-      riego_prevision_lluvia_ayer:
-        # rain, snow, sleet
-        friendly_name: 'Previsión Lluvia Ayer'
-        icon_template: mdi:weather
-        value_template: states('input_text.riego_prevision_lluvia_ayer')
-
+      # TARJETA VERTICAL PRONOSTICO
       # - entity: sensor.aemet_condition = weather.aemet_daily
-      # - entity: sensor.aemet_daily_forecast_precipitation <= ??? SIEMPRE UNKNONW
 
       # - entity: sensor.aemet_rain
       # - entity: sensor.aemet_rain_probability
-      # - entity: sensor.aemet_humidity
-
-      # - entity: sensor.aemet_daily_forecast_condition
       # - entity: sensor.aemet_daily_forecast_precipitation_probability
+
+      # - entity: sensor.aemet_humidity
       # - entity: sensor.aemet_storm_probability
-
-
-      # - sensor.aemet_daily_forecast_temperature_low
-      # - sensor.aemet_daily_forecast_temperature
       # - entity: sensor.aemet_snow_probability
 
+      # OTROS SENSORES DISPONIBLEs
+      # - entity: sensor.aemet_daily_forecast_condition
+      # - sensor.aemet_daily_forecast_temperature_low
+      # - sensor.aemet_daily_forecast_temperature
       # - entity: sensor.aemet_snow
 
-      riego_prevision_lluvia_hoy:
-        # rain, snow, sleet
-        # DARK SKY: sensor.dark_sky_icon
-        friendly_name: 'Previsión Lluvia Hoy'
-        icon_template: mdi:weather-pouring
+      aemet_prevision_lluvia_0d:
+        # DARKSKY : rain, snow, sleet
+        # AEMET : rainy, snow, sleet
+        # AYER : 0d
+        friendly_name: 'Pronóstico Lluvia 0d'
+        icon_template: >-
+          {% if is_state('binary_sensor.aemet_prevision_lluvia_0d','on') %} mdi:weather-rainy
+          {% else %} mdi:weather-sunny
+          {% endif %}
         value_template: >-
-          {% if (is_state('sensor.aemet_condition','rainy') or
-                 is_state('sensor.aemet_condition','snow') or
-                 is_state('sensor.aemet_condition','sleet')
-                ) and states('sensor.aemet_rain_probability')|int>40
+          {% if (is_state('sensor.aemet_icono_0d','rainy') or
+                 is_state('sensor.aemet_icono_0d','snow') or
+                 is_state('sensor.aemet_icono_0d','sleet')
+                ) and states('sensor.aemet_lluvia_0d')|int>=40
           %}
             true
           {% else %}
             false
           {% endif %}
 
-      riego_prevision_lluvia_1d:
-        # rain, snow, sleet
-        friendly_name: 'Previsión Lluvia Mañana'
-        icon_template: mdi:weather-pouring
+      aemet_prevision_lluvia_1d:
+        # AEMET : rainy, snow, sleet
+        # HOY : 1d
+        friendly_name: 'Pronóstico Lluvia +1d'
+        icon_template: >-
+          {% if is_state('binary_sensor.aemet_prevision_lluvia_1d','on') %} mdi:weather-rainy
+          {% else %} mdi:weather-sunny
+          {% endif %}
         value_template: >-
-          {% if (is_state('sensor.aemet_daily_forecast_condition','rainy') or
-                 is_state('sensor.aemet_daily_forecast_condition','snow') or
-                 is_state('sensor.aemet_daily_forecast_condition','sleet')
-                ) and states('sensor.aemet_daily_forecast_precipitation_probability')|int>40
+          {% if (is_state('sensor.aemet_icono_1d','rainy') or
+                 is_state('sensor.aemet_icono_1d','snow') or
+                 is_state('sensor.aemet_icono_1d','sleet')
+                ) and states('sensor.aemet_lluvia_1d')|int>=40
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      aemet_prevision_lluvia_2d:
+        # AEMET : rainy, snow, sleet
+        # HOY : 2d
+        friendly_name: 'Pronóstico Lluvia +2d'
+        icon_template: >-
+          {% if is_state('binary_sensor.aemet_prevision_lluvia_2d','on') %} mdi:weather-rainy
+          {% else %} mdi:weather-sunny
+          {% endif %}
+        value_template: >-
+          {% if (is_state('sensor.aemet_icono_2d','rainy') or
+                 is_state('sensor.aemet_icono_2d','snow') or
+                 is_state('sensor.aemet_icono_2d','sleet')
+                ) and states('sensor.aemet_lluvia_2d')|int>=40
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      aemet_prevision_lluvia_3d:
+        # AEMET : rainy, snow, sleet
+        # HOY : 2d
+        friendly_name: 'Pronóstico Lluvia +3d'
+        icon_template: >-
+          {% if is_state('binary_sensor.aemet_prevision_lluvia_0d','on') %} mdi:weather-rainy
+          {% else %} mdi:weather-sunny
+          {% endif %}
+        value_template: >-
+          {% if (is_state('sensor.aemet_icono_3d','rainy') or
+                 is_state('sensor.aemet_icono_3d','snow') or
+                 is_state('sensor.aemet_icono_3d','sleet')
+                ) and states('sensor.aemet_lluvia_3d')|int>=40
           %}
             true
           {% else %}
@@ -440,16 +479,23 @@
           {% endif %}
 
       riego_automatico_hoy:
-        # ML : ¿ACTIVAR RIEGO HOY?
+        #
+        # IA : ¿ACTIVAR RIEGO HOY?
+        #
         # SEASON: 'autumn','winter','spring','summer'
         # states('sensor.humedad_entrada_ly03')|int >= 50
         # states('sensor.temperatura_entrada_ly03')|int >= 35
-        friendly_name: '¿ML Activar Riego Hoy?'
-        icon_template: mdi:head-snowflake-outline
+        friendly_name: '¿IA Riego Hoy?'
+        #icon_template: mdi:head-snowflake-outline
+        icon_template: >-
+          {% if is_state('binary_sensor.riego_automatico_hoy','on') %} mdi:head-cog-outline
+          {% else %} mdi:head-remove-outline
+          {% endif %}
         value_template: >-
           {% if states('sensor.season') in ('autumn','winter','spring')
-                and ( is_state('binary_sensor.riego_prevision_lluvia_hoy','on')
-                     or  is_state('binary_sensor.riego_prevision_lluvia_1d','on')
+                and ( is_state('binary_sensor.aemet_prevision_lluvia_0d','on')
+                      or  is_state('binary_sensor.aemet_prevision_lluvia_1d','on')
+                      or  is_state('binary_sensor.aemet_prevision_lluvia_2d','on')
                 )
           %}
             false
@@ -458,8 +504,11 @@
           {% endif %}
 
       riego_interruptor_global:
-        friendly_name: 'Riego Interruptor General'
-        icon_template: mdi:weather-pouring
+        friendly_name: 'Interruptor General Riego'
+        icon_template: >-
+          {% if is_state('binary_sensor.riego_interruptor_global','on') %} mdi:water-pump
+          {% else %} mdi:water-pump-off
+          {% endif %}
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on') %}
             true
@@ -469,7 +518,10 @@
 
       riego_algun_sector_activo:
         friendly_name: 'Riego Algun Sector Activo?'
-        icon_template: mdi:water-pump
+        icon_template: >-
+          {% if is_state('binary_sensor.riego_algun_sector_activo','on') %} mdi:water-pump
+          {% else %} mdi:water-pump-off
+          {% endif %}
         value_template: >-
           {% if is_state('binary_sensor.riego_ch1_status','on') or
                 is_state('binary_sensor.riego_ch2_status','on') or
