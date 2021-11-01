@@ -47,9 +47,15 @@
   trigger:
     - platform: time
       at:
-        - '10:00:00'
+        - '08:55:00'
         - '23:55:00'
   action:
+    # Establece Volumnen Alexa Entrada/Estudio/Dormitorio según hora del día/noche
+    - service: script.alexa_entrada_set_volumen
+    - service: script.alexa_estudio_set_volumen
+    - service: script.alexa_dormitorio_set_volumen
+    #
+    # Establece Volumen Xiaomi Hub => DEPRECATED
     - service: input_number.set_value
       data_template:
         entity_id: input_number.xiaomi_volume_alarm_armed
@@ -380,7 +386,7 @@
       # - group.alarma_grp_sensores_home
       # - group.alarma_grp_sensores_away
       # Grupo Sensores Perimetrales
-        - binary_sensor.door_window_sensor_puerta_entrada       # Puerta Entrada
+        - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
         - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
         - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
         - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
@@ -444,7 +450,7 @@
     - platform: state
       #entity_id: group.alarma_grp_sensores_home
       entity_id:
-        - binary_sensor.door_window_sensor_puerta_entrada       # Puerta Entrada
+        - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
         - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
         #- binary_sensor.door_window_sensor_158d00030996fc      # Ventana Estudio
         - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
@@ -953,7 +959,7 @@
       entity_id: binary_sensor.motion_sensor_158d0001e55903
       to: 'on'
     - platform: state
-      entity_id: binary_sensor.door_window_sensor_puerta_entrada
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c
       to: 'on'
   condition:
     condition: or  # 'when dark' condition: either after sunset or before sunrise
@@ -1028,7 +1034,7 @@
       entity_id: binary_sensor.motion_sensor_158d0002ea1d0f       # Sensor Dormitorio
       to: 'on'
     - platform: state
-      entity_id: binary_sensor.door_window_sensor_puerta_entrada  # Puerta Entrada
+      entity_id: binary_sensor.door_window_sensor_158d00022b393c  # Puerta Entrada
       to: 'on'
     - platform: state
       entity_id: binary_sensor.motion_sensor_158d0001e637f6       # Sensor Exterior

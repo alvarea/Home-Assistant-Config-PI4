@@ -4,6 +4,67 @@ views:
     cards:
       - cards:
           - cards:
+              - type: glance
+                entities:
+                  - entity: person.agustin
+                show_name: true
+                state_color: true
+              - type: glance
+                entities:
+                  - entity: person.malen
+                show_name: true
+                state_color: true
+              - type: glance
+                entities:
+                  - entity: person.agu
+                show_name: true
+                state_color: true
+              - type: glance
+                entities:
+                  - entity: person.paloma
+                show_name: true
+                state_color: true
+            type: horizontal-stack
+          - cards:
+              - entity: binary_sensor.family_any_home
+                name: Alguien?
+                show_state: true
+                type: entity-button
+              - entity: binary_sensor.family_all_home
+                name: Todos?
+                show_state: true
+                type: entity-button
+              - entity: sensor.family_home
+                name: En Casa?
+                show_state: true
+                type: entity-button
+              - entity: sensor.family_sleep_home
+                name: Duermen?
+                show_state: true
+                type: entity-button
+            type: horizontal-stack
+          - cards:
+              - type: entity
+                entity: alarm_control_panel.ha
+                icon: mdi:shield-home
+                name: Alarma
+              - type: entity
+                entity: alarm_control_panel.blink_casa
+                name: Blink
+            type: horizontal-stack
+          - type: entity
+            entity: weather.dark_sky
+            name: Previsión del Tiempo
+            icon: mdi:weather-pouring
+          - cards:
+              - type: entity
+                entity: sensor.sun_next_rising
+                name: Salida Sol
+              - type: entity
+                entity: sensor.sun_next_setting
+                name: Puesta Sol
+            type: horizontal-stack
+          - cards:
               - type: entity
                 entity: sensor.time
                 name: Hora
@@ -21,32 +82,12 @@ views:
               - type: entity
                 entity: sensor.temperatura_cpu
                 name: HOMY CPU
-          - cards:
-              - type: entity
-                entity: sensor.sun_next_rising
-                name: Salida Sol
-              - type: entity
-                entity: sensor.sun_next_setting
-                name: Puesta Sol
-            type: horizontal-stack
-          - cards:
-              - type: entity
-                entity: alarm_control_panel.ha
-                icon: mdi:shield-home
-                name: Alarma
-              - type: entity
-                entity: alarm_control_panel.blink_casa
-                name: Blink
-            type: horizontal-stack
-          - type: entity
-            entity: weather.dark_sky
-            name: Previsión del Tiempo
-            icon: mdi:weather-pouring
-          - type: custom:weather-card
-            entity: weather.dark_sky
-            number_of_forecasts: '5'
         type: vertical-stack
       - cards:
+          - type: weather-forecast
+            entity: weather.aemet_daily
+            number_of_forecasts: '5'
+            name: AEMET
           - color_thresholds:
               - color: black
                 value: 0
@@ -160,97 +201,27 @@ views:
               - color: purple
                 value: 46
             entities:
-              - sensor.temperature_158d00022b65ff
-              - sensor.temperatura_estudio_ly02
-            font_size: 120
-            line_width: 8
-            points_per_hour: 1
-            name: Temperatura Salón+Estudio
-            show:
-              icon: true
-              labels: true
-              state: true
-            type: custom:mini-graph-card
-          - color_thresholds:
-              - color: black
-                value: 0
-              - color: violet
-                value: 5
-              - color: blue
-                value: 10
-              - color: teal
-                value: 15
-              - color: green
-                value: 20
-              - color: chartreuse
-                value: 25
-              - color: yellow
-                value: 30
-              - color: amber
-                value: 35
-              - color: orange
-                value: 38
-              - color: vermillion
-                value: 40
-              - color: red
-                value: 42
-              - color: magenta
-                value: 44
-              - color: purple
-                value: 46
-            entities:
               - sensor.temp_interior
             font_size: 120
             line_width: 8
             points_per_hour: 1
-            name: Media Interior
+            name: Temperatura Interior
             show:
               icon: true
               labels: true
               state: true
             type: custom:mini-graph-card
         type: vertical-stack
+      - type: calendar
+        entities:
+          - calendar.universidad_universidad_aaf
+          - calendar.universidad_universidad_paf
+          - calendar.family_almuerzo
+          - calendar.family_cena
+          - calendar.family_eventos
+        initial_view: listWeek
+        title: CALENDARIO FAMILY
       - cards:
-          - cards:
-              - type: glance
-                entities:
-                  - entity: person.agustin
-                show_name: true
-                state_color: true
-              - type: glance
-                entities:
-                  - entity: person.malen
-                show_name: true
-                state_color: true
-              - type: glance
-                entities:
-                  - entity: person.agu
-                show_name: true
-                state_color: true
-              - type: glance
-                entities:
-                  - entity: person.paloma
-                show_name: true
-                state_color: true
-            type: horizontal-stack
-          - cards:
-              - entity: binary_sensor.family_any_home
-                name: Alguien?
-                show_state: true
-                type: entity-button
-              - entity: binary_sensor.family_all_home
-                name: Todos?
-                show_state: true
-                type: entity-button
-              - entity: sensor.family_home
-                name: En Casa?
-                show_state: true
-                type: entity-button
-              - entity: sensor.family_sleep_home
-                name: Duermen?
-                show_state: true
-                type: entity-button
-            type: horizontal-stack
           - cards:
               - entity: group.luces_casa_grp
                 icon: mdi:lightbulb-on-outline
@@ -426,14 +397,15 @@ views:
                 tap_action:
                   action: more-info
                 type: entity-button
-                entity: binary_sensor.riego_prevision_lluvia_hoy
+                entity: binary_sensor.aemet_prevision_lluvia_0d
+                name: Pronóstico Lluvia
               - hold_action:
                   action: none
                 type: entity-button
                 show_state: true
                 entity: binary_sensor.riego_automatico_hoy
-                icon: mdi:head-snowflake-outline
-              - entity: input_boolean.riego_interruptor_global
+                name: IA Riego Hoy
+              - entity: binary_sensor.riego_interruptor_global
                 hold_action:
                   action: call-service
                   service: switch.toggle
@@ -441,7 +413,7 @@ views:
                   action: more-info
                 type: entity-button
                 show_state: true
-                icon: mdi:watering-can
+                name: Interruptor General
               - entity: binary_sensor.riego_control_bomba_status
                 hold_action:
                   action: none
@@ -451,188 +423,9 @@ views:
                   action: more-info
             type: horizontal-stack
         type: vertical-stack
-      - type: calendar
-        entities:
-          - calendar.universidad_universidad_aaf
-          - calendar.universidad_universidad_paf
-          - calendar.family_almuerzo
-          - calendar.family_cena
-          - calendar.family_eventos
-        initial_view: listWeek
-        title: CALENDARIO FAMILY
     icon: mdi:home-assistant
     path: default_view
     title: Home View
-  - icon: mdi:shield-home
-    path: alarma_view
-    title: Panel Control Alarma
-    badges: []
-    cards:
-      - cards:
-          - entity: alarm_control_panel.ha
-            name: HOMY ALARM
-            type: alarm-panel
-          - type: entity
-            entity: binary_sensor.esphome_bas_sw0
-            name: Sirena Alarma
-            state_color: true
-          - entity: alarm_control_panel.blink_casa
-            name: BLINK ALARM
-            type: alarm-panel
-          - entities:
-              - entity: alarm_control_panel.ha
-                icon: mdi:shield-home
-                secondary_info: last-changed
-              - entity: alarm_control_panel.blink_casa
-                secondary_info: last-changed
-              - entity: input_text.alarm_trigger
-                icon: mdi:security-network
-                name: Sensor
-                secondary_info: last-changed
-              - entity: binary_sensor.smoke_sensor_158d0001fd321c
-                secondary_info: last-changed
-              - entity: binary_sensor.water_leak_sensor_158d00045a3376
-                secondary_info: last-changed
-              - entity: automation.f01_family_away_armado_total
-                name: Nadie en Casa - Armado Total
-              - entity: automation.f02_armado_parcial_midnight
-                name: Todos en Casa - Armado Parcial
-            show_header_toggle: false
-            title: PANEL CONTROL ALARMA
-            state_color: true
-            type: entities
-        type: vertical-stack
-      - cards:
-          - entities:
-              - entity: binary_sensor.esphome_bas_sw0_status
-                name: Sensor Sirena (BAS.SW0)
-              - entity: binary_sensor.esphome_bas_sw0
-                secondary_info: last-changed
-              - entity: script.sirena_stop_alarma
-              - entity: script.sirena_alarma_micro_aviso
-                name: Micro test sirena
-              - entity: input_boolean.panic_button
-              - entity: script.alarma_boton_panico
-            show_header_toggle: false
-            title: Botón Pánico / Sirena
-            state_color: true
-            type: entities
-        type: vertical-stack
-      - entities:
-          - entity: binary_sensor.door_window_sensor_puerta_entrada
-            secondary_info: last-changed
-          - entity: binary_sensor.door_window_sensor_158d000201e2e7
-            secondary_info: last-changed
-          - entity: binary_sensor.door_window_sensor_158d00030996fc
-            secondary_info: last-changed
-          - entity: binary_sensor.door_window_sensor_158d0004508a6d
-            secondary_info: last-changed
-          - entity: binary_sensor.door_window_sensor_158d00020b7c27
-            secondary_info: last-changed
-          - entity: binary_sensor.door_window_sensor_158d00020457e0
-            secondary_info: last-changed
-          - entity: binary_sensor.door_window_sensor_158d00020910b1
-            secondary_info: last-changed
-          - entity: binary_sensor.door_window_sensor_158d00045d69a6
-            secondary_info: last-changed
-          - entity: binary_sensor.vibration_158d0002a4eacc
-            secondary_info: last-changed
-          - entity: binary_sensor.vibration_158d0002b15e3b
-            secondary_info: last-changed
-        show_header_toggle: false
-        title: Sensores Perimetral
-        state_color: true
-        type: entities
-      - entities:
-          - entity: binary_sensor.motion_sensor_158d0001e637f6
-            secondary_info: last-changed
-          - entity: binary_sensor.blink_puerta_principal_motion_detected
-            name: Blink Puerta Principal Exterior
-            secondary_info: last-changed
-          - entity: binary_sensor.blink_puerta_garaje_motion_detected
-            name: Blink Puerta Garaje
-            secondary_info: last-changed
-        show_header_toggle: false
-        title: Sensores Presencia Exterior
-        state_color: true
-        type: entities
-      - entities:
-          - entity: binary_sensor.motion_sensor_158d0001e55903
-            name: Entrada
-            secondary_info: last-changed
-          - entity: binary_sensor.motion_sensor_158d0001e464a6
-            name: Estudio
-            secondary_info: last-changed
-          - entity: binary_sensor.motion_sensor_158d0001e05661
-            name: Salón
-            secondary_info: last-changed
-          - entity: binary_sensor.motion_sensor_158d0002ea1d0f
-            name: Dormitorio Principal
-            secondary_info: last-changed
-          - entity: binary_sensor.blink_hall_motion_detected
-            name: Blink Presencia Entrada
-            secondary_info: last-changed
-        show_header_toggle: false
-        title: Sensores Presencia Interior
-        state_color: true
-        type: entities
-      - entities:
-          - entity: binary_sensor.esphome_4ch_status
-            secondary_info: last-changed
-          - entity: binary_sensor.esphome_4ch_sw2_status
-            secondary_info: last-changed
-          - entity: binary_sensor.esphome_pow_sw3_status
-            secondary_info: last-changed
-          - entity: binary_sensor.ups_status
-            secondary_info: last-changed
-        show_header_toggle: false
-        title: Sensores Cuadro Eléctrico
-        state_color: true
-        type: entities
-      - entities:
-          - entity: sensor.illumination_158d0001e464a6
-            secondary_info: last-changed
-          - entity: sensor.illumination_158d0001e55903
-            secondary_info: last-changed
-          - entity: sensor.illumination_158d0001e637f6
-            secondary_info: last-changed
-          - entity: sensor.illumination_158d0001e464a6
-            secondary_info: last-changed
-          - entity: sensor.illumination_158d0001e05661
-            secondary_info: last-changed
-        show_header_toggle: false
-        title: Sensores Luminosidad
-        state_color: true
-        type: entities
-      - entities:
-          - entity: binary_sensor.blink_puerta_garaje_motion_detected
-            secondary_info: last-changed
-          - entity: binary_sensor.blink_puerta_principal_motion_detected
-            name: Blink Puerta Principal Exterior
-            secondary_info: last-changed
-          - entity: binary_sensor.blink_hall_motion_detected
-            name: Blink Puerta Garaje
-            secondary_info: last-changed
-        show_header_toggle: false
-        title: Sensores Presencia Cámaras Blink
-        state_color: true
-        type: entities
-      - entities:
-          - entity: binary_sensor.blink_puerta_garaje_camera_armed
-            secondary_info: last-changed
-            name: Blink Puerta Garaje
-          - entity: binary_sensor.blink_puerta_principal_camera_armed
-            name: Blink Puerta Principal
-            secondary_info: last-changed
-          - entity: binary_sensor.blink_hall_camera_armed
-            name: Blink Hall
-            secondary_info: last-changed
-          - entity: binary_sensor.blink_piscina_camera_armed
-            name: Blink Piscina
-        show_header_toggle: false
-        title: Armado Cámaras Blink
-        state_color: true
-        type: entities
   - badges: []
     cards:
       - entities:
@@ -749,97 +542,6 @@ views:
     title: Tracking
   - badges: []
     cards:
-      - aspect_ratio: 0%
-        camera_image: camera.blink_puerta_garaje
-        entities:
-          - entity: binary_sensor.blink_puerta_garaje_camera_armed
-          - entity: binary_sensor.blink_puerta_garaje_motion_detected
-          - entity: sensor.blink_puerta_garaje_temperature
-          - entity: sensor.blink_puerta_garaje_wifi_signal
-          - entity: binary_sensor.blink_puerta_garaje_battery
-        hold_action:
-          action: call-service
-          service: script.blink_trigger_cam_puerta_garaje
-        tap_action:
-          action: more-info
-        title: Puerta Garaje
-        type: picture-glance
-      - aspect_ratio: 0%
-        camera_image: camera.blink_puerta_principal
-        entities:
-          - entity: binary_sensor.blink_puerta_principal_camera_armed
-          - entity: binary_sensor.blink_puerta_principal_motion_detected
-          - entity: sensor.blink_puerta_principal_temperature
-          - entity: sensor.blink_puerta_principal_wifi_signal
-          - entity: binary_sensor.blink_puerta_principal_battery
-          - entity: switch.wall_switch_right_158d0002236e75
-        hold_action:
-          action: call-service
-          service: script.blink_trigger_cam_puerta_principal
-        tap_action:
-          action: more-info
-        title: Puerta Principal
-        type: picture-glance
-      - aspect_ratio: 0%
-        camera_image: camera.blink_hall
-        entities:
-          - entity: binary_sensor.blink_hall_camera_armed
-          - entity: binary_sensor.blink_hall_motion_detected
-          - entity: sensor.blink_hall_temperature
-          - entity: sensor.blink_hall_wifi_signal
-          - entity: binary_sensor.blink_hall_battery
-        hold_action:
-          action: call-service
-          service: script.blink_trigger_cam_hall
-        tap_action:
-          action: more-info
-        title: Hall Entrada
-        type: picture-glance
-      - aspect_ratio: 56%
-        camera_image: camera.ipcam_estudio
-        camera_view: live
-        entities:
-          - entity: camera.ipcam_estudio
-          - entity: group.luces_estudio_grp
-          - entity: switch.esphome_bas_sw1
-        hold_action:
-          action: none
-        tap_action:
-          action: more-info
-        title: Estudio
-        type: picture-glance
-      - aspect_ratio: 0%
-        camera_image: camera.blink_piscina
-        entities:
-          - entity: binary_sensor.blink_piscina_camera_armed
-          - entity: binary_sensor.blink_piscina_motion_detected
-          - entity: sensor.blink_piscina_temperature
-          - entity: sensor.blink_piscina_wifi_signal
-          - entity: binary_sensor.blink_piscina_battery
-        hold_action:
-          action: call-service
-          service: script.blink_trigger_cam_piscina
-        tap_action:
-          action: more-info
-        title: Piscina
-        type: picture-glance
-      - aspect_ratio: 56%
-        camera_image: camera.ipcam_jardin
-        camera_view: live
-        entities:
-          - entity: camera.ipcam_jardin
-          - entity: switch.esphome_bas_sw4
-        hold_action:
-          action: none
-        tap_action:
-          action: more-info
-        title: Porche Jardín
-        type: picture-glance
-    icon: mdi:cctv
-    path: camaras_view
-    title: Cámaras
-  - badges: []
-    cards:
       - entities:
           - entity: group.luces_interior_grp
             icon: mdi:home-lightbulb-outline
@@ -884,6 +586,7 @@ views:
           - entity: light.luz_estudio_izquierda
           - entity: light.luz_estudio_centro
           - entity: light.luz_estudio_techo
+          - entity: light.esphome_lb1_l01
         show_header_toggle: true
         title: Estudio
         state_color: true
@@ -937,10 +640,17 @@ views:
     icon: mdi:lightbulb-on
     path: luces_view
     title: Luces
-  - badges: []
+  - title: Plan Riego
+    path: planriego_view
+    icon: mdi:head-snowflake-outline
+    badges: []
     cards:
       - type: vertical-stack
         cards:
+          - type: entity
+            entity: sensor.season
+            name: Predicción Metereológica
+            state_color: true
           - type: picture-entity
             image: '/local/AAC_header_col.jpg '
             tap_action:
@@ -1001,15 +711,251 @@ views:
             entity: binary_sensor.riego_automatico_hoy
             icon: mdi:head-snowflake-outline
             state_color: true
+            name: IA Riego Hoy?
           - type: entity
-            entity: binary_sensor.riego_prevision_lluvia_hoy
+            entity: binary_sensor.aemet_prevision_lluvia_0d
             state_color: true
+            name: AEMET Pronóstico Lluvia Día+0
           - type: entity
-            entity: binary_sensor.riego_prevision_lluvia_1d
+            entity: binary_sensor.aemet_prevision_lluvia_1d
             state_color: true
+            name: AEMET Pronóstico Lluvia Día+1
+          - type: entity
+            entity: binary_sensor.aemet_prevision_lluvia_2d
+            state_color: true
+            name: AEMET Pronóstico Lluvia Día+2
+      - type: vertical-stack
+        cards:
+          - type: entity
+            entity: sensor.aemet_condition
+            name: AEMET Pronóstico Hoy
+            icon: mdi:weather-cloudy
+            state_color: true
+          - cards:
+              - entity: sensor.aemet_rain
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: HOY Cantidad.Lluvia
+              - entity: sensor.aemet_humidity
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: '%Humedad'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.aemet_rain_probability
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                show_name: true
+                name: '%Lluvia'
+              - entity: sensor.aemet_storm_probability
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: '%Tormenta'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.aemet_daily_forecast_precipitation_probability
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: '%Probabilidad Lluvia'
+              - entity: sensor.aemet_snow_probability
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                show_name: true
+                name: '%Nieve'
+            type: horizontal-stack
+          - type: entity
+            entity: sensor.aemet_daily_forecast_condition
+            icon: mdi:weather-cloudy
+            state_color: true
+            name: AEMET Pronóstico Mañana
+          - cards:
+              - entity: sensor.aemet_fecha_0d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: DIA 0
+              - entity: sensor.aemet_fecha_1d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: DIA +1
+              - entity: sensor.aemet_fecha_2d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: DIA +2
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.aemet_icono_0d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: true
+                show_name: false
+              - entity: sensor.aemet_icono_1d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: true
+                show_name: false
+              - entity: sensor.aemet_icono_2d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: true
+                show_name: false
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.aemet_lluvia_0d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: '%Lluvia'
+              - entity: sensor.aemet_lluvia_1d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: '%Lluvia'
+              - entity: sensor.aemet_lluvia_2d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: '%Lluvia'
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.aemet_min_temperatura_0d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: ºMin
+              - entity: sensor.aemet_min_temperatura_1d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: ºMin
+              - entity: sensor.aemet_min_temperatura_2d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: ºMin
+            type: horizontal-stack
+          - cards:
+              - entity: sensor.aemet_max_temperatura_0d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: ºMax
+              - entity: sensor.aemet_max_temperatura_1d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: ºMax
+              - entity: sensor.aemet_max_temperatura_2d
+                hold_action:
+                  action: none
+                tap_action:
+                  action: more-info
+                type: entity-button
+                show_state: true
+                show_icon: false
+                name: ºMax
+            type: horizontal-stack
+      - type: custom:weather-card
+        entity: weather.aemet_daily
+        number_of_forecasts: '5'
+        name: AEMET
+      - type: custom:weather-card
+        entity: weather.dark_sky
+        number_of_forecasts: '5'
+        name: Dark Sky
+      - type: vertical-stack
+        cards:
           - type: entity
             entity: weather.dark_sky
-            name: Previsión Dark Sky
+            name: DARK SKY
             icon: mdi:weather-cloudy
             state_color: true
           - cards:
@@ -1093,10 +1039,6 @@ views:
                 show_icon: false
             type: horizontal-stack
           - type: entity
-            entity: sensor.season
-            name: Estación
-            state_color: true
-          - type: entity
             entity: binary_sensor.riego_algun_sector_activo
             name: ¿Regando Ahora?
             icon: mdi:water-pump
@@ -1124,6 +1066,181 @@ views:
             show_name: false
             show_state: true
             title: Riego Activo/Duracion Programa
+  - icon: mdi:shield-home
+    path: alarma_view
+    title: Panel Control Alarma
+    badges: []
+    cards:
+      - cards:
+          - entity: alarm_control_panel.ha
+            name: HOMY ALARM
+            type: alarm-panel
+          - type: entity
+            entity: binary_sensor.esphome_bas_sw0
+            name: Sirena Alarma
+            state_color: true
+          - entity: alarm_control_panel.blink_casa
+            name: BLINK ALARM
+            type: alarm-panel
+          - entities:
+              - entity: alarm_control_panel.ha
+                icon: mdi:shield-home
+                secondary_info: last-changed
+              - entity: alarm_control_panel.blink_casa
+                secondary_info: last-changed
+              - entity: input_text.alarm_trigger
+                icon: mdi:security-network
+                name: Sensor
+                secondary_info: last-changed
+              - entity: binary_sensor.smoke_sensor_158d0001fd321c
+                secondary_info: last-changed
+              - entity: binary_sensor.water_leak_sensor_158d00045a3376
+                secondary_info: last-changed
+              - entity: automation.f01_family_away_armado_total
+                name: Nadie en Casa - Armado Total
+              - entity: automation.f02_armado_parcial_midnight
+                name: Todos en Casa - Armado Parcial
+            show_header_toggle: false
+            title: PANEL CONTROL ALARMA
+            state_color: true
+            type: entities
+        type: vertical-stack
+      - cards:
+          - entities:
+              - entity: binary_sensor.esphome_bas_sw0_status
+                name: Sensor Sirena (BAS.SW0)
+              - entity: binary_sensor.esphome_bas_sw0
+                secondary_info: last-changed
+              - entity: script.sirena_stop_alarma
+              - entity: script.sirena_alarma_micro_aviso
+                name: Micro test sirena
+              - entity: input_boolean.panic_button
+              - entity: script.alarma_boton_panico
+            show_header_toggle: false
+            title: Botón Pánico / Sirena
+            state_color: true
+            type: entities
+        type: vertical-stack
+      - entities:
+          - entity: binary_sensor.door_window_sensor_158d00022b393c
+            secondary_info: last-changed
+          - entity: binary_sensor.door_window_sensor_158d000201e2e7
+            secondary_info: last-changed
+          - entity: binary_sensor.door_window_sensor_158d00030996fc
+            secondary_info: last-changed
+          - entity: binary_sensor.door_window_sensor_158d0004508a6d
+            secondary_info: last-changed
+          - entity: binary_sensor.door_window_sensor_158d00020b7c27
+            secondary_info: last-changed
+          - entity: binary_sensor.door_window_sensor_158d00020457e0
+            secondary_info: last-changed
+          - entity: binary_sensor.door_window_sensor_158d00020910b1
+            secondary_info: last-changed
+          - entity: binary_sensor.door_window_sensor_158d00045d69a6
+            secondary_info: last-changed
+          - entity: binary_sensor.vibration_158d0002a4eacc
+            secondary_info: last-changed
+          - entity: binary_sensor.vibration_158d0002b15e3b
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: Sensores Perimetral
+        state_color: true
+        type: entities
+      - entities:
+          - entity: binary_sensor.motion_sensor_158d0001e637f6
+            secondary_info: last-changed
+          - entity: binary_sensor.blink_puerta_principal_motion_detected
+            name: Blink Puerta Principal Exterior
+            secondary_info: last-changed
+          - entity: binary_sensor.blink_puerta_garaje_motion_detected
+            name: Blink Puerta Garaje
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: Sensores Presencia Exterior
+        state_color: true
+        type: entities
+      - entities:
+          - entity: binary_sensor.motion_sensor_158d0001e55903
+            name: Entrada
+            secondary_info: last-changed
+          - entity: binary_sensor.motion_sensor_158d0001e464a6
+            name: Estudio
+            secondary_info: last-changed
+          - entity: binary_sensor.motion_sensor_158d0001e05661
+            name: Salón
+            secondary_info: last-changed
+          - entity: binary_sensor.motion_sensor_158d0002ea1d0f
+            name: Dormitorio Principal
+            secondary_info: last-changed
+          - entity: binary_sensor.blink_hall_motion_detected
+            name: Blink Presencia Entrada
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: Sensores Presencia Interior
+        state_color: true
+        type: entities
+      - entities:
+          - entity: binary_sensor.esphome_4ch_status
+            secondary_info: last-changed
+          - entity: binary_sensor.esphome_4ch_sw2_status
+            secondary_info: last-changed
+          - entity: binary_sensor.esphome_pow_sw3_status
+            secondary_info: last-changed
+          - entity: binary_sensor.ups_status
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: Sensores Cuadro Eléctrico
+        state_color: true
+        type: entities
+      - entities:
+          - entity: sensor.illumination_158d0001e464a6
+            secondary_info: last-changed
+          - entity: sensor.illumination_158d0001e55903
+            secondary_info: last-changed
+          - entity: sensor.illumination_158d0001e637f6
+            secondary_info: last-changed
+          - entity: sensor.illumination_158d0001e464a6
+            secondary_info: last-changed
+          - entity: sensor.illumination_158d0001e05661
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: Sensores Luminosidad
+        state_color: true
+        type: entities
+      - entities:
+          - entity: binary_sensor.blink_puerta_garaje_motion_detected
+            secondary_info: last-changed
+          - entity: binary_sensor.blink_puerta_principal_motion_detected
+            name: Blink Puerta Principal Exterior
+            secondary_info: last-changed
+          - entity: binary_sensor.blink_hall_motion_detected
+            name: Blink Puerta Garaje
+            secondary_info: last-changed
+        show_header_toggle: false
+        title: Sensores Presencia Cámaras Blink
+        state_color: true
+        type: entities
+      - entities:
+          - entity: binary_sensor.blink_puerta_garaje_camera_armed
+            secondary_info: last-changed
+            name: Blink Puerta Garaje
+          - entity: binary_sensor.blink_puerta_principal_camera_armed
+            name: Blink Puerta Principal
+            secondary_info: last-changed
+          - entity: binary_sensor.blink_hall_camera_armed
+            name: Blink Hall
+            secondary_info: last-changed
+          - entity: binary_sensor.blink_piscina_camera_armed
+            name: Blink Piscina
+        show_header_toggle: false
+        title: Armado Cámaras Blink
+        state_color: true
+        type: entities
+  - icon: mdi:watering-can
+    path: riego_view
+    title: Programador Riego
+    badges: []
+    cards:
       - cards:
           - entities:
               - entity: switch.esphome_4ch_sw2_relay_1
@@ -1236,9 +1353,6 @@ views:
             state_color: true
             type: entities
         type: vertical-stack
-    icon: mdi:watering-can
-    path: riego_view
-    title: Riego Jardín
   - icon: mdi:tree
     path: bonsais_view
     title: Bonsais
@@ -2001,24 +2115,6 @@ views:
     icon: mdi:thermometer-lines
     path: temperatura
     title: Temperatura
-  - title: Energía
-    path: energia
-    icon: mdi:transmission-tower
-    badges: []
-    cards:
-      - type: sensor
-        entity: sensor.pvpc
-        graph: line
-        name: Coste Energía
-      - type: statistics-graph
-        entities:
-          - sensor.pvpc
-        days_to_show: 30
-        stat_types:
-          - mean
-          - min
-          - max
-        chart_type: line
   - badges: []
     cards:
       - aspect_ratio: 75%
@@ -2028,17 +2124,105 @@ views:
           https://embed.windy.com/embed2.html?lat=39.572&lon=-1.582&zoom=5&level=surface&overlay=rain&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=41.650&detailLon=-0.880&metricWind=default&metricTemp=default&radarRange=-1"1
       - entity: camera.weather_satelite
         type: picture-entity
-      - type: custom:weather-card
-        entity: weather.aemet_daily
-        number_of_forecasts: '5'
-        name: AEMET
-      - type: custom:weather-card
-        entity: weather.dark_sky
-        number_of_forecasts: '5'
-        name: Dark Sky
+      - aspect_ratio: 75%
+        title: Previsón Temperatura
+        type: iframe
+        url: >-
+          https://embed.windy.com/embed2.html?lat=36.280&lon=-5.142&zoom=6&level=surface&overlay=temp&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=37.353&detailLon=-5.911&metricWind=default&metricTemp=default&radarRange=-1
     icon: mdi:weather-partly-cloudy
     path: tiempo_view
     title: El Tiempo
+  - badges: []
+    cards:
+      - aspect_ratio: 0%
+        camera_image: camera.blink_puerta_garaje
+        entities:
+          - entity: binary_sensor.blink_puerta_garaje_camera_armed
+          - entity: binary_sensor.blink_puerta_garaje_motion_detected
+          - entity: sensor.blink_puerta_garaje_temperature
+          - entity: sensor.blink_puerta_garaje_wifi_signal
+          - entity: binary_sensor.blink_puerta_garaje_battery
+        hold_action:
+          action: call-service
+          service: script.blink_trigger_cam_puerta_garaje
+        tap_action:
+          action: more-info
+        title: Puerta Garaje
+        type: picture-glance
+      - aspect_ratio: 0%
+        camera_image: camera.blink_puerta_principal
+        entities:
+          - entity: binary_sensor.blink_puerta_principal_camera_armed
+          - entity: binary_sensor.blink_puerta_principal_motion_detected
+          - entity: sensor.blink_puerta_principal_temperature
+          - entity: sensor.blink_puerta_principal_wifi_signal
+          - entity: binary_sensor.blink_puerta_principal_battery
+          - entity: switch.wall_switch_right_158d0002236e75
+        hold_action:
+          action: call-service
+          service: script.blink_trigger_cam_puerta_principal
+        tap_action:
+          action: more-info
+        title: Puerta Principal
+        type: picture-glance
+      - aspect_ratio: 0%
+        camera_image: camera.blink_hall
+        entities:
+          - entity: binary_sensor.blink_hall_camera_armed
+          - entity: binary_sensor.blink_hall_motion_detected
+          - entity: sensor.blink_hall_temperature
+          - entity: sensor.blink_hall_wifi_signal
+          - entity: binary_sensor.blink_hall_battery
+        hold_action:
+          action: call-service
+          service: script.blink_trigger_cam_hall
+        tap_action:
+          action: more-info
+        title: Hall Entrada
+        type: picture-glance
+      - aspect_ratio: 56%
+        camera_image: camera.ipcam_estudio
+        camera_view: live
+        entities:
+          - entity: camera.ipcam_estudio
+          - entity: group.luces_estudio_grp
+          - entity: switch.esphome_bas_sw1
+        hold_action:
+          action: none
+        tap_action:
+          action: more-info
+        title: Estudio
+        type: picture-glance
+      - aspect_ratio: 0%
+        camera_image: camera.blink_piscina
+        entities:
+          - entity: binary_sensor.blink_piscina_camera_armed
+          - entity: binary_sensor.blink_piscina_motion_detected
+          - entity: sensor.blink_piscina_temperature
+          - entity: sensor.blink_piscina_wifi_signal
+          - entity: binary_sensor.blink_piscina_battery
+        hold_action:
+          action: call-service
+          service: script.blink_trigger_cam_piscina
+        tap_action:
+          action: more-info
+        title: Piscina
+        type: picture-glance
+      - aspect_ratio: 56%
+        camera_image: camera.ipcam_jardin
+        camera_view: live
+        entities:
+          - entity: camera.ipcam_jardin
+          - entity: switch.esphome_bas_sw4
+        hold_action:
+          action: none
+        tap_action:
+          action: more-info
+        title: Porche Jardín
+        type: picture-glance
+    icon: mdi:cctv
+    path: camaras_view
+    title: Cámaras
   - icon: mdi:speaker-wireless
     path: alexa
     title: Alexa Media Player
@@ -2161,6 +2345,24 @@ views:
             name: Prueba de Sonido
         title: Alexa Notificaciones
         type: entities
+  - title: Energía
+    path: energia
+    icon: mdi:transmission-tower
+    badges: []
+    cards:
+      - type: sensor
+        entity: sensor.pvpc
+        graph: line
+        name: Coste Energía
+      - type: statistics-graph
+        entities:
+          - sensor.pvpc
+        days_to_show: 30
+        stat_types:
+          - mean
+          - min
+          - max
+        chart_type: line
   - title: Media Player
     path: media-player
     icon: mdi:play-network
@@ -3324,7 +3526,7 @@ views:
         type: entities
         entities:
           - type: custom:battery-entity-row
-            entity: binary_sensor.door_window_sensor_puerta_entrada
+            entity: binary_sensor.door_window_sensor_158d00022b393c
             attribute: battery_percent
             unit: '%'
             icon: mdi:battery-alert
@@ -3905,8 +4107,47 @@ views:
                 type: entity-button
             type: horizontal-stack
         type: vertical-stack
-      - aspect_ratio: 75%
-        title: Previsón Temperatura
-        type: iframe
-        url: >-
-          https://embed.windy.com/embed2.html?lat=36.280&lon=-5.142&zoom=6&level=surface&overlay=temp&menu=&message=&marker=&calendar=&pressure=&type=map&location=coordinates&detail=&detailLat=37.353&detailLon=-5.911&metricWind=default&metricTemp=default&radarRange=-1
+      - cards:
+          - cards:
+              - type: entity
+                entity: sensor.time
+                name: Hora
+              - type: entity
+                entity: sensor.temp_interior
+                name: Interior
+            type: horizontal-stack
+          - type: horizontal-stack
+            cards:
+              - type: entity
+                entity: sensor.ha_uptime
+                unit: hours
+                name: HOMY Up-time
+                icon: mdi:clock-start
+              - type: entity
+                entity: sensor.temperatura_cpu
+                name: HOMY CPU
+          - cards:
+              - type: entity
+                entity: sensor.sun_next_rising
+                name: Salida Sol
+              - type: entity
+                entity: sensor.sun_next_setting
+                name: Puesta Sol
+            type: horizontal-stack
+          - cards:
+              - type: entity
+                entity: alarm_control_panel.ha
+                icon: mdi:shield-home
+                name: Alarma
+              - type: entity
+                entity: alarm_control_panel.blink_casa
+                name: Blink
+            type: horizontal-stack
+          - type: entity
+            entity: weather.dark_sky
+            name: Previsión del Tiempo
+            icon: mdi:weather-pouring
+          - type: custom:weather-card
+            entity: weather.dark_sky
+            number_of_forecasts: '5'
+        type: vertical-stack

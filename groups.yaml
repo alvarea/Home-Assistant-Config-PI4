@@ -20,7 +20,7 @@ alarma_sensores_perimetro:
   name: Sensores Perímetro
   entities:
     #- binary_sensor.door_window_sensor_158d000201dddb      # Ventana PAF ESTROPEADO - RIP
-    - binary_sensor.door_window_sensor_puerta_entrada       # Puerta Principal
+    - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Principal
     - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Trasera Jardín
     - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
     - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
@@ -64,7 +64,7 @@ alarma_sensor_jardin_grp:
 alarma_grp_sensores_home:
   name: Grupo Sensores Home
   entities:
-    - binary_sensor.door_window_sensor_puerta_entrada       # Puerta Principal
+    - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Principal
     - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Trasera Jardín
     - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
     - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha

@@ -145,7 +145,7 @@ light.gateway_light_7811dcb788fa:
   icon: mdi:flash-circle
 sensor.illumination_7811dcb788fa:
   friendly_name: Luz Aqara
-binary_sensor.door_window_sensor_puerta_entrada:
+binary_sensor.door_window_sensor_158d00022b393c:
   friendly_name: Puerta Entrada
   icon: mdi:door
 binary_sensor.motion_sensor_158d0001e55903:

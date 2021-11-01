@@ -417,6 +417,7 @@ cloud:
         name: Estudio Relax
 recorder:
   # purge_interval: 1
+  db_url: secret! mariadb_url
   purge_keep_days: 30
   include:
     domains:
