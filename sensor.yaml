@@ -68,7 +68,6 @@
       - type: disk_free
         arg: /
 
-
   - platform: season
 
   - platform: darksky

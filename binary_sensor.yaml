@@ -389,7 +389,7 @@
 
       # - entity: sensor.aemet_rain
       # - entity: sensor.aemet_rain_probability
-      # - entity: sensor.aemet_daily_forecast_precipitation_probability
+      # - entity: sensor.aemet_snow
 
       # - entity: sensor.aemet_humidity
       # - entity: sensor.aemet_storm_probability
@@ -397,9 +397,9 @@
 
       # OTROS SENSORES DISPONIBLEs
       # - entity: sensor.aemet_daily_forecast_condition
+      # - entity: sensor.aemet_daily_forecast_precipitation_probability
       # - sensor.aemet_daily_forecast_temperature_low
       # - sensor.aemet_daily_forecast_temperature
-      # - entity: sensor.aemet_snow
 
       aemet_prevision_lluvia_0d:
         # DARKSKY : rain, snow, sleet
