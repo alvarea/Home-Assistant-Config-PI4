@@ -284,7 +284,7 @@ alexa_dormitorio_set_volumen:
         entity_id: input_number.alexa_dormitorio_volumen_nuevo
         value: >
           {% if now().hour >= 0 and now().hour <= 9 %}
-            {{ states('input_number.input_number.alexa_dormitorio_volumen_anuncio_noc')|float }}
+            {{ states('input_number.alexa_dormitorio_volumen_anuncio_noc')|float }}
           {% else %}
             {{ states('input_number.alexa_dormitorio_volumen_anuncio_dia')|float }}
           {%endif%}
@@ -292,6 +292,10 @@ alexa_dormitorio_set_volumen:
     - service: media_player.volume_set
       data_template:
         entity_id: media_player.echo_alexa_dormitorio
+        volume_level: "{{ states('input_number.alexa_dormitorio_volumen_nuevo')|float }}"
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.echo_alexa_dormitorio_aac
         volume_level: "{{ states('input_number.alexa_dormitorio_volumen_nuevo')|float }}"
 
 alexa_entrada_set_volumen:
@@ -304,7 +308,7 @@ alexa_entrada_set_volumen:
         entity_id: input_number.alexa_entrada_volumen_nuevo
         value: >
           {% if now().hour >= 0 and now().hour <= 9 %}
-            {{ states('input_number.input_number.alexa_entrada_volumen_anuncio_noc')|float }}
+            {{ states('input_number.alexa_entrada_volumen_anuncio_noc')|float }}
           {% else %}
             {{ states('input_number.alexa_entrada_volumen_anuncio_dia')|float }}
           {%endif%}
@@ -324,7 +328,7 @@ alexa_estudio_set_volumen:
         entity_id: input_number.alexa_estudio_volumen_nuevo
         value: >
           {% if now().hour >= 0 and now().hour <= 9 %}
-            {{ states('input_number.input_number.alexa_estudio_volumen_anuncio_noc')|float }}
+            {{ states('input_number.alexa_estudio_volumen_anuncio_noc')|float }}
           {% else %}
             {{ states('input_number.alexa_estudio_volumen_anuncio_dia')|float }}
           {%endif%}

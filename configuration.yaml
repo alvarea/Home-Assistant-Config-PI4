@@ -416,16 +416,23 @@ cloud:
       script.luces_estudio_relax:
         name: Estudio Relax
 recorder:
-  # purge_interval: 1
   db_url: !secret mariadb_url
   purge_keep_days: 30
+  auto_purge: true
+  commit_interval: 60
   include:
     domains:
+      - alarm_control_panel
+      - light
       - input_boolean
       - sensor
       - binary_sensor
       - switch
       - energy
+      - person
+      - device_tracker
+      - weather
+      - person
 
 weather:
   - platform: darksky

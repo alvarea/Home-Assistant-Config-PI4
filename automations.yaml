@@ -47,8 +47,8 @@
   trigger:
     - platform: time
       at:
-        - '08:55:00'
-        - '23:55:00'
+        - '09:01:00'
+        - '00:01:00'
   action:
     # Establece Volumnen Alexa Entrada/Estudio/Dormitorio según hora del día/noche
     - service: script.alexa_entrada_set_volumen

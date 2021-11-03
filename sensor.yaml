@@ -100,6 +100,15 @@
       - precip_probability
       - precip_accumulation
 
+  - platform: sql
+    db_url: !secret mariadb_url
+    scan_interval: 3600
+    queries:
+      - name: 'MariaDB size'
+        query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 1) "value" FROM information_schema.tables WHERE table_schema="homeassistant_prod" GROUP BY table_schema;'
+        column: 'value'
+        unit_of_measurement: MB
+
   - platform: template
     sensors:
 
@@ -540,7 +549,7 @@
           {% elif is_state('sensor.aemet_icono_2d','cloudy') %} mdi:weather-cloudy
           {% elif is_state('sensor.aemet_icono_2d','partlycloudy') %} mdi:weather-partly-cloudy
           {% elif is_state('sensor.aemet_icono_2d','nightpartlycloudy') %} mdi:weather-night-partly-cloudy
-          {% elif is_state('_sensor.aemet_icono_2d','sunny') %} mdi:weather-sunny
+          {% elif is_state('sensor.aemet_icono_2d','sunny') %} mdi:weather-sunny
           {% else %} mdi:sun-wireless
           {% endif %}
 
