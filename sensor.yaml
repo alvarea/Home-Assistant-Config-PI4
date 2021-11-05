@@ -471,7 +471,7 @@
           {% elif is_state('sensor.aemet_icono_0d','cloudy') %} mdi:weather-cloudy
           {% elif is_state('sensor.aemet_icono_0d','partlycloudy') %} mdi:weather-partly-cloudy
           {% elif is_state('sensor.aemet_icono_0d','nightpartlycloudy') %} mdi:weather-night-partly-cloudy
-          {% elif is_state('_sensor.aemet_icono_0d','sunny') %} mdi:weather-sunny
+          {% elif is_state('sensor.aemet_icono_0d','sunny') %} mdi:weather-sunny
           {% else %} mdi:sun-wireless
           {% endif %}
 
@@ -510,7 +510,7 @@
           {% elif is_state('sensor.aemet_icono_1d','cloudy') %} mdi:weather-cloudy
           {% elif is_state('sensor.aemet_icono_1d','partlycloudy') %} mdi:weather-partly-cloudy
           {% elif is_state('sensor.aemet_icono_1d','nightpartlycloudy') %} mdi:weather-night-partly-cloudy
-          {% elif is_state('_sensor.aemet_icono_1d','sunny') %} mdi:weather-sunny
+          {% elif is_state('sensor.aemet_icono_1d','sunny') %} mdi:weather-sunny
           {% else %} mdi:sun-wireless
           {% endif %}
 

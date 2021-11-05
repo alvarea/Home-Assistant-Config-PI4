@@ -415,11 +415,40 @@ cloud:
         name: Estudio Top
       script.luces_estudio_relax:
         name: Estudio Relax
+
+#
+# MariaDB database . 01.11.2021
+#
 recorder:
   db_url: !secret mariadb_url
   purge_keep_days: 30
   auto_purge: true
   commit_interval: 60
+  include:
+    domains:
+      - alarm_control_panel
+      - light
+      - input_boolean
+      - sensor
+      - binary_sensor
+      - switch
+      - energy
+      - person
+      - device_tracker
+      - weather
+      - person
+
+#
+# InfluxDB database . 05.11.2021
+#
+influxdb:
+  host: !secret influxdb_host
+  port: 8086
+  database: !secret influxdb_database
+  username: !secret influxdb_username
+  password: !secret influxdb_pwd
+  max_retries: 3
+  default_measurement: state
   include:
     domains:
       - alarm_control_panel
