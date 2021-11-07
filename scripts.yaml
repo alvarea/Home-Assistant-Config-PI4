@@ -1059,6 +1059,17 @@ luces_estudio_top:
       target:
         entity_id: light.esphome_lb1_l01
 
+luces_estudio_azul:
+  alias: 'Luces Estudio Azul'
+  sequence:
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Estudio"
+        scene_name: "Azul"
+    - service: light.turn_on
+      target:
+        entity_id: light.esphome_lb1_l01
+
 luces_estudio_off:
   alias: 'Luces Estudio Off'
   sequence:

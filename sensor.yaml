@@ -408,7 +408,7 @@
       temp_interior:
         friendly_name: 'Temperatura Interior Media'
         icon_template: mdi:thermometer-lines
-        unit_of_measurement: ºC
+        unit_of_measurement: 'ºC'
         value_template: >
           {{
           ((  states.sensor.temperature_158d00022b65ff.state|float
