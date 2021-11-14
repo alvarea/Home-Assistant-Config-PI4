@@ -437,6 +437,10 @@ recorder:
       - device_tracker
       - weather
       - person
+      - input_boolean
+      - input_datetime
+      - input_number
+      - input_select
 
 #
 # InfluxDB database . 05.11.2021

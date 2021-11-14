@@ -89,7 +89,6 @@
 #
   piscina_programador:
     name: Programador On/Off
-    initial: on
     icon: mdi:dip-switch
 
 # Riego Plantas + Fuentes
@@ -103,73 +102,60 @@
 # Riego Bonsais Top
   riego_ch1_programador_t1:
     name: Programador CH1 Timer1
-    initial: off
     icon: mdi:dip-switch
 
   # Riego Bonsais Top - Tramo2
   riego_ch1_programador_t2:
     name: Programador CH1 Timer2
-    initial: off
     icon: mdi:dip-switch
 
   # Riego Plantas entrada
   riego_ch2_programador:
     name: Programador CH2
-    initial: on
     icon: mdi:dip-switch
 
   # Fuente Zen entrada
   riego_ch3_programador:
     name: Programador CH3
-    initial: on
     icon: mdi:dip-switch
 
   # Pendiente sin uso
   riego_ch4_programador:
     name: Programador CH4
-    initial: off
     icon: mdi:dip-switch
 
   # Riego Bonsais Producción - Tramo1
   riego_bonsais_programador_t1:
     name: Programador Riego Zona2 - Tramo1
-    initial: on
     icon: mdi:dip-switch
 
   # Riego Bonsais Producción - Tramo2
   riego_bonsais_programador_t2:
     name: Programador Riego Zona2 - Tramo2
-    initial: on
     icon: mdi:dip-switch
 
   # Riego Tomatera - Tramo1
   riego_tomates_programador_t1:
     name: Programador Riego Zona2 - Tramo1
-    initial: off
     icon: mdi:dip-switch
 
   # Riego Tomatera - Tramo2
   riego_tomates_programador_t2:
     name: Programador Riego Zona2 - Tramo2
-    initial: off
     icon: mdi:dip-switch
-
 
 # Programador Diario Luces Jardín
 
   jardin_programador_xia_ext:
     name: Prog. Faroles Exterior
-    initial: on
     icon: mdi:power-settings
 
   jardin_programador_bas_sw2:
     name: Prog. Porche Piscina
-    initial: off
     icon: mdi:power-settings
 
   jardin_programador_bas_sw4:
     name: Prog. Porche Salón
-    initial: off
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch1:
@@ -179,47 +165,39 @@
 
   jardin_programador_4ch_ch2:
     name: Prog. Focos Piscina
-    initial: off
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch3:
     name: Prog. Focos Entrada
-    initial: off
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch4:
     name: Prog. Focos Tendedero
-    initial: off
     icon: mdi:power-settings
 
 # Programador Calefacción / Mosquitos
 
   calefac_programador_mfc:
     name: Prog. Dormitorio MFC
-    initial: on
     icon: mdi:power-settings
 
   calefac_programador_paf:
     name: Prog. Dormitorio PAF
-    initial: on
     icon: mdi:power-settings
 
   calefac_programador_aaf:
     name: Prog. Dormitorio AAF
-    initial: on
     icon: mdi:power-settings
 
 # Dormitorio Warning Mode
 #
   dormitorio_warning:
     name: Dormitorio Warning Mode
-    initial: off
     icon: mdi:heart-multiple
 
 # Bloqueo del Sensor Vibración Rack
 #
   rack_sensor_vibration_disable:
     name: Bloqueo Sensor Vibración Rack
-    initial: off
     icon: mdi:trackpad-lock
 

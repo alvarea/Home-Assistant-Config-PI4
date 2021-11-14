@@ -198,7 +198,7 @@
      - 'Sábado'
      - 'Domingo'
      - 'Weekend'
-    initial: Diario
+    #initial: Diario
     icon: mdi:calendar
 
 # Riego Bonsais
@@ -209,7 +209,7 @@
      - 'Sábado'
      - 'Domingo'
      - 'Weekend'
-    initial: Diario
+    #initial: Diario
     icon: mdi:calendar
 
 # Riego
@@ -220,7 +220,7 @@
      - 'Sábado'
      - 'Domingo'
      - 'Weekend'
-    initial: Diario
+    #initial: Diario
     icon: mdi:calendar
 
 # Fuente Zen
@@ -231,7 +231,7 @@
      - 'Sábado'
      - 'Domingo'
      - 'Weekend'
-    initial: Diario
+    #initial: Diario
     icon: mdi:calendar
 
 # Riego
@@ -242,7 +242,7 @@
      - 'Sábado'
      - 'Domingo'
      - 'Weekend'
-    initial: Diario
+    #initial: Diario
     icon: mdi:calendar
 
 # Riego Bonsais
@@ -253,7 +253,7 @@
      - 'Sábado'
      - 'Domingo'
      - 'Weekend'
-    initial: Diario
+    #initial: Diario
     icon: mdi:calendar
 
 # Riego Tomates
@@ -264,5 +264,5 @@
      - 'Sábado'
      - 'Domingo'
      - 'Weekend'
-    initial: Diario
+    #initial: Diario
     icon: mdi:calendar

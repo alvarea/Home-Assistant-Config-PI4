@@ -16,13 +16,13 @@
     has_date: false
     has_time: true
     #initial: '18:00'    # Verano
-    initial: '20:00'   # Invierno
+    #initial: '20:00'   # Invierno
 
   piscina_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '22:00'
+    # initial: '22:00'
 
 #
 # Programador 4CH SW2 Jardín
@@ -32,13 +32,13 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '09:45'
+    #initial: '09:45'
 
   riego_ch1_end_time_t1:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '09:48'
+    #initial: '09:48'
 
   # Bonsais Top - Tramo2 - Inicio
   riego_ch1_start_time_t2:
@@ -51,46 +51,46 @@
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '15:33'
+    #initial: '15:33'
 
   # Plantas Entrada - Inicio
   riego_ch2_start_time:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '08:30'
+    #initial: '08:30'
 
   riego_ch2_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '08:33'
+    #initial: '08:33'
 
   # Fuente Zen - Inicio
   riego_ch3_start_time:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '21:00'
+    #initial: '21:00'
 
   riego_ch3_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '22:00'
+    #initial: '22:00'
 
   # Libre
   riego_ch4_start_time:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '21:00'
+    #initial: '21:00'
 
   riego_ch4_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '22:00'
+    #initial: '22:00'
 
 #
 # Programador Sonoff SW2 Jardín
@@ -100,26 +100,26 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '09:00'
+    #initial: '09:00'
 
   riego_bonsais_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '09:03'
+    #initial: '09:03'
 
   # Bonsais Producción - Tramo2
   riego_bonsais_start_time2:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '22:00'
+    #initial: '22:00'
 
   riego_bonsais_end_time2:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '22:03'
+    #initial: '22:03'
 
 #
 # Programador Sonoff POW SW1 Tomatera
@@ -129,23 +129,23 @@
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '09:06'
+    #initial: '09:06'
 
   riego_tomates_end_time:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '09:11'
+    #initial: '09:11'
 
   # Tomatera - Tramo2
   riego_tomates_start_time2:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    initial: '18:06'
+    #initial: '18:06'
 
   riego_tomates_end_time2:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    initial: '18:11'
+    #initial: '18:11'

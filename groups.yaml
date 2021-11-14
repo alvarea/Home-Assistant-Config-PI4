@@ -276,7 +276,7 @@ all_automations_grp:
     - automation.s15_ups_apc700_status
     - automation.s16_sonoff_pow_lavadora_boton_switch_on
     - automation.s17_sonoff_pow_lavadora_led
-    - automation.s18_sonoff_pow_lavadora_warning_off
+    - automation.s17c_sonoff_pow_lavadora_warning_off
     - automation.s19_timer_riego_ch1_start
     - automation.s19_timer_riego_ch1_timer2_start
     - automation.s20_timer_riego_ch1_end
