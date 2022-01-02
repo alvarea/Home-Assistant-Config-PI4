@@ -380,7 +380,7 @@ cloud:
       light.sonoff_mini_sw1:
         display_categories: LIGHT
         name: Luces Exterior
-      switch.esphome_pow_sw1:
+      switch.sonoff_s20_sw2:
         display_categories: LIGHT
         name: Arbol Navidad
       switch.esphome_4ch_relay_1:
@@ -397,6 +397,7 @@ cloud:
         display_categories: LIGHT
       light.esphome_lb1_l01:
         display_categories: LIGHT
+        name: Luz Cocina
       script.luces_dormitorio_lectura:
         name: Dormitorio Lectura
       script.luces_dormitorio_relax:
@@ -579,10 +580,10 @@ calendar:
     custom_calendars:
       - name: Universidad AAF
         calendar: Universidad
-        search: "AAF"
+        search: "Agu"
       - name: Universidad PAF
         calendar: Universidad
-        search: "PAF"
+        search: "Paloma"
       - name: Almuerzo
         calendar: Family
         search: "Almuerzo"

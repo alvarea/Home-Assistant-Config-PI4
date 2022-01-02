@@ -481,7 +481,7 @@
 
       aemet_fecha_0d:
         friendly_name: "Fecha Hoy"
-        value_template: "{{ as_timestamp(strptime(state_attr('weather.aemet_daily','forecast').0.datetime,'%Y-%m-%d %H:%M:%S')) | timestamp_custom('%A,%d-%m') }}"
+        value_template: "{{ as_timestamp(strptime(state_attr('weather.aemet_daily','forecast').0.datetime,'%Y-%m-%d %H:%M:%S'),0) | timestamp_custom('%A,%d-%m') }}"
 
       aemet_lluvia_0d:
         friendly_name:  "%Probabilidad Lluvia Hoy"
@@ -520,7 +520,7 @@
 
       aemet_fecha_1d:
         friendly_name: "Fecha Mañana"
-        value_template: "{{ as_timestamp(strptime(state_attr('weather.aemet_daily','forecast').1.datetime,'%Y-%m-%d %H:%M:%S')) | timestamp_custom('%A,%d-%m') }}"
+        value_template: "{{ as_timestamp(strptime(state_attr('weather.aemet_daily','forecast').1.datetime,'%Y-%m-%d %H:%M:%S'),0) | timestamp_custom('%A,%d-%m') }}"
 
       aemet_lluvia_1d:
         friendly_name:  "%Probabilidad Lluvia Mañana"
@@ -559,7 +559,7 @@
 
       aemet_fecha_2d:
         friendly_name: "Fecha Pasado Mañana"
-        value_template: "{{ as_timestamp(strptime(state_attr('weather.aemet_daily','forecast').2.datetime,'%Y-%m-%d %H:%M:%S')) | timestamp_custom('%A,%d-%m') }}"
+        value_template: "{{ as_timestamp(strptime(state_attr('weather.aemet_daily','forecast').2.datetime,'%Y-%m-%d %H:%M:%S'),0) | timestamp_custom('%A,%d-%m') }}"
 
       aemet_lluvia_2d:
         friendly_name:  "%Probabilidad Lluvia Pasado Mañana"
@@ -598,7 +598,7 @@
 
       aemet_fecha_3d:
         friendly_name: "Fecha Pasado Mañana"
-        value_template: "{{ as_timestamp(strptime(state_attr('weather.aemet_daily','forecast').3.datetime,'%Y-%m-%d %H:%M:%S')) | timestamp_custom('%A,%d-%m') }}"
+        value_template: "{{ as_timestamp(strptime(state_attr('weather.aemet_daily','forecast').3.datetime,'%Y-%m-%d %H:%M:%S'),0) | timestamp_custom('%A,%d-%m') }}"
 
       aemet_lluvia_3d:
         friendly_name:  "%Probabilidad Lluvia Pasado Mañana"

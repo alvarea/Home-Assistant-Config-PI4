@@ -14,15 +14,15 @@
   #   - devoce_tracker.a2f
 
   # OWNTRACK ==> prob_given_true: 0.99 - prob_given_false: 0.4
-  #   - device_tracker.aac_iphone_owntrack_2
-  #   - device_tracker.mfc_iphone_owntrack_2
-  #   - device_tracker.paf_iphone_owntrack_2
+  #   - device_tracker.aac_iphone_owntrack
+  #   - device_tracker.mfc_iphone_owntrack
+  #   - device_tracker.paf_iphone_owntrack
 
   # GEOFENCY ==> prob_given_true: 0.99 - prob_given_false: 0.1
-  #   - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496_2 #AAC
-  #   - device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2 #MFC
-  #   - device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2 #PAF
-  #   - device_tracker.daa04833_9772_4800_bf22_57f406aeb129_2 #AAF
+  #   - device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496 #AAC
+  #   - device_tracker.b6cd9e1f_4100_4cac_88d0_f4d6c044a4e6 #MFC
+  #   - device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8 #PAF
+  #   - device_tracker.0b495ff5_94fc_4773_9644_f71df3c328ac #AAF
 
   # BAYESIAN SENSORS
   #   - binary_sensor.family_home_mfc
@@ -45,14 +45,14 @@
         prob_given_false: 0.1
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.mfc_iphone_owntrack_2' # OWNTRACK
+      - entity_id: 'device_tracker.b6cd9e1f_4100_4cac_88d0_f4d6c044a4e6' #MFC
         prob_given_true: 0.99
-        prob_given_false: 0.4
+        prob_given_false: 0.1
         platform: 'state'
         to_state: 'home'
-      #- entity_id: 'device_tracker.e3c67d6b_51bf_445b_a241_a0045bfe0222_2' #MFC
+      #- entity_id: 'device_tracker.mfc_iphone_owntrack_2' # OWNTRACK
       #  prob_given_true: 0.99
-      #  prob_given_false: 0.1
+      #  prob_given_false: 0.4
       #  platform: 'state'
       #  to_state: 'home'
 
@@ -71,16 +71,16 @@
         prob_given_false: 0.1
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.aac_iphone_owntrack_2' # OWNTRACK
-        prob_given_true: 0.99
-        prob_given_false: 0.4
-        platform: 'state'
-        to_state: 'home'
       - entity_id: 'device_tracker.b8b52a3b_f038_4e72_a268_705d9b06e496_2' #AAC
         prob_given_true: 0.99
         prob_given_false: 0.1
         platform: 'state'
         to_state: 'home'
+      #- entity_id: 'device_tracker.aac_iphone_owntrack_2' # OWNTRACK
+      #  prob_given_true: 0.99
+      #  prob_given_false: 0.4
+      #  platform: 'state'
+      #  to_state: 'home'
 
   - platform: 'bayesian'
     prior: 0.60
@@ -97,23 +97,23 @@
         prob_given_false: 0.1
         platform: 'state'
         to_state: 'home'
-      - entity_id: 'device_tracker.paf_iphone_owntrack_2' # OWNTRACK
-        prob_given_true: 0.99
-        prob_given_false: 0.4
-        platform: 'state'
-        to_state: 'home'
-      - entity_id: 'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8_2' #PAF
-        prob_given_true: 0.99
-        prob_given_false: 0.1
-        platform: 'state'
-        to_state: 'home'
+      #- entity_id: 'device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8' #PAF
+      #  prob_given_true: 0.99
+      #  prob_given_false: 0.1
+      #  platform: 'state'
+      #  to_state: 'home'
+      #- entity_id: 'device_tracker.paf_iphone_owntrack_2' # OWNTRACK
+      #  prob_given_true: 0.99
+      #  prob_given_false: 0.4
+      #  platform: 'state'
+      #  to_state: 'home'
 
   - platform: 'bayesian'
     prior: 0.66
     name: 'baye_home_aaf'
     probability_threshold: 0.95
     observations:
-      - entity_id: 'device_tracker.daa04833_9772_4800_bf22_57f406aeb129_2' #AAF
+      - entity_id: 'device_tracker.0b495ff5_94fc_4773_9644_f71df3c328ac' #AAF
         prob_given_true: 0.99    # original 0.99
         prob_given_false: 0.1   # original 0.1
         platform: 'state'
@@ -414,7 +414,7 @@
           {% if (is_state('sensor.aemet_icono_0d','rainy') or
                  is_state('sensor.aemet_icono_0d','snow') or
                  is_state('sensor.aemet_icono_0d','sleet')
-                ) and states('sensor.aemet_lluvia_0d')|int>=40
+                ) and states('sensor.aemet_lluvia_0d')|int>=60
           %}
             true
           {% else %}
@@ -433,7 +433,7 @@
           {% if (is_state('sensor.aemet_icono_1d','rainy') or
                  is_state('sensor.aemet_icono_1d','snow') or
                  is_state('sensor.aemet_icono_1d','sleet')
-                ) and states('sensor.aemet_lluvia_1d')|int>=40
+                ) and states('sensor.aemet_lluvia_1d')|int>=60
           %}
             true
           {% else %}
@@ -452,7 +452,7 @@
           {% if (is_state('sensor.aemet_icono_2d','rainy') or
                  is_state('sensor.aemet_icono_2d','snow') or
                  is_state('sensor.aemet_icono_2d','sleet')
-                ) and states('sensor.aemet_lluvia_2d')|int>=40
+                ) and states('sensor.aemet_lluvia_2d')|int>=60
           %}
             true
           {% else %}
@@ -471,7 +471,7 @@
           {% if (is_state('sensor.aemet_icono_3d','rainy') or
                  is_state('sensor.aemet_icono_3d','snow') or
                  is_state('sensor.aemet_icono_3d','sleet')
-                ) and states('sensor.aemet_lluvia_3d')|int>=40
+                ) and states('sensor.aemet_lluvia_3d')|int>=60
           %}
             true
           {% else %}
@@ -485,6 +485,22 @@
         # SEASON: 'autumn','winter','spring','summer'
         # states('sensor.humedad_entrada_ly03')|int >= 50
         # states('sensor.temperatura_entrada_ly03')|int >= 35
+        #
+        #           AYER    HOY     MAÑANA
+        #           DIA-1   DIA+0   DIA+1     RIEGO
+        #  LLUEVE   0       0       0         1
+        #  LLUEVE   0       0       1         0
+        #  LLUEVE   0       1       1         0
+        #  LLUEVE   1       0       0         1
+        #  LLUEVE   1       0       1         0
+        #  LLUEVE   1       1       1         0
+        #
+        #
+        # select * from states
+        # where domain = 'binary_sensor'
+        # and entity_id = 'binary_sensor.aemet_prevision_lluvia_0d'
+        # and date_format(created,'%yy-%m-%d') >= date_format(now(),'%yy-%m-%d')
+
         friendly_name: '¿IA Riego Hoy?'
         #icon_template: mdi:head-snowflake-outline
         icon_template: >-

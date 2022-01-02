@@ -1040,6 +1040,13 @@ luces_salon_off:
     - service: light.turn_off
       entity_id: light.salon
 
+luces_salon_toggle:
+  alias: 'Luces Salon Toogle'
+  sequence:
+    - service: light.toggle
+      target:
+        area_id: 5abc514cc0ef48dfb52c8c234d389734   # Área Salón
+
 luces_estudio_relax:
   alias: 'Luces Estudio Relax'
   sequence:
@@ -1074,6 +1081,13 @@ luces_estudio_off:
   alias: 'Luces Estudio Off'
   sequence:
     - service: light.turn_off
+      target:
+        area_id: c87f1d973bb247848d28bbe4be4c0a95   # Área Estudio
+
+luces_estudio_toggle:
+  alias: 'Luces Estudio Toogle'
+  sequence:
+    - service: light.toggle
       target:
         area_id: c87f1d973bb247848d28bbe4be4c0a95   # Área Estudio
 

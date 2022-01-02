@@ -512,7 +512,7 @@
   trigger:
     - platform: sun
       event: sunrise
-      offset: "-00:05:00"
+      offset: "-01:00:00"
   condition:
     condition: and
     conditions:
@@ -618,14 +618,19 @@
 - id: F03
   alias: 'F03 Family Home Armado Home'
   trigger:
-    # Versión original: Están todos en casa y Agu ha llegado
+    # Están todos en casa
     - platform: state
       entity_id: binary_sensor.family_all_home
       from: 'off'
       to: 'on'
-    #- platform: numeric_state
-    #  entity_id: sensor.baye_probability_aaf
-    #  above: 90
+    - platform: time
+      at:
+        - "02:00:00"
+        - "03:30:00"
+        - "04:00:00"
+        - "05:00:00"
+        - "06:00:00"
+        - "07:00:00"
   condition:
     condition: and
     conditions:
@@ -651,8 +656,7 @@
       data:
         titulo: '*FAMILY HOME*'
         mensaje: >
-          >>> EN 30' AUTO ARMADO HOME
-
+          >>> MADRUGADA TODOS EN CASA. EN 30' AUTO ARMADO HOME
     - delay: '00:30:00'
     - service: alarm_control_panel.alarm_arm_home
       entity_id: alarm_control_panel.ha
@@ -827,11 +831,11 @@
   alias: 'L01 Luces On Exterior Sunset'
   trigger:
       # offset: "+01:00:00"   # Horario Invierno GMT+1 - Enero
-      # offset: "-00:30:00"   # Horario Invierno GMT+1
+      # offset: "-00:00:00"   # Horario Invierno GMT+1
       # offset: "-00:00:00"   # Horario Verano GMT+2
     - platform: sun
       event: sunset
-      offset: "-00:30"
+      #offset: "-00:30"
   action:
     # Encendido Luces Exterior y Jardín
     - service: script.luces_exterior_on
@@ -1566,7 +1570,7 @@
         - '18:00:00'
   action:
     - choose:
-        # IF Riego On AND Hoy Llueve => No Se Riega => Apaga Riego
+        # IF Riego On AND HOY No Se Riega (Llueve) => Apaga Riego
         - conditions:
           - condition: template
             value_template: "{{ is_state('input_boolean.riego_interruptor_global','on') and is_state('binary_sensor.riego_automatico_hoy','off') }}"
@@ -1574,7 +1578,15 @@
             - service: input_boolean.turn_off
               target:
                 entity_id: input_boolean.riego_interruptor_global
-        # ELIF Riego Off AND Hoy No Llueve => Se Riega => Enciende Riego
+        # ELIF Riego Off AND HOY No Se Riega (Llueve) => Apaga Riego
+        - conditions:
+          - condition: template
+            value_template: "{{ is_state('input_boolean.riego_interruptor_global','off') and is_state('binary_sensor.riego_automatico_hoy','on') }}"
+          sequence:
+            - service: input_boolean.turn_off
+              target:
+                entity_id: input_boolean.riego_interruptor_global
+        # ELIF Riego Off AND SI SE RIEGA (Hoy No Llueve) => Enciende Riego
         - conditions:
           - condition: template
             value_template: "{{ is_state('input_boolean.riego_interruptor_global','off') and is_state('binary_sensor.riego_automatico_hoy','on') }}"
@@ -1613,17 +1625,17 @@
           - condition: template
             value_template: "{{ now().hour == 0 and is_state('input_boolean.riego_interruptor_global','on') }}"
           sequence:
-            - service: switch.turn_off
-              target:
-                entity_id: switch.esphome_4ch_relay_4
+            #- service: switch.turn_off
+            #  target:
+            #    entity_id: switch.esphome_4ch_relay_4
         # ELIF
         - conditions:
           - condition: template
             value_template: "{{ now().hour == 8 and is_state('input_boolean.riego_interruptor_global','on') and is_state('binary_sensor.riego_control_bomba_status','off') }}"
           sequence:
-            - service: switch.turn_on
-              target:
-                entity_id: switch.esphome_4ch_relay_4
+            #- service: switch.turn_on
+            #  target:
+            #    entity_id: switch.esphome_4ch_relay_4
 
 # Regla Original Control Bomba Riego basado en el interruptor global
 #
@@ -2127,8 +2139,10 @@
       event_data:
         actionName: 'luz_salon'
   action:
+    # Salon
     - service: light.toggle
-      entity_id: light.salon
+      target:
+        entity_id: light.salon
 
 - id: I02
   alias: 'IOS Action Luz Estudio'
@@ -2139,9 +2153,10 @@
       event_data:
         actionName: 'luz_estudio'
   action:
+    # Estudio
     - service: light.toggle
       target:
-        area_id: c87f1d973bb247848d28bbe4be4c0a95   # Área Estudio
+        entity_id: light.estudio
 
 - id: I03
   alias: 'IOS Action Alarma Off'
