@@ -1026,13 +1026,15 @@ luces_salon_top:
         group_name: "Salón"
         scene_name: "Top"
 
-luces_salon_wpt:
-  alias: 'Luces Salon WPT'
+luces_salon_azul:
+  alias: 'Luces Salon Azul'
   sequence:
     - service: hue.hue_activate_scene
       data:
         group_name: "Salón"
-        scene_name: "WPT"
+        scene_name: "Azul"
+    - service: light.turn_on
+      entity_id: light.wled_tv_salon
 
 luces_salon_off:
   alias: 'Luces Salon Off'
@@ -1062,9 +1064,6 @@ luces_estudio_top:
       data:
         group_name: "Estudio"
         scene_name: "Top"
-    - service: light.turn_on
-      target:
-        entity_id: light.esphome_lb1_l01
 
 luces_estudio_azul:
   alias: 'Luces Estudio Azul'
@@ -1073,9 +1072,17 @@ luces_estudio_azul:
       data:
         group_name: "Estudio"
         scene_name: "Azul"
-    - service: light.turn_on
-      target:
-        entity_id: light.esphome_lb1_l01
+    #- service: light.turn_on
+    #  target:
+    #    entity_id: light.esphome_lb1_l01
+
+luces_estudio_desk:
+  alias: 'Luces Estudio Desk'
+  sequence:
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Estudio"
+        scene_name: "Desk"
 
 luces_estudio_off:
   alias: 'Luces Estudio Off'

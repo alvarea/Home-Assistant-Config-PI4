@@ -329,6 +329,8 @@ cloud:
         - group
         - script
       include_entities:
+        - light.wled_tv_salon
+        - light.wled_mesa_agu
         - light.esphome_lb1_l01
         - light.sonoff_mini_sw1
         - script.homy_armado_parcial
@@ -348,23 +350,6 @@ cloud:
         - switch.esphome_bas_sw4
         - switch.esphome_pow_sw1
         - switch.esphome_pow_sw2
-        - light.luz_cilindro
-        - light.luz_cueva_agu
-        - light.luz_dormitorio_aac
-        - light.luz_dormitorio_mfc
-        - light.luz_entrada
-        - light.luz_estudio
-        - light.luz_lectura
-        - light.luz_tv
-        - light.luz_pasillo
-        - light.luz_vitrina
-        - light.entrada
-        - light.cocina
-        - light.estudio
-        - light.pasillo
-        - light.salon
-        - light.dormitorio_aaf
-        - light.dormitorio_paf
     entity_config:
       script.homy_armado_parcial:
         name: Armado Parcial
@@ -416,7 +401,12 @@ cloud:
         name: Estudio Top
       script.luces_estudio_relax:
         name: Estudio Relax
-
+      light.wled_tv_salon:
+        display_categories: LIGHT
+        name: LED TV Salon
+      light.wled_mesa_agu:
+        display_categories: LIGHT
+        name: LED Mesa Agu
 #
 # MariaDB database . 01.11.2021
 #

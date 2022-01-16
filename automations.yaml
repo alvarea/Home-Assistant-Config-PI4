@@ -1072,32 +1072,36 @@
       entity_id: binary_sensor.motion_sensor_158d0001e464a6
       to: 'on'
   condition:
-    condition: or
-    conditions:
-      # https://www.home-assistant.io/docs/scripts/conditions/
-      #
-      # si el sensor de luz está es < 3 lumx
-      #- condition: numeric_state
-      #  entity_id: sensor.illumination_158d0001e464a6
-      #  below: 2
-      # 'when dark' condition: either after sunset or before sunrise
-      - condition: sun
-        after: sunset
-        after_offset: "+01:00:00"
-      - condition: sun
-        # before_offset: "+00:30:00"  ==> Horario Invierno GMT+1, en el amanecer -30m
-        # before_offset: "+01:30:00" ==> Horario Verano GMT+2, el amanecer 1h-30m
-        before: sunrise
-        before_offset: "+00:30:00"
+    - condition: state
+      entity_id: light.estudio
+      state: 'off'
+    - condition: or
+      conditions:
+        - condition: sun
+          after: sunset
+          after_offset: "+01:00:00"
+        - condition: sun
+          # before_offset: "+00:30:00"  ==> Horario Invierno GMT+1, en el amanecer -30m
+          # before_offset: "+01:30:00" ==> Horario Verano GMT+2, el amanecer 1h-30m
+          before: sunrise
+          before_offset: "+00:30:00"
+        # https://www.home-assistant.io/docs/scripts/conditions/
+        #
+        # si el sensor de luz está es < 3 lumx
+        #- condition: numeric_state
+        #  entity_id: sensor.illumination_158d0001e464a6
+        #  below: 2
+        # 'when dark' condition: either after sunset or before sunrise
   action:
     # Luces On
-    #- service: light.toggle
-    #  target:
-    #    area_id: c87f1d973bb247848d28bbe4be4c0a95   # Área Estudio
+    #- service: light.turn_on
+    #  entity_id:
+    #    - light.luz_estudio_techo
+    #    - light.luz_estudio_escalera
     - service: hue.hue_activate_scene
       data:
         group_name: "Estudio"
-        scene_name: "Azul"
+        scene_name: "Hall"
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1111,7 +1115,7 @@
 #
 
 - id: L12
-  alias: 'L12 Cube FreeFall Light Estudio On'
+  alias: 'L12 Cube FreeFall Light Estudio Azul'
   mode: restart
   trigger:
     platform: event
@@ -1127,7 +1131,7 @@
         scene_name: "Azul"
 
 - id: L13
-  alias: 'L13 Cube Shake Light off'
+  alias: 'L13 Cube Shake Light Estudio off'
   mode: restart
   trigger:
     platform: event
@@ -1139,7 +1143,7 @@
     - service: script.luces_estudio_off
 
 - id: L14
-  alias: 'L14 Cube Flip90 Light Desk Toggle'
+  alias: 'L14 Cube Flip90 Light Estudio Desk'
   mode: restart
   trigger:
     platform: event
@@ -1153,7 +1157,7 @@
     - service: hue.hue_activate_scene
       data:
         group_name: "Estudio"
-        scene_name: "Escritorio"
+        scene_name: "Desk"
     - delay: 3
 
 - id: L15
@@ -1168,6 +1172,22 @@
   action:
     - service: switch.toggle
       entity_id: switch.esphome_bas_sw1
+
+- id: L16
+  alias: 'L16 Cube Rotate Light Estudio Hall'
+  mode: restart
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00024a4a62
+      action_type: rotate
+  action:
+    - service: hue.hue_activate_scene
+      data:
+        group_name: "Estudio"
+        scene_name: "Hall"
+    - delay: 3
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

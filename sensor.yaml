@@ -423,13 +423,13 @@
       melcloud_estudio_state:
         friendly_name: 'AC/Estudio'
         icon_template: mdi:air-conditioner
-        value_template: "{{states('climate.estudio') }}"
+        value_template: "{{states('climate.aa_estudio') }}"
 
       # fan-speed-1,-2,-3, fan-off, fan-alert, fan-auto
       melcloud_estudio_fan_mode:
         friendly_name: 'Fan Mode (1-4-auto)'
         icon_template: mdi:fan
-        value_template: "{{state_attr('climate.estudio','fan_mode') }}"
+        value_template: "{{state_attr('climate.aa_estudio','fan_mode') }}"
 
       # swing-mode y vane_v (vertical) controla el movimiento de aspas.  Vane_H no se usa.
       # Modo Frio, 26º, fan auto, vane horizontal entre 15:00 - 16:00
@@ -451,7 +451,7 @@
       melcloud_estudio_swing_mode:
         friendly_name: 'Swing Mode (1-5-swing)'
         icon_template: mdi:sync
-        value_template: "{{state_attr('climate.estudio','swing_mode') }}"
+        value_template: "{{state_attr('climate.aa_estudio','swing_mode') }}"
 
       #
       # Predicción Metereologica AEMET
