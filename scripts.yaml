@@ -1472,17 +1472,17 @@ lavadora_switch_off:
 #                                                                             #
 #-----------------------------------------------------------------------------#
 sonoff_initialize:
-  alias: 'Arranque Interruptores SONOFF'
+  alias: 'Parada Seguridad Interruptores SONOFF'
   sequence:
-    #
-    # SONOFF_BAS_SW1_SIRENA INTERIOR ==> OFF
     - service: switch.turn_off
-      entity_id: switch.esphome_bas_sw0
-
-    #
-    #- service: switch.turn_on
-    # SONOFF_POW_SW2_LAVADORA => ON
-    #  entity_id: switch.esphome_pow_sw2
+      entity_id:
+        - switch.esphome_bas_sw0            # SONOFF_BAS_SW1_SIRENA INTERIOR ==> OFF
+        - switch.esphome_4ch_sw2_relay_1    # SONOFF_4CH PLANTAS ENTRADA
+        - switch.esphome_4ch_sw2_relay_2
+        - switch.esphome_4ch_sw2_relay_3
+        - switch.esphome_4ch_sw2_relay_4
+        - switch.esphome_pow_sw1            # SONOFF_POW TOMATERAS
+        - switch.esphome_bas_sw2            # SONOFF_BAS BONSAIS PRODUCCION
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

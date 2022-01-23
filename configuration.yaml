@@ -218,21 +218,21 @@ camera:
 #      key: !secret xiaomi_gateway
 
 # NMAP
-device_tracker:
-  - platform: nmap_tracker
-    hosts: !secret device_tracker_range1
-    home_interval: 10
-    consider_home: 0:10:00
-    interval_seconds: 90
-    track_new_devices: no
-    #scan_options: -Pn --host-timeout 5s
-    exclude:
-      - !secret device_tracker_host1
-      - !secret device_tracker_host2
+#device_tracker:
+#  - platform: nmap_tracker
+#    hosts: !secret device_tracker_range1
+#    home_interval: 10
+#    consider_home: 0:10:00
+#    interval_seconds: 90
+#    track_new_devices: no
+#    scan_options: -Pn --host-timeout 5s
+#    exclude:
+#      - !secret device_tracker_host1
+#      - !secret device_tracker_host2
 
-  - platform: ping
-    hosts:
-      ping_57_amazon_kindle: 192.168.0.57
+#  - platform: ping
+#    hosts:
+#      ping_57_amazon_kindle: 192.168.0.57
 
 # NOTIFICACIONES
 notify:
@@ -543,21 +543,32 @@ sonoff:
   username: !secret sonoff_ewelink_user
   password: !secret sonoff_ewelink_pwd
   devices:
+    # 051 Alvarea.net SONOFF Mini SW1 Luces Exterior
     1000b4adc4:
       device_class: light
       name: Luz Exterior
+
+    # 052 Alvarea.net SONOFF Mini SW2 ???
     1000b5aa49:
       device_class: light
       name: Luz Escritorio
+
+    # 053 Alvarea.net SONOFF Mini SW3 Cuadro Beer
     1001057e5c:
       device_class: light
-      name: Switch SW3
+      name: Luz Cuadro Beer
+
+    # 054 Alvarea.net SONOFF Mini SW4 Lamparita Escalera
     100104fe64:
       device_class: light
-      name: Switch SW4
+      name: Luz Escalera Lamparita
+
+    # 055 Alvarea.net SONOFF BAS SW3 LIBRE
     1000f83c56:
       device_class: light
       name: Switch BAS SW3
+
+    # 056 Alvarea.net SONOFF S20 SW2 Calefacción Agu
     10011a769f:
       name: Switch S20 SW2
 
