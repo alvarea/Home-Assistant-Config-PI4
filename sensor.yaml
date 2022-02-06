@@ -124,6 +124,16 @@
         friendly_name: 'Último Tracking'
         icon_template: "{{ 'mdi:home-map-marker' if states('input_text.family_last_tracking') is not none }}"
 
+      ping_wan_internet:
+        icon_template: "mdi:speedometer"
+        unit_of_measurement: "ms"
+        value_template: "{{ state_attr('binary_sensor.ping_00_internet_google', 'round_trip_time_avg')|round(2) }}"
+
+      ping_lan_router:
+        icon_template: "mdi:speedometer"
+        unit_of_measurement: "ms"
+        value_template: "{{ state_attr('binary_sensor.ping_01_router_movistar', 'round_trip_time_avg')|round(2) }}"
+
       # Meta tracker AAC, MFC, PAF, AAF
       # meta_track_aac:
       #  value_template: "{{ states('device_tracker.meta_aac') if states('device_tracker.meta_aac') is not none }}"

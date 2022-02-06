@@ -1051,9 +1051,16 @@
 #    scan_interval: 300
 
   - platform: ping
+    host: 8.8.8.8
+    name: "ping 00 Internet Google"
+    count: 5
+    scan_interval: 60
+
+  - platform: ping
     host: 192.168.0.1
     count: 5
-    name: 'ping 01 Router Fibra Movistar'
+    name: 'ping 01 Router Movistar'
+    scan_interval: 60
 
     #ping_02_nas_time_capsule:
   - platform: ping
@@ -1109,6 +1116,6 @@
     name: 'Hub Philips Hue'
 
   - platform: ping
-    host: 192.168.0.84
+    host: 192.168.0.120
     count: 2
     name: 'Xiaomi Aqara Gateway'

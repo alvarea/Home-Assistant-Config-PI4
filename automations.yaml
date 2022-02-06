@@ -822,6 +822,44 @@
     # Llamada al contador de personas que actualiza sensor.family_home
     - service: python_script.countpeople
 
+- id: F11
+  alias: 'F11 Family AAF Not Home'
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.family_home_aaf
+      to: 'off'
+  action:
+    # Apara el Area Dormitorio Agu
+    - service: switch.turn_off
+      data: {}
+      target:
+        area_id: dormitorio_aaf
+    - service: light.turn_off
+      data: {}
+      target:
+        area_id: dormitorio_aaf
+
+- id: F12
+  alias: 'F11 Family PAF Not Home'
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.family_home_paf
+      to: 'off'
+  action:
+    # Apara el Area Dormitorio Paloma
+    - service: switch.turn_off
+      data: {}
+      target:
+        area_id: dormitorio_paf
+    - service: light.turn_off
+      data: {}
+      target:
+        area_id: dormitorio_paf
+
+
+
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # REGLAS DE CONTROL DE LUCES Y ALUMBRADO                                      #
@@ -1109,11 +1147,15 @@
 #                                                                             #
 #-----------------------------------------------------------------------------#
 #
-# Available events are flip90, flip180, move, tap_twice, shake_air, swing, alert,
-# free_fall and rotate.
+# Available events are FLIP90, flip180, MOVE, TAP_TWICE, SHAKE_AIR, swing, alert, FREE_FALL
 # The component stores the last action as the attribute last_action.
 #
-
+# shake_air:    ESTUDIO LIGHT OFF
+# free_fall:    ESTUDIO LIGHT ESCENA AZUL
+# flip_90:      ESTUDIO LIGHT ESCENA DESK
+# tap_twice:    ESTUDIO SWITCH DESK POWER
+# move:         ESTUDIO LIGHT ESCENA HALL
+#
 - id: L12
   alias: 'L12 Cube FreeFall Light Estudio Azul'
   mode: restart
@@ -1161,7 +1203,20 @@
     - delay: 3
 
 - id: L15
-  alias: 'L15 Cube Rotate Light Rack'
+  alias: 'L15 Cube TapTwice Desk Power'
+  mode: restart
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00024a4a62
+      action_type: tap_twice
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_bas_sw3
+
+- id: L16
+  alias: 'L16 Cube Move Light Estudio Hall'
   mode: restart
   trigger:
     platform: event
@@ -1169,19 +1224,6 @@
     event_data:
       entity_id: binary_sensor.cube_158d00024a4a62
       action_type: move
-  action:
-    - service: switch.toggle
-      entity_id: switch.esphome_bas_sw1
-
-- id: L16
-  alias: 'L16 Cube Rotate Light Estudio Hall'
-  mode: restart
-  trigger:
-    platform: event
-    event_type: xiaomi_aqara.cube_action
-    event_data:
-      entity_id: binary_sensor.cube_158d00024a4a62
-      action_type: rotate
   action:
     - service: hue.hue_activate_scene
       data:
@@ -1974,6 +2016,51 @@
           >>> EVENTO: Control Riego/Fuentes encendidas antes del amanecer
           >>> JARDIN: Apagado total
 
+- id: S32
+  alias: 'S32 Switch Desk Power Off'
+  trigger:
+    - platform: time
+      at:
+        - "00:00:00"
+        - "01:00:00"
+        - "02:30:00"
+        - "03:00:00"
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.macbook_aac_active
+        state: 'off'
+      - condition: state
+        entity_id: binary_sensor.macbook_aac_active
+        state: 'off'
+  action:
+    - service: switch.turn_off
+      entity_id: switch.esphome_bas_sw3
+
+- id: S33
+  alias: 'S33 Switch Desk Power On'
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: "-01:00:00"
+    - platform: state
+      entity_id: binary_sensor.macbook_aac_active
+      from: 'off'
+      to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: sun
+        after: sunrise
+        after_offset: "-01:00:00"
+      # AAC en casa
+      - condition: state
+        entity_id: binary_sensor.family_aac
+        state: 'on'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.esphome_s20_sw1
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
