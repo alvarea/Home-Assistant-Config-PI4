@@ -984,28 +984,17 @@
         icon_template: mdi:laptop-mac
         #entity_id: device_tracker.nmap_macbook_air_paf
 
-      nmap_elitebook_hk:
+      nmap_toshiba_satellite:
         value_template: >-
-          {% if is_state('device_tracker.nmap_elitebook_hk_wifi','home')
-             or is_state('device_tracker.nmap_elitebook_hk_lan','home') %}
+          {% if is_state('device_tracker.toshiba_D7_84_D0_satellite_wifi','home')
+             or is_state('device_tracker.toshiba_91_41_44_satellite_lan','home') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Elitebook Heineken'
+        friendly_name: 'Toshiba Satélite CMC'
         icon_template: mdi:laptop
-        #entity_id: device_tracker.nmap_elitebook_hk_wifi
-
-      nmap_acer_notebook:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_acer_notebook','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Netbook Acer Aspire'
-        icon_template: mdi:laptop
-        #entity_id: device_tracker.nmap_acer_notebook
+        #entity_id: device_tracker.toshiba_91_41_44_satelite_cmc_lan
 
       nmap_alexa_entrada:
         value_template: >-
@@ -1028,27 +1017,6 @@
         friendly_name: 'Alexa Dormitorio'
         icon_template: mdi:speaker-wireless
         #entity_id: device_tracker.nmap_alexa_dormitorio
-
-      nmap_sony_ps4_lan_wifi:
-        value_template: >-
-          {% if is_state('device_tracker.nmap_sony_ps4','home')
-             or is_state('device_tracker.nmap_sony_ps4_wifi','home') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-        friendly_name: 'Sony PS4'
-        icon_template: mdi:gamepad-variant
-        #entity_id: device_tracker.nmap_sony_ps4
-
-#  - platform: command_line
-#    #command: "/home/homeassistant/.homeassistant/ssh_scripts/wan_test.sh"  # hassbian
-#    command: "/config/ssh_scripts/wan_test.sh"
-#    device_class: connectivity
-##    payload_on: "Up"
-#    payload_off: "Down"
-#    name: 'ping 00 WAN Internet - Google'
-#    scan_interval: 300
 
   - platform: ping
     host: 8.8.8.8
