@@ -1684,7 +1684,7 @@
           sequence:
             #- service: switch.turn_off
             #  target:
-            #    entity_id: switch.esphome_4ch_relay_4
+            #    entity_id: switch.esphome_pow_sw1
         # ELIF
         - conditions:
           - condition: template
@@ -1692,7 +1692,7 @@
           sequence:
             #- service: switch.turn_on
             #  target:
-            #    entity_id: switch.esphome_4ch_relay_4
+            #    entity_id: switch.esphome_pow_sw1
 
 # Regla Original Control Bomba Riego basado en el interruptor global
 #
@@ -1712,7 +1712,7 @@
 #          sequence:
 #            - service: switch.turn_on
 #             target:
-#                entity_id: switch.esphome_4ch_relay_4
+#                entity_id: switch.esphome_pow_sw1
 #        # ELIF el interruptor general riego se apaga y el controlador bomba riego encendido => Apaga controlador bomba
 #        - conditions:
 #          - condition: template
@@ -1720,7 +1720,7 @@
 #          sequence:
 #            - service: switch.turn_off
 #              target:
-#                entity_id: switch.esphome_4ch_relay_4
+#                entity_id: switch.esphome_pow_sw1
 #
 #
 - id: S18c
@@ -1946,7 +1946,7 @@
         entity_id: timer.riego_tomates
         duration: '{{ states.sensor.riego_tomates_duracion_planificada.state|int * 60 }}'
     - service: switch.turn_on
-      entity_id: switch.esphome_pow_sw1
+      entity_id: switch.esphome_bas_sw1
       
 - id: S29
   alias: 'S29 Timer Riego Huerto Start T2'
@@ -1969,7 +1969,7 @@
         entity_id: timer.riego_tomates
         duration: '{{ states.sensor.riego_tomates_duracion_planificada_t2.state|int * 60 }}'
     - service: switch.turn_on
-      entity_id: switch.esphome_pow_sw1
+      entity_id: switch.esphome_bas_sw1
 
 - id: S30
   alias: 'S30 Timer Riego Huerto End'

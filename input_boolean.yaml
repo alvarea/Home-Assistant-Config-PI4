@@ -97,7 +97,7 @@
   riego_interruptor_global:
     name: Riego Interruptor General
     initial: on
-    icon: mdi:weather-pouring
+    icon: mdi:sprinkler-var
 
 # Riego Bonsais Top
   riego_ch1_programador_t1:
@@ -172,7 +172,7 @@
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch4:
-    name: Prog. Focos Tendedero
+    name: Prog. Foco Bonsai
     icon: mdi:power-settings
 
 # Programador Calefacción / Mosquitos

@@ -335,7 +335,6 @@ switch.esphome_4ch_relay_3:
   icon: mdi:track-light
 
 switch.esphome_4ch_relay_4:
-  friendly_name: Luz Garaje
   icon: mdi:track-light
   #icon: mdi:car-side
 

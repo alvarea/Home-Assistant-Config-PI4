@@ -1161,6 +1161,7 @@ luces_exterior_on:
     - service: script.luces_jardin_check_4ch_ch1
     - service: script.luces_jardin_check_4ch_ch2
     - service: script.luces_jardin_check_4ch_ch3
+    - service: script.luces_jardin_check_4ch_ch4
 
 luces_jardin_check_xia_ext:
   alias: 'Luces On Faroles Exterior'
@@ -1215,6 +1216,15 @@ luces_jardin_check_4ch_ch3:
     state: 'on'
   - service: switch.turn_on
     entity_id: switch.esphome_4ch_relay_3
+
+luces_jardin_check_4ch_ch3:
+  alias: 'Luces On Sonoff4ch CH4'
+  sequence:
+  - condition: state
+    entity_id: input_boolean.jardin_programador_4ch_ch4
+    state: 'on'
+  - service: switch.turn_on
+    entity_id: switch.esphome_4ch_relay_4
 
 
 #-----------------------------------------------------------------------------#
@@ -1344,7 +1354,7 @@ riego_tomates_timer_cancel:
     - service: timer.cancel
       entity_id: timer.riego_tomates
     - service: switch.turn_off
-      entity_id: switch.esphome_pow_sw1
+      entity_id: switch.esphome_bas_sw1
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1481,7 +1491,7 @@ sonoff_initialize:
         - switch.esphome_4ch_sw2_relay_2
         - switch.esphome_4ch_sw2_relay_3
         - switch.esphome_4ch_sw2_relay_4
-        - switch.esphome_pow_sw1            # SONOFF_POW TOMATERAS
+        - switch.esphome_bas_sw1            # SONOFF_BAS TOMATERAS
         - switch.esphome_bas_sw2            # SONOFF_BAS BONSAIS PRODUCCION
 
 #-----------------------------------------------------------------------------#

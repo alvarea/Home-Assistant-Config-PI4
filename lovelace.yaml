@@ -668,7 +668,7 @@ views:
                   service: switch.toggle
                   service_data: {}
                   target:
-                    entity_id: switch.esphome_4ch_relay_4
+                    entity_id: switch.esphome_pow_sw1
                 tap_action:
                   action: more-info
                 type: entity-button
