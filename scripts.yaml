@@ -1346,7 +1346,7 @@ riego_sw2_timer_cancel:
     - service: timer.cancel
       entity_id: timer.riego_bonsais
     - service: switch.turn_off
-      entity_id: switch.esphome_bas_sw2
+      entity_id: switch.esphome_bas_sw1
 
 riego_tomates_timer_cancel:
   alias: Timer Tomatera Cancel
@@ -1354,7 +1354,7 @@ riego_tomates_timer_cancel:
     - service: timer.cancel
       entity_id: timer.riego_tomates
     - service: switch.turn_off
-      entity_id: switch.esphome_bas_sw1
+      entity_id: switch.esphome_bas_sw2
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1491,8 +1491,8 @@ sonoff_initialize:
         - switch.esphome_4ch_sw2_relay_2
         - switch.esphome_4ch_sw2_relay_3
         - switch.esphome_4ch_sw2_relay_4
-        - switch.esphome_bas_sw1            # SONOFF_BAS TOMATERAS
-        - switch.esphome_bas_sw2            # SONOFF_BAS BONSAIS PRODUCCION
+        - switch.esphome_bas_sw2            # SONOFF_BAS TOMATERAS
+        - switch.esphome_bas_sw1            # SONOFF_BAS BONSAIS PRODUCCION
 
 #-----------------------------------------------------------------------------#
 #                                                                             #

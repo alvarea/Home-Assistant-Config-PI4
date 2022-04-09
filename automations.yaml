@@ -1494,40 +1494,6 @@
       entity_id: switch.sonoff_s20_sw2
 
 #
-# ESPHOME BASIC SW2 PORCHE PISCINA
-#
-- id: S13
-  alias: 'S13 Sonoff SW2 Porche Piscina'
-  trigger:
-    platform: state
-    entity_id: binary_sensor.esphome_bas_sw1_boton
-    from: 'off'
-    to: 'on'
-  action:
-    # ESPHOME_SW2 ==> OFF
-    - service: switch.toggle
-      entity_id: switch.esphome_bas_sw1
-    - service: light.toggle
-      entity_id: light.esphome_bas_sw1_led
-
-#
-# ESPHOME BASIC SW4 PORCHE SALON
-#
-- id: S14
-  alias: 'S14 Sonoff SW4 Porche Piscina'
-  trigger:
-    platform: state
-    entity_id: binary_sensor.esphome_bas_sw4_boton
-    from: 'off'
-    to: 'on'
-  action:
-    # ESPHOME_SW4 ==> OFF
-    - service: switch.toggle
-      entity_id: switch.esphome_bas_sw4
-    - service: light.toggle
-      entity_id: light.esphome_bas_sw4_led
-
-#
 # SAI RACK COMUNICACIONES
 #
 - id: S15
@@ -1865,7 +1831,7 @@
   action:
     - service: script.riego_ch3_timer_cancel
 
-# ESPHOME BAS SW2 RIEGO : BONSAIS PRODUCCION
+# ESPHOME BAS SW1 RIEGO : BONSAIS PRODUCCION
 #
 - id: S25
   alias: 'S25 Timer Riego Bonsais Produccion Start T1'
@@ -1888,7 +1854,7 @@
         entity_id: timer.riego_bonsais
         duration: '{{ states.sensor.riego_bonsais_duracion_planificada.state|int * 60 }}'
     - service: switch.turn_on
-      entity_id: switch.esphome_bas_sw2
+      entity_id: switch.esphome_bas_sw1
 
 - id: S26
   alias: 'S26 Timer Riego Bonsais Produccion Start T2'
@@ -1911,7 +1877,7 @@
         entity_id: timer.riego_bonsais
         duration: '{{ states.sensor.riego_bonsais_duracion_planificada_t2.state|int * 60 }}'
     - service: switch.turn_on
-      entity_id: switch.esphome_bas_sw2
+      entity_id: switch.esphome_bas_sw1
 
 - id: S27
   alias: 'S27 Timer Riego Bonsais Produccion End'
@@ -1946,7 +1912,7 @@
         entity_id: timer.riego_tomates
         duration: '{{ states.sensor.riego_tomates_duracion_planificada.state|int * 60 }}'
     - service: switch.turn_on
-      entity_id: switch.esphome_bas_sw1
+      entity_id: switch.esphome_bas_sw2
       
 - id: S29
   alias: 'S29 Timer Riego Huerto Start T2'
@@ -1969,7 +1935,7 @@
         entity_id: timer.riego_tomates
         duration: '{{ states.sensor.riego_tomates_duracion_planificada_t2.state|int * 60 }}'
     - service: switch.turn_on
-      entity_id: switch.esphome_bas_sw1
+      entity_id: switch.esphome_bas_sw2
 
 - id: S30
   alias: 'S30 Timer Riego Huerto End'

@@ -523,7 +523,7 @@
         friendly_name: 'Interruptor General Riego'
         icon_template: >-
           {% if is_state('binary_sensor.riego_interruptor_global','on') %} mdi:sprinkler-var
-          {% else %} mdi:
+          {% else %} mdi:sprinkler
           {% endif %}
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on') %}
@@ -717,7 +717,7 @@
       #
       riego_bonsais_status:
         value_template: >-
-          {% if is_state('switch.esphome_bas_sw2','on') %}
+          {% if is_state('switch.esphome_bas_sw1','on') %}
             true
           {% else %}
             false
@@ -769,7 +769,7 @@
             false
           {% endif %}
 
-      # RIEGO BONSAIS TOMATERA
+      # RIEGO TOMATERA
       #
       riego_tomates_status:
         value_template: >-
@@ -778,7 +778,7 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Riego tomates Produccion on/off'
+        friendly_name: 'Riego Huerto Tomates  on/off'
         icon_template: mdi:power
 
       riego_tomates_dia_ejecucion_t1:

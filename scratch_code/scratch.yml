@@ -21,14 +21,6 @@ binary_sensor.esphome_bas_sw1_status:
 light.esphome_bas_sw1_led:
   friendly_name: LED Luz Rack Estudio
 
-switch.esphome_bas_sw2:
-  friendly_name: Fuente Tortugas
-  icon: mdi:waves
-binary_sensor.esphome_bas_sw2_status:
-  friendly_name: BAS.SW2 Fuente Tortugas
-light.esphome_bas_sw2_led:
-  friendly_name: LED BAS_SW2 Fuente Tortugas
-
 switch.esphome_bas_sw4:
   friendly_name: Porche 1
   icon: mdi:floor-lamp
