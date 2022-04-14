@@ -14,6 +14,7 @@
 #               esphome_4ch_relay_4                 Luz Foco Bonsai     CH4 - Pendiente
 # 192.168.0.36  esphome_pow_sw1                     Disponible
 # 192.168.0.37  esphome_pow_sw2                     Lavadora            Cocina
+# 192.168.0.39  esphome_pow_sw4                     Bomba Pozo          Jardín
 # 192.168.0.38  esphome_s20_SW1                     Radiador Malen      Radiador Dormitorio Principal (192.168.0.33)
 # 192.168.0.39  esphome_s20_SW2                     Nespresso
 # 192.168.0.40  esphome_s20_SW3                     Radiador Paloma     Radiador Dormitorio

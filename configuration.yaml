@@ -350,6 +350,8 @@ cloud:
         - switch.esphome_bas_sw4
         - switch.esphome_pow_sw1
         - switch.esphome_pow_sw2
+        - switch.esphome_pow_sw3
+        - switch.esphome_pow_sw4
     entity_config:
       script.homy_armado_parcial:
         name: Armado Parcial
