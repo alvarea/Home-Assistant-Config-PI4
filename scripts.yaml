@@ -1280,7 +1280,6 @@ piscina_timer_cancel:
       entity_id: timer.piscina
     - service: switch.turn_off
       entity_id: switch.esphome_pow_sw3
-      #entity_id: switch.esphome_4ch_relay_2
     # Actualiza Valor Hora Arranque Real
     - service: input_datetime.set_datetime
       entity_id: input_datetime.piscina_real_end_time
@@ -1308,39 +1307,39 @@ piscina_timer_resume:
     - service: switch.turn_on
       entity_id: switch.esphome_pow_sw3
 
-riego_ch1_timer_cancel:
+riego_bonsais_ch1_timer_cancel:
   alias: Timer Riego CH1 Cancel
   sequence:
     - service: timer.cancel
-      entity_id: timer.riego_ch1
+      entity_id: timer.riego_bonsais_ch1
     - service: switch.turn_off
       entity_id: switch.esphome_4ch_sw2_relay_1
 
-riego_ch2_timer_cancel:
+riego_bonsais_ch2_timer_cancel:
   alias: Timer Riego CH2 Cancel
   sequence:
     - service: timer.cancel
-      entity_id: timer.riego_ch2
+      entity_id: timer.riego_bonsais_ch2
     - service: switch.turn_off
       entity_id: switch.esphome_4ch_sw2_relay_2
 
-riego_ch3_timer_cancel:
+riego_bonsais_ch3_timer_cancel:
   alias: Timer Riego CH3 Cancel
   sequence:
     - service: timer.cancel
-      entity_id: timer.riego_ch3
+      entity_id: timer.riego_bonsais_ch3
     - service: switch.turn_off
       entity_id: switch.esphome_4ch_sw2_relay_3
 
-riego_ch4_timer_cancel:
+riego_bonsais_ch4_timer_cancel:
   alias: Timer Riego CH3 Cancel
   sequence:
     - service: timer.cancel
-      entity_id: timer.riego_ch4
+      entity_id: timer.riego_bonsais_ch4
     - service: switch.turn_off
       entity_id: switch.esphome_4ch_sw2_relay_4
 
-riego_sw2_timer_cancel:
+riego_bonsais_produccion_timer_cancel:
   alias: Timer Bonsais SW2 Cancel
   sequence:
     - service: timer.cancel
@@ -1358,16 +1357,16 @@ riego_tomates_timer_cancel:
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# SCRIPTS DE RIEGO BONSAIS SONOFF 4CH-SW2 CH1 - CH4                           #
+# SCRIPTS DE RIEGO BONSAIS SONOFF 4CH-SW2 CH1 - CH4                           #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-#riego_ch1_timer_start_diario:
+#riego_bonsais_ch1_timer_start_diario:
 #  alias: Timer Riego CH1 Start Automatico
 #  sequence:
 #    - service: timer.start
 #      data_template:
-#        entity_id: timer.riego_ch1
-#        duration: '{{ states.sensor.riego_ch1_duracion_planificada.state}}'
+#        entity_id: timer.riego_bonsais_ch1
+#        duration: '{{ states.sensor.riego_bonsais_ch1_duracion_planificada.state}}'
 #    - service: switch.turn_on
 #      entity_id: switch.esphome_4ch_sw2_relay_1
 
@@ -1388,11 +1387,14 @@ jardin_off:
       entity_id: switch.esphome_pow_sw3
     # Apagado Riego Jardin y Fuentes
     - service: switch.turn_off
-      entity_id: switch.esphome_4ch_sw2_relay_1
-    - service: switch.turn_off
-      entity_id: switch.esphome_4ch_sw2_relay_2
-    - service: switch.turn_off
-      entity_id: switch.esphome_4ch_sw2_relay_3
+      entity_id:
+        - switch.esphome_4ch_sw2_relay_1
+        - switch.esphome_4ch_sw2_relay_2
+        - switch.esphome_4ch_sw2_relay_3
+        - switch.esphome_4ch_sw3_relay_1
+        - switch.esphome_4ch_sw3_relay_2
+        - switch.esphome_4ch_sw3_relay_3
+        - switch.esphome_4ch_sw3_relay_4
 
 # SONOFF S20 - NESSPRESSO
 #
@@ -1487,11 +1489,15 @@ sonoff_initialize:
     - service: switch.turn_off
       entity_id:
         - switch.esphome_bas_sw0                  # SONOFF_BAS_SW1_SIRENA INTERIOR ==> OFF
-        - switch.esphome_4ch_sw2_relay_1          # SONOFF_4CH PLANTAS ENTRADA
+        - switch.esphome_4ch_sw2_relay_1          # SONOFF_4CH RIEGO BONSAIS
         - switch.esphome_4ch_sw2_relay_2
         - switch.esphome_4ch_sw2_relay_3
         - switch.esphome_4ch_sw2_relay_4
-        - switch.esphome_bas_sw2                  # SONOFF_BAS TOMATERAS
+        - switch.esphome_4ch_sw3_relay_1          # SONOFF_4CH RIEGO CESPED
+        - switch.esphome_4ch_sw3_relay_2
+        - switch.esphome_4ch_sw3_relay_3
+        - switch.esphome_4ch_sw3_relay_4
+        - switch.esphome_bas_sw2                  # SONOFF_BAS HUERTO TOMATERAS
         - switch.esphome_bas_sw1                  # SONOFF_BAS BONSAIS PRODUCCION
     - service: switch.turn_on
       entity_id:

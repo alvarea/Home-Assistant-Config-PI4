@@ -672,7 +672,7 @@ views:
                 tap_action:
                   action: more-info
                 type: entity-button
-              - entity: binary_sensor.riego_ch1_dia_ejecucion
+              - entity: binary_sensor.riego_bonsais_ch1_dia_ejecucion
                 hold_action:
                   action: none
                 icon: mdi:tree
@@ -680,7 +680,7 @@ views:
                 tap_action:
                   action: more-info
                 type: entity-button
-              - entity: binary_sensor.riego_ch2_dia_ejecucion
+              - entity: binary_sensor.riego_bonsais_ch2_dia_ejecucion
                 hold_action:
                   action: none
                 icon: mdi:flower
@@ -1046,10 +1046,10 @@ views:
           - type: glance
             columns: 4
             entities:
-              - entity: binary_sensor.riego_ch1_status
+              - entity: binary_sensor.riego_bonsais_ch1_status
                 icon: mdi:sprout
                 name: Bonsais Zona Top
-              - entity: binary_sensor.riego_ch2_status
+              - entity: binary_sensor.riego_bonsais_ch2_status
                 icon: mdi:flower
                 name: Plantas Entrada
               - entity: binary_sensor.riego_tomates_status
@@ -1058,8 +1058,8 @@ views:
               - entity: binary_sensor.riego_bonsais_status
                 icon: mdi:sprout
                 name: Bonsais Produccion
-              - entity: sensor.riego_ch1_duracion_planificada_total
-              - entity: sensor.riego_ch2_duracion_planificada
+              - entity: sensor.riego_bonsais_ch1_duracion_planificada_total
+              - entity: sensor.riego_bonsais_ch2_duracion_planificada
               - entity: sensor.riego_tomates_duracion_planificada
               - entity: sensor.riego_bonsais_duracion_planificada_total
             show_icon: true
@@ -1246,19 +1246,19 @@ views:
               - entity: switch.esphome_4ch_sw2_relay_1
                 icon: mdi:watering-can
                 secondary_info: last-changed
-              - entity: timer.riego_ch1
-              - entity: input_boolean.riego_ch1_programador_t1
+              - entity: timer.riego_bonsais_ch1
+              - entity: input_boolean.riego_bonsais_ch1_programador_t1
                 name: Programador Tramo1
-              - entity: input_boolean.riego_ch1_programador_t2
+              - entity: input_boolean.riego_bonsais_ch1_programador_t2
                 name: Programador Tramo2
-              - entity: input_select.riego_ch1_programador_dias
-              - entity: input_datetime.riego_ch1_start_time_t1
-              - entity: input_datetime.riego_ch1_end_time_t1
-              - entity: sensor.riego_ch1_duracion_planificada
+              - entity: input_select.riego_bonsais_ch1_programador_dias
+              - entity: input_datetime.riego_bonsais_ch1_start_time_t1
+              - entity: input_datetime.riego_bonsais_ch1_end_time_t1
+              - entity: sensor.riego_bonsais_ch1_duracion_planificada
                 name: Duración Riego Tramo1
-              - entity: input_datetime.riego_ch1_start_time_t2
-              - entity: input_datetime.riego_ch1_end_time_t2
-              - entity: sensor.riego_ch1_duracion_planificada_t2
+              - entity: input_datetime.riego_bonsais_ch1_start_time_t2
+              - entity: input_datetime.riego_bonsais_ch1_end_time_t2
+              - entity: sensor.riego_bonsais_ch1_duracion_planificada_t2
                 name: Duración Riego Tramo2
             show_header_toggle: false
             title: Bonsais TOP
@@ -1320,14 +1320,14 @@ views:
               - entity: switch.esphome_4ch_sw2_relay_2
                 icon: mdi:watering-can
                 secondary_info: last-changed
-              - entity: timer.riego_ch2
+              - entity: timer.riego_bonsais_ch2
                 name: Timer Plantas Entrada
-              - entity: input_boolean.riego_ch2_programador
+              - entity: input_boolean.riego_bonsais_ch2_programador
                 name: Programador Automático
-              - entity: input_select.riego_ch2_programador_dias
-              - entity: input_datetime.riego_ch2_start_time
-              - entity: input_datetime.riego_ch2_end_time
-              - entity: sensor.riego_ch2_duracion_planificada
+              - entity: input_select.riego_bonsais_ch2_programador_dias
+              - entity: input_datetime.riego_bonsais_ch2_start_time
+              - entity: input_datetime.riego_bonsais_ch2_end_time
+              - entity: sensor.riego_bonsais_ch2_duracion_planificada
                 name: Duración Programa (Min)
             show_header_toggle: false
             title: Plantas Entrada
@@ -1339,14 +1339,14 @@ views:
               - entity: switch.esphome_4ch_sw2_relay_3
                 icon: mdi:watering-can
                 secondary_info: last-changed
-              - entity: timer.riego_ch3
+              - entity: timer.riego_bonsais_ch3
                 name: Timer Fuente Zen
-              - entity: input_boolean.riego_ch3_programador
+              - entity: input_boolean.riego_bonsais_ch3_programador
                 name: Programador Automático
-              - entity: input_select.riego_ch3_programador_dias
-              - entity: input_datetime.riego_ch3_start_time
-              - entity: input_datetime.riego_ch3_end_time
-              - entity: sensor.riego_ch3_duracion_planificada
+              - entity: input_select.riego_bonsais_ch3_programador_dias
+              - entity: input_datetime.riego_bonsais_ch3_start_time
+              - entity: input_datetime.riego_bonsais_ch3_end_time
+              - entity: sensor.riego_bonsais_ch3_duracion_planificada
                 name: Duración Programa (Min)
             show_header_toggle: false
             title: Fuente Zen

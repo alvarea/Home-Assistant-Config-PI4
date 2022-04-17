@@ -134,6 +134,13 @@
         unit_of_measurement: "ms"
         value_template: "{{ state_attr('binary_sensor.ping_01_router_movistar', 'round_trip_time_avg')|round(2) }}"
 
+      densidad_sensor_humo:
+        # smoke_sensor_158d0001fd321c
+        friendly_name: 'Densidad Humo Cocina'
+        value_template: "{{ states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.Density|int if states.binary_sensor.smoke_sensor_158d0001fd321c is not none }}"
+        unit_of_measurement: '%'
+        icon_template: mdi:fire
+
       # Meta tracker AAC, MFC, PAF, AAF
       # meta_track_aac:
       #  value_template: "{{ states('device_tracker.meta_aac') if states('device_tracker.meta_aac') is not none }}"
@@ -272,46 +279,46 @@
         icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_manual_minutos') is not none }}"
 
       #
-      # CONTROL ESPHOME SW2 - JADRIN - RIEGO BONSAIS
+      # CONTROL ESPHOME_4CH_SW2 - RIEGO BONSAIS
       #
       # RIEGO CH1 Duracion Programa Diario-Semanal
-      riego_ch1_duracion_planificada:
-        value_template: '{{ "{:}".format((states.input_datetime.riego_ch1_end_time_t1.attributes.timestamp -  states.input_datetime.riego_ch1_start_time_t1.attributes.timestamp)/60)|int }}'
+      riego_bonsais_ch1_duracion_planificada:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_bonsais_ch1_end_time_t1.attributes.timestamp -  states.input_datetime.riego_bonsais_ch1_start_time_t1.attributes.timestamp)/60)|int }}'
         friendly_name: 'Duración Programa Planificado T1 (Min)'
-        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_ch1_duracion_planificada') is not none }}"
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_bonsais_ch1_duracion_planificada') is not none }}"
 
-      riego_ch1_duracion_planificada_t2:
-        value_template: '{{ "{:}".format((states.input_datetime.riego_ch1_end_time_t2.attributes.timestamp -  states.input_datetime.riego_ch1_start_time_t2.attributes.timestamp)/60)|int }}'
+      riego_bonsais_ch1_duracion_planificada_t2:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_bonsais_ch1_end_time_t2.attributes.timestamp -  states.input_datetime.riego_bonsais_ch1_start_time_t2.attributes.timestamp)/60)|int }}'
         friendly_name: 'Duración Programa Planificado T2 (Min)'
-        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_ch1_duracion_planificada_t2') is not none }}"
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_bonsais_ch1_duracion_planificada_t2') is not none }}"
 
-      riego_ch1_programador_t1_estado:
-        value_template: "{% if is_state('input_boolean.riego_ch1_programador_t1','on')%}1{%else%}0{%endif%}"
+      riego_bonsais_ch1_programador_t1_estado:
+        value_template: "{% if is_state('input_boolean.riego_bonsais_ch1_programador_t1','on')%}1{%else%}0{%endif%}"
         friendly_name: 'Estado Programador Riego CH1 T1'
 
-      riego_ch1_programador_t2_estado:
-        value_template: "{% if is_state('input_boolean.riego_ch1_programador_t2','on')%}1{%else%}0{%endif%}"
+      riego_bonsais_ch1_programador_t2_estado:
+        value_template: "{% if is_state('input_boolean.riego_bonsais_ch1_programador_t2','on')%}1{%else%}0{%endif%}"
         friendly_name: 'Estado Programador Riego CH1 T2'
 
-      riego_ch1_duracion_planificada_total:
-        value_template: '{{(states.sensor.riego_ch1_duracion_planificada.state|int*states.sensor.riego_ch1_programador_t1_estado.state|int)+(states.sensor.riego_ch1_duracion_planificada_t2.state|int*states.sensor.riego_ch1_programador_t2_estado.state|int)}}'
+      riego_bonsais_ch1_duracion_planificada_total:
+        value_template: '{{(states.sensor.riego_bonsais_ch1_duracion_planificada.state|int*states.sensor.riego_bonsais_ch1_programador_t1_estado.state|int)+(states.sensor.riego_bonsais_ch1_duracion_planificada_t2.state|int*states.sensor.riego_bonsais_ch1_programador_t2_estado.state|int)}}'
         friendly_name: 'Duración Total Programa (Min)'
-        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_ch1_duracion_planificada_t2') is not none }}"
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_bonsais_ch1_duracion_planificada_t2') is not none }}"
 
-      riego_ch2_duracion_planificada:
-        value_template: '{{ "{:}".format((states.input_datetime.riego_ch2_end_time.attributes.timestamp -  states.input_datetime.riego_ch2_start_time.attributes.timestamp)/60)|int }}'
+      riego_bonsais_ch2_duracion_planificada:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_bonsais_ch2_end_time.attributes.timestamp -  states.input_datetime.riego_bonsais_ch2_start_time.attributes.timestamp)/60)|int }}'
         friendly_name: 'Duración Programa Planificado (Min)'
-        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_ch2_duracion_planificada') is not none }}"
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_bonsais_ch2_duracion_planificada') is not none }}"
 
-      riego_ch3_duracion_planificada:
-        value_template: '{{ "{:}".format((states.input_datetime.riego_ch3_end_time.attributes.timestamp -  states.input_datetime.riego_ch3_start_time.attributes.timestamp)/60)|int }}'
+      riego_bonsais_ch3_duracion_planificada:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_bonsais_ch3_end_time.attributes.timestamp -  states.input_datetime.riego_bonsais_ch3_start_time.attributes.timestamp)/60)|int }}'
         friendly_name: 'Duración Programa Planificado (Min)'
-        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_ch3_duracion_planificada') is not none }}"
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_bonsais_ch3_duracion_planificada') is not none }}"
 
-      riego_ch4_duracion_planificada:
-        value_template: '{{ "{:}".format((states.input_datetime.riego_ch4_end_time.attributes.timestamp -  states.input_datetime.riego_ch4_start_time.attributes.timestamp)/60)|int }}'
+      riego_bonsais_ch4_duracion_planificada:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_bonsais_ch4_end_time.attributes.timestamp -  states.input_datetime.riego_bonsais_ch4_start_time.attributes.timestamp)/60)|int }}'
         friendly_name: 'Duración Programa Planificado (Min)'
-        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_ch4_duracion_planificada') is not none }}"
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_bonsais_ch4_duracion_planificada') is not none }}"
 
       riego_bonsais_duracion_planificada:
         value_template: '{{ "{:}".format((states.input_datetime.riego_bonsais_end_time.attributes.timestamp -  states.input_datetime.riego_bonsais_start_time.attributes.timestamp)/60)|int }}'
@@ -334,7 +341,7 @@
       riego_bonsais_duracion_planificada_total:
         value_template: '{{(states.sensor.riego_bonsais_duracion_planificada.state|int*states.sensor.riego_bonsais_programador_t1_estado.state|int)+(states.sensor.riego_bonsais_duracion_planificada_t2.state|int*states.sensor.riego_bonsais_programador_t2_estado.state|int)}}'
         friendly_name: 'Duración Total Programa (Min)'
-        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_ch1_duracion_planificada_t2') is not none }}"
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_bonsais_ch1_duracion_planificada_t2') is not none }}"
 
       riego_tomates_duracion_planificada:
         value_template: '{{ "{:}".format((states.input_datetime.riego_tomates_end_time.attributes.timestamp -  states.input_datetime.riego_tomates_start_time.attributes.timestamp)/60)|int }}'
@@ -357,23 +364,105 @@
       riego_tomates_duracion_planificada_total:
         value_template: '{{(states.sensor.riego_tomates_duracion_planificada.state|int*states.sensor.riego_tomates_programador_t1_estado.state|int)+(states.sensor.riego_tomates_duracion_planificada_t2.state|int*states.sensor.riego_tomates_programador_t2_estado.state|int)}}'
         friendly_name: 'Duración Total Programa (Min)'
-        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_ch1_duracion_planificada_t2') is not none }}"
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_bonsais_ch1_duracion_planificada_t2') is not none }}"
 
-      densidad_sensor_humo:
-        # smoke_sensor_158d0001fd321c
-        friendly_name: 'Densidad Humo Cocina'
-        value_template: "{{ states.binary_sensor.smoke_sensor_158d0001fd321c.attributes.Density|int if states.binary_sensor.smoke_sensor_158d0001fd321c is not none }}"
-        unit_of_measurement: '%'
-        icon_template: mdi:fire
+      #
+      # CONTROL ESPHOME_4CH_SW3 - RIEGO JARDIN
+      #
+
+      # CH1 Duracion Programa Diario-Semanal
+      riego_cesped_ch1_duracion_planificada:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch1_end_time_t1.attributes.timestamp -  states.input_datetime.riego_cesped_ch1_start_time_t1.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Duración Programa Planificado T1 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch1_duracion_planificada') is not none }}"
+
+      riego_cesped_ch1_duracion_planificada_t2:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch1_end_time_t2.attributes.timestamp -  states.input_datetime.riego_cesped_ch1_start_time_t2.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Duración Programa Planificado T2 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch1_duracion_planificada_t2') is not none }}"
+
+      riego_cesped_ch1_programador_t1_estado:
+        value_template: "{% if is_state('input_boolean.riego_cesped_ch1_programador_t1','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Estado Programador Riego CH1 T1'
+
+      riego_cesped_ch1_programador_t2_estado:
+        value_template: "{% if is_state('input_boolean.riego_cesped_ch1_programador_t2','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Estado Programador Riego CH1 T2'
+
+      riego_cesped_ch1_duracion_planificada_total:
+        value_template: '{{(states.sensor.riego_cesped_ch1_duracion_planificada.state|int*states.sensor.riego_cesped_ch1_programador_t1_estado.state|int)+(states.sensor.riego_cesped_ch1_duracion_planificada_t2.state|int*states.sensor.riego_cesped_ch1_programador_t2_estado.state|int)}}'
+        friendly_name: 'Duración Total Programa (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch1_duracion_planificada_t2') is not none }}"
+
+      # CH2 Duracion Programa Diario-Semanal
+      riego_cesped_ch2_duracion_planificada:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch2_end_time_t1.attributes.timestamp -  states.input_datetime.riego_cesped_ch2_start_time_t1.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Duración Programa Planificado T1 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch2_duracion_planificada') is not none }}"
+
+      riego_cesped_ch2_duracion_planificada_t2:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch2_end_time_t2.attributes.timestamp -  states.input_datetime.riego_cesped_ch2_start_time_t2.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Duración Programa Planificado T2 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch2_duracion_planificada_t2') is not none }}"
+
+      riego_cesped_ch2_programador_t1_estado:
+        value_template: "{% if is_state('input_boolean.riego_cesped_ch2_programador_t1','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Estado Programador Riego CH2 T1'
+
+      riego_cesped_ch2_programador_t2_estado:
+        value_template: "{% if is_state('input_boolean.riego_cesped_ch2_programador_t2','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Estado Programador Riego CH2 T2'
+
+      # CH3 Duracion Programa Diario-Semanal
+      riego_cesped_ch3_duracion_planificada:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch3_end_time_t1.attributes.timestamp -  states.input_datetime.riego_cesped_ch3_start_time_t1.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Duración Programa Planificado T1 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch3_duracion_planificada') is not none }}"
+
+      riego_cesped_ch3_duracion_planificada_t2:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch3_end_time_t2.attributes.timestamp -  states.input_datetime.riego_cesped_ch3_start_time_t2.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Duración Programa Planificado T2 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch3_duracion_planificada_t2') is not none }}"
+
+      riego_cesped_ch3_programador_t1_estado:
+        value_template: "{% if is_state('input_boolean.riego_cesped_ch3_programador_t1','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Estado Programador Riego CH3 T1'
+
+      riego_cesped_ch3_programador_t2_estado:
+        value_template: "{% if is_state('input_boolean.riego_cesped_ch3_programador_t2','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Estado Programador Riego CH3 T2'
+
+      riego_cesped_ch3_duracion_planificada_total:
+        value_template: '{{(states.sensor.riego_cesped_ch3_duracion_planificada.state|int*states.sensor.riego_cesped_ch3_programador_t1_estado.state|int)+(states.sensor.riego_cesped_ch3_duracion_planificada_t2.state|int*states.sensor.riego_cesped_ch3_programador_t2_estado.state|int)}}'
+        friendly_name: 'Duración Total Programa (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch3_duracion_planificada_t2') is not none }}"
+
+      # CH4 Duracion Programa Diario-Semanal
+      riego_cesped_ch4_duracion_planificada:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch4_end_time_t1.attributes.timestamp -  states.input_datetime.riego_cesped_ch4_start_time_t1.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Duración Programa Planificado T1 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch4_duracion_planificada') is not none }}"
+
+      riego_cesped_ch4_duracion_planificada_t2:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch4_end_time_t2.attributes.timestamp -  states.input_datetime.riego_cesped_ch4_start_time_t2.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Duración Programa Planificado T2 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch4_duracion_planificada_t2') is not none }}"
+
+      riego_cesped_ch4_programador_t1_estado:
+        value_template: "{% if is_state('input_boolean.riego_cesped_ch4_programador_t1','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Estado Programador Riego CH4 T1'
+
+      riego_cesped_ch4_programador_t2_estado:
+        value_template: "{% if is_state('input_boolean.riego_cesped_ch4_programador_t2','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Estado Programador Riego CH4 T2'
+
+      riego_cesped_ch4_duracion_planificada_total:
+        value_template: '{{(states.sensor.riego_cesped_ch4_duracion_planificada.state|int*states.sensor.riego_cesped_ch4_programador_t1_estado.state|int)+(states.sensor.riego_cesped_ch4_duracion_planificada_t2.state|int*states.sensor.riego_cesped_ch4_programador_t2_estado.state|int)}}'
+        friendly_name: 'Duración Total Programa (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch4_duracion_planificada_t2') is not none }}"
+
       #
       # Sensores Timezone
-      # {{utcnow() }}
-      # {{now() }}
-      # {{ utcnow().astimezone() }}
-      # {{ now().astimezone() }}
-      # {{ utcnow().tzinfo }}
-      # {{ now().tzinfo }}
-      # {{ now().astimezone().tzinfo }}
       #
       now_tzinfo:
         friendly_name: 'Time Zone Info'
@@ -389,6 +478,15 @@
         friendly_name: 'Time Zone Hora'
         value_template: "{{ now().astimezone() }}"
         icon_template: mdi:clock-time-eight
+
+      # {{utcnow() }}
+      # {{now() }}
+      # {{ utcnow().astimezone() }}
+      # {{ now().astimezone() }}
+      # {{ utcnow().tzinfo }}
+      # {{ now().tzinfo }}
+      # {{ now().astimezone().tzinfo }}
+      #
 
       # offset: "+03:30:00"   # Horario Invierno CET = UTC+1  => 18:30 + 3:30 = 22:00
       # offset: "+00:30:00"   # Horario Verano   DST = UTC+2  => 21:30 + 0:30 = 22:00

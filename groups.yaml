@@ -276,11 +276,11 @@ all_automations_grp:
     - automation.s16_sonoff_pow_lavadora_boton_switch_on
     - automation.s17_sonoff_pow_lavadora_led
     - automation.s17c_sonoff_pow_lavadora_warning_off
-    - automation.s19_timer_riego_ch1_start
-    - automation.s19_timer_riego_ch1_timer2_start
-    - automation.s20_timer_riego_ch1_end
-    - automation.s21_timer_riego_ch2_start
-    - automation.s22_timer_riego_ch2_end
+    - automation.s19_timer_riego_bonsais_ch1_start
+    - automation.s19_timer_riego_bonsais_ch1_timer2_start
+    - automation.s20_timer_riego_bonsais_ch1_end
+    - automation.s21_timer_riego_bonsais_ch2_start
+    - automation.s22_timer_riego_bonsais_ch2_end
     - automation.s23_timer_fuente_ch3_start
     - automation.s24_timer_fuente_ch3_end
     - automation.s25_timer_fuente_frog_sw2_start

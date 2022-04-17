@@ -132,23 +132,37 @@ timer:
   piscina:
     name: Timer Piscina
     icon: mdi:timer
-  riego_ch1:
-    name: Timer Bonsais Top
-    icon: mdi:timer
-  riego_ch2:
-    name: Timer CH2
-    icon: mdi:timer
-  riego_ch3:
-    name: Timer CH3
-    icon: mdi:timer
-  riego_ch4:
-    name: Timer CH4
-    icon: mdi:timer
   riego_bonsais:
     name: Timer Bonsais Producción
     icon: mdi:timer
   riego_tomates:
     name: Timer Tomatera
+    icon: mdi:timer
+  # Programador SONOFF esphome_4ch_sw2 Riego Bonsáis
+  riego_bonsais_ch1:
+    name: Timer CH1
+    icon: mdi:timer
+  riego_bonsais_ch2:
+    name: Timer CH2
+    icon: mdi:timer
+  riego_bonsais_ch3:
+    name: Timer CH3
+    icon: mdi:timer
+  riego_bonsais_ch4:
+    name: Timer CH4
+    icon: mdi:timer
+  # Programador SONOFF esphome_4ch_sw3 Riego Jardín
+  riego_cesped_ch1:
+    name: Timer CH1
+    icon: mdi:timer
+  riego_cesped_ch2:
+    name: Timer CH2
+    icon: mdi:timer
+  riego_cesped_ch3:
+    name: Timer CH3
+    icon: mdi:timer
+  riego_cesped_ch4:
+    name: Timer CH4
     icon: mdi:timer
 
 #counter:

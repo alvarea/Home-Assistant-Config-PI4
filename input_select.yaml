@@ -189,7 +189,6 @@
     icon: mdi:music-note
     initial: '2 - Accident'
 
-
 # Depuradora Piscina
   piscina_programador_dias:
     name: Diario/Semanal
@@ -202,7 +201,7 @@
     icon: mdi:calendar
 
 # Riego Bonsais
-  riego_ch1_programador_dias:
+  riego_bonsais_ch1_programador_dias:
     name: Diario/Semanal
     options:
      - 'Diario'
@@ -213,7 +212,7 @@
     icon: mdi:calendar
 
 # Riego
-  riego_ch2_programador_dias:
+  riego_bonsais_ch2_programador_dias:
     name: Diario/Semanal
     options:
      - 'Diario'
@@ -224,7 +223,7 @@
     icon: mdi:calendar
 
 # Fuente Zen
-  riego_ch3_programador_dias:
+  riego_bonsais_ch3_programador_dias:
     name: Diario/Semanal
     options:
      - 'Diario'
@@ -235,7 +234,7 @@
     icon: mdi:calendar
 
 # Riego
-  riego_ch4_programador_dias:
+  riego_bonsais_ch4_programador_dias:
     name: Diario/Semanal
     options:
      - 'Diario'
@@ -245,7 +244,7 @@
     #initial: Diario
     icon: mdi:calendar
 
-# Riego Bonsais
+# Riego Bonsais Producción
   riego_bonsais_programador_dias:
     name: Diario/Semanal
     options:
@@ -256,7 +255,7 @@
     #initial: Diario
     icon: mdi:calendar
 
-# Riego Tomates
+# Riego Huerto Tomates
   riego_tomates_programador_dias:
     name: Diario/Semanal
     options:
@@ -265,4 +264,44 @@
      - 'Domingo'
      - 'Weekend'
     #initial: Diario
+    icon: mdi:calendar
+
+# Riego Cesped CH1
+  riego_cesped_ch1_programador_dias:
+    name: Diario/Semanal
+    options:
+     - 'Diario'
+     - 'Sábado'
+     - 'Domingo'
+     - 'Weekend'
+    icon: mdi:calendar
+
+# Riego Cesped CH2
+  riego_cesped_ch2_programador_dias:
+    name: Diario/Semanal
+    options:
+     - 'Diario'
+     - 'Sábado'
+     - 'Domingo'
+     - 'Weekend'
+    icon: mdi:calendar
+
+# Riego Cesped CH3
+  riego_cesped_ch3_programador_dias:
+    name: Diario/Semanal
+    options:
+     - 'Diario'
+     - 'Sábado'
+     - 'Domingo'
+     - 'Weekend'
+    icon: mdi:calendar
+
+# Riego Cesped CH4
+  riego_cesped_ch4_programador_dias:
+    name: Diario/Semanal
+    options:
+     - 'Diario'
+     - 'Sábado'
+     - 'Domingo'
+     - 'Weekend'
     icon: mdi:calendar

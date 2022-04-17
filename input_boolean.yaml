@@ -96,31 +96,30 @@
   # RIEGO INTERRUPTOR General conectado con Previsión del Tiempo
   riego_interruptor_global:
     name: Riego Interruptor General
-    initial: on
     icon: mdi:sprinkler-var
 
 # Riego Bonsais Top
-  riego_ch1_programador_t1:
+  riego_bonsais_ch1_programador_t1:
     name: Programador CH1 Timer1
     icon: mdi:dip-switch
 
   # Riego Bonsais Top - Tramo2
-  riego_ch1_programador_t2:
+  riego_bonsais_ch1_programador_t2:
     name: Programador CH1 Timer2
     icon: mdi:dip-switch
 
   # Riego Plantas entrada
-  riego_ch2_programador:
+  riego_bonsais_ch2_programador:
     name: Programador CH2
     icon: mdi:dip-switch
 
   # Fuente Zen entrada
-  riego_ch3_programador:
+  riego_bonsais_ch3_programador:
     name: Programador CH3
     icon: mdi:dip-switch
 
   # Pendiente sin uso
-  riego_ch4_programador:
+  riego_bonsais_ch4_programador:
     name: Programador CH4
     icon: mdi:dip-switch
 
@@ -144,6 +143,46 @@
     name: Programador Riego Zona2 - Tramo2
     icon: mdi:dip-switch
 
+  # Riego Cesped CH1
+  riego_cesped_ch1_programador_t1:
+    name: Programador CH1 Timer1
+    icon: mdi:dip-switch
+
+  # Riego Cesped CH1 - Tramo2
+  riego_cesped_ch1_programador_t2:
+    name: Programador CH1 Timer2
+    icon: mdi:dip-switch
+
+  # Riego Cesped CH2
+  riego_cesped_ch2_programador_t1:
+    name: Programador CH2 Timer1
+    icon: mdi:dip-switch
+
+  # Riego Cesped CH2 - Tramo2
+  riego_cesped_ch2_programador_t2:
+    name: Programador CH2 Timer2
+    icon: mdi:dip-switch
+
+  # Riego Cesped CH3
+  riego_cesped_ch3_programador_t1:
+    name: Programador CH3 Timer1
+    icon: mdi:dip-switch
+
+  # Riego Jardín CH3 - Tramo2
+  riego_cesped_ch3_programador_t2:
+    name: Programador CH3 Timer2
+    icon: mdi:dip-switch
+
+  # Riego Cesped CH4
+  riego_cesped_ch4_programador_t1:
+    name: Programador CH4 Timer1
+    icon: mdi:dip-switch
+
+  # Riego Cesped CH4 - Tramo2
+  riego_cesped_ch4_programador_t2:
+    name: Programador CH4 Timer2
+    icon: mdi:dip-switch
+
 # Programador Diario Luces Jardín
 
   jardin_programador_xia_ext:
@@ -164,11 +203,11 @@
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch2:
-    name: Prog. Focos Piscina
+    name: Prog. Foco Olivos
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch3:
-    name: Prog. Focos Entrada
+    name: Prog. Foco Olivo Nubes
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch4:

@@ -317,69 +317,10 @@ script.piscina_timer_cancel:
   icon: mdi:power-off
 
 #
-# SERIE SONOFF 4CH
+# SERIE SONOFF 4CH_SW1
 #
 binary_sensor.esphome_4ch_status:
   friendly_name: 4CH.SW1 Cuadro Jardín
-
-switch.esphome_4ch_relay_1:
-  friendly_name: Balizas Cesped
-  icon: mdi:lightbulb-cfl
-
-switch.esphome_4ch_relay_2:
-  friendly_name: Luz Olivo 3
-  icon: mdi:track-light
-
-switch.esphome_4ch_relay_3:
-  friendly_name: Luz Olivo 1
-  icon: mdi:track-light
-
-switch.esphome_4ch_relay_4:
-  icon: mdi:track-light
-  #icon: mdi:car-side
-
-#
-# SERIE SONOFF 4CH R2
-#
-binary_sensor.esphome_4ch_sw2_status:
-  friendly_name: 4CH.SW2 Control Riego
-
-switch.esphome_4ch_sw2_relay_1:
-  friendly_name: Riego CH1
-  icon: mdi:track-light
-
-switch.esphome_4ch_sw2_relay_2:
-  friendly_name: Riego CH2
-  icon: mdi:track-light
-
-switch.esphome_4ch_sw2_relay_3:
-  friendly_name: Riego CH3
-  icon: mdi:track-light
-
-switch.esphome_4ch_sw2_relay_4:
-  friendly_name: Riego CH1
-  icon: mdi:track-light
-
-#
-# SERIE SONOFF S20
-#
-switch.esphome_s20_sw1:
-  friendly_name: Dormitorio MFC
-
-binary_sensor.esphome_s20_sw1_status:
-  friendly_name: S20.SW1 Dormitorio MFC
-
-light.esphome_s20_sw1_led:
-  friendly_name: Led Dormitorio MFC
-
-switch.esphome_s20_sw3:
-  friendly_name: Dormitorio PAF
-
-binary_sensor.esphome_s20_sw3_status:
-  friendly_name: S20.SW3 Dormitorio PAF
-
-light.esphome_s20_sw3_led:
-  friendly_name: Led Dormitorio PAF
 
 #
 # SERIE SONOFF POW-R2
