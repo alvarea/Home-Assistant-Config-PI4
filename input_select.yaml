@@ -191,117 +191,123 @@
 
 # Depuradora Piscina
   piscina_programador_dias:
-    name: Diario/Semanal
+    name: Frecuencia Programador
     options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
-    #initial: Diario
+      - 'Bloqueado'
+      - 'Diario'
+      - 'Sábado'
+      - 'Domingo'
+      - 'Weekend'
     icon: mdi:calendar
 
 # Riego Bonsais
   riego_bonsais_ch1_programador_dias:
-    name: Diario/Semanal
+    name: Frecuencia Programador
     options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
-    #initial: Diario
+      - 'Bloqueado'
+      - 'Diario'
+      - 'Sábado'
+      - 'Domingo'
+      - 'Weekend'
     icon: mdi:calendar
 
-# Riego
+# Riego Plantas Aromaticas
   riego_bonsais_ch2_programador_dias:
-    name: Diario/Semanal
+    name: Frecuencia Programador
     options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
+      - 'Bloqueado'
+      - 'Diario'
+      - 'Sábado'
+      - 'Domingo'
+      - 'Weekend'
     #initial: Diario
     icon: mdi:calendar
 
 # Fuente Zen
   riego_bonsais_ch3_programador_dias:
-    name: Diario/Semanal
+    name: Frecuencia Programador
     options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
-    #initial: Diario
+      - 'Bloqueado'
+      - 'Diario'
+      - 'Sábado'
+      - 'Domingo'
+      - 'Weekend'
     icon: mdi:calendar
 
 # Riego
   riego_bonsais_ch4_programador_dias:
-    name: Diario/Semanal
+    name: Frecuencia Programador
     options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
-    #initial: Diario
+      - 'Bloqueado'
+      - 'Diario'
+      - 'Sábado'
+      - 'Domingo'
+      - 'Weekend'
     icon: mdi:calendar
 
 # Riego Bonsais Producción
-  riego_bonsais_programador_dias:
-    name: Diario/Semanal
+  riego_bonsais_ch0_programador_dias:
+    name: Frecuencia Programador
     options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
+      - 'Bloqueado'
+      - 'Diario'
+      - 'Sábado'
+      - 'Domingo'
+      - 'Weekend'
     #initial: Diario
     icon: mdi:calendar
 
 # Riego Huerto Tomates
-  riego_tomates_programador_dias:
-    name: Diario/Semanal
+  riego_tomates_ch0_programador_dias:
+    name: Frecuencia Programador
     options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
-    #initial: Diario
+      - 'Bloqueado'
+      - 'Diario'
+      - 'Sábado'
+      - 'Domingo'
+      - 'Weekend'
     icon: mdi:calendar
 
 # Riego Cesped CH1
   riego_cesped_ch1_programador_dias:
-    name: Diario/Semanal
+    name: Frecuencia Programador
     options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
+      - 'Bloqueado'
+      - 'Diario'
+      - 'Sábado'
+      - 'Domingo'
+      - 'Weekend'
     icon: mdi:calendar
 
 # Riego Cesped CH2
   riego_cesped_ch2_programador_dias:
-    name: Diario/Semanal
+    name: Frecuencia Programador
     options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
+      - 'Bloqueado'
+      - 'Diario'
+      - 'Sábado'
+      - 'Domingo'
+      - 'Weekend'
     icon: mdi:calendar
 
 # Riego Cesped CH3
   riego_cesped_ch3_programador_dias:
-    name: Diario/Semanal
+    name: Frecuencia Programador
     options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
+      - 'Bloqueado'
+      - 'Diario'
+      - 'Sábado'
+      - 'Domingo'
+      - 'Weekend'
     icon: mdi:calendar
 
 # Riego Cesped CH4
   riego_cesped_ch4_programador_dias:
-    name: Diario/Semanal
+    name: Frecuencia Programador
     options:
-     - 'Diario'
-     - 'Sábado'
-     - 'Domingo'
-     - 'Weekend'
+      - 'Bloqueado'
+      - 'Diario'
+      - 'Sábado'
+      - 'Domingo'
+      - 'Weekend'
     icon: mdi:calendar

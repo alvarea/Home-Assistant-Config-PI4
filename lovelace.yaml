@@ -1296,7 +1296,7 @@ views:
                 icon: mdi:watering-can
                 name: Riego Tomateras
                 secondary_info: last-changed
-              - entity: timer.riego_tomates
+              - entity: timer.riego_tomates_ch0
               - entity: input_boolean.riego_tomates_programador_t1
                 name: Programador Tramo1
               - entity: input_boolean.riego_tomates_programador_t2

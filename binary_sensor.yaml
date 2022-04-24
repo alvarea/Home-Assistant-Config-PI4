@@ -178,8 +178,8 @@
       # Todos en Casa:  IF sensor.family_home >= sensor.family_sleep_home THEN TRUE
       family_all_home:
         value_template: >-
-          {% if states('sensor.family_sleep_home')|int > 0
-              and states('sensor.family_home')|int >= states('sensor.family_sleep_home')|int %}
+          {% if states('sensor.family_sleep_home')|int(0) > 0
+              and states('sensor.family_home')|int(0) >= states('sensor.family_sleep_home')|int(0) %}
             true
           {% else %}
             false
@@ -192,7 +192,7 @@
       # Alguien en Casa:  IF sensor.family_home > 0 THEN TRUE
       family_any_home:
         value_template: >-
-          {% if states('sensor.family_home')|int > 0 %}
+          {% if states('sensor.family_home')|int(0) > 0 %}
             true
           {% else %}
             false
@@ -232,7 +232,7 @@
 
       esphome_pow_sw2_current:
         value_template: >-
-          {% if states('sensor.esphome_pow_sw2_current')|int > 0 %}
+          {% if states('sensor.esphome_pow_sw2_current')|int(0) > 0 %}
             true
           {% else %}
             false
@@ -240,7 +240,7 @@
 
       esphome_pow_sw2_power:
         value_template: >-
-          {% if states('sensor.esphome_pow_sw2_power')|int > 0 %}
+          {% if states('sensor.esphome_pow_sw2_power')|int(0) > 0 %}
             true
           {% else %}
             false
@@ -248,7 +248,7 @@
 
       esphome_pow_sw2_voltage:
         value_template: >-
-          {% if states('sensor.esphome_pow_sw2_voltage')|int > 0 %}
+          {% if states('sensor.esphome_pow_sw2_voltage')|int(0) > 0 %}
             true
           {% else %}
             false
@@ -257,7 +257,7 @@
       esphome_pow_sw2_lavadora_lavando:
         value_template: >-
           {%  if is_state('binary_sensor.esphome_pow_sw2_switch','on')
-              and states('sensor.esphome_pow_sw2_voltage')|int > 200
+              and states('sensor.esphome_pow_sw2_voltage')|int(0) > 200
               and states('sensor.esphome_pow_sw2_power')|round(1) > 2.5
           %}
             true
@@ -295,7 +295,7 @@
 
       esphome_pow_sw3_current:
         value_template: >-
-          {% if states('sensor.esphome_pow_sw3_current')|int > 1 %}
+          {% if states('sensor.esphome_pow_sw3_current')|int(0) > 1 %}
             true
           {% else %}
             false
@@ -303,7 +303,7 @@
 
       esphome_pow_sw3_power:
         value_template: >-
-          {% if states('sensor.esphome_pow_sw3_power')|int > 1 %}
+          {% if states('sensor.esphome_pow_sw3_power')|int(0) > 1 %}
             true
           {% else %}
             false
@@ -311,7 +311,7 @@
 
       esphome_pow_sw3_voltage:
         value_template: >-
-          {% if states('sensor.esphome_pow_sw3_voltage')|int > 1 %}
+          {% if states('sensor.esphome_pow_sw3_voltage')|int(0) > 1 %}
             true
           {% else %}
             false
@@ -320,7 +320,7 @@
       esphome_pow_sw3_piscina_depurando:
         value_template: >-
           {%  if is_state('binary_sensor.esphome_pow_sw3_switch','on')
-              and states('sensor.esphome_pow_sw3_voltage')|int > 200
+              and states('sensor.esphome_pow_sw3_voltage')|int(0) > 200
               and states('sensor.esphome_pow_sw3_power')|round(1) > 2.5
           %}
             true
@@ -414,7 +414,7 @@
           {% if (is_state('sensor.aemet_icono_0d','rainy') or
                  is_state('sensor.aemet_icono_0d','snow') or
                  is_state('sensor.aemet_icono_0d','sleet')
-                ) and states('sensor.aemet_lluvia_0d')|int>=80
+                ) and states('sensor.aemet_lluvia_0d')|int(0)>=80
           %}
             true
           {% else %}
@@ -433,7 +433,7 @@
           {% if (is_state('sensor.aemet_icono_1d','rainy') or
                  is_state('sensor.aemet_icono_1d','snow') or
                  is_state('sensor.aemet_icono_1d','sleet')
-                ) and states('sensor.aemet_lluvia_1d')|int>=80
+                ) and states('sensor.aemet_lluvia_1d')|int(0)>=80
           %}
             true
           {% else %}
@@ -452,7 +452,7 @@
           {% if (is_state('sensor.aemet_icono_2d','rainy') or
                  is_state('sensor.aemet_icono_2d','snow') or
                  is_state('sensor.aemet_icono_2d','sleet')
-                ) and states('sensor.aemet_lluvia_2d')|int>=80
+                ) and states('sensor.aemet_lluvia_2d')|int(0)>=80
           %}
             true
           {% else %}
@@ -471,7 +471,7 @@
           {% if (is_state('sensor.aemet_icono_3d','rainy') or
                  is_state('sensor.aemet_icono_3d','snow') or
                  is_state('sensor.aemet_icono_3d','sleet')
-                ) and states('sensor.aemet_lluvia_3d')|int>=80
+                ) and states('sensor.aemet_lluvia_3d')|int(0)>=80
           %}
             true
           {% else %}
@@ -541,8 +541,12 @@
         value_template: >-
           {% if is_state('binary_sensor.riego_bonsais_ch1_status','on') or
                 is_state('binary_sensor.riego_bonsais_ch2_status','on') or
-                is_state('binary_sensor.riego_bonsais_status','on') or
-                is_state('binary_sensor.riego_tomates_status','on')
+                is_state('binary_sensor.riego_cesped_ch1_status','on') or
+                is_state('binary_sensor.riego_cesped_ch2_status','on') or
+                is_state('binary_sensor.riego_cesped_ch3_status','on') or
+                is_state('binary_sensor.riego_cesped_ch4_status','on') or
+                is_state('binary_sensor.riego_bonsais_ch0_status','on') or
+                is_state('binary_sensor.riego_tomates_ch0_status','on')
           %}
             true
           {% else %}
@@ -617,17 +621,33 @@
         friendly_name: 'Riego CH2 on/off'
         icon_template: mdi:power
 
-      riego_bonsais_ch2_dia_ejecucion_t0:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH2) Precheck'
+      riego_bonsais_ch2_dia_ejecucion_t1:
+        friendly_name: '¿Próxima Ejecución Hoy? (CH2-T1)'
         icon_template: mdi:calendar-check
         value_template: >-
-          {% if is_state('input_select.riego_bonsais_ch2_programador_dias','Diario') and is_state('input_boolean.riego_bonsais_ch2_programador','on') %}
+          {% if is_state('input_select.riego_bonsais_ch2_programador_dias','Diario') and is_state('input_boolean.riego_bonsais_ch2_programador_t1','on') %}
             true
-          {% elif is_state('input_select.riego_bonsais_ch2_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_bonsais_ch2_programador','on') %}
+          {% elif is_state('input_select.riego_bonsais_ch2_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_bonsais_ch2_programador_t1','on') %}
             true
-          {% elif is_state('input_select.riego_bonsais_ch2_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_bonsais_ch2_programador','on') %}
+          {% elif is_state('input_select.riego_bonsais_ch2_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_bonsais_ch2_programador_t1','on') %}
             true
-          {% elif is_state('input_select.riego_bonsais_ch2_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_bonsais_ch2_programador','on') %}
+          {% elif is_state('input_select.riego_bonsais_ch2_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_bonsais_ch2_programador_t1','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      riego_bonsais_ch2_dia_ejecucion_t2:
+        friendly_name: '¿Próxima Ejecución Hoy? (CH2-T2)'
+        icon_template: mdi:calendar-check
+        value_template: >-
+          {% if is_state('input_select.riego_bonsais_ch2_programador_dias','Diario') and is_state('input_boolean.riego_bonsais_ch2_programador_t2','on') %}
+            true
+          {% elif is_state('input_select.riego_bonsais_ch2_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_bonsais_ch2_programador_t2','on') %}
+            true
+          {% elif is_state('input_select.riego_bonsais_ch2_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_bonsais_ch2_programador_t2','on') %}
+            true
+          {% elif is_state('input_select.riego_bonsais_ch2_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_bonsais_ch2_programador_t2','on') %}
             true
           {% else %}
             false
@@ -635,10 +655,10 @@
 
       riego_bonsais_ch2_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy? (CH2)'
-        icon_template: mdi:sprout
+        icon_template: mdi:tree
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
-                and is_state('binary_sensor.riego_bonsais_ch2_dia_ejecucion_t0','on')
+                and (is_state('binary_sensor.riego_bonsais_ch2_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_bonsais_ch2_dia_ejecucion_t2','on'))
           %}
             true
           {% else %}
@@ -715,9 +735,9 @@
 
       # RIEGO BONSAIS PRODUCCION
       #
-      riego_bonsais_status:
+      riego_bonsais_ch0_status:
         value_template: >-
-          {% if is_state('switch.esphome_bas_sw1','on') %}
+          {% if is_state('switch.esphome_pow_sw1','on') %}
             true
           {% else %}
             false
@@ -725,44 +745,44 @@
         friendly_name: 'Riego Bonsais Produccion on/off'
         icon_template: mdi:power
 
-      riego_bonsais_dia_ejecucion_t1:
+      riego_bonsais_ch0_dia_ejecucion_t1:
         friendly_name: '¿Próxima Ejecución Hoy? (SW2-T1)'
         icon_template: mdi:calendar-check
         value_template: >-
-          {% if is_state('input_select.riego_bonsais_programador_dias','Diario') and is_state('input_boolean.riego_bonsais_programador_t1','on') %}
+          {% if is_state('input_select.riego_bonsais_ch0_programador_dias','Diario') and is_state('input_boolean.riego_bonsais_ch0_programador_t1','on') %}
             true
-          {% elif is_state('input_select.riego_bonsais_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_bonsais_programador_t1','on') %}
+          {% elif is_state('input_select.riego_bonsais_ch0_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_bonsais_ch0_programador_t1','on') %}
             true
-          {% elif is_state('input_select.riego_bonsais_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_bonsais_programador_t1','on') %}
+          {% elif is_state('input_select.riego_bonsais_ch0_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_bonsais_ch0_programador_t1','on') %}
             true
-          {% elif is_state('input_select.riego_bonsais_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_bonsais_programador_t1','on') %}
+          {% elif is_state('input_select.riego_bonsais_ch0_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_bonsais_ch0_programador_t1','on') %}
             true
           {% else %}
             false
           {% endif %}
 
-      riego_bonsais_dia_ejecucion_t2:
+      riego_bonsais_ch0_dia_ejecucion_t2:
         friendly_name: '¿Próxima Ejecución Hoy? (SW2-T2)'
         icon_template: mdi:calendar-check
         value_template: >-
-          {% if is_state('input_select.riego_bonsais_programador_dias','Diario') and is_state('input_boolean.riego_bonsais_programador_t2','on') %}
+          {% if is_state('input_select.riego_bonsais_ch0_programador_dias','Diario') and is_state('input_boolean.riego_bonsais_ch0_programador_t2','on') %}
             true
-          {% elif is_state('input_select.riego_bonsais_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_bonsais_programador_t2','on') %}
+          {% elif is_state('input_select.riego_bonsais_ch0_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_bonsais_ch0_programador_t2','on') %}
             true
-          {% elif is_state('input_select.riego_bonsais_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_bonsais_programador_t2','on') %}
+          {% elif is_state('input_select.riego_bonsais_ch0_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_bonsais_ch0_programador_t2','on') %}
             true
-          {% elif is_state('input_select.riego_bonsais_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_bonsais_programador_t2','on') %}
+          {% elif is_state('input_select.riego_bonsais_ch0_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_bonsais_ch0_programador_t2','on') %}
             true
           {% else %}
             false
           {% endif %}
 
-      riego_bonsais_dia_ejecucion:
+      riego_bonsais_ch0_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy?'
         icon_template: mdi:pine-tree
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
-                and (is_state('binary_sensor.riego_bonsais_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_bonsais_dia_ejecucion_t2','on'))
+                and (is_state('binary_sensor.riego_bonsais_ch0_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_bonsais_ch0_dia_ejecucion_t2','on'))
           %}
             true
           {% else %}
@@ -771,7 +791,7 @@
 
       # RIEGO HUERTO TOMATERA
       #
-      riego_tomates_status:
+      riego_tomates_ch0_status:
         value_template: >-
           {% if is_state('switch.esphome_bas_sw2','on') %}
             true
@@ -781,44 +801,44 @@
         friendly_name: 'Riego Huerto Tomates  on/off'
         icon_template: mdi:power
 
-      riego_tomates_dia_ejecucion_t1:
+      riego_tomates_ch0_dia_ejecucion_t1:
         friendly_name: '¿Próxima Ejecución Hoy? (POW1-T1)'
         icon_template: mdi:calendar-check
         value_template: >-
-          {% if is_state('input_select.riego_tomates_programador_dias','Diario') and is_state('input_boolean.riego_tomates_programador_t1','on') %}
+          {% if is_state('input_select.riego_tomates_ch0_programador_dias','Diario') and is_state('input_boolean.riego_tomates_ch0_programador_t1','on') %}
             true
-          {% elif is_state('input_select.riego_tomates_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_tomates_programador_t1','on') %}
+          {% elif is_state('input_select.riego_tomates_ch0_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_tomates_ch0_programador_t1','on') %}
             true
-          {% elif is_state('input_select.riego_tomates_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_tomates_programador_t1','on') %}
+          {% elif is_state('input_select.riego_tomates_ch0_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_tomates_ch0_programador_t1','on') %}
             true
-          {% elif is_state('input_select.riego_tomates_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_tomates_programador_t1','on') %}
+          {% elif is_state('input_select.riego_tomates_ch0_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_tomates_ch0_programador_t1','on') %}
             true
           {% else %}
             false
           {% endif %}
 
-      riego_tomates_dia_ejecucion_t2:
+      riego_tomates_ch0_dia_ejecucion_t2:
         friendly_name: '¿Próxima Ejecución Hoy? (POW1-T2)'
         icon_template: mdi:calendar-check
         value_template: >-
-          {% if is_state('input_select.riego_tomates_programador_dias','Diario') and is_state('input_boolean.riego_tomates_programador_t2','on') %}
+          {% if is_state('input_select.riego_tomates_ch0_programador_dias','Diario') and is_state('input_boolean.riego_tomates_ch0_programador_t2','on') %}
             true
-          {% elif is_state('input_select.riego_tomates_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_tomates_programador_t2','on') %}
+          {% elif is_state('input_select.riego_tomates_ch0_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_tomates_ch0_programador_t2','on') %}
             true
-          {% elif is_state('input_select.riego_tomates_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_tomates_programador_t2','on') %}
+          {% elif is_state('input_select.riego_tomates_ch0_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_tomates_ch0_programador_t2','on') %}
             true
-          {% elif is_state('input_select.riego_tomates_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_tomates_programador_t2','on') %}
+          {% elif is_state('input_select.riego_tomates_ch0_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_tomates_ch0_programador_t2','on') %}
             true
           {% else %}
             false
           {% endif %}
 
-      riego_tomates_dia_ejecucion:
+      riego_tomates_ch0_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy?'
         icon_template: mdi:sprout
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
-                and (is_state('binary_sensor.riego_tomates_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_tomates_dia_ejecucion_t2','on'))
+                and (is_state('binary_sensor.riego_tomates_ch0_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_tomates_ch0_dia_ejecucion_t2','on'))
           %}
             true
           {% else %}
@@ -830,12 +850,12 @@
       #
       riego_cesped_ch1_status:
         value_template: >-
-          {% if is_state('switch.esphome_4ch_sw2_relay_1','on') %}
+          {% if is_state('switch.esphome_4ch_sw3_relay_1','on') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Riego CH1 on/off'
+        friendly_name: 'Riego Cesped CH1 on/off'
         icon_template: mdi:power
 
       riego_cesped_ch1_dia_ejecucion_t1:
@@ -887,12 +907,12 @@
       #
       riego_cesped_ch2_status:
         value_template: >-
-          {% if is_state('switch.esphome_4ch_sw2_relay_1','on') %}
+          {% if is_state('switch.esphome_4ch_sw3_relay_1','on') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Riego CH1 on/off'
+        friendly_name: 'Riego Cesped CH1 on/off'
         icon_template: mdi:power
 
       riego_cesped_ch2_dia_ejecucion_t1:
@@ -944,12 +964,12 @@
       #
       riego_cesped_ch3_status:
         value_template: >-
-          {% if is_state('switch.esphome_4ch_sw2_relay_1','on') %}
+          {% if is_state('switch.esphome_4ch_sw3_relay_3','on') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Riego CH1 on/off'
+        friendly_name: 'Riego Cesped CH1 on/off'
         icon_template: mdi:power
 
       riego_cesped_ch3_dia_ejecucion_t1:
@@ -1001,12 +1021,12 @@
       #
       riego_cesped_ch4_status:
         value_template: >-
-          {% if is_state('switch.esphome_4ch_sw2_relay_1','on') %}
+          {% if is_state('switch.esphome_4ch_sw3_relay_4','on') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Riego CH1 on/off'
+        friendly_name: 'Riego Cesped CH4 on/off'
         icon_template: mdi:power
 
       riego_cesped_ch4_dia_ejecucion_t1:

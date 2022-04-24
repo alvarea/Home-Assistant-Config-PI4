@@ -27,7 +27,7 @@
 #
 # Programador SONOFF 4CH SW2 Bonsais
 #
-  # Bonsais Top - Tramo1 - Inicio
+  # Bonsais Top - Tramo1
   riego_bonsais_ch1_start_time_t1:
     name: Hora Inicio Planificado
     has_date: false
@@ -38,6 +38,7 @@
     has_date: false
     has_time: true
 
+  # Bonsais Top - Tramo2
   riego_bonsais_ch1_start_time_t2:
     name: Hora Inicio Planificado
     has_date: false
@@ -48,13 +49,24 @@
     has_date: false
     has_time: true
 
-  # Plantas Entrada - Inicio
-  riego_bonsais_ch2_start_time:
+  # Plantas Entrada - Tramo1
+  riego_bonsais_ch2_start_time_t1:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
 
-  riego_bonsais_ch2_end_time:
+  riego_bonsais_ch2_end_time_t1:
+    name: Hora Final Planificado
+    has_date: false
+    has_time: true
+
+  # Plantas Entrada - Tramo2
+  riego_bonsais_ch2_start_time_t2:
+    name: Hora Inicio Planificado
+    has_date: false
+    has_time: true
+
+  riego_bonsais_ch2_end_time_t2:
     name: Hora Final Planificado
     has_date: false
     has_time: true
@@ -81,143 +93,141 @@
     has_date: false
     has_time: true
 
-#
-# Programador Sonoff Bonsais Producción
-#
+  #
+  # Programador SONOFF "CH0" BAS+POW : Bonsais Producción + Huerto Tomates
+  #
+
   # Bonsais Produccion - Tramo1
-  riego_bonsais_start_time:
-    name: Hora Inicio Planificado
+  riego_bonsais_ch0_start_time_t1:
+    name: Hora Inicio Planificado Tramo1
     has_date: false
     has_time: true
 
-  riego_bonsais_end_time:
-    name: Hora Final Planificado
+  riego_bonsais_ch0_end_time_t1:
+    name: Hora Final Planificado Tramo1
     has_date: false
     has_time: true
 
   # Bonsais Producción - Tramo2
-  riego_bonsais_start_time2:
-    name: Hora Inicio Planificado
+  riego_bonsais_ch0_start_time_t2:
+    name: Hora Inicio Planificado Tramo2
     has_date: false
     has_time: true
 
-  riego_bonsais_end_time2:
-    name: Hora Final Planificado
+  riego_bonsais_ch0_end_time_t2:
+    name: Hora Final Planificado Tramo2
     has_date: false
     has_time: true
 
-#
-# Programador Sonoff SW1 Huerto Tomatera
-#
   # Tomatera - Tramo1
-  riego_tomates_start_time:
-    name: Hora Inicio Planificado
+  riego_tomates_ch0_start_time_t1:
+    name: Hora Inicio Planificado Tramo1
     has_date: false
     has_time: true
 
-  riego_tomates_end_time:
-    name: Hora Final Planificado
+  riego_tomates_ch0_end_time_t1:
+    name: Hora Final Planificado Tramo1
     has_date: false
     has_time: true
 
   # Tomatera - Tramo2
-  riego_tomates_start_time2:
-    name: Hora Inicio Planificado
+  riego_tomates_ch0_start_time_t2:
+    name: Hora Inicio Planificado Tramo2
     has_date: false
     has_time: true
 
-  riego_tomates_end_time2:
-    name: Hora Final Planificado
+  riego_tomates_ch0_end_time_t2:
+    name: Hora Final Planificado Tramo2
     has_date: false
     has_time: true
 
-#
-# Programador SONOFF 4CH SW3 Riego Cesped
-#
+  #
+  # Programador SONOFF 4CH SW3 Riego Cesped
+  #
   # Riego Cesped CH1 - Tramo1 - Inicio
   riego_cesped_ch1_start_time_t1:
-    name: Hora Inicio Planificado
+    name: Hora Inicio Planificado Tramo1
     has_date: false
     has_time: true
 
   riego_cesped_ch1_end_time_t1:
-    name: Hora Final Planificado
+    name: Hora Final Planificado Tramo1
     has_date: false
     has_time: true
 
   # Riego Cesped CH1 - Tramo2 - Inicio
   riego_cesped_ch1_start_time_t2:
-    name: Hora Inicio Planificado
+    name: Hora Inicio Planificado Tramo2
     has_date: false
     has_time: true
 
   riego_cesped_ch1_end_time_t2:
-    name: Hora Final Planificado
+    name: Hora Final Planificado Tramo2
     has_date: false
     has_time: true
 
   # Riego Cesped CH2 - Tramo1 - Inicio
   riego_cesped_ch2_start_time_t1:
-    name: Hora Inicio Planificado
+    name: Hora Inicio Planificado Tramo1
     has_date: false
     has_time: true
 
   riego_cesped_ch2_end_time_t1:
-    name: Hora Final Planificado
+    name: Hora Final Planificado Tramo1
     has_date: false
     has_time: true
 
   # Riego Cesped CH2 - Tramo2 - Inicio
   riego_cesped_ch2_start_time_t2:
-    name: Hora Inicio Planificado
+    name: Hora Inicio Planificado Tramo2
     has_date: false
     has_time: true
 
   riego_cesped_ch2_end_time_t2:
-    name: Hora Final Planificado
+    name: Hora Final Planificado Tramo2
     has_date: false
     has_time: true
 
   # Riego Cesped CH3 - Tramo1 - Inicio
   riego_cesped_ch3_start_time_t1:
-    name: Hora Inicio Planificado
+    name: Hora Inicio Planificado Tramo1
     has_date: false
     has_time: true
 
   riego_cesped_ch3_end_time_t1:
-    name: Hora Final Planificado
+    name: Hora Final Planificado Tramo1
     has_date: false
     has_time: true
 
   # Riego Cesped CH3 - Tramo2 - Inicio
   riego_cesped_ch3_start_time_t2:
-    name: Hora Inicio Planificado
+    name: Hora Inicio Planificado Tramo2
     has_date: false
     has_time: true
 
   riego_cesped_ch3_end_time_t2:
-    name: Hora Final Planificado
+    name: Hora Final Planificado Tramo2
     has_date: false
     has_time: true
 
   # Riego Cesped CH4 - Tramo1 - Inicio
   riego_cesped_ch4_start_time_t1:
-    name: Hora Inicio Planificado
+    name: Hora Inicio Planificado Tramo1
     has_date: false
     has_time: true
 
   riego_cesped_ch4_end_time_t1:
-    name: Hora Final Planificado
+    name: Hora Final Planificado Tramo1
     has_date: false
     has_time: true
 
   # Riego Cesped CH4 - Tramo2 - Inicio
   riego_cesped_ch4_start_time_t2:
-    name: Hora Inicio Planificado
+    name: Hora Inicio Planificado Tramo2
     has_date: false
     has_time: true
 
   riego_cesped_ch4_end_time_t2:
-    name: Hora Final Planificado
+    name: Hora Final Planificado Tramo2
     has_date: false
     has_time: true

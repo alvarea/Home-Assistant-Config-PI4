@@ -108,14 +108,24 @@
     name: Programador CH1 Timer2
     icon: mdi:dip-switch
 
-  # Riego Plantas entrada
-  riego_bonsais_ch2_programador:
-    name: Programador CH2
+  # Riego Bonsais Plantas Aromáticas - Tramo1
+  riego_bonsais_ch2_programador_t1:
+    name: Programador CH2 Timer 1
     icon: mdi:dip-switch
 
-  # Fuente Zen entrada
-  riego_bonsais_ch3_programador:
-    name: Programador CH3
+  # Riego Bonsais Plantas Aromáticas - Tramo2
+  riego_bonsais_ch2_programador_t2:
+    name: Programador CH2 Timer 2
+    icon: mdi:dip-switch
+
+  # Fuente Bonsais Fuente Zen - Tramo 1
+  riego_bonsais_ch3_programador_t1:
+    name: Programador CH3 Timer 1
+    icon: mdi:dip-switch
+
+  # Fuente Bonsais Fuente Zen - Tramo 2
+  riego_bonsais_ch3_programador_t2:
+    name: Programador CH3 Timer 2
     icon: mdi:dip-switch
 
   # Pendiente sin uso
@@ -124,22 +134,22 @@
     icon: mdi:dip-switch
 
   # Riego Bonsais Producción - Tramo1
-  riego_bonsais_programador_t1:
+  riego_bonsais_ch0_programador_t1:
     name: Programador Riego Zona2 - Tramo1
     icon: mdi:dip-switch
 
   # Riego Bonsais Producción - Tramo2
-  riego_bonsais_programador_t2:
+  riego_bonsais_ch0_programador_t2:
     name: Programador Riego Zona2 - Tramo2
     icon: mdi:dip-switch
 
   # Riego Tomatera - Tramo1
-  riego_tomates_programador_t1:
+  riego_tomates_ch0_programador_t1:
     name: Programador Riego Zona2 - Tramo1
     icon: mdi:dip-switch
 
   # Riego Tomatera - Tramo2
-  riego_tomates_programador_t2:
+  riego_tomates_ch0_programador_t2:
     name: Programador Riego Zona2 - Tramo2
     icon: mdi:dip-switch
 

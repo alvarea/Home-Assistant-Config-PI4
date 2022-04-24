@@ -1308,7 +1308,7 @@ piscina_timer_resume:
       entity_id: switch.esphome_pow_sw3
 
 riego_bonsais_ch1_timer_cancel:
-  alias: Timer Riego CH1 Cancel
+  alias: Timer Riego Bonsais CH1 Cancel
   sequence:
     - service: timer.cancel
       entity_id: timer.riego_bonsais_ch1
@@ -1316,7 +1316,7 @@ riego_bonsais_ch1_timer_cancel:
       entity_id: switch.esphome_4ch_sw2_relay_1
 
 riego_bonsais_ch2_timer_cancel:
-  alias: Timer Riego CH2 Cancel
+  alias: Timer Riego Bonsais CH2 Cancel
   sequence:
     - service: timer.cancel
       entity_id: timer.riego_bonsais_ch2
@@ -1324,7 +1324,7 @@ riego_bonsais_ch2_timer_cancel:
       entity_id: switch.esphome_4ch_sw2_relay_2
 
 riego_bonsais_ch3_timer_cancel:
-  alias: Timer Riego CH3 Cancel
+  alias: Timer Riego Bonsais CH3 Cancel
   sequence:
     - service: timer.cancel
       entity_id: timer.riego_bonsais_ch3
@@ -1332,35 +1332,67 @@ riego_bonsais_ch3_timer_cancel:
       entity_id: switch.esphome_4ch_sw2_relay_3
 
 riego_bonsais_ch4_timer_cancel:
-  alias: Timer Riego CH3 Cancel
+  alias: Timer Riego Bonsais CH4 Cancel
   sequence:
     - service: timer.cancel
       entity_id: timer.riego_bonsais_ch4
     - service: switch.turn_off
       entity_id: switch.esphome_4ch_sw2_relay_4
 
-riego_bonsais_produccion_timer_cancel:
-  alias: Timer Bonsais SW2 Cancel
+riego_bonsais_ch0_timer_cancel:
+  alias: Timer Bonsais Produccion Cancel
   sequence:
     - service: timer.cancel
-      entity_id: timer.riego_bonsais
+      entity_id: timer.riego_bonsais_ch0
     - service: switch.turn_off
-      entity_id: switch.esphome_bas_sw1
+      entity_id: switch.esphome_pow_sw1
 
-riego_tomates_timer_cancel:
+riego_tomates_ch0_timer_cancel:
   alias: Timer Tomatera Cancel
   sequence:
     - service: timer.cancel
-      entity_id: timer.riego_tomates
+      entity_id: timer.riego_tomates_ch0
     - service: switch.turn_off
       entity_id: switch.esphome_bas_sw2
+
+riego_cesped_ch1_timer_cancel:
+  alias: Timer Riego Cesped CH1 Cancel
+  sequence:
+    - service: timer.cancel
+      entity_id: timer.riego_cesped_ch1
+    - service: switch.turn_off
+      entity_id: switch.esphome_4ch_sw3_relay_1
+
+riego_cesped_ch2_timer_cancel:
+  alias: Timer Riego Cesped CH2 Cancel
+  sequence:
+    - service: timer.cancel
+      entity_id: timer.riego_cesped_ch2
+    - service: switch.turn_off
+      entity_id: switch.esphome_4ch_sw3_relay_2
+
+riego_cesped_ch3_timer_cancel:
+  alias: Timer Riego Cesped CH3 Cancel
+  sequence:
+    - service: timer.cancel
+      entity_id: timer.riego_cesped_ch3
+    - service: switch.turn_off
+      entity_id: switch.esphome_4ch_sw3_relay_3
+
+riego_cesped_ch4_timer_cancel:
+  alias: Timer Riego Cesped CH4 Cancel
+  sequence:
+    - service: timer.cancel
+      entity_id: timer.riego_cesped_ch4
+    - service: switch.turn_off
+      entity_id: switch.esphome_4ch_sw3_relay_4
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
 # SCRIPTS DE RIEGO BONSAIS SONOFF 4CH-SW2 CH1 - CH4                           #
 #                                                                             #
 #-----------------------------------------------------------------------------#
-#riego_bonsais_ch1_timer_start_diario:
+#riego_tomates_ch1_timer_start_diario:
 #  alias: Timer Riego CH1 Start Automatico
 #  sequence:
 #    - service: timer.start
@@ -1488,7 +1520,7 @@ sonoff_initialize:
   sequence:
     - service: switch.turn_off
       entity_id:
-        - switch.esphome_bas_sw0                  # SONOFF_BAS_SW1_SIRENA INTERIOR ==> OFF
+        - switch.esphome_bas_sw0                  # SONOFF_BAS_SW0_SIRENA INTERIOR ==> OFF
         - switch.esphome_4ch_sw2_relay_1          # SONOFF_4CH RIEGO BONSAIS
         - switch.esphome_4ch_sw2_relay_2
         - switch.esphome_4ch_sw2_relay_3
@@ -1497,8 +1529,8 @@ sonoff_initialize:
         - switch.esphome_4ch_sw3_relay_2
         - switch.esphome_4ch_sw3_relay_3
         - switch.esphome_4ch_sw3_relay_4
-        - switch.esphome_bas_sw2                  # SONOFF_BAS HUERTO TOMATERAS
-        - switch.esphome_bas_sw1                  # SONOFF_BAS BONSAIS PRODUCCION
+        - switch.esphome_bas_sw2                  # SONOFF_BAS_SW2 HUERTO TOMATERAS
+        - switch.esphome_pow_sw1                  # SONOFF_POW_SW1 BONSAIS PRODUCCION
     - service: switch.turn_on
       entity_id:
         - switch.tagreader_9a0be4_buzzer_enabled  # Activa el zumbido al pasar un tag
@@ -1560,5 +1592,7 @@ blink_trigger_cam_piscina:
       data:
         entity_id: camera.blink_piscina
         filename: /share/blink_piscina.jpg
+
+
 
 

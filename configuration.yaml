@@ -129,29 +129,30 @@ alarm_control_panel:
 
 # Timer temporizadores
 timer:
+  # Temporizadores para interruptores Sonoff Sueltos BAS y POW
   piscina:
     name: Timer Piscina
     icon: mdi:timer
-  riego_bonsais:
+  riego_bonsais_ch0:
     name: Timer Bonsais Producción
     icon: mdi:timer
-  riego_tomates:
-    name: Timer Tomatera
+  riego_tomates_ch0:
+    name: Timer Huerto Tomates
     icon: mdi:timer
   # Programador SONOFF esphome_4ch_sw2 Riego Bonsáis
   riego_bonsais_ch1:
-    name: Timer CH1
+    name: Timer CH1 Bonsais Top
     icon: mdi:timer
   riego_bonsais_ch2:
-    name: Timer CH2
+    name: Timer CH2 Plantas Aromáticas
     icon: mdi:timer
   riego_bonsais_ch3:
-    name: Timer CH3
+    name: Timer CH3 Fuente Zen
     icon: mdi:timer
   riego_bonsais_ch4:
-    name: Timer CH4
+    name: Timer CH4 Disponible
     icon: mdi:timer
-  # Programador SONOFF esphome_4ch_sw3 Riego Jardín
+  # Programador SONOFF esphome_4ch_sw3 Riego Cesped
   riego_cesped_ch1:
     name: Timer CH1
     icon: mdi:timer
@@ -613,6 +614,9 @@ calendar:
       - name: Festivos
         calendar: "Festivos"
         search: "*"
+
+#hacs:
+#  token: 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
 
 #
 # DEPRECATED
