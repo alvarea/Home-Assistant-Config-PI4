@@ -1986,7 +1986,7 @@
     - service: timer.start
       data_template:
         entity_id: timer.riego_cesped_ch1
-        duration: '{{ states.sensor.riego_cesped_ch1_duracion_planificada.state|int * 60}}'
+        duration: '{{ states.sensor.riego_cesped_ch1_duracion_planificada_t1.state|int * 60}}'
     - service: switch.turn_on
       entity_id: switch.esphome_4ch_sw3_relay_1
 
@@ -2045,7 +2045,7 @@
     - service: timer.start
       data_template:
         entity_id: timer.riego_cesped_ch2
-        duration: '{{ states.sensor.riego_cesped_ch2_duracion_planificada.state|int * 60}}'
+        duration: '{{ states.sensor.riego_cesped_ch2_duracion_planificada_t1.state|int * 60}}'
     - service: switch.turn_on
       entity_id: switch.esphome_4ch_sw3_relay_2
 
@@ -2104,7 +2104,7 @@
     - service: timer.start
       data_template:
         entity_id: timer.riego_cesped_ch3
-        duration: '{{ states.sensor.riego_cesped_ch3_duracion_planificada.state|int * 60}}'
+        duration: '{{ states.sensor.riego_cesped_ch3_duracion_planificada_t1.state|int * 60}}'
     - service: switch.turn_on
       entity_id: switch.esphome_4ch_sw3_relay_3
 
@@ -2163,7 +2163,7 @@
     - service: timer.start
       data_template:
         entity_id: timer.riego_cesped_ch4
-        duration: '{{ states.sensor.riego_cesped_ch4_duracion_planificada.state|int * 60}}'
+        duration: '{{ states.sensor.riego_cesped_ch4_duracion_planificada_t1.state|int * 60}}'
     - service: switch.turn_on
       entity_id: switch.esphome_4ch_sw3_relay_4
 
