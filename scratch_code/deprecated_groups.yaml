@@ -310,11 +310,11 @@ jardin_piscina_grp:
   entities:
     - switch.esphome_pow_sw1                     # Switch POW Depuradora Piscina OCULTO
     - binary_sensor.esphome_pow_sw1_status       # Sensor de conectividad sonoff
-    - binary_sensor.piscina_dia_ejecucion       # Sensor Próximo día de ejecución
-    - binary_sensor.piscina_status              # Sensor basado en el switch sonoff POW SW1
+    - binary_sensor.piscina_depuradora_ch0_dia_ejecucion       # Sensor Próximo día de ejecución
+    - binary_sensor.piscina_depuradora_ch0_on              # Sensor basado en el switch sonoff POW SW1
     - sensor.piscina_duracion_programa          # Sensor duración programa activo/siguiente minutos
     #- input_text.piscina_duracion_programa     # Sensor duración programa activo/siguiente
-    - timer.piscina                             # Timer tiempo pendiente de ejecución
+    - timer.piscina_depuradora                             # Timer tiempo pendiente de ejecución
     - input_datetime.piscina_real_start_time    # Próximo Arranque Real
     - input_datetime.piscina_real_end_time      # Próximo Parada Real
 

@@ -76,7 +76,7 @@ http:
 # the developers to assist with development of Home Assistant.
 # For more information, please see:
 # https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
-updater:
+#updater:
   # Optional, allows Home Assistant developers to focus on popular components.
   # include_used_components: true
 
@@ -130,7 +130,7 @@ alarm_control_panel:
 # Timer temporizadores
 timer:
   # Temporizadores para interruptores Sonoff Sueltos BAS y POW
-  piscina:
+  piscina_depuradora_ch0:
     name: Timer Piscina
     icon: mdi:timer
   riego_bonsais_ch0:
@@ -174,7 +174,7 @@ timer:
 #history_graph:
 #  piscina_duracion:
 #    entities:
-#      - binary_sensor.piscina_status
+#      - binary_sensor.piscina_depuradora_ch0_on
 #    name: Duracion Depuradora Piscina
 #    hours_to_show: 168
 #    refresh: 1800
@@ -687,10 +687,3 @@ calendar:
 #   - platform: braviatv
 #     host: 192.168.0.15
 #     name: TV Sony Estudio
-
-#TO DO
-#
-# https://github.com/custom-components/custom_updater/wiki/Installation
-# custom_updater:
-#  card_urls:
-#    - https://raw.githubusercontent.com/kalkih/mini-graph-card/master/tracker.json

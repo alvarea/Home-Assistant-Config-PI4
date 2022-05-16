@@ -276,14 +276,31 @@
             false
           {% endif %}
 
+      #
       # SONOFF POW_SW3. PISCINA. Sensores control consumo potencia
-      esphome_pow_sw3_switch:
+      #
+      piscina_interruptor_global:
+        friendly_name: 'Interruptor General Piscina'
+        icon_template: >-
+          {% if is_state('input_boolean.piscina_interruptor_global','on') %} mdi:pool
+          {% else %} mdi:swim
+          {% endif %}
+        value_template: >-
+          {% if is_state('input_boolean.piscina_interruptor_global','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      piscina_depuradora_ch0_status:
         value_template: >-
           {% if is_state('switch.esphome_pow_sw3','on') %}
             true
           {% else %}
             false
           {% endif %}
+        friendly_name: 'Control Depuradora Piscina'
+        icon_template: mdi:pool
 
       esphome_pow_sw3_blue_led:
         value_template: >-
@@ -317,30 +334,29 @@
             false
           {% endif %}
 
-      esphome_pow_sw3_piscina_depurando:
+      piscina_depuradora_ch0_motor_on:
         value_template: >-
-          {%  if is_state('binary_sensor.esphome_pow_sw3_switch','on')
+          {%  if is_state('binary_sensor.piscina_depuradora_ch0_status','on')
               and states('sensor.esphome_pow_sw3_voltage')|int(0) > 200
-              and states('sensor.esphome_pow_sw3_power')|round(1) > 2.5
+              and states('sensor.esphome_pow_sw3_power')|round(1) > 1.6
           %}
             true
           {% else %}
             false
           {% endif %}
 
-      esphome_pow_sw3_piscina_warning:
+      piscina_depuradora_ch0_warning:
         value_template: >-
-          {%  if is_state('binary_sensor.esphome_pow_sw3_switch','on')
+          {%  if is_state('switch.esphome_pow_sw3','on')
               and states('sensor.esphome_pow_sw3_power')|round(1) >= 0.1
-              and states('sensor.esphome_pow_sw3_power')|round(1) < 3.0
+              and states('sensor.esphome_pow_sw3_power')|round(1) <= 1.5
           %}
             true
           {% else %}
             false
           {% endif %}
 
-      # JARDIN - DEPURADORA PISCINA
-      piscina_status:
+      piscina_depuradora_ch0_on:
         value_template: >-
           {% if is_state('switch.esphome_pow_sw3','on') %}
             true
@@ -350,7 +366,7 @@
         friendly_name: 'Depuradora on/off'
         icon_template: mdi:power
 
-      piscina_dia_ejecucion:
+      piscina_depuradora_ch0_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy?'
         icon_template: mdi:calendar-check
         value_template: >-
@@ -365,6 +381,52 @@
           {% else %}
             false
           {% endif %}
+
+      piscina_depuradora_ch0_dia_ejecucion_t1:
+        friendly_name: '¿Próxima Ejecución Hoy? (CH0-T1)'
+        icon_template: mdi:calendar-check
+        value_template: >-
+          {% if is_state('input_select.piscina_depuradora_ch0_programador_dias','Diario') and is_state('input_boolean.piscina_depuradora_ch0_programador_t1','on') %}
+            true
+          {% elif is_state('input_select.piscina_depuradora_ch0_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.piscina_depuradora_ch0_programador_t1','on') %}
+            true
+          {% elif is_state('input_select.piscina_depuradora_ch0_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.piscina_depuradora_ch0_programador_t1','on') %}
+            true
+          {% elif is_state('input_select.piscina_depuradora_ch0_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.piscina_depuradora_ch0_programador_t1','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      piscina_depuradora_ch0_dia_ejecucion_t2:
+        friendly_name: '¿Próxima Ejecución Hoy? (CH0-T2)'
+        icon_template: mdi:calendar-check
+        value_template: >-
+          {% if is_state('input_select.piscina_depuradora_ch0_programador_dias','Diario') and is_state('input_boolean.piscina_depuradora_ch0_programador_t2','on') %}
+            true
+          {% elif is_state('input_select.piscina_depuradora_ch0_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.piscina_depuradora_ch0_programador_t2','on') %}
+            true
+          {% elif is_state('input_select.piscina_depuradora_ch0_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.piscina_depuradora_ch0_programador_t2','on') %}
+            true
+          {% elif is_state('input_select.piscina_depuradora_ch0_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.piscina_depuradora_ch0_programador_t2','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      ## FALTA PISCINA INTERRUPTOR GLOBAL
+      piscina_depuradora_ch0_dia_ejecucion:
+        friendly_name: '¿Próxima Ejecución Hoy? (CH0)'
+        icon_template: mdi:pool
+        value_template: >-
+          {% if is_state('input_boolean.piscina_interruptor_global','on')
+                and (is_state('binary_sensor.piscina_depuradora_ch0_dia_ejecucion_t1','on') or is_state('binary_sensor.piscina_depuradora_ch0_dia_ejecucion_t2','on'))
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
       #
       # AEMET - JARDIN RIEGO - CH1 - CH4
       #

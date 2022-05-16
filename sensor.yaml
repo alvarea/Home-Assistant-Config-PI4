@@ -45,12 +45,11 @@
   - platform: version
     source: local
     name: Versión Local
-    # icon: mdi: home-assistant
 
   - platform: version
     name: Versión Disponible
     source: hassio
-    # icon cloud-download
+
 
   - platform: systemmonitor
     resources:
@@ -109,9 +108,57 @@
         column: 'value'
         unit_of_measurement: MB
 
+  - platform: statistics
+    name: aemet_rain_24h_mean
+    entity_id: sensor.aemet_rain
+    state_characteristic: mean
+    max_age:
+      hours: 24
+
+  - platform: statistics
+    name: aemet_rain_24h_max
+    entity_id: sensor.aemet_rain
+    state_characteristic: value_max
+    max_age:
+      hours: 24
+
+  - platform: statistics
+    name: aemet_rain_24h_min
+    entity_id: sensor.aemet_rain
+    state_characteristic: value_min
+    max_age:
+      hours: 24
+
+  - platform: statistics
+    name: aemet_rain_24h_total
+    entity_id: sensor.aemet_rain
+    state_characteristic: total
+    max_age:
+      hours: 24
+
+  - platform: statistics
+    name: aemet_rain_24h_count
+    entity_id: sensor.aemet_rain
+    state_characteristic: count
+    max_age:
+      hours: 24
+
+  - platform: statistics
+    name: aemet_rain_24h_change
+    entity_id: sensor.aemet_rain
+    state_characteristic: change
+    max_age:
+      hours: 24
+
+  #- platform: statistics
+  #  name: aemet_rain_24h_datetime_oldest
+  #  entity_id: sensor.aemet_rain
+  #  state_characteristic: datetime_oldest
+  #  max_age:
+  #    hours: 24
+
   - platform: template
     sensors:
-
       # Uptime : nº horas desde último reinicio
       ha_uptime:
         value_template: "{{ ((as_timestamp(now()) - as_timestamp(states('sensor.uptime'))) / 3600) | int}}"
@@ -247,41 +294,61 @@
       #
       # CONTROL DEPURADORA PISCINA
       #
-      # Piscina Duracion Programa Diario-Semanal
-      piscina_duracion_planificada:
-        value_template: '{{ states.input_number.piscina_diario_horas.state|int(0) }}:00:00'
+      # piscina_depuradora_ch0 Duracion Programa Manual
+      piscina_depuradora_ch0_duracion_manual:
+        value_template: '00:{{ states.input_number.piscina_depuradora_ch0_manual_minutos.state|int(0) }}:00'
         friendly_name: 'Duración Programa Planificado'
-        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_diario_horas') is not none }}"
+        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_depuradora_ch0_manual_minutos') is not none }}"
 
-      # Piscina Duracion Programa Manual
-      piscina_duracion_manual:
-        value_template: '00:{{ states.input_number.piscina_manual_minutos.state|int(0) }}:00'
-        friendly_name: 'Duración Programa Planificado'
-        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_manual_minutos') is not none }}"
+      # BORRAR ALVAREA
+      #piscina_depuradora_ch0_duracion_programa:
+      #  value_template: '{{ states.input_text.piscina_depuradora_ch0_duracion_programa.state }}'
+      #  friendly_name: 'Duración Programa Activo'
+      #  icon_template: "{{ 'mdi:timer-sand' if states('input_text.piscina_depuradora_ch0_duracion_programa') is not none }}"
 
-      piscina_duracion_programa:
-        value_template: '{{ states.input_text.piscina_duracion_programa.state }}'
-        friendly_name: 'Duración Programa Activo'
-        icon_template: "{{ 'mdi:timer-sand' if states('input_text.piscina_duracion_programa') is not none }}"
-
-      piscina_diario_endtime:
+      piscina_depuradora_ch0_diario_endtime:
         friendly_name: 'Sensor Hora Finalización'
-        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_diario_horas') is not none }}"
-        value_template: '{% if states.input_number.piscina_diario_horas.state | int + states.input_datetime.piscina_start_time.attributes.hour | int < 24 %}
-                            {{ states.input_number.piscina_diario_horas.state | int + states.input_datetime.piscina_start_time.attributes.hour | int }}:00:00
+        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_depuradora_ch0_diario_horas') is not none }}"
+        value_template: '{% if states.input_number.piscina_depuradora_ch0_diario_horas.state | int + states.input_datetime.piscina_depuradora_ch0_start_time.attributes.hour | int < 24 %}
+                            {{ states.input_number.piscina_depuradora_ch0_diario_horas.state | int + states.input_datetime.piscina_depuradora_ch0_start_time.attributes.hour | int }}:00:00
                          {% else %}
-                            {{ states.input_number.piscina_diario_horas.state | int + states.input_datetime.piscina_start_time.attributes.hour | int - 24 }}:00:00
+                            {{ states.input_number.piscina_depuradora_ch0_diario_horas.state | int + states.input_datetime.piscina_depuradora_ch0_start_time.attributes.hour | int - 24 }}:00:00
                          {% endif %}'
 
-      piscina_manual_segundos:
-        value_template: '{{ states.input_number.piscina_manual_minutos.state |int(0) *60 }}'
+      piscina_depuradora_ch0_manual_segundos:
+        value_template: '{{ states.input_number.piscina_depuradora_ch0_manual_minutos.state |int(0) *60 }}'
         friendly_name: 'Duración Programa Corto (Seg)'
-        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_manual_minutos') is not none }}"
+        icon_template: "{{ 'mdi:timer-sand' if states('input_number.piscina_depuradora_ch0_manual_minutos') is not none }}"
+
+      piscina_depuradora_ch0_duracion_planificada_t1:
+        value_template: '{{ "{:}".format((states.input_datetime.piscina_depuradora_ch0_end_time_t1.attributes.timestamp -  states.input_datetime.piscina_depuradora_ch0_start_time_t1.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Bonsais CH0 - Duración Tramo-1 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.piscina_depuradora_ch0_duracion_planificada_t1') is not none }}"
+
+      piscina_depuradora_ch0_duracion_planificada_t2:
+        value_template: '{{ "{:}".format((states.input_datetime.piscina_depuradora_ch0_end_time_t2.attributes.timestamp -  states.input_datetime.piscina_depuradora_ch0_start_time_t2.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Bonsais CH0 - Duración Tramo-2 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.piscina_depuradora_ch0_duracion_planificada_t2') is not none }}"
+
+      piscina_depuradora_ch0_programador_t1_estado:
+        value_template: "{% if is_state('input_boolean.piscina_depuradora_ch0_programador_t1','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Bonsais CH0 - Programador Tramo-1'
+
+      piscina_depuradora_ch0_programador_t2_estado:
+        value_template: "{% if is_state('input_boolean.piscina_depuradora_ch0_programador_t2','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Bonsais CH0 - Duración Tramo-2'
+
+      piscina_depuradora_ch0_duracion_planificada_total:
+        value_template: '{{(states.sensor.piscina_depuradora_ch0_duracion_planificada_t1.state|int*states.sensor.piscina_depuradora_ch0_programador_t1_estado.state|int)+(
+        states.sensor.piscina_depuradora_ch0_duracion_planificada_t2.state|int*states.sensor.piscina_depuradora_ch0_programador_t2_estado.state|int)}}'
+        friendly_name: 'Depuradora Piscina - Duración Total (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.piscina_depuradora_ch0_duracion_planificada_total') is not none }}"
+
 
       #
-      # CONTROL ESPHOME SW0 (BAS+POW) - RIEGO HUERTO / BONSAIS 
+      # CONTROL ESPHOME SW0 (BAS+POW) - RIEGO HUERTO / BONSAIS
       #
-      
+
       # Bonsais Produccion
       riego_bonsais_ch0_duracion_planificada_t1:
         value_template: '{{ "{:}".format((states.input_datetime.riego_bonsais_ch0_end_time_t1.attributes.timestamp -  states.input_datetime.riego_bonsais_ch0_start_time_t1.attributes.timestamp)/60)|int }}'

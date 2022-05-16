@@ -22,7 +22,7 @@
     initial: ''
     icon: mdi:security-home
 
-  piscina_duracion_programa:
+  piscina_depuradora_ch0_duracion_programa:
     name: Duración Programa Activo
     initial: ''
     icon: mdi:timer-sand

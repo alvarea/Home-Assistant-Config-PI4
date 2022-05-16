@@ -1310,55 +1310,66 @@
 
           >>> DISPOSITIVO: ESPHOME SONOFF POW_SW3
 
+#
 # ESPHOME POW - DEPURADORA PISCINA
 #
 - id: S06
-  alias: 'S06 Timer Piscina Start'
+  alias: 'S06 Timer Piscina Depuradora Tramo1'
   trigger:
     - platform: template
-      value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_start_time.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+      value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_depuradora_ch0_start_time_t1.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
   condition:
     condition: and
     conditions:
       - condition: state
-        entity_id: input_boolean.piscina_programador  # Sensor del programador on/off
+        entity_id: input_boolean.piscina_interruptor_global
         state: 'on'
       - condition: state
-        entity_id: binary_sensor.piscina_dia_ejecucion  # Sensor que indica si es día de ejecución en función de la lista input_select.piscina_programador_dias
+        entity_id: binary_sensor.piscina_depuradora_ch0_dia_ejecucion_t1  # Sensor del programador on/off
         state: 'on'
   action:
-    # Timer Programador Diario Piscina
-    - service: script.piscina_timer_start_diario
+    # Timer Programador Diario
+    - service: timer.start
+      data_template:
+        entity_id: timer.piscina_depuradora_ch0
+        duration: '{{ states.sensor.piscina_depuradora_ch0_duracion_planificada_t1.state|int * 60}}'
+    - service: switch.turn_on
+      entity_id: switch.esphome_4ch_sw2_relay_1
 
-- id: S07
-  alias: 'S07 Timer Piscina End'
+- id: S06b
+  alias: 'S06b Timer Piscinda Depuradora Tramo2'
+  trigger:
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states.input_datetime.piscina_depuradora_ch0_start_time_t2.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.piscina_interruptor_global  # Interruptor General Riego segun Forecast Tiempo
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.piscina_depuradora_ch0_dia_ejecucion_t2  # Sensor del programador on/off
+        state: 'on'
+  action:
+    # Timer Programador Diario
+    - service: timer.start
+      data_template:
+        entity_id: timer.piscina_depuradora_ch0
+        duration: '{{ states.sensor.piscina_depuradora_ch0_duracion_planificada_t2.state|int * 60}}'
+    - service: switch.turn_on
+      entity_id: switch.esphome_pow_sw3
+
+- id: S06c
+  alias: 'S06c Timer Piscina Depuradora CH0 End'
   trigger:
     - platform: event
       event_type: timer.finished
       event_data:
-        entity_id: timer.piscina
+        entity_id: timer.piscina_depuradora_ch0
   action:
-    # Inicia el Timer de la Piscina
-    - service: script.piscina_timer_cancel
-    # Actualiza Valor Duración Programa Activo
-    - service: input_text.set_value
-      entity_id: input_text.piscina_duracion_programa
-      data_template:
-        value: ''
+    - service: script.piscina_depuradora_ch0_timer_cancel
 
-- id: S08
-  alias: 'S08 Set Hora Final Planificado'
-  trigger:
-    - platform: state
-      entity_id: sensor.piscina_diario_endtime
-    - platform: state
-      entity_id: sensor.piscina_duracion_planificada
-  action:
-    # Actualiza Valor input_datetime.piscina_end_time
-    - service: input_datetime.set_datetime
-      entity_id: input_datetime.piscina_end_time
-      data_template:
-        time: '{{ states.sensor.piscina_diario_endtime.state }}'
+
 
 # ESPHOME S20 - SW1 Smart Pluh Dormitorio Principal
 #

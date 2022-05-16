@@ -1,28 +1,27 @@
 #
 # Programador Depuradora Piscina
 #
-  piscina_real_start_time:
-    name: Inicio Última Ejecución
-    has_date: false
-    has_time: true
-
-  piscina_real_end_time:
-    name: Fin Última Ejecución
-    has_date: false
-    has_time: true
-
-  piscina_start_time:
+# Tramo1
+  piscina_depuradora_ch0_start_time_t1:
     name: Hora Inicio Planificado
     has_date: false
     has_time: true
-    #initial: '18:00'    # Verano
-    #initial: '20:00'   # Invierno
 
-  piscina_end_time:
+  piscina_depuradora_ch0_end_time_t1:
     name: Hora Final Planificado
     has_date: false
     has_time: true
-    # initial: '22:00'
+
+  # Tramo2
+  piscina_depuradora_ch0_start_time_t2:
+    name: Hora Inicio Planificado
+    has_date: false
+    has_time: true
+
+  piscina_depuradora_ch0_end_time_t2:
+    name: Hora Final Planificado
+    has_date: false
+    has_time: true
 
 #
 # Programador SONOFF 4CH SW2 Bonsais

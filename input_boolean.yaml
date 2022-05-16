@@ -87,8 +87,16 @@
 
 # Depuradora Piscina
 #
-  piscina_programador:
-    name: Programador On/Off
+  piscina_interruptor_global:
+      name: Piscina Interruptor General
+      icon: mdi:swin
+
+  piscina_depuradora_ch0_programador_t1:
+    name: Programador Tramo1 On/Off
+    icon: mdi:dip-switch
+
+  piscina_depuradora_ch0_programador_t2:
+    name: Programador Tramo2 On/Off
     icon: mdi:dip-switch
 
 # Riego Plantas + Fuentes

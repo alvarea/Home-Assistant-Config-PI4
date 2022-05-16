@@ -294,28 +294,6 @@ binary_sensor.motion_sensor_158d0002ea1d0f:
 sensor.illumination_158d0002ea1d0f:
   friendly_name: Dormitorio
 
-# Scripts Timer Piscina
-#
-script.piscina_timer_start:
-  friendly_name: Timer Piscina - START
-  icon: mdi:power
-
-script.piscina_timer_pause:
-  friendly_name: Timer Piscina - PAUSE
-  icon: mdi:pause
-
-script.piscina_timer_resume:
-  friendly_name: Timer Piscina - RESUME
-  icon: mdi:play-pause
-
-script.piscina_timer_finish:
-  friendly_name: Timer Piscina - STOP
-  icon: mdi:power-off
-
-script.piscina_timer_cancel:
-  friendly_name: Timer Piscina - STOP
-  icon: mdi:power-off
-
 #
 # SERIE SONOFF 4CH_SW1
 #

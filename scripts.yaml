@@ -1233,12 +1233,12 @@ luces_jardin_check_4ch_ch4:
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
-piscina_timer_start:
+piscina_depuradora_ch0_timer_start:
   alias: Timer Piscina Start
   sequence:
     - service: timer.start
       data_template:
-        entity_id: timer.piscina
+        entity_id: timer.piscina_depuradora_ch0
         duration: '{{ states.sensor.piscina_manual_segundos.state}}'
     - service: switch.turn_on
       entity_id: switch.esphome_pow_sw3
@@ -1253,12 +1253,12 @@ piscina_timer_start:
       data_template:
         value: '{{ states.sensor.piscina_duracion_manual.state}}'
 
-piscina_timer_start_diario:
+piscina_depuradora_ch0_timer_start_diario:
   alias: Timer Piscina Start
   sequence:
     - service: timer.start
       data_template:
-        entity_id: timer.piscina
+        entity_id: timer.piscina_depuradora_ch0
         duration: '{{ states.sensor.piscina_duracion_planificada.state}}'
     - service: switch.turn_on
       entity_id: switch.esphome_pow_sw3
@@ -1273,11 +1273,11 @@ piscina_timer_start_diario:
       data_template:
         value: '{{ states.sensor.piscina_duracion_planificada.state}}'
 
-piscina_timer_cancel:
+piscina_depuradora_ch0_timer_cancel:
   alias: Timer Piscina Cancel
   sequence:
     - service: timer.cancel
-      entity_id: timer.piscina
+      entity_id: timer.piscina_depuradora_ch0
     - service: switch.turn_off
       entity_id: switch.esphome_pow_sw3
     # Actualiza Valor Hora Arranque Real
@@ -1287,25 +1287,31 @@ piscina_timer_cancel:
         time: '{{ (as_timestamp(now()) | timestamp_custom("%H:%M:%S")) }}'
     # Actualiza Valor Duración Programa Activo
     - service: input_text.set_value
-      entity_id: input_text.piscina_duracion_programa
+      entity_id: input_text.piscina_depuradora_ch0_duracion_programa
       data_template:
         value: ''
 
-piscina_timer_pause:
+piscina_depuradora_ch0_timer_pause:
   alias: Timer Piscina Pause
   sequence:
     - service: timer.pause
-      entity_id: timer.piscina
+      entity_id: timer.piscina_depuradora_ch0
     - service: switch.turn_off
       entity_id: switch.esphome_pow_sw3
 
-piscina_timer_resume:
+piscina_depuradora_ch0_timer_resume:
   alias: Timer Piscina Resume
   sequence:
     - service: timer.start
-      entity_id: timer.piscina
+      entity_id: timer.piscina_depuradora_ch0
     - service: switch.turn_on
       entity_id: switch.esphome_pow_sw3
+
+#-----------------------------------------------------------------------------#
+#                                                                             #
+# SCRIPTS DE RIEGO                                                            #
+#                                                                             #
+#-----------------------------------------------------------------------------#
 
 riego_bonsais_ch1_timer_cancel:
   alias: Timer Riego Bonsais CH1 Cancel

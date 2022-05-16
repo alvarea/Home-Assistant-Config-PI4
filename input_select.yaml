@@ -190,7 +190,7 @@
     initial: '2 - Accident'
 
 # Depuradora Piscina
-  piscina_programador_dias:
+  piscina_depuradora_ch0_programador_dias:
     name: Frecuencia Programador
     options:
       - 'Bloqueado'
