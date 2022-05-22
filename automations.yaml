@@ -1237,10 +1237,10 @@
 #-----------------------------------------------------------------------------#
 
 #
-# ESPHOME 4CH - JARDIN
+# ESPHOME 4CH SW1 - LUCES JARDIN
 #
-- id: S01
-  alias: 'S01 Sonoff 4CH Boton1 On'
+- id: S01_4CH_SW1
+  alias: 'S01 Sonoff 4CH SW1 Boton1 On'
   trigger:
     - platform: state
       entity_id: binary_sensor.esphome_4ch_button_1
@@ -1250,8 +1250,8 @@
     - service: switch.toggle
       entity_id: switch.esphome_4ch_relay_1
 
-- id: S02
-  alias: 'S02 Sonoff 4CH Boton2 On'
+- id: S02_4CH_SW1
+  alias: 'S02 Sonoff 4CH SW1 Boton2 On'
   trigger:
     - platform: state
       entity_id: binary_sensor.esphome_4ch_button_2
@@ -1261,8 +1261,8 @@
     - service: switch.toggle
       entity_id: switch.esphome_4ch_relay_2
 
-- id: S03
-  alias: 'S03 Sonoff 4CH Boton3 On'
+- id: S03_4CH_SW1
+  alias: 'S03 Sonoff 4CH SW1 Boton3 On'
   trigger:
     - platform: state
       entity_id: binary_sensor.esphome_4ch_button_3
@@ -1272,11 +1272,127 @@
     - service: switch.toggle
       entity_id: switch.esphome_4ch_relay_3
 
+- id: S04_4CH_SW1
+  alias: 'S04 Sonoff 4CH SW1 Boton4 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_4ch_button_4
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_4ch_relay_4
+
+#
+# ESPHOME 4CH SW2 -  RIEGO PLANTAS y BONSAIS
+#
+- id: S01_4CH_SW2
+  alias: 'S01 Sonoff 4CH SW2 Boton1 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_4ch_sw2_button_1
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_4ch_sw2_relay_1
+
+- id: S02_4CH_SW2
+  alias: 'S02 Sonoff 4CH SW2 Boton2 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_4ch_sw2_button_2
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_4ch_sw2_relay_2
+
+- id: S03_4CH_SW2
+  alias: 'S03 Sonoff 4CH SW2 Boton3 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_4ch_sw2_button_3
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_4ch_sw2_relay_3
+
+- id: S04_4CH_SW2
+  alias: 'S03 Sonoff 4CH SW2 Boton4 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_4ch_sw2_button_4
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_4ch_sw2_relay_4
+
+#
+# ESPHOME 4CH SW3 -  RIEGO CESPED
+#
+- id: S01_4CH_SW3
+  alias: 'S01 Sonoff 4CH SW3 Boton1 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_4ch_sw3_button_1
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_4ch_sw3_relay_1
+
+- id: S02_4CH_SW3
+  alias: 'S02 Sonoff 4CH SW3 Boton2 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_4ch_sw3_button_2
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_4ch_sw3_relay_2
+
+- id: S03_4CH_SW3
+  alias: 'S01 Sonoff 4CH SW3 Boton3 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_4ch_sw3_button_3
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_4ch_sw3_relay_3
+
+- id: S04_4CH_SW3
+  alias: 'S03 Sonoff 4CH SW3 Boton4 On'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_4ch_sw3_button_4
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_4ch_sw3_relay_4
+
+
 - id: S04
   alias: 'S04 Sonoff 4CH Status'
   trigger:
     - platform: state
       entity_id: binary_sensor.esphome_4ch_status
+      from: 'on'
+      to: 'off'
+      for: '00:05:00'
+    - platform: state
+      entity_id: binary_sensor.esphome_4ch_sw2_status
+      from: 'on'
+      to: 'off'
+      for: '00:05:00'
+    - platform: state
+      entity_id: binary_sensor.esphome_4ch_sw3_status
       from: 'on'
       to: 'off'
       for: '00:05:00'
