@@ -157,6 +157,44 @@
   #  max_age:
   #    hours: 24
 
+  # Hora Mínima Inicio Riego Cesped Por Tramos
+  - platform: min_max
+    name: min_riego_start_time_t1
+    type: min
+    entity_ids:
+      - sensor.riego_cesped_ch1_start_time_t1
+      - sensor.riego_cesped_ch2_start_time_t1
+      - sensor.riego_cesped_ch3_start_time_t1
+      - sensor.riego_cesped_ch4_start_time_t1
+
+  - platform: min_max
+    name: min_riego_start_time_t2
+    type: min
+    entity_ids:
+      - sensor.riego_cesped_ch1_start_time_t2
+      - sensor.riego_cesped_ch2_start_time_t2
+      - sensor.riego_cesped_ch3_start_time_t2
+      - sensor.riego_cesped_ch4_start_time_t2
+
+  # Hora Máxima Final Riego Cesped Por Tramos
+  - platform: min_max
+    name: max_riego_end_time_t1
+    type: max
+    entity_ids:
+      - sensor.riego_cesped_ch1_end_time_t1
+      - sensor.riego_cesped_ch2_end_time_t1
+      - sensor.riego_cesped_ch3_end_time_t1
+      - sensor.riego_cesped_ch4_end_time_t1
+
+  - platform: min_max
+    name: max_riego_end_time_t2
+    type: max
+    entity_ids:
+      - sensor.riego_cesped_ch1_end_time_t2
+      - sensor.riego_cesped_ch2_end_time_t2
+      - sensor.riego_cesped_ch3_end_time_t2
+      - sensor.riego_cesped_ch4_end_time_t2
+
   - platform: template
     sensors:
       # Uptime : nº horas desde último reinicio
@@ -463,6 +501,26 @@
       #
 
       # CH1 Duracion Programa Diario-Semanal
+      riego_cesped_ch1_start_time_t1:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_start_time_t1.state }}'
+        friendly_name: 'Cesped CH1 - Start Time Tramo-1'
+        icon_template: "{{ 'mdi:timer-play-outline' if states('sensor.riego_cesped_ch1_start_time_t1') is not none }}"
+
+      riego_cesped_ch1_end_time_t1:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_end_time_t1.state }}'
+        friendly_name: 'Cesped CH1 - Start Time Tramo-1'
+        icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch1_end_time_t1') is not none }}"
+
+      riego_cesped_ch1_start_time_t2:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_start_time_t2.state }}'
+        friendly_name: 'Cesped CH1 - Start Time Tramo-2'
+        icon_template: "{{ 'mdi:timer-play-outline' if states('sensor.riego_cesped_ch1_start_time_t2') is not none }}"
+
+      riego_cesped_ch1_end_time_t2:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_end_time_t2.state }}'
+        friendly_name: 'Cesped CH1 - Start Time Tramo-2'
+        icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch1_end_time_t2') is not none }}"
+
       riego_cesped_ch1_duracion_planificada_t1:
         value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch1_end_time_t1.attributes.timestamp -  states.input_datetime.riego_cesped_ch1_start_time_t1.attributes.timestamp)/60)|int }}'
         friendly_name: 'Cesped CH1 - Duración Tramo-1 (Min)'
@@ -488,6 +546,26 @@
         icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch1_duracion_planificada_total') is not none }}"
 
       # CH2 Duracion Programa Diario-Semanal
+      riego_cesped_ch2_start_time_t1:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_start_time_t1.state }}'
+        friendly_name: 'Cesped ch2 - Start Time Tramo-1'
+        icon_template: "{{ 'mdi:timer-play-outline' if states('sensor.riego_cesped_ch2_start_time_t1') is not none }}"
+
+      riego_cesped_ch2_end_time_t1:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_end_time_t1.state }}'
+        friendly_name: 'Cesped ch2 - Start Time Tramo-1'
+        icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch2_end_time_t1') is not none }}"
+
+      riego_cesped_ch2_start_time_t2:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_start_time_t2.state }}'
+        friendly_name: 'Cesped ch2 - Start Time Tramo-2'
+        icon_template: "{{ 'mdi:timer-play-outline' if states('sensor.riego_cesped_ch2_start_time_t2') is not none }}"
+
+      riego_cesped_ch2_end_time_t2:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_end_time_t2.state }}'
+        friendly_name: 'Cesped ch2 - Start Time Tramo-2'
+        icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch2_end_time_t2') is not none }}"
+
       riego_cesped_ch2_duracion_planificada_t1:
         value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch2_end_time_t1.attributes.timestamp -  states.input_datetime.riego_cesped_ch2_start_time_t1.attributes.timestamp)/60)|int }}'
         friendly_name: 'Cesped CH2 - Duración Tramo-1 (Min)'
@@ -513,6 +591,26 @@
         icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch2_duracion_planificada_total') is not none }}"
 
       # CH3 Duracion Programa Diario-Semanal
+      riego_cesped_ch3_start_time_t1:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_start_time_t1.state }}'
+        friendly_name: 'Cesped ch3 - Start Time Tramo-1'
+        icon_template: "{{ 'mdi:timer-play-outline' if states('sensor.riego_cesped_ch3_start_time_t1') is not none }}"
+
+      riego_cesped_ch3_end_time_t1:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_end_time_t1.state }}'
+        friendly_name: 'Cesped ch3 - Start Time Tramo-1'
+        icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch3_end_time_t1') is not none }}"
+
+      riego_cesped_ch3_start_time_t2:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_start_time_t2.state }}'
+        friendly_name: 'Cesped ch3 - Start Time Tramo-2'
+        icon_template: "{{ 'mdi:timer-play-outline' if states('sensor.riego_cesped_ch3_start_time_t2') is not none }}"
+
+      riego_cesped_ch3_end_time_t2:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_end_time_t2.state }}'
+        friendly_name: 'Cesped ch3 - Start Time Tramo-2'
+        icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch3_end_time_t2') is not none }}"
+
       riego_cesped_ch3_duracion_planificada_t1:
         value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch3_end_time_t1.attributes.timestamp -  states.input_datetime.riego_cesped_ch3_start_time_t1.attributes.timestamp)/60)|int }}'
         friendly_name: 'Cesped CH3 - Duración Tramo-1 (Min)'
@@ -538,6 +636,26 @@
         icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch3_duracion_planificada_total') is not none }}"
 
       # CH4 Duracion Programa Diario-Semanal
+      riego_cesped_ch4_start_time_t1:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_start_time_t1.state }}'
+        friendly_name: 'Cesped ch4 - Start Time Tramo-1'
+        icon_template: "{{ 'mdi:timer-play-outline' if states('sensor.riego_cesped_ch4_start_time_t1') is not none }}"
+
+      riego_cesped_ch4_end_time_t1:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_end_time_t1.state }}'
+        friendly_name: 'Cesped ch4 - Start Time Tramo-1'
+        icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch4_end_time_t1') is not none }}"
+
+      riego_cesped_ch4_start_time_t2:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_start_time_t2.state }}'
+        friendly_name: 'Cesped ch4 - Start Time Tramo-2'
+        icon_template: "{{ 'mdi:timer-play-outline' if states('sensor.riego_cesped_ch4_start_time_t2') is not none }}"
+
+      riego_cesped_ch4_end_time_t2:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_end_time_t2.state }}'
+        friendly_name: 'Cesped ch4 - Start Time Tramo-2'
+        icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch4_end_time_t2') is not none }}"
+
       riego_cesped_ch4_duracion_planificada_t1:
         value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch4_end_time_t1.attributes.timestamp -  states.input_datetime.riego_cesped_ch4_start_time_t1.attributes.timestamp)/60)|int }}'
         friendly_name: 'Cesped CH4 - Duración Tramo-1 (Min)'
