@@ -1416,18 +1416,15 @@ riego_cesped_ch4_timer_cancel:
 #-----------------------------------------------------------------------------#
 
 #Apagado SW Sonoff Jardín
-jardin_off:
-  alias: 'Jardin Off'
+jardin_riego_off:
+  alias: 'Jardin Riego Off'
   sequence:
-    # When a condition does not return true, the script will finish
-    # Apagado Depuradora Piscina
-    - service: switch.turn_off
-      entity_id: switch.esphome_pow_sw3
     # Apagado Riego Jardin y Fuentes
     - service: switch.turn_off
       entity_id:
         - switch.esphome_4ch_sw2_relay_1
         - switch.esphome_4ch_sw2_relay_2
+        - switch.esphome_4ch_sw2_relay_3
         - switch.esphome_4ch_sw2_relay_3
         - switch.esphome_4ch_sw3_relay_1
         - switch.esphome_4ch_sw3_relay_2
@@ -1537,6 +1534,7 @@ sonoff_initialize:
         - switch.esphome_4ch_sw3_relay_4
         - switch.esphome_bas_sw2                  # SONOFF_BAS_SW2 HUERTO TOMATERAS
         - switch.esphome_pow_sw1                  # SONOFF_POW_SW1 BONSAIS PRODUCCION
+        - switch.esphome_pow_sw3                  # SONOFF_POW_SW3 DEPURADORA PISCINA
     - service: switch.turn_on
       entity_id:
         - switch.tagreader_9a0be4_buzzer_enabled  # Activa el zumbido al pasar un tag

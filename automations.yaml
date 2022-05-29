@@ -1450,7 +1450,7 @@
         entity_id: timer.piscina_depuradora_ch0
         duration: '{{ states.sensor.piscina_depuradora_ch0_duracion_planificada_t1.state|int * 60}}'
     - service: switch.turn_on
-      entity_id: switch.esphome_4ch_sw2_relay_1
+      entity_id: switch.esphome_pow_sw3
 
 - id: S06b
   alias: 'S06b Timer Piscinda Depuradora Tramo2'
@@ -1516,10 +1516,10 @@
   alias: 'S10 Switch Dormitorio MFC On'
   trigger:
     - platform: sun
-      # offset: "+03:30:00"   # Horario Invierno GMT+1  => 18:30 + 3:30 = 22:00
-      # offset: "+00:30:00"   # Horario Verano GMT+2  => 21:30 + 0:30 = 22:00
+      # offset: "+03:30:00"   # Horario Invierno GMT+2  => 18:30 + 3:30 = 22:00
+      # offset: "+00:30:00"   # Horario Verano GMT+1  => 21:30 + 0:30 = 22:00
       event: sunset
-      offset: "+03:30:00"
+      offset: "+00:30:00"
     #- platform: time # Solo Invierno Calefacción
     #  at: '06:45:00'
     #- platform: sun  # solo para calefacción
@@ -1549,7 +1549,7 @@
       # offset: "+03:30:00"   # Horario Invierno GMT+1  => 18:30 + 3:30 = 22:00
       # offset: "+00:30:00"   # Horario Verano GMT+2  => 21:30 + 0:30 = 22:00
       event: sunset
-      offset: "+03:30:00"
+      offset: "+00:30:00"
   condition:
     condition: and
     conditions:
@@ -1574,7 +1574,7 @@
       # offset: "+03:30:00"   # Horario Invierno GMT+1  => 18:30 + 3:30 = 22:00
       # offset: "+00:30:00"   # Horario Verano GMT+2  => 21:30 + 0:30 = 22:00
       event: sunset
-      offset: "+03:30:00"
+      offset: "+00:30:00"
   condition:
     condition: and
     conditions:
@@ -1595,8 +1595,8 @@
 - id: S12
   alias: 'S12 Switch Dormitorios Off'
   trigger:
-    - platform: time # Solo Invierno Calefacción
-      at: '00:05:00'
+    # - platform: time # Solo Invierno Calefacción
+    # at: '00:05:00'
     - platform: sun
       event: sunrise
   condition:
@@ -2328,38 +2328,29 @@
     - service: script.riego_cesped_ch4_timer_cancel
 
 - id: S40
-  alias: '40 Control Jardin Before Sunrise'
+  alias: 'S40 Control Jardin Sobreriego'
   trigger:
-    - platform: time
-      at: "00:00:00"
-    - platform: time
-      at: "01:00:00"
-    - platform: time
-      at: "02:00:00"
-  condition:
-    condition: or
-    conditions:
-      - condition: state
-        entity_id: switch.esphome_4ch_sw2_relay_1
-        state: 'on'
-      - condition: state
-        entity_id: switch.esphome_4ch_sw2_relay_2
-        state: 'on'
-      - condition: state
-        entity_id: switch.esphome_4ch_sw2_relay_3
-        state: 'on'
-      - condition: state
-        entity_id: switch.esphome_pow_sw3
-        state: 'on'
+    - platform: state
+      entity_id:
+        - switch.esphome_4ch_sw2_relay_1
+        - switch.esphome_4ch_sw2_relay_2
+        - switch.esphome_4ch_sw2_relay_3
+        - switch.esphome_4ch_sw2_relay_4
+        - switch.esphome_4ch_sw3_relay_1
+        - switch.esphome_4ch_sw3_relay_2
+        - switch.esphome_4ch_sw3_relay_3
+        - switch.esphome_4ch_sw3_relay_4
+      to: 'on'
+      for: '00:12:01'
   action:
-    - service: script.jardin_off
+    - service: script.jardin_riego_off
     # Notifica a Familia
     - service: script.notifica_evento
       data:
-        titulo: '*JARDIN: OFF*'
+        titulo: '*JARDIN: SOBRERIEGO DETECTADO*'
         mensaje: >
-          >>> EVENTO: Control Riego/Fuentes encendidas antes del amanecer
-          >>> JARDIN: Apagado total
+          >>> EVENTO: Control Riego/Fuentes encendidas > 10'
+          >>> JARDIN: Apagado total del riego
 
 - id: S41
   alias: 'S41 Switch Desk Power Off'
@@ -2405,7 +2396,7 @@
         state: 'on'
   action:
     - service: switch.turn_on
-      entity_id: switch.esphome_s20_sw1
+      entity_id: switch.esphome_bas_sw3
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
