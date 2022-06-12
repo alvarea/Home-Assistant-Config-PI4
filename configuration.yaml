@@ -87,6 +87,16 @@ discovery:
     #- xiaomi_gw
     #- esphome
 
+logbook:
+  exclude:
+    entities:
+      - sensor.now_astimezone_time
+    entity_globs:
+      - sensor.macbook*
+      - sensor.time*
+      - sensor.date*
+    domains:
+      - sun
 
 # Philips Hue Bridge ==> INTEGRATION
 #hue:

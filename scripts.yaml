@@ -1431,6 +1431,14 @@ jardin_riego_off:
         - switch.esphome_4ch_sw3_relay_3
         - switch.esphome_4ch_sw3_relay_4
 
+#Apagado SW Sonoff Piscina Depuradora
+piscina_depuradora_off:
+  alias: 'Jardin Riego Off'
+  sequence:
+    # Apagado POW Depuradora Piscina
+    - service: switch.turn_off
+      entity_id: switch.esphome_pow_sw3
+
 # SONOFF S20 - NESSPRESSO
 #
 #nesspreso_on_timer:

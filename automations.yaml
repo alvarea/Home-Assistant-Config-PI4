@@ -1622,22 +1622,22 @@
 #
 # SAI RACK COMUNICACIONES
 #
-- id: S15
-  alias: 'S15 ups apc700 status'
-  trigger:
-    - platform: state
-      entity_id: binary_sensor.ups_status
-      from: 'on'
-      to: 'off'
-      for: '00:00:10'
-  action:
-    # Script Notificación Alarma
-    - service: script.notifica_alarma
-      data:
-        voz: 'Fallo Eléctrico. Cuadro rack estudio sin corriente eléctrica'
-        titulo: '*AVISO FALLO ELECTRICO*'
-        mensaje: >
-          >>> URGENTE: SAI RACK COMUNICACIONES SIN CORRIENTE
+#- id: S15
+#  alias: 'S15 ups apc700 status'
+#  trigger:
+#    - platform: state
+#      entity_id: binary_sensor.ups_status
+#      from: 'on'
+#      to: 'off'
+#      for: '00:00:10'
+#  action:
+#    # Script Notificación Alarma
+#    - service: script.notifica_alarma
+#      data:
+#        voz: 'Fallo Eléctrico. Cuadro rack estudio sin corriente eléctrica'
+#        titulo: '*AVISO FALLO ELECTRICO*'
+#        mensaje: >
+#          >>> URGENTE: SAI RACK COMUNICACIONES SIN CORRIENTE
 
 # ESPHOME POW R2 SW2 - LAVADORA
 #
@@ -1711,10 +1711,8 @@
   trigger:
     - platform: time
       at:
-        - '00:05:00'
-        - '06:00:00'
-        - '12:00:00'
-        - '18:00:00'
+        - '07:00:00'
+        - '21:00:00'
   action:
     - choose:
         # IF Riego On AND HOY No Se Riega (Llueve) => Apaga Riego
@@ -1739,12 +1737,12 @@
 #
 # SENSOR:  input_boolean.riego_interruptor_global
 #
-# PLAN DE RIEGOS ESTACION OTOÑO
+# PLAN DE RIEGOS ESTACION OTOÑO /VERANO
 #
-#     CANAL   SECTOR    HORA    MINUTOS
-#     A       1         8:30    5
-#     B       2         9:30    4
-#     C       3         23:30   8
+#     CANAL   SECTOR    HORA    TRAMO1    HORA2     TRAMO2
+#     A       1         8:00    5         22:00     5
+#     B       2         8:50    4         22:50     4
+#     C       3         10:00   4         23:30     4
 #
 - id: S18b
   alias: 'S18b Control Bomba Riego'
@@ -1754,27 +1752,29 @@
       event: start
     - platform: time
       at:
-        - '08:00:00'
-        - '00:00:00'
+        - '07:59:00'
+        - '21:59:00'
+        - '10:59:00'
+        - '23:59:00'
   action:
     # Apaga la bomba de riego por las noches y la enciende a primera hora en función del estado del interruptor global
     - choose:
         # IF el interruptor general riego está encendido => a las 00:00 apaga la bomba de riego
         - conditions:
           - condition: template
-            value_template: "{{ now().hour == 0 and is_state('input_boolean.riego_interruptor_global','on') }}"
+            value_template: "{{ (now().hour == 10 or now().hour == 23) }}"
           sequence:
-            #- service: switch.turn_off
-            #  target:
-            #    entity_id: switch.esphome_pow_sw4
+            - service: switch.turn_off
+              target:
+                entity_id: switch.esphome_pow_sw4
         # ELIF
         - conditions:
           - condition: template
-            value_template: "{{ now().hour == 8 and is_state('input_boolean.riego_interruptor_global','on') and is_state('binary_sensor.riego_control_bomba_status','off') }}"
+            value_template: "{{ (now().hour == 7 or now().hour == 21) and is_state('input_boolean.riego_interruptor_global','on')}}"
           sequence:
-            #- service: switch.turn_on
-            #  target:
-            #    entity_id: switch.esphome_pow_sw4
+            - service: switch.turn_on
+              target:
+                entity_id: switch.esphome_pow_sw4
 
 # Regla Original Control Bomba Riego basado en el interruptor global
 #
@@ -2396,6 +2396,23 @@
   action:
     - service: switch.turn_on
       entity_id: switch.esphome_bas_sw3
+
+- id: S43
+  alias: 'S43 Control Depuradora Piscina'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.piscina_depuradora_ch0_motor_on
+      to: 'on'
+      for: '05:00:00'
+  action:
+    - service: script.piscina_depuradora_off
+    # Notifica a Familia
+    - service: script.notifica_evento
+      data:
+        titulo: '*PISCINA: SOBRE-DEPURACION DETECTADO*'
+        mensaje: >
+          >>> EVENTO: Control Motor Depuradora Piscina > 5h'
+          >>> PISCINA: Apagado depuradora piscina
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
