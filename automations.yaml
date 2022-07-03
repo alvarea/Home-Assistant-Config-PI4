@@ -39,9 +39,21 @@
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
-# TAREAS DIARIAS DEL SISTEMA                                                  #
+# TAREAS PERIODICAS DEL SISTEMA                                               #
 #                                                                             #
 #-----------------------------------------------------------------------------#
+- id: hass_weekly_ha_restart
+  alias: 'HA weekly restart'
+  trigger:
+    - platform: time
+      at: '06:00:00'
+  condition:
+    - condition: time
+      weekday: sat
+  action:
+    # Reinicio HA Core
+    - service: homeassistant.restart
+
 - id: hass_daily_automations
   alias: 'HA daily automations'
   trigger:
@@ -1146,14 +1158,15 @@
 #                                                                             #
 #-----------------------------------------------------------------------------#
 #
-# Available events are FLIP90, flip180, MOVE, TAP_TWICE, SHAKE_AIR, swing, alert, FREE_FALL
+# Available events are FLIP90, FLIP180, move, TAP_TWICE, SHAKE_AIR, swing, alert, FREE_FALL
 # The component stores the last action as the attribute last_action.
 #
 # shake_air:    ESTUDIO LIGHT OFF
 # free_fall:    ESTUDIO LIGHT ESCENA AZUL
 # flip_90:      ESTUDIO LIGHT ESCENA DESK
+# flip_180:     ESTUDIO LIGHT ESCENA DESK HIGH
 # tap_twice:    ESTUDIO SWITCH DESK POWER
-# move:         ESTUDIO LIGHT ESCENA HALL
+# move:
 #
 - id: L12
   alias: 'L12 Cube FreeFall Light Estudio Azul'
@@ -1199,7 +1212,6 @@
       data:
         group_name: "Estudio"
         scene_name: "Desk"
-    - delay: 3
 
 - id: L15
   alias: 'L15 Cube TapTwice Desk Power'
@@ -1215,20 +1227,20 @@
       entity_id: switch.esphome_bas_sw3
 
 - id: L16
-  alias: 'L16 Cube Move Light Estudio Hall'
+  alias: 'L14 Cube Flip180 Light Estudio Desk High'
   mode: restart
   trigger:
     platform: event
     event_type: xiaomi_aqara.cube_action
     event_data:
       entity_id: binary_sensor.cube_158d00024a4a62
-      action_type: move
+      action_type: flip180
   action:
     - service: hue.hue_activate_scene
       data:
         group_name: "Estudio"
-        scene_name: "Hall"
-    - delay: 3
+        scene_name: "Desk_High"
+
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -1752,17 +1764,17 @@
       event: start
     - platform: time
       at:
-        - '07:59:00'
+        - '06:59:00'
         - '21:59:00'
         - '10:59:00'
-        - '23:59:00'
+        - '02:59:00'
   action:
     # Apaga la bomba de riego por las noches y la enciende a primera hora en función del estado del interruptor global
     - choose:
         # IF el interruptor general riego está encendido => a las 00:00 apaga la bomba de riego
         - conditions:
           - condition: template
-            value_template: "{{ (now().hour == 10 or now().hour == 23) }}"
+            value_template: "{{ (now().hour == 10 or now().hour == 02) }}"
           sequence:
             - service: switch.turn_off
               target:
@@ -1770,7 +1782,7 @@
         # ELIF
         - conditions:
           - condition: template
-            value_template: "{{ (now().hour == 7 or now().hour == 21) and is_state('input_boolean.riego_interruptor_global','on')}}"
+            value_template: "{{ (now().hour == 6 or now().hour == 21) and is_state('input_boolean.riego_interruptor_global','on')}}"
           sequence:
             - service: switch.turn_on
               target:
@@ -2373,29 +2385,6 @@
     - service: switch.turn_off
       entity_id: switch.esphome_bas_sw3
 
-- id: S42
-  alias: 'S42 Switch Desk Power On'
-  trigger:
-    - platform: sun
-      event: sunrise
-      offset: "-01:00:00"
-    - platform: state
-      entity_id: binary_sensor.macbook_aac_active
-      from: 'off'
-      to: 'on'
-  condition:
-    condition: and
-    conditions:
-      - condition: sun
-        after: sunrise
-        after_offset: "-01:00:00"
-      # AAC en casa
-      - condition: state
-        entity_id: binary_sensor.family_aac
-        state: 'on'
-  action:
-    - service: switch.turn_on
-      entity_id: switch.esphome_bas_sw3
 
 - id: S43
   alias: 'S43 Control Depuradora Piscina'

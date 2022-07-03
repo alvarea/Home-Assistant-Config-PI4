@@ -336,9 +336,8 @@
 
       piscina_depuradora_ch0_motor_on:
         value_template: >-
-          {%  if is_state('binary_sensor.piscina_depuradora_ch0_status','on')
-              and states('sensor.esphome_pow_sw3_voltage')|int(0) > 200
-              and states('sensor.esphome_pow_sw3_power')|round(1) > 1.6
+          {%  if states('sensor.esphome_pow_sw3_voltage')|int(0) > 200
+              and states('sensor.esphome_pow_sw3_power')|round(1) > 1.0
           %}
             true
           {% else %}
@@ -347,9 +346,8 @@
 
       piscina_depuradora_ch0_warning:
         value_template: >-
-          {%  if is_state('switch.esphome_pow_sw3','on')
-              and states('sensor.esphome_pow_sw3_power')|round(1) >= 0.1
-              and states('sensor.esphome_pow_sw3_power')|round(1) <= 1.5
+          {%  if states('sensor.esphome_pow_sw3_voltage')|int(0) > 200
+              and states('sensor.esphome_pow_sw3_power')|round(1) > 4.0
           %}
             true
           {% else %}
@@ -969,16 +967,16 @@
       #
       riego_cesped_ch2_status:
         value_template: >-
-          {% if is_state('switch.esphome_4ch_sw3_relay_1','on') %}
+          {% if is_state('switch.esphome_4ch_sw3_relay_2','on') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Riego Cesped CH1 on/off'
+        friendly_name: 'Riego Cesped CH2 on/off'
         icon_template: mdi:power
 
       riego_cesped_ch2_dia_ejecucion_t1:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH1-T1)'
+        friendly_name: '¿Próxima Ejecución Hoy? (CH2-T1)'
         icon_template: mdi:calendar-check
         value_template: >-
           {% if is_state('input_select.riego_cesped_ch2_programador_dias','Diario') and is_state('input_boolean.riego_cesped_ch2_programador_t1','on') %}
@@ -994,7 +992,7 @@
           {% endif %}
 
       riego_cesped_ch2_dia_ejecucion_t2:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH1-T2)'
+        friendly_name: '¿Próxima Ejecución Hoy? (CH2-T2)'
         icon_template: mdi:calendar-check
         value_template: >-
           {% if is_state('input_select.riego_cesped_ch2_programador_dias','Diario') and is_state('input_boolean.riego_cesped_ch2_programador_t2','on') %}
@@ -1010,7 +1008,7 @@
           {% endif %}
 
       riego_cesped_ch2_dia_ejecucion:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH1)'
+        friendly_name: '¿Próxima Ejecución Hoy? (CH2)'
         icon_template: mdi:tree
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
@@ -1031,11 +1029,11 @@
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Riego Cesped CH1 on/off'
+        friendly_name: 'Riego Cesped CH3 on/off'
         icon_template: mdi:power
 
       riego_cesped_ch3_dia_ejecucion_t1:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH1-T1)'
+        friendly_name: '¿Próxima Ejecución Hoy? (CH3-T1)'
         icon_template: mdi:calendar-check
         value_template: >-
           {% if is_state('input_select.riego_cesped_ch3_programador_dias','Diario') and is_state('input_boolean.riego_cesped_ch3_programador_t1','on') %}
@@ -1051,7 +1049,7 @@
           {% endif %}
 
       riego_cesped_ch3_dia_ejecucion_t2:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH1-T2)'
+        friendly_name: '¿Próxima Ejecución Hoy? (CH3-T2)'
         icon_template: mdi:calendar-check
         value_template: >-
           {% if is_state('input_select.riego_cesped_ch3_programador_dias','Diario') and is_state('input_boolean.riego_cesped_ch3_programador_t2','on') %}
@@ -1067,7 +1065,7 @@
           {% endif %}
 
       riego_cesped_ch3_dia_ejecucion:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH1)'
+        friendly_name: '¿Próxima Ejecución Hoy? (CH3)'
         icon_template: mdi:tree
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
@@ -1092,7 +1090,7 @@
         icon_template: mdi:power
 
       riego_cesped_ch4_dia_ejecucion_t1:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH1-T1)'
+        friendly_name: '¿Próxima Ejecución Hoy? (CH4-T1)'
         icon_template: mdi:calendar-check
         value_template: >-
           {% if is_state('input_select.riego_cesped_ch4_programador_dias','Diario') and is_state('input_boolean.riego_cesped_ch4_programador_t1','on') %}
@@ -1108,7 +1106,7 @@
           {% endif %}
 
       riego_cesped_ch4_dia_ejecucion_t2:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH1-T2)'
+        friendly_name: '¿Próxima Ejecución Hoy? (CH4-T2)'
         icon_template: mdi:calendar-check
         value_template: >-
           {% if is_state('input_select.riego_cesped_ch4_programador_dias','Diario') and is_state('input_boolean.riego_cesped_ch4_programador_t2','on') %}
@@ -1124,7 +1122,7 @@
           {% endif %}
 
       riego_cesped_ch4_dia_ejecucion:
-        friendly_name: '¿Próxima Ejecución Hoy? (CH1)'
+        friendly_name: '¿Próxima Ejecución Hoy? (CH4)'
         icon_template: mdi:tree
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
