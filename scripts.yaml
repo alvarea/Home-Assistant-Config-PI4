@@ -290,13 +290,12 @@ alexa_dormitorio_set_volumen:
           {%endif%}
     # Establece el volumen
     - service: media_player.volume_set
-      data_template:
-        entity_id: media_player.echo_alexa_dormitorio
+      data:
         volume_level: "{{ states('input_number.alexa_dormitorio_volumen_nuevo')|float }}"
-    - service: media_player.volume_set
-      data_template:
-        entity_id: media_player.echo_alexa_dormitorio_aac
-        volume_level: "{{ states('input_number.alexa_dormitorio_volumen_nuevo')|float }}"
+      target:
+        entity_id:
+          - media_player.echo_alexa_dormitorio
+          - media_player.echo_alexa_dormitorio_aac
 
 alexa_entrada_set_volumen:
   alias: 'Alexa Entrada Set Vol'
@@ -314,9 +313,10 @@ alexa_entrada_set_volumen:
           {%endif%}
     # Establece el volumen
     - service: media_player.volume_set
-      data_template:
-        entity_id: media_player.echo_alexa_entrada
+      data:
         volume_level: "{{ states('input_number.alexa_entrada_volumen_nuevo')|float }}"
+      target:
+        entity_id: media_player.echo_alexa_entrada
 
 alexa_estudio_set_volumen:
   alias: 'Alexa Estudio Set Vol'
@@ -334,9 +334,10 @@ alexa_estudio_set_volumen:
           {%endif%}
     # Establece el volumen
     - service: media_player.volume_set
-      data_template:
-        entity_id: media_player.echo_alexa_estudio
+      data:
         volume_level: "{{ states('input_number.alexa_estudio_volumen_nuevo')|float }}"
+      target:
+        entity_id: media_player.echo_alexa_estudio
 
 # Script completo para almacenar el volumen actual y establecer el volumen de voz a Alexa DORMITORIO
 #
@@ -366,10 +367,12 @@ alexa_dormitorio_set_volumen_alarma:
           {%endif%}
     # Establece el volumen
     - service: media_player.volume_set
-      data_template:
-        entity_id: media_player.echo_alexa_dormitorio
+      data:
         volume_level: "{{ states('input_number.alexa_dormitorio_volumen_nuevo')|float }}"
-
+      target:
+        entity_id:
+          - media_player.echo_alexa_dormitorio
+          - media_player.echo_alexa_dormitorio_aac
 #
 # Script completo para almacenar el volumen actual y establecer el volumen de voz a Alexa ENTRADA
 #
@@ -399,9 +402,10 @@ alexa_entrada_set_volumen_alarma:
           {%endif%}
     # Establece el volumen
     - service: media_player.volume_set
-      data_template:
-        entity_id: media_player.echo_alexa_entrada
+      data:
         volume_level: "{{ states('input_number.alexa_entrada_volumen_nuevo')|float }}"
+      target:
+        entity_id: media_player.echo_alexa_entrada
 
 #
 # Scripts básicos para restaurar el volumen original que tenía Alexa antes del mensaje
@@ -412,9 +416,11 @@ alexa_entrada_restaura_volumen:
   sequence:
     # Restablece el Volumen Anterior al mensaje
     - service: media_player.volume_set
-      data_template:
-        entity_id: media_player.echo_alexa_entrada
+      data:
         volume_level: "{{ states('input_number.alexa_entrada_volumen_anterior')|float }}"
+      target:
+        entity_id: media_player.echo_alexa_entrada
+
 
 alexa_dormitorio_restaura_volumen:
   alias: 'Alexa Dormitorio Restaura Vol'
@@ -422,9 +428,12 @@ alexa_dormitorio_restaura_volumen:
   sequence:
     # Restablece el Volumen Anterior al mensaje
     - service: media_player.volume_set
-      data_template:
-        entity_id: media_player.echo_alexa_dormitorio
+      data:
         volume_level: "{{ states('input_number.alexa_dormitorio_volumen_anterior')|float }}"
+      target:
+        entity_id:
+          - media_player.echo_alexa_dormitorio
+          - media_player.echo_alexa_dormitorio_aac
 
 #
 # Script completo para enviar un SONIDO varias repeticiones a un Alexa
@@ -1554,7 +1563,7 @@ sonoff_initialize:
 #                                                                             #
 #-----------------------------------------------------------------------------#
 blink_trigger_cam_hall:
-  alias: 'Blink Trigger Camera Entrada'
+  alias: 'Blink Trigger Camera Hall'
   sequence:
     - service: blink.trigger_camera
       data:
@@ -1605,6 +1614,18 @@ blink_trigger_cam_piscina:
         entity_id: camera.blink_piscina
         filename: /share/blink_piscina.jpg
 
+blink_trigger_cam_porche:
+  alias: 'Blink Trigger Camera Porche'
+  sequence:
+    - service: blink.trigger_camera
+      data:
+        entity_id: camera.blink_porche
+    - delay: 00:00:05
+    - service: blink.blink_update
+    - service: camera.snapshot
+      data:
+        entity_id: camera.blink_porche
+        filename: /share/blink_porche.jpg
 
 
 

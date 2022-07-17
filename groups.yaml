@@ -32,6 +32,8 @@ alarma_sensores_exterior:
     - binary_sensor.motion_sensor_158d0001e637f6            # Presencia Exterior
     - binary_sensor.blink_puerta_garaje_motion_detected     # Blink Puerta Garaje
     - binary_sensor.blink_puerta_principal_motion_detected  # Blink Puerta Principal
+    - binary_sensor.blink_piscina_motion_detected           # Blink Piscina
+    - binary_sensor.blink_porche_motion_detected            # Blink Porche
 
 alarma_sensores_presencia:
   name: Sensores Presencia

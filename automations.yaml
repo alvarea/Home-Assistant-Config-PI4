@@ -130,6 +130,8 @@
     - service: script.blink_trigger_cam_puerta_garaje
     - delay: '00:00:30'
     - service: script.blink_trigger_cam_piscina
+    - delay: '00:00:30'
+    - service: script.blink_trigger_cam_porche
 
 #-----------------------------------------------------------------------------#
 #                                                                             #
@@ -405,15 +407,18 @@
         - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
         - binary_sensor.door_window_sensor_158d00045d69a6       # Ventana PAF
       # Grupo Sensores Away
-        - binary_sensor.motion_sensor_158d0001e637f6            # Presencia Exterior
+        #- binary_sensor.motion_sensor_158d0001e637f6           # Presencia Exterior
         - binary_sensor.motion_sensor_158d0002ea1d0f            # Presencia Dormitorio
         - binary_sensor.motion_sensor_158d0001e55903            # Presencia Entrada Interior
         - binary_sensor.motion_sensor_158d0001e464a6            # Presencia Estudio
         - binary_sensor.motion_sensor_158d0001e05661            # Presencia Salón
         - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
+        - binary_sensor.door_window_sensor_158d0004508a6d       # Ventana Estudio2
         - binary_sensor.blink_puerta_garaje_motion_detected     # Blink Puerta Garaje
         - binary_sensor.blink_puerta_principal_motion_detected  # Blink Puerta Principal
-        - binary_sensor.blink_entrada_motion_detected           # Blink Entrada Interior
+        - binary_sensor.blink_hall_motion_detected              # Blink Entrada Interior
+        - binary_sensor.blink_porche_motion_detected            # Blink Zona Porche Salón
+        - binary_sensor.blink_piscina_motion_detected           # Blink Zona Piscina
       to: 'on'
     # Los sensores vibración solo saltan por trigger = event
     - platform: event
@@ -1764,17 +1769,17 @@
       event: start
     - platform: time
       at:
-        - '06:59:00'
-        - '21:59:00'
-        - '10:59:00'
-        - '02:59:00'
+        - '06:45:00'
+        - '21:45:00'
+        - '10:30:00'
+        - '02:30:00'
   action:
     # Apaga la bomba de riego por las noches y la enciende a primera hora en función del estado del interruptor global
     - choose:
         # IF el interruptor general riego está encendido => a las 00:00 apaga la bomba de riego
         - conditions:
           - condition: template
-            value_template: "{{ (now().hour == 10 or now().hour == 02) }}"
+            value_template: "{{ now().hour == 10 or now().hour == 2 }}"
           sequence:
             - service: switch.turn_off
               target:
@@ -1782,7 +1787,7 @@
         # ELIF
         - conditions:
           - condition: template
-            value_template: "{{ (now().hour == 6 or now().hour == 21) and is_state('input_boolean.riego_interruptor_global','on')}}"
+            value_template: "{{ now().hour == 6 or now().hour == 21 and is_state('input_boolean.riego_interruptor_global','on')}}"
           sequence:
             - service: switch.turn_on
               target:
