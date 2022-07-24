@@ -171,6 +171,11 @@
     name: Programador CH1 Timer2
     icon: mdi:dip-switch
 
+  # Riego Cesped CH1 - Tramo3
+  riego_cesped_ch1_programador_t3:
+    name: Programador CH1 Timer3
+    icon: mdi:dip-switch
+
   # Riego Cesped CH2
   riego_cesped_ch2_programador_t1:
     name: Programador CH2 Timer1
@@ -179,6 +184,11 @@
   # Riego Cesped CH2 - Tramo2
   riego_cesped_ch2_programador_t2:
     name: Programador CH2 Timer2
+    icon: mdi:dip-switch
+
+  # Riego Cesped CH2 - Tramo3
+  riego_cesped_ch2_programador_t3:
+    name: Programador CH2 Timer3
     icon: mdi:dip-switch
 
   # Riego Cesped CH3

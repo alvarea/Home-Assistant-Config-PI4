@@ -165,6 +165,17 @@
     has_date: false
     has_time: true
 
+  # Riego Cesped CH1 - Tramo2 - Inicio
+  riego_cesped_ch1_start_time_t3:
+    name: Hora Inicio Planificado Tramo3
+    has_date: false
+    has_time: true
+
+  riego_cesped_ch1_end_time_t3:
+    name: Hora Final Planificado Tramo3
+    has_date: false
+    has_time: true
+
   # Riego Cesped CH2 - Tramo1 - Inicio
   riego_cesped_ch2_start_time_t1:
     name: Hora Inicio Planificado Tramo1
@@ -184,6 +195,17 @@
 
   riego_cesped_ch2_end_time_t2:
     name: Hora Final Planificado Tramo2
+    has_date: false
+    has_time: true
+
+  # Riego Cesped CH2 - Tramo3 - Inicio
+  riego_cesped_ch2_start_time_t3:
+    name: Hora Inicio Planificado Tramo3
+    has_date: false
+    has_time: true
+
+  riego_cesped_ch2_end_time_t3:
+    name: Hora Final Planificado Tramo3
     has_date: false
     has_time: true
 

@@ -1153,10 +1153,6 @@ luces_exterior_off:
     - condition: template
       value_template: "{% if is_state('group.luces_jardin_grp', 'on') %}true{% endif %}"
 
-    # Apagado Luces Exterior - Switch
-    - service: switch.turn_off
-      entity_id: group.luces_jardin_grp
-
     # Apagado Luces Exterior - Light
     - service: light.turn_off
       entity_id: group.luces_jardin_grp

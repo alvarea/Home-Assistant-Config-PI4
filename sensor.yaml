@@ -521,6 +521,16 @@
         friendly_name: 'Cesped CH1 - Start Time Tramo-2'
         icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch1_end_time_t2') is not none }}"
 
+      riego_cesped_ch1_start_time_t3:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_start_time_t3.state }}'
+        friendly_name: 'Cesped CH1 - Start Time Tramo-3'
+        icon_template: "{{ 'mdi:timer-play-outline' if states('sensor.riego_cesped_ch1_start_time_t3') is not none }}"
+
+      riego_cesped_ch1_end_time_t3:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_end_time_t3.state }}'
+        friendly_name: 'Cesped CH1 - Start Time Tramo-3'
+        icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch1_end_time_t3') is not none }}"
+
       riego_cesped_ch1_duracion_planificada_t1:
         value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch1_end_time_t1.attributes.timestamp -  states.input_datetime.riego_cesped_ch1_start_time_t1.attributes.timestamp)/60)|int }}'
         friendly_name: 'Cesped CH1 - Duración Tramo-1 (Min)'
@@ -531,6 +541,11 @@
         friendly_name: 'Cesped CH1 - Duración Tramo-2 (Min)'
         icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch1_duracion_planificada_t2') is not none }}"
 
+      riego_cesped_ch1_duracion_planificada_t3:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch1_end_time_t3.attributes.timestamp -  states.input_datetime.riego_cesped_ch1_start_time_t3.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Cesped CH1 - Duración Tramo-2 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch1_duracion_planificada_t3') is not none }}"
+
       riego_cesped_ch1_programador_t1_estado:
         value_template: "{% if is_state('input_boolean.riego_cesped_ch1_programador_t1','on')%}1{%else%}0{%endif%}"
         friendly_name: 'Cesped CH1 - Programador Tramo-1'
@@ -539,9 +554,14 @@
         value_template: "{% if is_state('input_boolean.riego_cesped_ch1_programador_t2','on')%}1{%else%}0{%endif%}"
         friendly_name: 'Cesped CH1 - Programador Tramo-2'
 
+      riego_cesped_ch1_programador_t3_estado:
+        value_template: "{% if is_state('input_boolean.riego_cesped_ch1_programador_t3','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Cesped CH1 - Programador Tramo-3'
+
       riego_cesped_ch1_duracion_planificada_total:
-        value_template: '{{(states.sensor.riego_cesped_ch1_duracion_planificada_t1.state|int*states.sensor.riego_cesped_ch1_programador_t1_estado.state|int)+
-        (states.sensor.riego_cesped_ch1_duracion_planificada_t2.state|int*states.sensor.riego_cesped_ch1_programador_t2_estado.state|int)}}'
+        value_template: '{{(states.sensor.riego_cesped_ch1_duracion_planificada_t1.state|int*states.sensor.riego_cesped_ch1_programador_t1_estado.state|int)
+        +(states.sensor.riego_cesped_ch1_duracion_planificada_t2.state|int*states.sensor.riego_cesped_ch1_programador_t2_estado.state|int)
+        +(states.sensor.riego_cesped_ch1_duracion_planificada_t3.state|int*states.sensor.riego_cesped_ch1_programador_t3_estado.state|int)}}'
         friendly_name: 'Cesped CH1 - Duración Total (Min)'
         icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch1_duracion_planificada_total') is not none }}"
 
@@ -566,6 +586,16 @@
         friendly_name: 'Cesped ch2 - Start Time Tramo-2'
         icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch2_end_time_t2') is not none }}"
 
+      riego_cesped_ch2_start_time_t3:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_start_time_t3.state }}'
+        friendly_name: 'Cesped ch2 - Start Time Tramo-3'
+        icon_template: "{{ 'mdi:timer-play-outline' if states('sensor.riego_cesped_ch2_start_time_t3') is not none }}"
+
+      riego_cesped_ch2_end_time_t3:
+        value_template: '{{ states.input_datetime.riego_bonsais_ch0_end_time_t3.state }}'
+        friendly_name: 'Cesped ch2 - Start Time Tramo-3'
+        icon_template: "{{ 'mdi:timer-stop-outline' if states('sensor.riego_cesped_ch2_end_time_t3') is not none }}"
+
       riego_cesped_ch2_duracion_planificada_t1:
         value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch2_end_time_t1.attributes.timestamp -  states.input_datetime.riego_cesped_ch2_start_time_t1.attributes.timestamp)/60)|int }}'
         friendly_name: 'Cesped CH2 - Duración Tramo-1 (Min)'
@@ -576,17 +606,28 @@
         friendly_name: 'Cesped CH2 - Duración Tramo-2 (Min)'
         icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch2_duracion_planificada_t2') is not none }}"
 
+      riego_cesped_ch2_duracion_planificada_t3:
+        value_template: '{{ "{:}".format((states.input_datetime.riego_cesped_ch2_end_time_t3.attributes.timestamp -  states.input_datetime.riego_cesped_ch2_start_time_t3.attributes.timestamp)/60)|int }}'
+        friendly_name: 'Cesped CH2 - Duración Tramo-3 (Min)'
+        icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch2_duracion_planificada_t3') is not none }}"
+
       riego_cesped_ch2_programador_t1_estado:
         value_template: "{% if is_state('input_boolean.riego_cesped_ch2_programador_t1','on')%}1{%else%}0{%endif%}"
         friendly_name: 'Cesped CH2 - Programador Tramo-1'
 
       riego_cesped_ch2_programador_t2_estado:
         value_template: "{% if is_state('input_boolean.riego_cesped_ch2_programador_t2','on')%}1{%else%}0{%endif%}"
-        friendly_name: 'Cesped CH2 - Programador Tramo-1'
+        friendly_name: 'Cesped CH2 - Programador Tramo-2'
+
+      riego_cesped_ch2_programador_t3_estado:
+        value_template: "{% if is_state('input_boolean.riego_cesped_ch2_programador_t3','on')%}1{%else%}0{%endif%}"
+        friendly_name: 'Cesped CH2 - Programador Tramo-3'
 
       riego_cesped_ch2_duracion_planificada_total:
-        value_template: '{{(states.sensor.riego_cesped_ch2_duracion_planificada_t1.state|int*states.sensor.riego_cesped_ch2_programador_t1_estado.state|int)+
-        (states.sensor.riego_cesped_ch2_duracion_planificada_t2.state|int*states.sensor.riego_cesped_ch2_programador_t2_estado.state|int)}}'
+        value_template: '{{(states.sensor.riego_cesped_ch2_duracion_planificada_t1.state|int*states.sensor.riego_cesped_ch2_programador_t1_estado.state|int)
+        +(states.sensor.riego_cesped_ch2_duracion_planificada_t2.state|int*states.sensor.riego_cesped_ch2_programador_t2_estado.state|int)
+        +(states.sensor.riego_cesped_ch2_duracion_planificada_t3.state|int*states.sensor.riego_cesped_ch2_programador_t3_estado.state|int)
+        }}'
         friendly_name: 'Cesped CH2 - Duración Total (Min)'
         icon_template: "{{ 'mdi:timer-sand' if states('sensor.riego_cesped_ch2_duracion_planificada_total') is not none }}"
 

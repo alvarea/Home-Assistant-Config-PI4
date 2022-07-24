@@ -642,7 +642,7 @@
     - platform: time
       at:
         - "02:00:00"
-        - "03:30:00"
+        - "03:00:00"
         - "04:00:00"
         - "05:00:00"
         - "06:00:00"
@@ -1769,17 +1769,16 @@
       event: start
     - platform: time
       at:
-        - '06:45:00'
+        - '07:45:00'
         - '21:45:00'
-        - '10:30:00'
-        - '02:30:00'
+        - '12:30:00'
   action:
     # Apaga la bomba de riego por las noches y la enciende a primera hora en función del estado del interruptor global
     - choose:
         # IF el interruptor general riego está encendido => a las 00:00 apaga la bomba de riego
         - conditions:
           - condition: template
-            value_template: "{{ now().hour == 10 or now().hour == 2 }}"
+            value_template: "{{ now().hour == 12 }}"
           sequence:
             - service: switch.turn_off
               target:
@@ -1787,7 +1786,7 @@
         # ELIF
         - conditions:
           - condition: template
-            value_template: "{{ now().hour == 6 or now().hour == 21 and is_state('input_boolean.riego_interruptor_global','on')}}"
+            value_template: "{{ now().hour == 7 or now().hour == 21 and is_state('input_boolean.riego_interruptor_global','on')}}"
           sequence:
             - service: switch.turn_on
               target:
@@ -2157,7 +2156,30 @@
       entity_id: switch.esphome_4ch_sw3_relay_1
 
 - id: S31c
-  alias: 'S31c Timer Riego Cesped CH1 End'
+  alias: 'S31c Timer Riego Cesped CH1 Tramo3'
+  trigger:
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states.input_datetime.riego_cesped_ch1_start_time_t3.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.riego_interruptor_global  # Interruptor General Riego segun Forecast Tiempo
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.riego_cesped_ch1_dia_ejecucion_t3  # Sensor del programador on/off
+        state: 'on'
+  action:
+    # Timer Programador Diario
+    - service: timer.start
+      data_template:
+        entity_id: timer.riego_cesped_ch1
+        duration: '{{ states.sensor.riego_cesped_ch1_duracion_planificada_t3.state|int * 60}}'
+    - service: switch.turn_on
+      entity_id: switch.esphome_4ch_sw3_relay_1
+
+- id: S31z
+  alias: 'S31z Timer Riego Cesped CH1 End'
   trigger:
     - platform: event
       event_type: timer.finished
@@ -2216,7 +2238,30 @@
       entity_id: switch.esphome_4ch_sw3_relay_2
 
 - id: S32c
-  alias: 'S31c Timer Riego Cesped CH2 End'
+  alias: 'S32c Timer Riego Cesped CH2 Tramo3'
+  trigger:
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states.input_datetime.riego_cesped_ch2_start_time_t3.attributes.timestamp | int | timestamp_custom('%H:%M', False)) }}"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: input_boolean.riego_interruptor_global  # Interruptor General Riego segun Forecast Tiempo
+        state: 'on'
+      - condition: state
+        entity_id: binary_sensor.riego_cesped_ch2_dia_ejecucion_t3  # Sensor del programador on/off
+        state: 'on'
+  action:
+    # Timer Programador Diario
+    - service: timer.start
+      data_template:
+        entity_id: timer.riego_cesped_ch2
+        duration: '{{ states.sensor.riego_cesped_ch2_duracion_planificada_t3.state|int * 60}}'
+    - service: switch.turn_on
+      entity_id: switch.esphome_4ch_sw3_relay_2
+
+- id: S32z
+  alias: 'S31z Timer Riego Cesped CH2 End'
   trigger:
     - platform: event
       event_type: timer.finished

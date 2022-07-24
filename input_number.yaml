@@ -295,7 +295,7 @@
 # DEPURADORA PISCINA
 #
 
-  piscina_manual_minutos:
+  piscina_depuradora_ch0_manual_minutos:
     name: 'Programa Manual (min)'
     mode: slider
     #initial: 60

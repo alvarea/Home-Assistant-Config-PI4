@@ -213,8 +213,11 @@
         friendly_name: 'Alarma Sirena Interior'
         icon_template: mdi:alarm-light
 
+      #
+      # CONTROL LAVADORA
+      #
       # SONOFF POW_SW2. Sensores control consumo potencia
-      esphome_pow_sw2_switch:
+      #
         value_template: >-
           {% if is_state('switch.esphome_pow_sw2','on') %}
             true
@@ -426,18 +429,83 @@
           {% endif %}
 
       #
-      # AEMET - JARDIN RIEGO - CH1 - CH4
+      #  CONTROL BOMBA JARDIN RIEGO - CH1 - CH4
       #
-      riego_control_bomba_status:
+      esphome_pow_sw4_current:
+        value_template: >-
+          {% if states('sensor.esphome_pow_sw4_current')|int(0) > 1 %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw4_power:
+        value_template: >-
+          {% if states('sensor.esphome_pow_sw4_power')|int(0) > 1 %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      esphome_pow_sw4_voltage:
+        value_template: >-
+          {% if states('sensor.esphome_pow_sw4_voltage')|int(0) > 1 %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
+      riego_bomba_pozo_status:
         value_template: >-
           {% if is_state('switch.esphome_pow_sw4','on') %}
             true
           {% else %}
             false
           {% endif %}
-        friendly_name: 'Control Bomba Pozo'
+        friendly_name: 'Control Bomba Riego'
         icon_template: mdi:water-well
 
+      # Sensor binario que indica si el motor del pozo está activo, basado en
+      # voltaga = 220V y consumo wattios (power) > 100W
+      # El consumo habitual de la bomba es > 1500W
+      riego_bomba_pozo_motor_on:
+        value_template: >-
+          {%  if states('sensor.esphome_pow_sw4_voltage')|int(0) > 200
+              and states('sensor.esphome_pow_sw4_power')|round(1) > 100
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        icon_template: mdi:flash-outline
+      # AAC
+      riego_bomba_pozo_warning_consumo:
+        value_template: >-
+          {% if (is_state('binary_sensor.riego_cesped_ch1_status','on') or
+                 is_state('binary_sensor.riego_cesped_ch1_status','on') or
+                 is_state('binary_sensor.riego_cesped_ch1_status','on')
+                ) and states('sensor.esphome_pow_sw3_power')|round(1) < 100
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        icon_template: mdi:flash-alert
+
+      riego_bomba_pozo_warning_motor_off:
+        value_template: >-
+          {%  if states('sensor.esphome_pow_sw3_voltage')|int(0) > 200
+              and states('sensor.esphome_pow_sw3_power')|round(1) > 1800
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        icon_template: mdi:flash-alert
+
+      #
+      # AEMET PREVISION METEREOLOGICA
+      #
       # aemet_prevision_tiempo_dia0:
       #  # rain, snow, sleet
       #  friendly_name: 'Previsión Tiempo Hoy'
@@ -623,7 +691,7 @@
             false
           {% endif %}
         friendly_name: 'Riego CH1 on/off'
-        icon_template: mdi:power
+        icon_template: mdi:leaf
 
       riego_bonsais_ch1_dia_ejecucion_t1:
         friendly_name: '¿Próxima Ejecución Hoy? (CH1-T1)'
@@ -679,7 +747,7 @@
             false
           {% endif %}
         friendly_name: 'Riego CH2 on/off'
-        icon_template: mdi:power
+        icon_template: mdi:flower
 
       riego_bonsais_ch2_dia_ejecucion_t1:
         friendly_name: '¿Próxima Ejecución Hoy? (CH2-T1)'
@@ -803,7 +871,7 @@
             false
           {% endif %}
         friendly_name: 'Riego Bonsais Produccion on/off'
-        icon_template: mdi:power
+        icon_template: mdi:tree
 
       riego_bonsais_ch0_dia_ejecucion_t1:
         friendly_name: '¿Próxima Ejecución Hoy? (SW2-T1)'
@@ -859,7 +927,7 @@
             false
           {% endif %}
         friendly_name: 'Riego Huerto Tomates  on/off'
-        icon_template: mdi:power
+        icon_template: mdi:sprout
 
       riego_tomates_ch0_dia_ejecucion_t1:
         friendly_name: '¿Próxima Ejecución Hoy? (POW1-T1)'
@@ -916,7 +984,7 @@
             false
           {% endif %}
         friendly_name: 'Riego Cesped CH1 on/off'
-        icon_template: mdi:power
+        icon_template: mdi:sprinkler
 
       riego_cesped_ch1_dia_ejecucion_t1:
         friendly_name: '¿Próxima Ejecución Hoy? (CH1-T1)'
@@ -950,12 +1018,31 @@
             false
           {% endif %}
 
+      riego_cesped_ch1_dia_ejecucion_t3:
+        friendly_name: '¿Próxima Ejecución Hoy? (CH1-T3)'
+        icon_template: mdi:calendar-check
+        value_template: >-
+          {% if is_state('input_select.riego_cesped_ch1_programador_dias','Diario') and is_state('input_boolean.riego_cesped_ch1_programador_t3','on') %}
+            true
+          {% elif is_state('input_select.riego_cesped_ch1_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_cesped_ch1_programador_t3','on') %}
+            true
+          {% elif is_state('input_select.riego_cesped_ch1_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_cesped_ch1_programador_t3','on') %}
+            true
+          {% elif is_state('input_select.riego_cesped_ch1_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_cesped_ch1_programador_t3','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
       riego_cesped_ch1_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy? (CH1)'
         icon_template: mdi:tree
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
-                and (is_state('binary_sensor.riego_cesped_ch1_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_cesped_ch1_dia_ejecucion_t2','on'))
+                and (is_state('binary_sensor.riego_cesped_ch1_dia_ejecucion_t1','on') 
+                     or is_state('binary_sensor.riego_cesped_ch1_dia_ejecucion_t2','on')
+                     or is_state('binary_sensor.riego_cesped_ch1_dia_ejecucion_t3','on')
+                )
           %}
             true
           {% else %}
@@ -973,7 +1060,7 @@
             false
           {% endif %}
         friendly_name: 'Riego Cesped CH2 on/off'
-        icon_template: mdi:power
+        icon_template: mdi:sprinkler-variant
 
       riego_cesped_ch2_dia_ejecucion_t1:
         friendly_name: '¿Próxima Ejecución Hoy? (CH2-T1)'
@@ -1007,12 +1094,31 @@
             false
           {% endif %}
 
+      riego_cesped_ch2_dia_ejecucion_t3:
+        friendly_name: '¿Próxima Ejecución Hoy? (CH2-T3)'
+        icon_template: mdi:calendar-check
+        value_template: >-
+          {% if is_state('input_select.riego_cesped_ch2_programador_dias','Diario') and is_state('input_boolean.riego_cesped_ch2_programador_t3','on') %}
+            true
+          {% elif is_state('input_select.riego_cesped_ch2_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.riego_cesped_ch2_programador_t3','on') %}
+            true
+          {% elif is_state('input_select.riego_cesped_ch2_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.riego_cesped_ch2_programador_t3','on') %}
+            true
+          {% elif is_state('input_select.riego_cesped_ch2_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.riego_cesped_ch2_programador_t3','on') %}
+            true
+          {% else %}
+            false
+          {% endif %}
+
       riego_cesped_ch2_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy? (CH2)'
         icon_template: mdi:tree
         value_template: >-
           {% if is_state('input_boolean.riego_interruptor_global','on')
-                and (is_state('binary_sensor.riego_cesped_ch2_dia_ejecucion_t1','on') or is_state('binary_sensor.riego_cesped_ch2_dia_ejecucion_t2','on'))
+                and (is_state('binary_sensor.riego_cesped_ch2_dia_ejecucion_t1','on') 
+                    or is_state('binary_sensor.riego_cesped_ch2_dia_ejecucion_t2','on')
+                    or is_state('binary_sensor.riego_cesped_ch2_dia_ejecucion_t3','on')
+                )
           %}
             true
           {% else %}
@@ -1030,7 +1136,7 @@
             false
           {% endif %}
         friendly_name: 'Riego Cesped CH3 on/off'
-        icon_template: mdi:power
+        icon_template: mdi:sprinkler-fire
 
       riego_cesped_ch3_dia_ejecucion_t1:
         friendly_name: '¿Próxima Ejecución Hoy? (CH3-T1)'

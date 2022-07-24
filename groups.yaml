@@ -15,36 +15,41 @@ alarma_sirena_grp:
     - script.alarma_boton_panico
     - script.alarma_sirenas_off
 
-alarma_sensores_perimetro:
+# Como obtener el sensor del grupo
+# https://community.home-assistant.io/t/how-to-display-the-sensor-that-triggers-the-alarm/3385513
+#
+
+alarma_sensores_perimetro_grp:
   name: Sensores Perímetro
   entities:
     - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Principal
-    - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Trasera Jardín
+    - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón Jardín
     - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
     - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
     - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
-    - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
     - binary_sensor.door_window_sensor_158d00045d69a6       # Ventana PAF
+    - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio Izquierda
+    - binary_sensor.door_window_sensor_158d0004508a6d       # Ventana Estudio Derecha
 
-alarma_sensores_exterior:
-  name: Sensores Exterior
+alarma_sensores_presencia_interior_grp:
+  name: Sensores Presencia Interior
   entities:
-    - binary_sensor.motion_sensor_158d0001e637f6            # Presencia Exterior
+    - binary_sensor.motion_sensor_158d0001e55903            # Sensor Presencia Hall Entrada
+    - binary_sensor.motion_sensor_158d0001e464a6            # Sensor Presencia Estudio
+    - binary_sensor.motion_sensor_158d0001e05661            # Sensor Presencia Salón
+    - binary_sensor.motion_sensor_158d0002ea1d0f            # Sensor Presencia Dormitorio MFC
+    - binary_sensor.blink_entrada_motion_detected           # Sensor Presencia Blink Hall Entrada
+
+alarma_sensores_presencia_exterior_grp:
+  name: Sensores Presencia Exterior
+  entities:
     - binary_sensor.blink_puerta_garaje_motion_detected     # Blink Puerta Garaje
     - binary_sensor.blink_puerta_principal_motion_detected  # Blink Puerta Principal
     - binary_sensor.blink_piscina_motion_detected           # Blink Piscina
     - binary_sensor.blink_porche_motion_detected            # Blink Porche
+    #- binary_sensor.motion_sensor_158d0001e637f6           # Sensor Presencia Entrada Exterior - SOLO LUZ
 
-alarma_sensores_presencia:
-  name: Sensores Presencia
-  entities:
-    - binary_sensor.motion_sensor_158d0001e55903
-    - binary_sensor.motion_sensor_158d0001e464a6
-    - binary_sensor.motion_sensor_158d0001e05661
-    - binary_sensor.motion_sensor_158d0002ea1d0f
-    - binary_sensor.blink_entrada_motion_detected           # Blink Entrada Interior
-
-alarma_sensores_luz:
+alarma_sensores_luz_grp:
   name: Sensores Luz
   entities:
     - sensor.illumination_158d0001e464a6
@@ -52,40 +57,6 @@ alarma_sensores_luz:
     - sensor.illumination_158d0001e637f6
     - sensor.illumination_158d0001e464a6
     - sensor.illumination_158d0001e05661
-
-alarma_sensor_jardin_grp:
-  name: Sensores Jardín
-  entities:
-    - binary_sensor.esphome_4ch_status                      # Sensor de conectividad sonoff 4CH
-    - binary_sensor.esphome_pow_sw3_status                  # Sensor de conectividad sonoff POW
-    - binary_sensor.esphome_bas_sw4_status
-    - binary_sensor.esphome_pow_sw1_status
-
-alarma_grp_sensores_home:
-  name: Grupo Sensores Home
-  entities:
-    - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Principal
-    - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Trasera Jardín
-    - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
-    - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
-    - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
-    #- binary_sensor.door_window_sensor_158d00030996fc      # Ventana Estudio ==> SOLO ARMADO AWAY
-    - binary_sensor.door_window_sensor_158d00045d69a6       # Ventana PAF
-    - binary_sensor.vibration_158d0002b15e3b                # Rack Comunicaciones
-    - binary_sensor.vibration_158d0002a4eacc                # Puerta atras salon
-
-alarma_grp_sensores_away:
-  name: Grupo Sensores Away
-  entities:
-    - binary_sensor.motion_sensor_158d0001e637f6            # Presencia Exterior
-    - binary_sensor.motion_sensor_158d0002ea1d0f            # Presencia Dormitorio
-    - binary_sensor.motion_sensor_158d0001e55903            # Presencia Entrada Interior
-    - binary_sensor.motion_sensor_158d0001e464a6            # Presencia Estudio
-    - binary_sensor.motion_sensor_158d0001e05661            # Presencia Salón
-    - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
-    - binary_sensor.blink_puerta_garaje_motion_detected     # Blink Puerta Garaje
-    - binary_sensor.blink_puerta_principal_motion_detected  # Blink Puerta Principal
-    - binary_sensor.blink_entrada_motion_detected           # Blink Entrada Interior
 
 luces_estudio_grp:
   name: Luces Estudio
@@ -130,18 +101,12 @@ luces_interior_grp:
 luces_jardin_grp:
   name: Luces Jardín
   entities:
-    #- switch.esphome_bas_sw4                     # Porche 1 Salón
-    - light.sonoff_mini_sw1                       # Luces Exterior
-    - switch.esphome_4ch_relay_1                  # Balizas Cesped Jardín (CH1)
-    - switch.esphome_4ch_relay_2                  # Focos Piscina (Olivo3+Yuca)(CH2)
-    - switch.esphome_4ch_relay_3                  # Focos Entrada (Olivo1)(CH3)
-    - switch.esphome_4ch_relay_4                  # Focos Bonsai
-
-luces_focos_arboles_grp:
-  name: Focos Árboles
-  entities:
-    - switch.esphome_4ch_relay_2                  # Focos Piscina (Olivo3+Yuca)(CH2)
-    - switch.esphome_4ch_relay_3                  # Focos Olivo1 (Olivo1+Cica)(CH3)
+    - light.sonoff_mini_sw1             # Luces Exterior (MINI_SW1)
+    - light.balizas_cesped              # Balizas Cesped  (switch.esphome_4ch_relay_1)
+    - light.focos_olivo_piscina         # Foco Olivo Piscina (switch.esphome_4ch_relay_2)
+    - light.foco_olivo_nubes            # Foco Olivo Nubes (switch.esphome_4ch_relay_3)
+    - light.foco_entrada_bonsai         # Foco Entrada Bonsai (switch.esphome_4ch_relay_4)
+    - light.luces_porche_salon          # Porche Salón (switch.esphome_bas_sw4)
 
 luces_casa_grp:
   name: Luces De Toda La Casa
@@ -153,7 +118,6 @@ switch_calefaccion_grp:
   name: Calefacción de Toda La Casa
   entities:
     - switch.esphome_s20_sw1                      # Dormitorio M&D
-    # - switch.esphome_s20_sw2                    # Dormitorio AAF
     - switch.esphome_s20_sw3                      # Dormitorio PAF
 
 setup_telegram_grp:
