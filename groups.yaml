@@ -20,10 +20,10 @@ alarma_sirena_grp:
 #
 
 alarma_sensores_perimetro_grp:
-  name: Sensores Perímetro
+  name: Grupo Sensores Perímetro
   entities:
-    - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Principal
-    - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón Jardín
+    - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
+    - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
     - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
     - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
     - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
@@ -32,25 +32,25 @@ alarma_sensores_perimetro_grp:
     - binary_sensor.door_window_sensor_158d0004508a6d       # Ventana Estudio Derecha
 
 alarma_sensores_presencia_interior_grp:
-  name: Sensores Presencia Interior
+  name: Grupo Sensores Presencia Interior
   entities:
-    - binary_sensor.motion_sensor_158d0001e55903            # Sensor Presencia Hall Entrada
-    - binary_sensor.motion_sensor_158d0001e464a6            # Sensor Presencia Estudio
-    - binary_sensor.motion_sensor_158d0001e05661            # Sensor Presencia Salón
-    - binary_sensor.motion_sensor_158d0002ea1d0f            # Sensor Presencia Dormitorio MFC
-    - binary_sensor.blink_entrada_motion_detected           # Sensor Presencia Blink Hall Entrada
+    - binary_sensor.blink_hall_motion_detected
+    - binary_sensor.alarma_sensor_presencia_salon
+    - binary_sensor.alarma_sensor_presencia_estudio
+    - binary_sensor.alarma_sensor_presencia_entrada_hall
+    - binary_sensor.alarma_sensor_presencia_dormitorio_principal
 
 alarma_sensores_presencia_exterior_grp:
-  name: Sensores Presencia Exterior
+  name: Grupo Sensores Presencia Exterior
   entities:
-    - binary_sensor.blink_puerta_garaje_motion_detected     # Blink Puerta Garaje
-    - binary_sensor.blink_puerta_principal_motion_detected  # Blink Puerta Principal
-    - binary_sensor.blink_piscina_motion_detected           # Blink Piscina
-    - binary_sensor.blink_porche_motion_detected            # Blink Porche
-    #- binary_sensor.motion_sensor_158d0001e637f6           # Sensor Presencia Entrada Exterior - SOLO LUZ
+    - binary_sensor.alarma_sensor_presencia_entrada_exterior    # Presencia Entrada Exterior
+    - binary_sensor.blink_puerta_garaje_motion_detected         # Blink Puerta Garaje
+    - binary_sensor.blink_puerta_principal_motion_detected      # Blink Puerta Principal
+    - binary_sensor.blink_piscina_motion_detected               # Blink Piscina
+    - binary_sensor.blink_porche_motion_detected                # Blink Porche
 
 alarma_sensores_luz_grp:
-  name: Sensores Luz
+  name: Grupo Sensores Luz
   entities:
     - sensor.illumination_158d0001e464a6
     - sensor.illumination_158d0001e55903
@@ -59,7 +59,7 @@ alarma_sensores_luz_grp:
     - sensor.illumination_158d0001e05661
 
 luces_estudio_grp:
-  name: Luces Estudio
+  name: Grupo Luces Estudio
   entities:
     - light.luz_estudio_alta                                # Hue Estudio
     - light.luz_estudio_media                               # Hue Estudio
@@ -72,13 +72,13 @@ luces_estudio_grp:
     - light.sonoff_mini_sw2                                 # Luz Escritorio
 
 luces_entrada_grp:
-  name: Luces Entrada
+  name: Grupo Luces Entrada
   entities:
     - light.entrada
     - light.pasillo
 
 luces_planta_baja_grp:
-  name: Luces Planta Baja
+  name: Grupo Luces Planta Baja
   entities:
     - light.cocina
     - light.dormitorio
@@ -88,18 +88,18 @@ luces_planta_baja_grp:
     - light.salon
 
 luces_planta_alta_grp:
-  name: Luces Planta Alta
+  name: Grupo Luces Planta Alta
   entities:
     - group.luces_estudio_grp
 
 luces_interior_grp:
-  name: Luces Interior
+  name: Grupo Luces Interior
   entities:
     - group.luces_planta_baja_grp
     - group.luces_planta_alta_grp
 
 luces_jardin_grp:
-  name: Luces Jardín
+  name: Grupo Luces Jardín
   entities:
     - light.sonoff_mini_sw1             # Luces Exterior (MINI_SW1)
     - light.balizas_cesped              # Balizas Cesped  (switch.esphome_4ch_relay_1)
@@ -115,7 +115,7 @@ luces_casa_grp:
     - group.luces_jardin_grp
 
 switch_calefaccion_grp:
-  name: Calefacción de Toda La Casa
+  name: Grupo Calefacción de Toda La Casa
   entities:
     - switch.esphome_s20_sw1                      # Dormitorio M&D
     - switch.esphome_s20_sw3                      # Dormitorio PAF

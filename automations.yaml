@@ -396,29 +396,9 @@
     # MUY IMPORTANTE: EN EL ARM AWAY SE CHEQUEA GRUPO SENSORES HOME + AWAY
     - platform: state
       entity_id:
-      # - group.alarma_grp_sensores_home
-      # - group.alarma_grp_sensores_away
-      # Grupo Sensores Perimetrales
-        - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
-        - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
-        - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
-        - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
-        - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
-        - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
-        - binary_sensor.door_window_sensor_158d00045d69a6       # Ventana PAF
-      # Grupo Sensores Away
-        #- binary_sensor.motion_sensor_158d0001e637f6           # Presencia Exterior
-        - binary_sensor.motion_sensor_158d0002ea1d0f            # Presencia Dormitorio
-        - binary_sensor.motion_sensor_158d0001e55903            # Presencia Entrada Interior
-        - binary_sensor.motion_sensor_158d0001e464a6            # Presencia Estudio
-        - binary_sensor.motion_sensor_158d0001e05661            # Presencia Salón
-        - binary_sensor.door_window_sensor_158d00030996fc       # Ventana Estudio
-        - binary_sensor.door_window_sensor_158d0004508a6d       # Ventana Estudio2
-        - binary_sensor.blink_puerta_garaje_motion_detected     # Blink Puerta Garaje
-        - binary_sensor.blink_puerta_principal_motion_detected  # Blink Puerta Principal
-        - binary_sensor.blink_hall_motion_detected              # Blink Entrada Interior
-        - binary_sensor.blink_porche_motion_detected            # Blink Zona Porche Salón
-        - binary_sensor.blink_piscina_motion_detected           # Blink Zona Piscina
+        - group.alarma_sensores_perimetro_grp                   # Grupo Sensores PERIMETRO
+        - group.alarma_sensores_presencia_interior_grp          # Grupo Sensores Presencia INTERIOR
+        - group.alarma_sensores_presencia_exterior_grp          # Grupo Sensores Presencia EXTERIOR
       to: 'on'
     # Los sensores vibración solo saltan por trigger = event
     - platform: event
@@ -442,10 +422,6 @@
         entity_id: alarm_control_panel.ha
         state: armed_away
   action:
-    #- service: python_script.meta_alarm_trigger
-    #  data_template:
-    #    entity_id: '{{trigger.entity_id}}'
-    #
     # ALMACENA EL SENSOR DEL TRIGGER
     - service: input_text.set_value
       entity_id: input_text.alarm_trigger
@@ -464,15 +440,8 @@
   alias: 'A6 Alarm Trigger Armed Home'
   trigger:
     - platform: state
-      #entity_id: group.alarma_grp_sensores_home
-      entity_id:
-        - binary_sensor.door_window_sensor_158d00022b393c       # Puerta Entrada
-        - binary_sensor.door_window_sensor_158d000201e2e7       # Puerta Salón
-        #- binary_sensor.door_window_sensor_158d00030996fc      # Ventana Estudio
-        - binary_sensor.door_window_sensor_158d00020b7c27       # Ventana MFC
-        - binary_sensor.door_window_sensor_158d00020457e0       # Ventana Plancha
-        - binary_sensor.door_window_sensor_158d00020910b1       # Ventana AAF
-        - binary_sensor.door_window_sensor_158d00045d69a6       # Ventana PAF
+      # Grupo Sensores PERIMETRO
+      entity_id: group.alarma_sensores_perimetro_grp
       to: 'on'
     # Los sensores vibración solo saltan por trigger = event
     - platform: event

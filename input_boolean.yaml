@@ -3,19 +3,15 @@
 #
   family_home_mfc:
     name: Tracking Malen on/off
-    initial: on
     icon: mdi:cellphone-iphone
   family_home_aac:
     name: Tracking Agustin on/off
-    initial: on
     icon: mdi:cellphone-iphone
   family_home_paf:
     name: Tracking Paloma on/off
-    initial: on
     icon: mdi:cellphone-iphone
   family_home_aaf:
     name: Tracking Agu on/off
-    initial: on
     icon: mdi:cellphone-iphone
 
 #
@@ -23,47 +19,57 @@
 #
   camara_estudio:
     name: Camara Estudio on/off
-    initial: on
     icon: mdi:webcam
 
   camara_jardin:
     name: Camara Jardín on/off
-    initial: on
     icon: mdi:webcam
 
   camara_hall_interior:
     name: Camara Hall on/off
-    initial: on
     icon: mdi:webcam
 
   camara_puerta_exterior:
     name: Camara Puerta on/off
-    initial: on
     icon: mdi:webcam
 
   camara_cancela_exterior:
     name: Camara Cancela on/off
-    initial: on
     icon: mdi:webcam
 
+#
+# ON/OFF SENSORES PRESENCIA ALARMA
+#
+  alarma_sensor_presencia_salon:
+    name: Sensor Presencia Salón
+    icon: mdi:motion-sensor
+  alarma_sensor_presencia_estudio:
+    name: Sensor Presencia Estudio
+    icon: mdi:motion-sensor
+  alarma_sensor_presencia_entrada_hall:
+    name: Sensor Presencia Entrada Hall
+    icon: mdi:motion-sensor
+  alarma_sensor_presencia_entrada_exterior:
+    name: Sensor Presencia Entrada Exterior
+    icon: mdi:motion-sensor
+  alarma_sensor_presencia_dormitorio_principal:
+    name: Sensor Presencia Dormitorio Principal
+    icon: mdi:motion-sensor
 
+#
 # ON/OFF DUERME EN CASA
 #
   family_sleep_home_mfc:
     name: Malen Duerme en Casa
-    initial: on
     icon: mdi:sleep
   family_sleep_home_aac:
     name: Agustin Duerme en Casa
-    initial: on
     icon: mdi:sleep
   family_sleep_home_paf:
     name: Paloma Duerme en Casa
-    initial: on
     icon: mdi:sleep
   family_sleep_home_aaf:
     name: Agu Duerme en Casa
-    initial: on
     icon: mdi:sleep
 
 # Control alarma y notificaciones
@@ -75,7 +81,6 @@
     # AAC. Interruptores control alarma y notificaciones
   alarm_status:
     name: Sirena Alarma
-    initial: on
     icon: mdi:alarm-light
   alarm_test_sirenas:
     name: Test Sirena Alarma
@@ -227,7 +232,6 @@
 
   jardin_programador_4ch_ch1:
     name: Prog. Balizas Cesped
-    initial: on
     icon: mdi:power-settings
 
   jardin_programador_4ch_ch2:

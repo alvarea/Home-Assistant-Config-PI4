@@ -1,6 +1,8 @@
-#
-# BINARY_SENSOR
-#
+  #
+  # BAYESIAN SENSORS
+  #
+  #
+
   # NMAP ==> prob_given_true: 0.8 - prob_given_false: 0.2
   #   - device_tracker.apple_94_ac_c4_iphone_aac
   #   - device_tracker.apple_87_31_3b_iphone_mfc
@@ -23,12 +25,6 @@
   #   - device_tracker.b6cd9e1f_4100_4cac_88d0_f4d6c044a4e6 #MFC
   #   - device_tracker.863b93f2_f00f_4737_a35f_1ff0cce201a8 #PAF
   #   - device_tracker.0b495ff5_94fc_4773_9644_f71df3c328ac #AAF
-
-  # BAYESIAN SENSORS
-  #   - binary_sensor.family_home_mfc
-  #   - binary_sensor.family_home_aac
-  #   - binary_sensor.family_home_paf
-  #   - binary_sensor.family_home_aaf
 
   - platform: 'bayesian'
     prior: 0.60
@@ -129,13 +125,15 @@
         platform: 'state'
         to_state: 'home'
 
+  #
+  # TEMPLATE SENSORS
+  #
+
   - platform: template
     sensors:
-      # Test Alert Component
-      test_alert_sensor:
-        value_template: '{{ states.light.luz_estudio }}'
-        friendly_name: 'Estado Hue Estudio'
-
+      #
+      # SENSORES CONTROL PRESENCIA
+      #
       # Sensores finales de control de presencia basados en el bayesian(on/off) AND input_boolean(on/off) de cada Uno.
       #
       # and is_state('binary_sensor.baye_home_aac','on') %}
@@ -147,7 +145,7 @@
           {% else %}
             false
           {% endif %}
-      # and is_state('binary_sensor.baye_home_mfc','on') %}
+
       family_home_mfc:
         value_template: >-
           {% if is_state('input_boolean.family_home_mfc','on')
@@ -156,7 +154,7 @@
           {% else %}
             false
           {% endif %}
-      # and is_state('binary_sensor.baye_home_paf','on') %}
+
       family_home_paf:
         value_template: >-
           {% if is_state('input_boolean.family_home_paf','on')
@@ -165,7 +163,7 @@
           {% else %}
             false
           {% endif %}
-      # and is_state('binary_sensor.baye_home_aaf','on') %}
+
       family_home_aaf:
         value_template: >-
           {% if is_state('input_boolean.family_home_aaf','on')
@@ -176,6 +174,7 @@
           {% endif %}
 
       # Todos en Casa:  IF sensor.family_home >= sensor.family_sleep_home THEN TRUE
+      #
       family_all_home:
         value_template: >-
           {% if states('sensor.family_sleep_home')|int(0) > 0
@@ -189,7 +188,9 @@
         #entity_id:
         #  - sensor.family_home
         #  - sensor.family_sleep_home
+
       # Alguien en Casa:  IF sensor.family_home > 0 THEN TRUE
+      #
       family_any_home:
         value_template: >-
           {% if states('sensor.family_home')|int(0) > 0 %}
@@ -214,10 +215,91 @@
         icon_template: mdi:alarm-light
 
       #
+      # CONTROL SENSORES PRESENCIA ALARMA AWAY
+      #
+      #    - entity: binary_sensor.motion_sensor_158d0001e05661             name: Presencia Salón
+      #    - entity: binary_sensor.motion_sensor_158d0001e464a6             name: Presencia Estudio
+      #    - entity: binary_sensor.motion_sensor_158d0001e55903             name: Presencia Entrada Hall
+      #    - entity: binary_sensor.motion_sensor_158d0001e637f6             name: Presencia Entrada Exterior
+      #    - entity: binary_sensor.motion_sensor_158d0002ea1d0f             name: Presencia Dormitorio Principal
+      #
+      alarma_sensor_presencia_salon:
+        value_template: >-
+          {%  if is_state('input_boolean.alarma_sensor_presencia_salon','on')
+              and is_state('binary_sensor.motion_sensor_158d0001e05661','on')
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        icon_template: >-
+          {% if is_state('binary_sensor.alarma_sensor_presencia_salon','on') %} mdi:motion-sensor
+          {% else %} mdi:motion-sensor-off
+          {% endif %}
+
+      alarma_sensor_presencia_estudio:
+        value_template: >-
+          {%  if is_state('input_boolean.alarma_sensor_presencia_estudio','on')
+              and is_state('binary_sensor.motion_sensor_158d0001e464a6','on')
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        icon_template: >-
+          {% if is_state('binary_sensor.alarma_sensor_presencia_estudio','on') %} mdi:motion-sensor
+          {% else %} mdi:motion-sensor-off
+          {% endif %}
+
+
+      alarma_sensor_presencia_entrada_hall:
+        value_template: >-
+          {%  if is_state('input_boolean.alarma_sensor_presencia_entrada_hall','on')
+              and is_state('binary_sensor.motion_sensor_158d0001e55903','on')
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        icon_template: >-
+          {% if is_state('binary_sensor.alarma_sensor_presencia_entrada_hall','on') %} mdi:motion-sensor
+          {% else %} mdi:motion-sensor-off
+          {% endif %}
+
+      alarma_sensor_presencia_entrada_exterior:
+        value_template: >-
+          {%  if is_state('input_boolean.alarma_sensor_presencia_entrada_exterior','on')
+              and is_state('binary_sensor.motion_sensor_158d0001e637f6','on')
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        icon_template: >-
+          {% if is_state('binary_sensor.alarma_sensor_presencia_entrada_exterior','on') %} mdi:motion-sensor
+          {% else %} mdi:motion-sensor-off
+          {% endif %}
+
+      alarma_sensor_presencia_dormitorio_principal:
+        value_template: >-
+          {%  if is_state('input_boolean.alarma_sensor_presencia_dormitorio_principal','on')
+              and is_state('binary_sensor.motion_sensor_158d0002ea1d0f','on')
+          %}
+            true
+          {% else %}
+            false
+          {% endif %}
+        icon_template: >-
+          {% if is_state('binary_sensor.alarma_sensor_presencia_dormitorio_principal','on') %} mdi:motion-sensor
+          {% else %} mdi:motion-sensor-off
+          {% endif %}
+
+      #
       # CONTROL LAVADORA
       #
       # SONOFF POW_SW2. Sensores control consumo potencia
       #
+      esphome_pow_sw2_switch:
         value_template: >-
           {% if is_state('switch.esphome_pow_sw2','on') %}
             true
@@ -367,22 +449,6 @@
         friendly_name: 'Depuradora on/off'
         icon_template: mdi:power
 
-      piscina_depuradora_ch0_dia_ejecucion:
-        friendly_name: '¿Próxima Ejecución Hoy?'
-        icon_template: mdi:calendar-check
-        value_template: >-
-          {% if is_state('input_select.piscina_programador_dias','Diario') and is_state('input_boolean.piscina_programador','on') %}
-            true
-          {% elif is_state('input_select.piscina_programador_dias','Sábado') and now().weekday() | int == 5 and is_state('input_boolean.piscina_programador','on') %}
-            true
-          {% elif is_state('input_select.piscina_programador_dias','Domingo') and now().weekday() | int == 6 and is_state('input_boolean.piscina_programador','on') %}
-            true
-          {% elif is_state('input_select.piscina_programador_dias','Weekend') and now().weekday() | int in (5,6) and is_state('input_boolean.piscina_programador','on') %}
-            true
-          {% else %}
-            false
-          {% endif %}
-
       piscina_depuradora_ch0_dia_ejecucion_t1:
         friendly_name: '¿Próxima Ejecución Hoy? (CH0-T1)'
         icon_template: mdi:calendar-check
@@ -415,7 +481,6 @@
             false
           {% endif %}
 
-      ## FALTA PISCINA INTERRUPTOR GLOBAL
       piscina_depuradora_ch0_dia_ejecucion:
         friendly_name: '¿Próxima Ejecución Hoy? (CH0)'
         icon_template: mdi:pool
