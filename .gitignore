@@ -1,5 +1,4 @@
 secret.yaml
 scratch_code/known_devices.yaml
-/config_esphomeyaml/
 /entity_catalogue.yaml
 !/scratch_code/

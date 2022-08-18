@@ -1171,7 +1171,7 @@
     - service: script.luces_estudio_off
 
 - id: L14
-  alias: 'L14 Cube Flip90 Light Estudio Desk'
+  alias: 'L14 Cube Flip90 Light Estudio Desk Soft'
   mode: restart
   trigger:
     platform: event
@@ -1185,7 +1185,7 @@
     - service: hue.hue_activate_scene
       data:
         group_name: "Estudio"
-        scene_name: "Desk"
+        scene_name: "Desk_Soft"
 
 - id: L15
   alias: 'L15 Cube TapTwice Desk Power'
