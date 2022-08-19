@@ -1,0 +1,85 @@
+#
+# ESPHOME - ESP32S HUB2 - BLUETOOTH BLE - ENTRADA
+#
+esphome:
+  name: esphome_esp32_hub1_ble_tracker
+  platform: ESP32
+  board: nodemcu-32s
+
+wifi:
+  ssid: !secret wifi_ssid_wlan
+  password: !secret wifi_pwd
+  manual_ip:
+    static_ip: 192.168.0.49
+    gateway: !secret wifi_gateway
+    subnet: 255.255.255.0
+
+api:
+
+# Enable logging
+logger:
+
+binary_sensor:
+  - platform: status
+    name: "esphome esp32 h1 status"
+
+ota:
+
+# Example configuration entry
+esp32_ble_tracker:
+
+sensor:
+  - platform: xiaomi_hhccjcy01
+    mac_address: C4:7C:8D:67:C1:9E
+    temperature:
+      name: "Temperatura Plant Monitor PM01"
+    moisture:
+      name: "Humedad Plant Monitor PM01"
+    illuminance:
+      name: "Luminosidad Plant Monitor PM01"
+    conductivity:
+      name: "Fertilidad Plant Monitor PM01"
+    #battery_level:
+    #  name: "MiFlora S1 Bateria"
+
+  - platform: xiaomi_hhccjcy01
+    mac_address: 80:EA:CA:89:59:A5
+    temperature:
+      name: "Temperatura Plant Monitor PM02"
+    moisture:
+      name: "Humedad Plant Monitor PM02"
+    illuminance:
+      name: "Luminosidad Plant Monitor PM02"
+    conductivity:
+      name: "Fertilidad Plant Monitor PM02"
+
+  - platform: xiaomi_hhccjcy01
+    mac_address: 80:EA:CA:89:59:EF
+    temperature:
+      name: "Temperatura Plant Monitor PM03"
+    moisture:
+      name: "Humedad Plant Monitor PM03"
+    illuminance:
+      name: "Luminosidad Plant Monitor PM03"
+    conductivity:
+      name: "Fertilidad Plant Monitor PM03"
+
+  # LY3 Entrada Exterior
+  - platform: atc_mithermometer
+    mac_address: 'A4:C1:38:E8:02:EF'
+    temperature:
+      name: "LY3 Entrada Exterior Temperatura"
+    humidity:
+      name: "LY3 Entrada Exterior Humedad"
+    battery_level:
+      name: "LY3 Entrada Exterior Bateria"
+
+  # LY02 Entrada Interior
+  - platform: atc_mithermometer
+    mac_address: "A4:C1:38:6B:AA:C8"
+    temperature:
+      name: "LY2 Entrada Interior Temperatura"
+    humidity:
+      name: "LY2 Entrada Interior Humedad"
+    battery_voltage:
+      name: "LY2 Entrada Interior Batería"

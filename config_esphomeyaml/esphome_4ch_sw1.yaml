@@ -1,0 +1,78 @@
+#
+# ESPHOME SONOFF 4CH PRO - SW1 - CUADRO ELECTRICO lUCES JARDIN
+#
+esphomeyaml:
+  name: esphome_4ch_sw1
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: !secret wifi_ssid_wgar
+  password: !secret wifi_pwd
+  manual_ip:
+    gateway: !secret wifi_gateway
+    subnet: 255.255.255.0
+    static_ip: 192.168.0.35
+
+api:
+
+# Enable logging
+logger:
+
+ota:
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "esphome 4ch button 1"
+  - platform: gpio
+    pin:
+      number: GPIO9
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "esphome 4ch button 2"
+  - platform: gpio
+    pin:
+      number: GPIO10
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "esphome 4ch button 3"
+  - platform: gpio
+    pin:
+      number: GPIO14
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "esphome 4ch button 4"
+  - platform: status
+    name: "esphome 4ch sw1 status"
+
+switch:
+  - platform: gpio
+    name: "esphome 4ch relay 1"
+    pin: GPIO12
+  - platform: gpio
+    name: "esphome 4ch relay 2"
+    pin: GPIO5
+  - platform: gpio
+    name: "esphome 4ch relay 3"
+    pin: GPIO4
+  - platform: gpio
+    name: "esphome 4ch relay 4"
+    pin: GPIO15
+
+output:
+  # Register the blue LED as a dimmable output ....
+  - platform: esp8266_pwm
+    id: blue_led
+    pin: GPIO13
+    inverted: True
+
+light:
+  # ... and then make a light out of it.
+  - platform: monochromatic
+    name: "esphome 4ch blue led"
+    output: blue_led

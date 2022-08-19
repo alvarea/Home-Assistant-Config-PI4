@@ -1,0 +1,50 @@
+#
+# ESPHOME esphome BASIC SW1 - DISPONIBLE
+#
+esphome:
+  name: esphome_bas_sw1
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: 'WLAN.alvarea.net'
+  password: '3286202581200'
+  manual_ip:
+    static_ip: 192.168.0.31
+    gateway: 192.168.0.1
+    subnet: 255.255.255.0
+
+api:
+
+# Enable logging
+logger:
+
+ota:
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "esphome bas sw1 Boton"
+  - platform: status
+    name: "esphome bas sw1 Status"
+
+switch:
+  - platform: gpio
+    name: "esphome bas sw1"
+    pin: GPIO12
+
+output:
+  - platform: esp8266_pwm
+    id: bas_sw1_green_led
+    pin:
+      number: GPIO13
+      inverted: True
+
+light:
+  - platform: monochromatic
+    name: "esphome bas sw1 led"
+    output: bas_sw1_green_led
