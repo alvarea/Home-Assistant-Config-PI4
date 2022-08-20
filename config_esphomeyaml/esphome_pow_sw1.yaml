@@ -1,0 +1,53 @@
+#
+# ESPHOME - POW SW1 - RIEGO BONSAIS PRODUCCION
+#
+esphomeyaml:
+  name: esphome_pow_sw1
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: !secret wifi_ssid_wlan
+  password: !secret wifi_pwd
+  manual_ip:
+    static_ip: 192.168.0.36
+    gateway: !secret wifi_gateway
+    subnet: 255.255.255.0
+
+api:
+
+# Enable logging
+logger:
+
+ota:
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "esphome pow sw1 boton"
+  - platform: status
+    name: "esphome pow sw1 status"
+
+
+switch:
+  - platform: gpio
+    name: "esphome pow sw1"
+    pin: GPIO12
+
+output:
+  # Register the green LED as a dimmable output ....
+  - platform: esp8266_pwm
+    id: pow_sw1_green_led
+    pin:
+      number: GPIO13
+      inverted: True
+
+light:
+  # ... and then make a light out of it.
+  - platform: monochromatic
+    name: "esphome pow sw1 LED"
+    output: pow_sw1_green_led

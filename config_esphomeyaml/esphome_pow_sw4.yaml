@@ -1,0 +1,74 @@
+#
+# ESPHOME SONOFF POW R2 SW4 - BOMBA POZO
+#
+# FTDDI CABLE 1 ROJO-MARRON
+#   GND => MARRON
+#   R   => ROJO
+#   TX  => NARANJA
+#   VCC => AMARILLO - 3.3V
+#
+esphome:
+  name: esphome_pow_sw4
+  platform: ESP8266
+  board: esp01_1m
+  board_flash_mode: dout
+
+wifi:
+  ssid: !secret wifi_ssid_wgar
+  password: !secret wifi_pwd
+  manual_ip:
+    static_ip: 192.168.0.39
+    gateway: !secret wifi_gateway
+    subnet: 255.255.255.0
+
+api:
+
+ota:
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "esphome pow sw4 boton"
+  - platform: status
+    name: "esphome pow sw4 status"
+
+switch:
+  - platform: gpio
+    name: "esphome pow sw4"
+    pin: GPIO12
+
+output:
+  # Register the green LED as a dimmable output ....
+  - platform: esp8266_pwm
+    id: pow_sw4_green_led
+    pin:
+      number: GPIO13
+      inverted: True
+
+light:
+  # ... and then make a light out of it.
+  - platform: monochromatic
+    name: "esphome pow sw4 led"
+    output: pow_sw4_green_led
+
+# Example configuration entry
+# Disable logging over USB
+logger:
+  baud_rate: 0
+
+uart:
+  rx_pin: RX
+  baud_rate: 4800
+
+sensor:
+  - platform: cse7766
+    update_interval: 30s
+    current:
+      name: "esphome pow sw4 Current"
+    voltage:
+      name: "esphome pow sw4 Voltage"
+    power:
+      name: "esphome pow sw4 Power"
