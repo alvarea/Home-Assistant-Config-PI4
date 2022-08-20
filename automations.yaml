@@ -1363,7 +1363,6 @@
     - service: switch.toggle
       entity_id: switch.esphome_4ch_sw3_relay_4
 
-
 - id: S04
   alias: 'S04 Sonoff 4CH Status'
   trigger:
@@ -1470,7 +1469,6 @@
         entity_id: timer.piscina_depuradora_ch0
   action:
     - service: script.piscina_depuradora_ch0_timer_cancel
-
 
 
 # ESPHOME S20 - SW1 Smart Pluh Dormitorio Principal
@@ -1625,6 +1623,7 @@
 #        mensaje: >
 #          >>> URGENTE: SAI RACK COMUNICACIONES SIN CORRIENTE
 
+#
 # ESPHOME POW R2 SW2 - LAVADORA
 #
 - id: S16
@@ -1667,6 +1666,8 @@
     #      {% else %}
     #        "Hola, el lavado ha terminado y el tiempo es bueno. Puedes tender la ropa"
     #      {% endif %}
+
+
 
 #
 # ESPHOME 4CH-R2 SW2 RIEGO BONSAIS
@@ -1717,6 +1718,10 @@
             - service: input_boolean.turn_on
               target:
                 entity_id: input_boolean.riego_interruptor_global
+
+#
+# ESPHOME POW R2 SW4 - BOMBA POZO
+#
 
 #
 # Regla para encender/apagar el controlador de la bomba de riego del cesped en función del interruptor general de riego
@@ -1803,6 +1808,16 @@
         entity_id: input_text.riego_prevision_lluvia_ayer
         value: "{{ states('sensor.dark_sky_icon') }}"
 
+- id: S18D
+  alias: 'S01 Sonoff POW SW4 Boton'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.esphome_pow_sw4_boton
+      from: 'off'
+      to: 'on'
+  action:
+    - service: switch.toggle
+      entity_id: switch.esphome_pow_sw4
 #
 # ESPHOME 4CH-R2 SW2 RIEGO : Relay1 BONSAIS TOP
 #
